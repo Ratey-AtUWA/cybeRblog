@@ -1,0 +1,19 @@
+name: "cyboRg"
+output_dir: "."
+navbar:
+  title: "cyboRg"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "Code"
+      href: code.html
+    - text: "Rants"
+      href: rants.html
+    - text: "About"
+      href: about.html
+output:
+  html_document:
+    theme: cosmo
+    highlight: kate
+    include:
+      after_body: footer.html

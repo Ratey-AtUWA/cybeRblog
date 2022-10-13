@@ -1,0 +1,7 @@
+list.files(pattern = "Rmd")
+rmarkdown::render_site("index.Rmd")
+rmarkdown::render_site("about.Rmd")
+rmarkdown::render_site("misc.Rmd")
+rmarkdown::render_site("boxplot.Rmd")
+rmarkdown::render_site("rants.Rmd")
+rmarkdown::render_site("code.Rmd")
