@@ -15,6 +15,13 @@ navbar:
     - text: "About"
       icon: fa-address-card
       href: about.html
+  right:
+    - text: "Twitter"
+      icon: fa-twitter
+      href: https://twitter.com/DrAndrewRate
+    - text: "UWA"
+      icon: fa-building-user
+      href: https://research-repository.uwa.edu.au/en/persons/andrew-rate
 output:
   html_document:
     theme: cosmo
