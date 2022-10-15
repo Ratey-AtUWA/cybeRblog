@@ -1,6 +1,7 @@
 .Rproj.user
 *.Rproj
 .RData
+.Rmd
 .nojekyll
 site_libs/
 site_libs/**
