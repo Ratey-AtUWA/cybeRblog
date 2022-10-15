@@ -4,12 +4,16 @@ navbar:
   title: "cyboRg"
   left:
     - text: "Home"
+      icon: fa-home
       href: index.html
     - text: "Code"
+      icon: fa-rectangle-terminal
       href: code.html
     - text: "Rants"
+      icon: fa-amp-guitar
       href: rants.html
     - text: "About"
+      icon: fa-address-card
       href: about.html
 output:
   html_document:
