@@ -18,10 +18,10 @@ navbar:
   right:
     - text: "Twitter"
       icon: fa-twitter
-      href: https://twitter.com/DrAndrewRate
+      href: twitter-redirect.html
     - text: "UWA"
       icon: fa-building-user
-      href: https://research-repository.uwa.edu.au/en/persons/andrew-rate
+      href: uwa-redirect.html
 output:
   html_document:
     theme: cosmo
