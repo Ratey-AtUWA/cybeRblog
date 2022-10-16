@@ -6,14 +6,4 @@
 .nojekyll
 old.gitignore.txt
 
-/site_libs/**/*.*
-
-**/site_libs/
-
-**/misc_files/
-
-**/boxplot_files/
-
-/site_libs/bootstrap-3.3.5/temp.txt
-
 footer.html
