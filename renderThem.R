@@ -1,4 +1,5 @@
 list.files(pattern = "Rmd")
+list.files(pattern = "html")
 rmarkdown::render_site("index.Rmd")
 rmarkdown::render_site("about.Rmd")
 rmarkdown::render_site("misc.Rmd")
