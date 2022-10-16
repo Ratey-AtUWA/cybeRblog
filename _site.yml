@@ -16,7 +16,7 @@ navbar:
       icon: fa-address-card
       href: about.html
   right:
-    - text: "Twitter"
+    - text: "Social"
       icon: fa-twitter
       href: social.html
     - text: "UWA"
