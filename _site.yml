@@ -7,10 +7,10 @@ navbar:
       icon: fa-home
       href: index.html
     - text: "Code"
-      icon: fa-rectangle-terminal
+      icon: fa-code-fork
       href: code.html
     - text: "Rants"
-      icon: fa-amp-guitar
+      icon: fa-bell
       href: rants.html
     - text: "About"
       icon: fa-address-card
@@ -18,10 +18,10 @@ navbar:
   right:
     - text: "Twitter"
       icon: fa-twitter
-      href: twitter-redirect.html
+      href: social.html
     - text: "UWA"
-      icon: fa-building-user
-      href: uwa-redirect.html
+      icon: fa-flask
+      href: work.html
 output:
   html_document:
     theme: cosmo
