@@ -7,7 +7,7 @@ navbar:
       icon: fa-home
       href: index.html
     - text: "Code"
-      icon: fa-code-fork
+      icon: fa-project-diagram
       href: code.html
     - text: "Rants"
       icon: fa-bell
@@ -20,7 +20,7 @@ navbar:
       icon: fa-twitter
       href: social.html
     - text: "UWA"
-      icon: fa-flask
+      icon: fa-user-graduate
       href: work.html
 output:
   html_document:
