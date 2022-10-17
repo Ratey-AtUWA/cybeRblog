@@ -24,7 +24,7 @@ navbar:
       href: work.html
 output:
   html_document:
-    theme: cosmo
-    highlight: kate
+    theme: cerulean
+    highlight: tango
     include:
       after_body: footer.html
