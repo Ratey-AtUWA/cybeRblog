@@ -1,9 +1,17 @@
 .Rproj.user
+
 .Rhistory
+
 *.Rproj
+
 .RData
+
 *.Rmd
+
 .nojekyll
+
 old.gitignore.txt
+
 renderThem.R
+
 footer.html
