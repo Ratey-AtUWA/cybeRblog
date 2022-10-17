@@ -1,2 +1,2 @@
 # cybeRblog
-code, thoughts, rants, poems, and more
+code, thoughts, rants, photographs, poems, and maybe more
