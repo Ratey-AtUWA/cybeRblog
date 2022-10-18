@@ -26,5 +26,7 @@ output:
   html_document:
     theme: cerulean
     highlight: tango
+    md_extensions: -smart
+    self_contained: no
     include:
       after_body: footer.html
