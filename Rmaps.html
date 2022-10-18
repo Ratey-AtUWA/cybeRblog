@@ -416,9 +416,9 @@ maps, and many other map plotting methods.</p>
 <p><img src="Rmaps_files/figure-html/world%20map%20for%20decoration-1.png" width="45%" style="display: block; margin: auto;" /></p>
 <div id="load-packages-needed-to-make-maps" class="section level3">
 <h3>load packages needed to make maps</h3>
-<p>…also read some <em>data</em> we need for map annotations, make some
-<em>colour</em> <em>palettes</em> to use later, and set any alternative
-Windows <em>fonts</em>:</p>
+<p>...also read some <em>data</em> we need for map annotations, make
+some <em>colour</em> <em>palettes</em> to use later, and set any
+alternative Windows <em>fonts</em>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sp)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(maptiles)</span>
@@ -461,8 +461,8 @@ define the projection of our GPS data</p>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="st">           +datum=WGS84 +no_defs&quot;</span>) <span class="co"># uses Earth ellipsis specs from WGS84 datum</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>UTM50 <span class="ot">&lt;-</span> <span class="fu">CRS</span>(<span class="st">&quot;+proj=utm +zone=50 +south&quot;</span>) <span class="co"># just for Zone 50, S hemisphere!</span></span></code></pre></div>
 <p>We will use these coordinate reference system objects later. For now
-we’re going to work in UTM coordinates.</p>
-<p>Next we’ll convert our data frames to <em>Simple Features</em>
+we're going to work in UTM coordinates.</p>
+<p>Next we'll convert our data frames to <em>Simple Features</em>
 spatial data, using the <strong>R</strong> package <span
 style="font-family: monospace; background-color:#e8e8e8;">sf</span>
 (Pebesma, 2018). Simple Features is a formal standard (ISO 19125-1:2004)
@@ -471,7 +471,7 @@ computers - see <a
 href="https://r-spatial.github.io/sf/articles/sf1.html"
 class="uri">https://r-spatial.github.io/sf/articles/sf1.html</a>.</p>
 <p>We also make equivalents of these two sf-dataframes in the
-longitude–latitiude coordinate system, using the <span
+longitude--latitiude coordinate system, using the <span
 style="font-family: monospace; background-color: #e8e8e8;">st_transform</span>
 function.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>afs19utm <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(afs19[<span class="sc">-</span><span class="dv">9</span>,], <span class="co"># omitting row 9 where coordinates are missing</span></span>
@@ -483,9 +483,9 @@ function.</p>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>afs21ll <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(afs19utm, <span class="at">crs =</span> LongLat)</span></code></pre></div>
 <hr>
 </div>
-<div id="alternative-1-maps-in-r-using-the-maptiles-package"
+<div id="alternative-1----maps-in-r-using-the-maptiles-package"
 class="section level2">
-<h2>Alternative 1 – Maps in R using the maptiles package</h2>
+<h2>Alternative 1 -- Maps in R using the maptiles package</h2>
 <div id="defining-the-mapped-area" class="section level3">
 <h3>Defining the mapped area</h3>
 <p>We define the area we need for our map and save it in a simple
@@ -493,10 +493,10 @@ features object called <span
 style="font-family: monospace; background-color:#e8e8e8;">extent</span>.</p>
 <p>An easy way to get bounding coordinates (in longitude, latitude) is
 by using Google Maps or Google Earth. Google Earth allows the option to
-set the coordinate system to UTM. If we generate latitude–longitude
+set the coordinate system to UTM. If we generate latitude--longitude
 coordinates, we would need to convert our <em>Simple Features</em>
 object (see the <strong>Appendix</strong>). If our input coordinates are
-Longitude–Latitude, note that south latitudes (and west longitudes) are
+Longitude--Latitude, note that south latitudes (and west longitudes) are
 negative, and we want decimal degrees rather than
 degrees-minutes-seconds. Also note that coordinates from Google Maps and
 Google Earth (except in saved <span
@@ -522,14 +522,14 @@ the map plots in!</p>
 <h3>Getting the map tile data</h3>
 <p>We now need some functions from the <span
 style="font-family: monospace; background-color:#e8e8e8;">maptiles</span>
-package (Giraud 2021). We’re using one of the OpenStreetMap tile
+package (Giraud 2021). We're using one of the OpenStreetMap tile
 options, but the following tile providers also work: <br> <span
 style="font-family: monospace; background-color:#e8e8e8;">OpenStreetMap,
 OpenStreetMap.HOT, Esri.WorldStreetMap, Esri.WorldTopoMap,
 Esri.WorldImagery, Esri.WorldGrayCanvas, Stamen.Toner,
 Stamen.TonerBackground, Stamen.TonerHybrid, Stamen.TonerLines,
 Stamen.TonerLabels, Stamen.TonerLite, CartoDB.Positron,
-CartoDB.DarkMatter, CartoDB.Voyager</span> (all CartoDB… tiles have
+CartoDB.DarkMatter, CartoDB.Voyager</span> (all CartoDB... tiles have
 variants which work), and <span
 style="font-family: monospace; background-color:#e8e8e8;">OpenTopoMap</span>
 <br> The option <span
@@ -544,10 +544,10 @@ square (uncropped) map tiles.</p>
 </div>
 <div id="plotting-the-map" class="section level3">
 <h3>Plotting the map</h3>
-<p>The ‘aftiles’ object we created is a ‘SpatRaster’ object which needs
+<p>The 'aftiles' object we created is a 'SpatRaster' object which needs
 the maptiles package loaded to be able to plot it. We need to set the
 outer margins of the plot area (by default they are zeros) to allow
-plotting of axes <em>etc</em> – see Figure 1.</p>
+plotting of axes <em>etc</em> -- see Figure 1.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">oma=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">lend=</span><span class="st">&quot;square&quot;</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(aftiles)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -590,7 +590,7 @@ map</strong>, such as the location of samples, often with different
 sizes, shapes, or colours of symbols to represent numerical
 information.</p>
 <p>Since we have a map in UTM coordinates, we can now add plots of our
-data based on UTM locations (with a legend, of course – see Figure 3).
+data based on UTM locations (with a legend, of course -- see Figure 3).
 We can plot the points from the non-spatial data frame <span
 style="font-family: monospace; background-color: #e8e8e8;">afs19</span>,
 but here we <span
@@ -651,7 +651,7 @@ OpenStreetMap tiles acquired using maptiles.
 plotting the annotations and data in the correct order!). Then we use
 the <span
 style="font-family: monospace; background-color: #e8e8e8;">symbols()</span>
-function to make the ‘bubbles’, making sure that we include the options
+function to make the 'bubbles', making sure that we include the options
 <span style="font-family: monospace; background-color: #e8e8e8;">add =
 TRUE</span> so we overplot the map, and <span
 style="font-family: monospace; background-color: #e8e8e8;">inches =
@@ -761,7 +761,7 @@ acquired using maptiles.
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">palette</span>(pal4lite) <span class="co"># change back to non-transparent palette (optional)</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>afs19<span class="sc">$</span>QZn <span class="ot">&lt;-</span> <span class="cn">NULL</span> <span class="co"># to delete quantile column (optional; you can leave it in)</span></span></code></pre></div>
 <p>The resulting percentile bubble map (Figure 7) adds value to the
-‘standard’ bubble map (Figure 6), as it adds some statistical meaning to
+'standard' bubble map (Figure 6), as it adds some statistical meaning to
 the bubble sizes. A similar map could be created by using the Tukey
 boxplot thresholds instead of percentiles which could show potential
 outliers (<em>i.e</em>. using the <span
@@ -772,14 +772,14 @@ function.)</p>
 <hr>
 </div>
 </div>
-<div id="alternative-2-maps-in-r-using-the-ggmap-package"
+<div id="alternative-2----maps-in-r-using-the-ggmap-package"
 class="section level2">
-<h2>Alternative 2 – Maps in R using the ggmap package</h2>
+<h2>Alternative 2 -- Maps in R using the ggmap package</h2>
 <p>The <span
 style="font-family: monospace; background-color: #e8e8e8;">ggmap</span>
 package (Kahle and Wickham 2013) is an extension of <span
 style="font-family: monospace; background-color: #e8e8e8;">ggplot</span>,
-so it’s easier to use if you are familiar with <span
+so it's easier to use if you are familiar with <span
 style="font-family: monospace; background-color: #e8e8e8;">ggplot</span>
 and the associated family of packages. <span
 style="color: #A00000;"><em>You need to register for and obtain</em>
@@ -794,10 +794,10 @@ option:</p>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">register_google</span>(<span class="at">key =</span> secret) <span class="co"># you need your own Google Maps API code</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>udubua.gg <span class="ot">&lt;-</span> <span class="fu">get_googlemap</span>(<span class="at">center=</span><span class="fu">c</span>(<span class="fl">115.8213</span>,<span class="sc">-</span><span class="fl">31.98165</span>), </span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">zoom =</span> <span class="dv">16</span>, <span class="at">maptype =</span> <span class="st">&quot;terrain&quot;</span>, <span class="at">color =</span> <span class="st">&quot;bw&quot;</span>)</span></code></pre></div>
-<p>Next we plot the ggmap object using ggplot grammar. It’s possible to
+<p>Next we plot the ggmap object using ggplot grammar. It's possible to
 just plot the object (<em>i.e</em>. run <span
 style="font-family: monospace;  background-color: #e8e8e8;">ggmap(udubua.gg)</span>),
-but it’s good to have more control over plot options
+but it's good to have more control over plot options
 <strong>and</strong> to plot some data over the base map. In the example
 in Figure 8, we use the aesthetic in <span
 style="font-family: monospace; background-color: #e8e8e8;">geom_point()</span>
@@ -806,16 +806,16 @@ categories defined by the factor <span
 style="font-family: monospace; background-color: #e8e8e8;">Type</span>.
 A range of map styles is available by selecting a combination of one of
 <span style="font-family: monospace; background-color: #e8e8e8;">maptype
-= “terrain”, “satellite”, “roadmap”</span>, or <span
-style="font-family: monospace; background-color: #e8e8e8;">“hybrid”</span>,
+= "terrain", "satellite", "roadmap"</span>, or <span
+style="font-family: monospace; background-color: #e8e8e8;">"hybrid"</span>,
 together with <span
 style="font-family: monospace; background-color: #e8e8e8;">color =
-“color”</span> or <span
-style="font-family: monospace; background-color: #e8e8e8;">“bw”</span>.
+"color"</span> or <span
+style="font-family: monospace; background-color: #e8e8e8;">"bw"</span>.
 Note: the <span
 style="font-family: monospace; background-color: #e8e8e8;">ggsm</span>
 package is designed to add scale bar and north arrow to ggmaps, but it
-seems buggy and we currently don’t recommend it.</p>
+seems buggy and we currently don't recommend it.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggmap</span>(udubua.gg) <span class="sc">+</span> </span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">&quot;Latitude (\u00B0S)&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Longitude (\u00B0E)&quot;</span>) <span class="sc">+</span> </span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">115.825</span>, <span class="at">y =</span> <span class="sc">-</span><span class="fl">31.98</span>, <span class="at">label =</span> <span class="st">&quot;Swan</span><span class="sc">\n</span><span class="st">River&quot;</span>,</span>
@@ -840,7 +840,7 @@ style="font-family: monospace; background-color: #e8e8e8;">ggplot2</span>
 that are not illustrated by Figure 8. For example, we could use <span
 style="font-family: monospace; background-color: #e8e8e8;">size</span>
 as an aesthetic (<em>i.e</em>. include within <span
-style="font-family: monospace; background-color: #e8e8e8;">aes(…)</span>
+style="font-family: monospace; background-color: #e8e8e8;">aes(...)</span>
 with <span
 style="font-family: monospace; background-color: #e8e8e8;">size =
 variableName</span>), to generate something like a bubble map. Although
@@ -848,7 +848,7 @@ there is an option to set the map size (and therefore aspect ratio) in
 the <span
 style="font-family: monospace; background-color: #e8e8e8;">get</span>_<span
 style="font-family: monospace; background-color: #e8e8e8;">googlemap</span>,
-we have found that this doesn’t work consistently, so we recommend
+we have found that this doesn't work consistently, so we recommend
 leaving the map dimensions and aspect ratio at their default values.</p>
 <div id="other-map-types-using-ggmap" class="section level3">
 <h3>Other map types using ggmap</h3>
@@ -859,14 +859,14 @@ style="font-family: monospace; background-color: #e8e8e8;">get</span>_<span
 style="font-family: monospace; background-color: #e8e8e8;">stamenmap()</span>
 function.</p>
 <ul>
-<li>The Stamen “terrain” tiles seem to be available up to <span
+<li>The Stamen "terrain" tiles seem to be available up to <span
 style="font-family: monospace; background-color: #e8e8e8;">zoom =
 13</span>, and are good for showing maps at the scale of 1-2 suburbs or
-a small town (Figure 9), with ‘hill shading’ to show terrain.</li>
+a small town (Figure 9), with 'hill shading' to show terrain.</li>
 <li>The Stamen toner variants are minimalist maps which are good at
 de-emphasizing the base map background to emphasise added data (see the
 example in Figure 10).</li>
-<li>The Stamen “watercolor” tiles are also available.</li>
+<li>The Stamen "watercolor" tiles are also available.</li>
 </ul>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>tai_Stamen <span class="ot">&lt;-</span> <span class="fu">get_stamenmap</span>(<span class="at">bbox=</span><span class="fu">c</span>(<span class="at">left=</span><span class="fl">174.9</span>, <span class="at">bottom =</span> <span class="sc">-</span><span class="fl">41.2</span>,</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">right =</span> <span class="fl">175.0</span>, <span class="at">top =</span> <span class="sc">-</span><span class="fl">41.15</span>),</span>
@@ -900,7 +900,7 @@ Stamen terrain map tiles acquired using the R package ggmap.
 (Figure 10) uses the simple features information in one of the data
 frames we made at the beginning. The <span
 style="font-family: monospace; background-color: #e8e8e8;">sf</span>
-package introduces a new ‘geom’, <span
+package introduces a new 'geom', <span
 style="font-family: monospace; background-color: #e8e8e8;">geom_sf()</span>
 for plotting in <span
 style="font-family: monospace; background-color: #e8e8e8;">ggmap</span>.
@@ -949,8 +949,8 @@ locations.
 <hr>
 </div>
 </div>
-<div id="alternative-3-the-rosm-package" class="section level2">
-<h2>Alternative 3 – the ‘rosm’ package</h2>
+<div id="alternative-3----the-rosm-package" class="section level2">
+<h2>Alternative 3 -- the 'rosm' package</h2>
 <p>The rosm package (Dunnington 2022) allows users to produce background
 maps from several map tile providers.</p>
 <p>The following map tile types seem to work using <span
@@ -958,16 +958,16 @@ style="font-family: monospace; background-color: #e8e8e8;">osm.plot()</span>
 in the <span
 style="font-family: monospace; background-color: #e8e8e8;">rosm</span>
 package: <br><span
-style="font-family: monospace; background-color: #e8e8e8;">“osm”,
-“hotstyle”, “stamenbw”, “stamenwatercolor”, “cartodark”,
-“cartolight”</span></p>
+style="font-family: monospace; background-color: #e8e8e8;">"osm",
+"hotstyle", "stamenbw", "stamenwatercolor", "cartodark",
+"cartolight"</span></p>
 <p>The following map tile types seem to work using <span
 style="font-family: monospace; background-color: #e8e8e8;">bmaps.plot()</span>
 in the <span
 style="font-family: monospace; background-color: #e8e8e8;">rosm</span>
 package:<br> <span
-style="font-family: monospace; background-color: #e8e8e8;">“Aerial”,
-“AerialWithLabels”</span></p>
+style="font-family: monospace; background-color: #e8e8e8;">"Aerial",
+"AerialWithLabels"</span></p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(.<span class="dv">1</span>,.<span class="dv">1</span>,.<span class="dv">1</span>,.<span class="dv">1</span>), <span class="at">mgp =</span> <span class="fu">c</span>(<span class="fl">1.7</span>,<span class="fl">0.3</span>,<span class="dv">0</span>), <span class="at">lend=</span><span class="dv">2</span>, <span class="at">ljoin=</span><span class="dv">1</span>, <span class="at">tcl=</span><span class="fl">0.25</span>)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># specify limits of map in order N, E, S, W</span></span>
@@ -988,21 +988,32 @@ Figure 11. UWA campus map using cartolight tiles acquired using the rosm
 package.
 </p>
 </div>
+<pre><code>## 
+  |                                                                                   
+  |                                                                             |   0%
+  |                                                                                   
+  |===================                                                          |  25%
+  |                                                                                   
+  |======================================                                       |  50%
+  |                                                                                   
+  |==========================================================                   |  75%
+  |                                                                                   
+  |=============================================================================| 100%</code></pre>
 <p>The map in Figure 11 uses the <span
 style="font-family: monospace; background-color: #e8e8e8;">cartolight</span>
-map tile style to produce a base map with light colours – this can be
+map tile style to produce a base map with light colours -- this can be
 useful when we are trying to emphasise the data rather than the map
 features.</p>
 <div id="another-option-using-a-bing-map-as-background"
 class="section level3">
 <h3>another option using a Bing map as background</h3>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bmaps.plot</span>(udubua.rosm, <span class="at">type=</span><span class="st">&quot;AerialWithLabels&quot;</span>, <span class="at">zoomin=</span><span class="dv">0</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">osm.points</span>(<span class="fu">c</span>(<span class="fl">115.82</span>, <span class="fl">115.8186</span>, <span class="fl">115.8211</span>, <span class="fl">115.8182</span>, <span class="fl">115.8184</span>), </span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">c</span>(<span class="sc">-</span><span class="fl">31.9835</span>, <span class="sc">-</span><span class="fl">31.9829</span>, <span class="sc">-</span><span class="fl">31.9821</span>, <span class="sc">-</span><span class="fl">31.9790</span>, <span class="sc">-</span><span class="fl">31.9765</span>), </span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">col=</span><span class="st">&quot;yellow&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">pch=</span><span class="dv">10</span>, <span class="at">cex=</span><span class="fl">1.5</span>)</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">osm.text</span>(<span class="fu">c</span>(<span class="fl">115.825</span>,<span class="fl">115.826</span>), <span class="fu">c</span>(<span class="sc">-</span><span class="fl">31.98</span>, <span class="sc">-</span><span class="fl">31.988</span>),</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Matilda</span><span class="sc">\n</span><span class="st">Bay&quot;</span>, <span class="st">&quot;Pelican Point&quot;</span>),</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;powderblue&quot;</span>,<span class="st">&quot;honeydew&quot;</span>), <span class="at">font =</span> <span class="dv">3</span>, <span class="at">cex =</span> <span class="fl">0.75</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bmaps.plot</span>(udubua.rosm, <span class="at">type=</span><span class="st">&quot;AerialWithLabels&quot;</span>, <span class="at">zoomin=</span><span class="dv">0</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">osm.points</span>(<span class="fu">c</span>(<span class="fl">115.82</span>, <span class="fl">115.8186</span>, <span class="fl">115.8211</span>, <span class="fl">115.8182</span>, <span class="fl">115.8184</span>), </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">c</span>(<span class="sc">-</span><span class="fl">31.9835</span>, <span class="sc">-</span><span class="fl">31.9829</span>, <span class="sc">-</span><span class="fl">31.9821</span>, <span class="sc">-</span><span class="fl">31.9790</span>, <span class="sc">-</span><span class="fl">31.9765</span>), </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">col=</span><span class="st">&quot;yellow&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">pch=</span><span class="dv">10</span>, <span class="at">cex=</span><span class="fl">1.5</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">osm.text</span>(<span class="fu">c</span>(<span class="fl">115.825</span>,<span class="fl">115.826</span>), <span class="fu">c</span>(<span class="sc">-</span><span class="fl">31.98</span>, <span class="sc">-</span><span class="fl">31.988</span>),</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Matilda</span><span class="sc">\n</span><span class="st">Bay&quot;</span>, <span class="st">&quot;Pelican Point&quot;</span>),</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;powderblue&quot;</span>,<span class="st">&quot;honeydew&quot;</span>), <span class="at">font =</span> <span class="dv">3</span>, <span class="at">cex =</span> <span class="fl">0.75</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="Rmaps_files/figure-html/rosmAerial-1.png" alt="Figure 12. UWA campus map using Bing tiles acquired using the rosm package." width="35%" />
 <p class="caption">
@@ -1010,6 +1021,17 @@ Figure 12. UWA campus map using Bing tiles acquired using the rosm
 package.
 </p>
 </div>
+<pre><code>## 
+  |                                                                                   
+  |                                                                             |   0%
+  |                                                                                   
+  |===================                                                          |  25%
+  |                                                                                   
+  |======================================                                       |  50%
+  |                                                                                   
+  |==========================================================                   |  75%
+  |                                                                                   
+  |=============================================================================| 100%</code></pre>
 <p>As shown by the output in Figure 12, the Bing map tiles are aerial
 photographs. Sometimes this is useful for showing features like
 vegetation <em>etc</em>. on the base map.</p>
@@ -1017,26 +1039,26 @@ vegetation <em>etc</em>. on the base map.</p>
 <div id="embedding-rosm-functions-inside-prettymap"
 class="section level3">
 <h3>embedding rosm functions inside prettymap()</h3>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prettymap</span>({</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">osm.plot</span>(udubua.rosm, <span class="at">type=</span><span class="st">&quot;stamenbw&quot;</span>, <span class="at">zoomin =</span> <span class="sc">-</span><span class="dv">1</span>)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">osm.points</span>(<span class="fu">c</span>(<span class="fl">115.82</span>, <span class="fl">115.8186</span>, <span class="fl">115.8211</span>, <span class="fl">115.8182</span>, <span class="fl">115.8184</span>), </span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>             <span class="fu">c</span>(<span class="sc">-</span><span class="fl">31.9835</span>, <span class="sc">-</span><span class="fl">31.9829</span>, <span class="sc">-</span><span class="fl">31.9821</span>, <span class="sc">-</span><span class="fl">31.9790</span>, <span class="sc">-</span><span class="fl">31.9765</span>), </span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">lwd=</span><span class="dv">3</span>, <span class="at">pch =</span> <span class="dv">15</span>, <span class="at">cex=</span><span class="fl">1.5</span>)</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">osm.text</span>(<span class="fl">115.825</span>, <span class="sc">-</span><span class="fl">31.98</span>, <span class="at">labels =</span> <span class="st">&quot;Matilda</span><span class="sc">\n</span><span class="st">Bay&quot;</span>, </span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">font =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">&quot;azure&quot;</span>)</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">osm.text</span>(<span class="fl">115.824</span>, <span class="sc">-</span><span class="fl">31.9865</span>, <span class="at">labels =</span> <span class="st">&quot;Pelican Point&quot;</span>, </span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">font =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">&quot;navy&quot;</span>)</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>},</span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="at">oma =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">drawarrow =</span> T, <span class="at">arrow.scale =</span> <span class="dv">1</span>, </span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="at">arrow.border =</span> <span class="st">&quot;pink&quot;</span>, <span class="at">arrow.text.col =</span> <span class="st">&quot;pink&quot;</span>,</span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="at">scale.htin =</span> <span class="fl">0.15</span>, <span class="at">scale.label.cex =</span> <span class="fl">1.2</span>, <span class="at">scale.label.col =</span> <span class="st">&quot;pink&quot;</span>, </span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="at">scale.linecol =</span> <span class="st">&quot;pink&quot;</span>, <span class="at">scale.pos =</span> <span class="st">&quot;bottomright&quot;</span></span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;right&quot;</span>, <span class="at">legend =</span> <span class="st">&quot;Coffee is</span><span class="sc">\n</span><span class="st">found here&quot;</span>,</span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="dv">15</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>,</span>
-<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">inset =</span> <span class="fl">0.02</span>, <span class="at">cex =</span> <span class="fl">0.9</span>, <span class="at">pt.cex =</span> <span class="dv">1</span>,</span>
-<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">x.intersp =</span> <span class="fl">0.5</span>, <span class="at">y.intersp=</span><span class="fl">0.7</span>)</span>
-<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>,<span class="at">tcl=</span><span class="sc">-</span><span class="fl">0.2</span>); <span class="fu">axis</span>(<span class="dv">2</span>,<span class="at">tcl=</span><span class="sc">-</span><span class="fl">0.2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prettymap</span>({</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">osm.plot</span>(udubua.rosm, <span class="at">type=</span><span class="st">&quot;stamenbw&quot;</span>, <span class="at">zoomin =</span> <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">osm.points</span>(<span class="fu">c</span>(<span class="fl">115.82</span>, <span class="fl">115.8186</span>, <span class="fl">115.8211</span>, <span class="fl">115.8182</span>, <span class="fl">115.8184</span>), </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>             <span class="fu">c</span>(<span class="sc">-</span><span class="fl">31.9835</span>, <span class="sc">-</span><span class="fl">31.9829</span>, <span class="sc">-</span><span class="fl">31.9821</span>, <span class="sc">-</span><span class="fl">31.9790</span>, <span class="sc">-</span><span class="fl">31.9765</span>), </span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">lwd=</span><span class="dv">3</span>, <span class="at">pch =</span> <span class="dv">15</span>, <span class="at">cex=</span><span class="fl">1.5</span>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">osm.text</span>(<span class="fl">115.825</span>, <span class="sc">-</span><span class="fl">31.98</span>, <span class="at">labels =</span> <span class="st">&quot;Matilda</span><span class="sc">\n</span><span class="st">Bay&quot;</span>, </span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">font =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">&quot;azure&quot;</span>)</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">osm.text</span>(<span class="fl">115.824</span>, <span class="sc">-</span><span class="fl">31.9865</span>, <span class="at">labels =</span> <span class="st">&quot;Pelican Point&quot;</span>, </span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">font =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">&quot;navy&quot;</span>)</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>},</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="at">oma =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">drawarrow =</span> T, <span class="at">arrow.scale =</span> <span class="dv">1</span>, </span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="at">arrow.border =</span> <span class="st">&quot;pink&quot;</span>, <span class="at">arrow.text.col =</span> <span class="st">&quot;pink&quot;</span>,</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="at">scale.htin =</span> <span class="fl">0.15</span>, <span class="at">scale.label.cex =</span> <span class="fl">1.2</span>, <span class="at">scale.label.col =</span> <span class="st">&quot;pink&quot;</span>, </span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="at">scale.linecol =</span> <span class="st">&quot;pink&quot;</span>, <span class="at">scale.pos =</span> <span class="st">&quot;bottomright&quot;</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;right&quot;</span>, <span class="at">legend =</span> <span class="st">&quot;Coffee is</span><span class="sc">\n</span><span class="st">found here&quot;</span>,</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="dv">15</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">inset =</span> <span class="fl">0.02</span>, <span class="at">cex =</span> <span class="fl">0.9</span>, <span class="at">pt.cex =</span> <span class="dv">1</span>,</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">x.intersp =</span> <span class="fl">0.5</span>, <span class="at">y.intersp=</span><span class="fl">0.7</span>)</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>,<span class="at">tcl=</span><span class="sc">-</span><span class="fl">0.2</span>); <span class="fu">axis</span>(<span class="dv">2</span>,<span class="at">tcl=</span><span class="sc">-</span><span class="fl">0.2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="Rmaps_files/figure-html/rosmPretty-1.png" alt="Figure 13. UWA campus map using Stamen-toner tiles acquired using the rosm package, and illustrating the axis problem." width="45%" />
 <p class="caption">
@@ -1044,9 +1066,16 @@ Figure 13. UWA campus map using Stamen-toner tiles acquired using the
 rosm package, and illustrating the axis problem.
 </p>
 </div>
-<p>It’s helpful to include a scale and North arrow on the plot, but the
+<pre><code>## 
+  |                                                                                   
+  |                                                                             |   0%
+  |                                                                                   
+  |======================================                                       |  50%
+  |                                                                                   
+  |=============================================================================| 100%</code></pre>
+<p>It's helpful to include a scale and North arrow on the plot, but the
 axes in Figure 13, however, are in web Mercator coordinates (and are
-messy). This is a problem with no easy fix. Either we don’t include axes
+messy). This is a problem with no easy fix. Either we don't include axes
 (not ideal, since we should show some coordinates), figure out how to
 plot them, or use another package.</p>
 <hr>
@@ -1074,11 +1103,11 @@ relates to the need for a working Java installation (Windows and Mac)
 and the requirement for the XQuartz app on Mac OS. Otherwise the <span
 style="font-family: monospace; background-color: #e8e8e8;">OpenStreetMap</span>
 package can be very useful!</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>UWA_osm <span class="ot">&lt;-</span> <span class="fu">openmap</span>(<span class="at">upperLeft =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">31.974</span>, <span class="fl">115.812</span>), <span class="co"># latitude first</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">lowerRight =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">31.988</span>, <span class="fl">115.828</span>), </span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">zoom =</span> <span class="dv">16</span>,</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">type =</span> <span class="st">&quot;osm&quot;</span>)</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(UWA_osm)</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>UWA_osm <span class="ot">&lt;-</span> <span class="fu">openmap</span>(<span class="at">upperLeft =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">31.974</span>, <span class="fl">115.812</span>), <span class="co"># latitude first</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">lowerRight =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">31.988</span>, <span class="fl">115.828</span>), </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">zoom =</span> <span class="dv">16</span>,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">type =</span> <span class="st">&quot;osm&quot;</span>)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(UWA_osm)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="Rmaps_files/figure-html/UWAosm-1.png" alt="Figure 14. Map of the University of Western Australia Crawley campus using the default OpenStreetMap settings." width="50%" />
 <p class="caption">
@@ -1087,22 +1116,22 @@ using the default OpenStreetMap settings.
 </p>
 </div>
 <p>The map in Figure 14 needs some attention. Without some prior
-knowledge, we don’t know where on Earth’s surface this map represents,
-we don’t know the direction it’s oriented in, and we don’t know the
+knowledge, we don't know where on Earth's surface this map represents,
+we don't know the direction it's oriented in, and we don't know the
 scale. We can add a north arrow to indicate direction, a scale bar to
 show the scale, and axes to show any coordinates which should show the
 location on Earth.</p>
 <div id="plot-the-uwa-campus-map-with-margins-axes-and-annotations"
 class="section level3">
 <h3>Plot the UWA campus map with margins, axes, and annotations</h3>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(prettymapr)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="at">mgp =</span> <span class="fu">c</span>(<span class="fl">1.6</span>, <span class="fl">0.3</span>, <span class="dv">0</span>), <span class="at">tcl =</span> <span class="fl">0.4</span>)</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(UWA_osm, <span class="at">removeMargin =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>)</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">2</span>)</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="fu">addnortharrow</span>()</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="fu">addscalebar</span>(<span class="at">plotepsg =</span> <span class="dv">3857</span>) <span class="co"># 3857 is EPSG code for web Mercator</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="fu">box</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(prettymapr)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="at">mgp =</span> <span class="fu">c</span>(<span class="fl">1.6</span>, <span class="fl">0.3</span>, <span class="dv">0</span>), <span class="at">tcl =</span> <span class="fl">0.4</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(UWA_osm, <span class="at">removeMargin =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">2</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="fu">addnortharrow</span>()</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="fu">addscalebar</span>(<span class="at">plotepsg =</span> <span class="dv">3857</span>) <span class="co"># 3857 is EPSG code for web Mercator</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="fu">box</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="Rmaps_files/figure-html/UWAosm2-1.png" alt="Figure 15. Map of the University of Western Australia Crawley campus showing scale, north arrow, and axes, but retaining some default OpenStreetMap settings." width="50%" />
 <p class="caption">
@@ -1111,11 +1140,11 @@ showing scale, north arrow, and axes, but retaining some default
 OpenStreetMap settings.
 </p>
 </div>
-<p>The map in Figure 15 is better – we now know scale and direction, but
-finding our location on Earth is tricky because the OpenStreetMap map
-projection is “Google Mercator” (<em>a.k.a</em>. “Web Mercator”) which
-is not a projection most people are familiar with. We need a map in a
-commonly-used projection such as Longitude-Latitude, or Universal
+<p>The map in Figure 15 is better -- we now know scale and direction,
+but finding our location on Earth is tricky because the OpenStreetMap
+map projection is "Google Mercator" (<em>a.k.a</em>. "Web Mercator")
+which is not a projection most people are familiar with. We need a map
+in a commonly-used projection such as Longitude-Latitude, or Universal
 Transverse Mercator (UTM). We can change projections using the <span
 style="font-family: monospace; background-color: #e8e8e8;">openproj()</span>
 function in the OpenStreetMap package.</p>
@@ -1125,28 +1154,28 @@ id="plot-a-re-projected-uwa-campus-map-in-utm-with-margins-axes-and-annotations"
 class="section level3">
 <h3>Plot a re-projected UWA campus map in UTM with margins, axes, and
 annotations</h3>
-<p>First convert the projection…</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(OpenStreetMap)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>UWA_utm <span class="ot">&lt;-</span> <span class="fu">openproj</span>(UWA_osm, <span class="at">projection =</span> <span class="st">&quot;+proj=utm +zone=50 +south&quot;</span>)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Show upper left (p1) and lower right (p2) coordinates</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(UWA_utm<span class="sc">$</span>bbox, <span class="at">digits=</span><span class="dv">6</span>) <span class="co"># show bounding coordinates to check</span></span></code></pre></div>
+<p>First convert the projection...</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(OpenStreetMap)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>UWA_utm <span class="ot">&lt;-</span> <span class="fu">openproj</span>(UWA_osm, <span class="at">projection =</span> <span class="st">&quot;+proj=utm +zone=50 +south&quot;</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Show upper left (p1) and lower right (p2) coordinates</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(UWA_utm<span class="sc">$</span>bbox, <span class="at">digits=</span><span class="dv">6</span>) <span class="co"># show bounding coordinates to check</span></span></code></pre></div>
 <pre><code>## Show upper left (p1) and lower right (p2) coordinates
 ## $p1
 ## [1]  387742 6461857
 ## 
 ## $p2
 ## [1]  389290 6460267</code></pre>
-<p><strong>…then plot the map in its new projection.</strong></p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the map in its new projection</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="at">mgp =</span> <span class="fu">c</span>(<span class="fl">1.6</span>, <span class="fl">0.3</span>, <span class="dv">0</span>), <span class="at">tcl =</span> <span class="fl">0.4</span>)</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(UWA_utm, <span class="at">removeMargin =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>)</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;Easting (UTM Zone 50, m)&quot;</span>, <span class="at">side =</span> <span class="dv">1</span>, <span class="at">line =</span> <span class="fl">1.6</span>, <span class="at">font =</span> <span class="dv">2</span>, <span class="at">cex =</span> <span class="fl">1.2</span>)</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">2</span>)</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;Northing (UTM Zone 50, m)&quot;</span>, <span class="at">side =</span> <span class="dv">2</span>, <span class="at">line =</span> <span class="fl">1.6</span>, <span class="at">font =</span> <span class="dv">2</span>, <span class="at">cex =</span> <span class="fl">1.2</span>)</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="fu">addnortharrow</span>(<span class="at">scale =</span> <span class="fl">1.2</span>)</span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="fu">addscalebar</span>(<span class="at">plotepsg =</span> <span class="dv">32750</span>, <span class="at">htin =</span> <span class="fl">0.15</span>, <span class="at">label.cex =</span> <span class="fl">1.2</span>)</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="fu">box</span>()</span></code></pre></div>
+<p><strong>...then plot the map in its new projection.</strong></p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the map in its new projection</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="at">mgp =</span> <span class="fu">c</span>(<span class="fl">1.6</span>, <span class="fl">0.3</span>, <span class="dv">0</span>), <span class="at">tcl =</span> <span class="fl">0.4</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(UWA_utm, <span class="at">removeMargin =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;Easting (UTM Zone 50, m)&quot;</span>, <span class="at">side =</span> <span class="dv">1</span>, <span class="at">line =</span> <span class="fl">1.6</span>, <span class="at">font =</span> <span class="dv">2</span>, <span class="at">cex =</span> <span class="fl">1.2</span>)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">2</span>)</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;Northing (UTM Zone 50, m)&quot;</span>, <span class="at">side =</span> <span class="dv">2</span>, <span class="at">line =</span> <span class="fl">1.6</span>, <span class="at">font =</span> <span class="dv">2</span>, <span class="at">cex =</span> <span class="fl">1.2</span>)</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="fu">addnortharrow</span>(<span class="at">scale =</span> <span class="fl">1.2</span>)</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="fu">addscalebar</span>(<span class="at">plotepsg =</span> <span class="dv">32750</span>, <span class="at">htin =</span> <span class="fl">0.15</span>, <span class="at">label.cex =</span> <span class="fl">1.2</span>)</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="fu">box</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="Rmaps_files/figure-html/UWAutm1-1.png" alt="Figure 16. Map of the University of Western Australia Crawley campus showing scale, north arrow, and axes, and with the map projection changed from the OpenStreetMap default to Universal Transverse Mercator (UTM)." width="50%" />
 <p class="caption">
@@ -1156,7 +1185,7 @@ changed from the OpenStreetMap default to Universal Transverse Mercator
 (UTM).
 </p>
 </div>
-<p>The map in Figure 16 is now just what we need – we know scale and
+<p>The map in Figure 16 is now just what we need -- we know scale and
 direction, and we have axes in the Universal Transverse Mercator (UTM)
 projection with units of metres, which we would normally set up our
 field GPS to show.</p>
@@ -1184,48 +1213,48 @@ object containing the UTM coordinates</p>
 style="font-family: monospace; background-color: #e8e8e8;">maptiles</span>
 map), but the coordinates could also be obtained from a data frame -
 edit to suit!</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>utm.temp <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(<span class="fu">data.frame</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="dv">399800</span>,<span class="dv">400700</span>),<span class="at">y=</span><span class="fu">c</span>(<span class="dv">6467900</span>,<span class="dv">6468400</span>)),</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>,<span class="st">&quot;y&quot;</span>), <span class="at">crs =</span> UTM50)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>utm.temp <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(<span class="fu">data.frame</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="dv">399800</span>,<span class="dv">400700</span>),<span class="at">y=</span><span class="fu">c</span>(<span class="dv">6467900</span>,<span class="dv">6468400</span>)),</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>,<span class="st">&quot;y&quot;</span>), <span class="at">crs =</span> UTM50)</span></code></pre></div>
 <p>We then use the <span
 style="font-family: monospace; background-color: #e8e8e8;">st_transform()</span>
 function from the <span
 style="font-family: monospace; background-color: #e8e8e8;">sf</span>
 package to convert to long-lat (or another projection), which results in
 another spatial object:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>longlat.temp <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(utm.temp, <span class="at">crs =</span> LongLat)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>longlat.temp <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(utm.temp, <span class="at">crs =</span> LongLat)</span></code></pre></div>
 <p>We now have two <span
 style="font-family: monospace; background-color: #e8e8e8;">sf</span>
 spatial objects which we can use (for instance) to define the map extent
 for a <span
 style="font-family: monospace; background-color: #e8e8e8;">maptiles</span>
 map:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(sf); <span class="fu">require</span>(maptiles) <span class="co"># load packages if not done already</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># using the utm object</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>tiles_utm <span class="ot">&lt;-</span> <span class="fu">get_tiles</span>(utm.temp, <span class="at">provider =</span> <span class="st">&quot;OpenStreetMap&quot;</span>, <span class="at">crop =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co"># using the longitude-latitude object</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>tiles_longlat <span class="ot">&lt;-</span> <span class="fu">get_tiles</span>(longlat.temp, <span class="at">provider =</span> <span class="st">&quot;OpenStreetMap&quot;</span>,</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>                          <span class="at">crop =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="co"># . . . and so on</span></span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(sf); <span class="fu">require</span>(maptiles) <span class="co"># load packages if not done already</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co"># using the utm object</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>tiles_utm <span class="ot">&lt;-</span> <span class="fu">get_tiles</span>(utm.temp, <span class="at">provider =</span> <span class="st">&quot;OpenStreetMap&quot;</span>, <span class="at">crop =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># using the longitude-latitude object</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>tiles_longlat <span class="ot">&lt;-</span> <span class="fu">get_tiles</span>(longlat.temp, <span class="at">provider =</span> <span class="st">&quot;OpenStreetMap&quot;</span>,</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>                          <span class="at">crop =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="co"># . . . and so on</span></span></code></pre></div>
 <p>To extract coordinates from a data frame, for example: <br>
 (<strong>NOTE</strong> - missing coordinates are not allowed!)</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>afs19 <span class="ot">&lt;-</span> afs19[<span class="sc">-</span><span class="fu">which</span>(<span class="fu">is.na</span>(afs19[,<span class="fu">c</span>(<span class="st">&quot;Easting&quot;</span>)])<span class="sc">==</span><span class="dv">1</span>),] <span class="co"># remove rows with NAs</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>afs19utm <span class="ot">&lt;-</span>  <span class="fu">st_as_sf</span>(afs19, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;Easting&quot;</span>,<span class="st">&quot;Northing&quot;</span>), <span class="at">crs =</span> UTM50)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>afs19 <span class="ot">&lt;-</span> afs19[<span class="sc">-</span><span class="fu">which</span>(<span class="fu">is.na</span>(afs19[,<span class="fu">c</span>(<span class="st">&quot;Easting&quot;</span>)])<span class="sc">==</span><span class="dv">1</span>),] <span class="co"># remove rows with NAs</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>afs19utm <span class="ot">&lt;-</span>  <span class="fu">st_as_sf</span>(afs19, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;Easting&quot;</span>,<span class="st">&quot;Northing&quot;</span>), <span class="at">crs =</span> UTM50)</span></code></pre></div>
 <p>We then use the <span
 style="font-family: monospace; background-color: #e8e8e8;">st_transform()</span>
 function from the <span
 style="font-family: monospace; background-color: #e8e8e8;">sf</span>
 package to convert to longitude-latitude, which results in another
 spatial data frame:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>afs19ll <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(afs19utm, <span class="at">crs =</span> LongLat)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>afs19ll <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(afs19utm, <span class="at">crs =</span> LongLat)</span></code></pre></div>
 <p>To extract just the coordinate values in non-spatial form, we use the
 function <span
 style="font-family: monospace; background-color: #e8e8e8;">st_coordinates()</span>:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract sf coordinates to console (can assign to object of class &quot;matrix&quot;)</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_coordinates</span>(afs19utm)</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># extract sf coordinates to data frame</span></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>longlat.temp <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">st_coordinates</span>(afs19ll))</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(longlat.temp) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Longitude&quot;</span>,<span class="st">&quot;Latitude&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract sf coordinates to console (can assign to object of class &quot;matrix&quot;)</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_coordinates</span>(afs19utm)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co"># extract sf coordinates to data frame</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>longlat.temp <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">st_coordinates</span>(afs19ll))</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(longlat.temp) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Longitude&quot;</span>,<span class="st">&quot;Latitude&quot;</span>)</span></code></pre></div>
 <hr>
 </div>
 <div id="references-and-r-packages" class="section level2">
