@@ -12,6 +12,10 @@
 
 old.gitignore.txt
 
+*.txt
+
+*.docx
+
 renderThem.R
 
 footer.html
