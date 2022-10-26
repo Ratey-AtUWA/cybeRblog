@@ -13,23 +13,17 @@
 
 <title>basic solute transport animation</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
-<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<style>h1 {font-size: 34px;}
-       h1.title {font-size: 38px;}
-       h2 {font-size: 30px;}
-       h3 {font-size: 24px;}
-       h4 {font-size: 18px;}
-       h5 {font-size: 16px;}
-       h6 {font-size: 12px;}
-       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
-       pre:not([class]) { background-color: white }</style>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<link href="site_libs/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-5.1.3/bootstrap.bundle.min.js"></script>
+<script src="site_libs/bs3compat-0.4.0/transition.js"></script>
+<script src="site_libs/bs3compat-0.4.0/tabs.js"></script>
+<script src="site_libs/bs3compat-0.4.0/bs3compat.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -42,109 +36,18 @@
   ul.task-list{list-style: none;}
     </style>
 
-
-
-<style type="text/css">
-  code {
-    white-space: pre;
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
   }
-  .sourceCode {
-    overflow: visible;
-  }
-</style>
-<style type="text/css" data-origin="pandoc">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
 }
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {  background-color: #f8f8f8; }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ef2929; } /* Alert */
-code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #c4a000; } /* Attribute */
-code span.bn { color: #0000cf; } /* BaseN */
-code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4e9a06; } /* Char */
-code span.cn { color: #000000; } /* Constant */
-code span.co { color: #8f5902; font-style: italic; } /* Comment */
-code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
-code span.dt { color: #204a87; } /* DataType */
-code span.dv { color: #0000cf; } /* DecVal */
-code span.er { color: #a40000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #0000cf; } /* Float */
-code span.fu { color: #000000; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
-code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
-code span.ot { color: #8f5902; } /* Other */
-code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-code span.sc { color: #000000; } /* SpecialChar */
-code span.ss { color: #4e9a06; } /* SpecialString */
-code span.st { color: #4e9a06; } /* String */
-code span.va { color: #000000; } /* Variable */
-code span.vs { color: #4e9a06; } /* VerbatimString */
-code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
-
-</style>
-<script>
-// apply pandoc div.sourceCode style to pre.sourceCode instead
-(function() {
-  var sheets = document.styleSheets;
-  for (var i = 0; i < sheets.length; i++) {
-    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
-    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    var j = 0;
-    while (j < rules.length) {
-      var rule = rules[j];
-      // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
-        j++;
-        continue;
-      }
-      var style = rule.style.cssText;
-      // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') {
-        j++;
-        continue;
-      }
-      // replace div.sourceCode by a pre.sourceCode rule
-      sheets[i].deleteRule(j);
-      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
-    }
-  }
-})();
 </script>
+
+
 
 
 
@@ -269,8 +172,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -278,16 +181,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -415,50 +311,50 @@ style="font-family: monospace;background-color: #e8e8e8;">gifski</span>
 package to render a <span
 style="font-family: monospace; background-color: #e8e8e8;">ggplot2</span>
 object to an animated gif file.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gganimate)</span></code></pre></div>
+<pre class="r"><code>library(gganimate)</code></pre>
 <pre><code>## Loading required package: ggplot2</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gifski)</span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>npts <span class="ot">&lt;-</span> <span class="dv">500</span> <span class="co"># number of points to represent solute pulse</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>nd <span class="ot">&lt;-</span> <span class="dv">11</span> <span class="co"># number of depths to simulate</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>ds <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">d=</span><span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">96</span>,<span class="at">l=</span>nd), <span class="co"># data fram with d = list of depths,</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">s=</span><span class="fu">seq</span>(<span class="fl">0.3</span>,<span class="dv">6</span>,<span class="at">l=</span>nd)) <span class="co">#    s = standard deviation at each depth</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>x0 <span class="ot">&lt;-</span> <span class="fu">runif</span>(npts)  <span class="co"># spread the x values aross a nominal range</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>y0 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(npts,ds<span class="sc">$</span>d[<span class="dv">1</span>],ds<span class="sc">$</span>s[<span class="dv">1</span>]) <span class="co"># calculate y for each x</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x0, y0, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">1.25</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">105</span>,<span class="dv">0</span>),<span class="at">pch=</span><span class="dv">16</span>, <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;&quot;</span>,</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Depth&quot;</span>, <span class="at">cex =</span> <span class="dv">2</span>, </span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="fu">rainbow</span>(nd, <span class="at">v=</span><span class="fl">0.7</span>, <span class="at">end=</span><span class="fl">0.8</span>, <span class="at">alpha=</span><span class="fl">0.25</span>)[<span class="dv">1</span>]) <span class="co"># plot first depth</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>nd) { <span class="co"># plot remaining depths</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">points</span>(x0, <span class="fu">rnorm</span>(npts, ds<span class="sc">$</span>d[i], ds<span class="sc">$</span>s[i]), <span class="at">cex =</span> <span class="dv">2</span>,</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="fu">rainbow</span>(nd, <span class="at">v=</span><span class="fl">0.7</span>, <span class="at">end=</span><span class="fl">0.8</span>, <span class="at">alpha=</span><span class="fl">0.25</span>)[i])</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;right&quot;</span>, <span class="at">legend=</span><span class="fu">seq</span>(<span class="dv">1</span>,nd), <span class="at">pch =</span><span class="dv">16</span>, <span class="at">title =</span> <span class="st">&quot;Step&quot;</span>, <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>,</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">rainbow</span>(nd, <span class="at">v=</span><span class="fl">0.7</span>, <span class="at">end=</span><span class="fl">0.8</span>, <span class="at">alpha=</span><span class="fl">0.75</span>), </span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">pt.cex =</span> <span class="fl">1.5</span>, <span class="at">y.intersp =</span> <span class="fl">1.6</span>)</span></code></pre></div>
+<pre class="r"><code>library(reshape2)
+library(gifski)</code></pre>
+<pre class="r"><code>npts &lt;- 500 # number of points to represent solute pulse
+nd &lt;- 11 # number of depths to simulate
+ds &lt;- data.frame(d=seq(1,96,l=nd), # data fram with d = list of depths,
+                 s=seq(0.3,6,l=nd)) #    s = standard deviation at each depth
+x0 &lt;- runif(npts)  # spread the x values aross a nominal range
+y0 &lt;- rnorm(npts,ds$d[1],ds$s[1]) # calculate y for each x
+plot(x0, y0, xlim = c(0,1.25), ylim=c(105,0),pch=16, xaxt=&quot;n&quot;, xlab=&quot;&quot;,
+     ylab = &quot;Depth&quot;, cex = 2, 
+     col = rainbow(nd, v=0.7, end=0.8, alpha=0.25)[1]) # plot first depth
+for(i in 2:nd) { # plot remaining depths
+  points(x0, rnorm(npts, ds$d[i], ds$s[i]), cex = 2,
+         pch = 16, col = rainbow(nd, v=0.7, end=0.8, alpha=0.25)[i])
+}
+legend(&quot;right&quot;, legend=seq(1,nd), pch =16, title = &quot;Step&quot;, bty = &quot;n&quot;,
+       col = rainbow(nd, v=0.7, end=0.8, alpha=0.75), 
+       pt.cex = 1.5, y.intersp = 1.6)</code></pre>
 <div class="figure">
 <img src="pulse_files/figure-html/make%20some%20simulated%20data%20and%20plot-1.png" alt="Figure 1. Plot to show our simulated dataset." width="384" />
 <p class="caption">
 Figure 1. Plot to show our simulated dataset.
 </p>
 </div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pulse <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x0 =</span> <span class="fu">runif</span>(npts))</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>(nd<span class="dv">-1</span>)) {</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  pulse[,<span class="fu">paste0</span>(<span class="st">&quot;time_&quot;</span>,i)] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(npts, ds<span class="sc">$</span>d[i<span class="sc">+</span><span class="dv">1</span>], ds<span class="sc">$</span>s[i<span class="sc">+</span><span class="dv">1</span>])</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(pulse)</span></code></pre></div>
+<pre class="r"><code>pulse &lt;- data.frame(x0 = runif(npts))
+for(i in 0:(nd-1)) {
+  pulse[,paste0(&quot;time_&quot;,i)] &lt;- rnorm(npts, ds$d[i+1], ds$s[i+1])
+}
+str(pulse)</code></pre>
 <pre><code>## &#39;data.frame&#39;:    500 obs. of  12 variables:
-##  $ x0     : num  0.494 0.261 0.322 0.86 0.505 ...
-##  $ time_0 : num  0.948 0.917 1.272 1.123 1.048 ...
-##  $ time_1 : num  11.73 9.04 9.62 9.42 11.7 ...
-##  $ time_2 : num  20.7 18.3 18 20.7 16.5 ...
-##  $ time_3 : num  27.3 30.9 31.2 28.1 30.8 ...
-##  $ time_4 : num  40.4 40.9 36.1 40.7 35.6 ...
-##  $ time_5 : num  48.8 52 47.2 48 51.8 ...
-##  $ time_6 : num  57.5 53.6 53.2 62.2 50.5 ...
-##  $ time_7 : num  68.6 73.7 59.4 62 67.1 ...
-##  $ time_8 : num  82.2 80.8 77.4 74.4 84.3 ...
-##  $ time_9 : num  92.4 94.2 80.8 78.3 81.6 ...
-##  $ time_10: num  94.6 94.5 91.8 92.3 103.9 ...</code></pre>
+##  $ x0     : num  0.00629 0.4641 0.77077 0.97146 0.19514 ...
+##  $ time_0 : num  1.168 1.029 0.929 0.827 1.082 ...
+##  $ time_1 : num  10.5 10.9 11.4 9.4 10.9 ...
+##  $ time_2 : num  20.5 21.4 20.2 21.7 18.5 ...
+##  $ time_3 : num  28.3 29.6 28.7 31.7 32.4 ...
+##  $ time_4 : num  40.4 37.7 39.3 40.7 40.6 ...
+##  $ time_5 : num  47 45.6 48.1 43.3 52 ...
+##  $ time_6 : num  52.4 64 56.2 56.7 58 ...
+##  $ time_7 : num  63.6 61.8 72.5 68.9 69.1 ...
+##  $ time_8 : num  78.3 79.7 81.2 79.8 70.1 ...
+##  $ time_9 : num  92.2 88.5 82.1 82.8 87.8 ...
+##  $ time_10: num  93.1 94.2 95.9 97.9 97.6 ...</code></pre>
 <p>The data we have created has time steps as separate columns. We
 actually want a single column factor column with the time steps as
 levels. For this we use the <span
@@ -466,28 +362,28 @@ style="font-family: monospace; background-color: #e8e8e8;">melt()</span>
 function in the <span
 style="font-family: monospace; background-color: #e8e8e8;">reshape2</span>
 package, which does this seamlessly if we get the options correct:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pulseFact <span class="ot">&lt;-</span> <span class="fu">melt</span>(pulse, <span class="at">measure.vars=</span><span class="dv">2</span><span class="sc">:</span><span class="fu">ncol</span>(pulse), </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">variable.name =</span> <span class="st">&quot;Timestep&quot;</span>, <span class="at">value.name =</span> <span class="st">&quot;Particles&quot;</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(pulseFact)</span></code></pre></div>
+<pre class="r"><code>pulseFact &lt;- melt(pulse, measure.vars=2:ncol(pulse), 
+                     variable.name = &quot;Timestep&quot;, value.name = &quot;Particles&quot;)
+str(pulseFact)</code></pre>
 <pre><code>## &#39;data.frame&#39;:    5500 obs. of  3 variables:
-##  $ x0       : num  0.494 0.261 0.322 0.86 0.505 ...
+##  $ x0       : num  0.00629 0.4641 0.77077 0.97146 0.19514 ...
 ##  $ Timestep : Factor w/ 11 levels &quot;time_0&quot;,&quot;time_1&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
-##  $ Particles: num  0.948 0.917 1.272 1.123 1.048 ...</code></pre>
+##  $ Particles: num  1.168 1.029 0.929 0.827 1.082 ...</code></pre>
 <div id="make-the-animation" class="section level1">
 <h1>Make the animation</h1>
 <p>The animation is based on a standard ggplot:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pulseFact, <span class="fu">aes</span>(<span class="at">x=</span>x0, <span class="at">y=</span>Particles)) <span class="sc">+</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_reverse</span>() <span class="sc">+</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">4</span>, <span class="at">shape =</span> <span class="dv">16</span>, <span class="at">color=</span><span class="st">&quot;#0000B040&quot;</span>) <span class="sc">+</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">18</span>, <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;blue3&quot;</span>),</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">22</span>, <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="at">colour=</span><span class="st">&quot;black&quot;</span>),</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>),</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">colour =</span> <span class="dv">1</span>,<span class="at">fill=</span><span class="cn">NA</span>)) <span class="sc">+</span> </span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">&quot;Depth (cm)&quot;</span>, <span class="at">x =</span> <span class="st">&quot;&quot;</span>) </span></code></pre></div>
+<pre class="r"><code>ggplot(pulseFact, aes(x=x0, y=Particles)) + 
+  scale_y_reverse() +
+  geom_point(size=4, shape = 16, color=&quot;#0000B040&quot;) +
+  theme_bw() +
+  theme(legend.position=&quot;none&quot;,
+        axis.ticks.x = element_blank(),
+        axis.text.x = element_blank(),
+        title = element_text(size=18, face = &quot;bold&quot;, colour = &quot;blue3&quot;),
+        axis.title = element_text(size = 22, face = &quot;bold&quot;, colour=&quot;black&quot;),
+        axis.text = element_text(size = 18),
+        panel.border = element_rect(colour = 1,fill=NA)) + 
+  labs(y=&quot;Depth (cm)&quot;, x = &quot;&quot;) </code></pre>
 <div class="figure">
 <img src="pulse_files/figure-html/ggplot-before-gganimate-1.png" alt="Figure 2. Simulated solute distribution at all time steps at once!" width="384" />
 <p class="caption">
@@ -501,26 +397,26 @@ function in <span
 style="font-family:  monospace; background-color: #e8e8e8;">gganimate</span>
 to animate timestep by timestep, with some other options to control how
 the animation works.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>pulseAnim <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pulseFact, <span class="fu">aes</span>(<span class="at">x=</span>x0, <span class="at">y=</span>Particles)) <span class="sc">+</span> </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_reverse</span>() <span class="sc">+</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">4</span>, <span class="at">shape =</span> <span class="dv">16</span>, <span class="at">color=</span><span class="st">&quot;#0000B040&quot;</span>) <span class="sc">+</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>,</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">18</span>, <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;blue3&quot;</span>),</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">22</span>, <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="at">colour=</span><span class="st">&quot;black&quot;</span>),</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>),</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">colour =</span> <span class="dv">1</span>,<span class="at">fill=</span><span class="cn">NA</span>)) <span class="sc">+</span> </span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">&quot;Depth (cm)&quot;</span>, <span class="at">x =</span> <span class="st">&quot;&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transition_states</span>(pulseFact<span class="sc">$</span>Timestep,</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>                    <span class="at">transition_length =</span> <span class="dv">1</span>,</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>                    <span class="at">state_length =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">10</span>),<span class="dv">3</span>),</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>                    <span class="at">wrap =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">enter_fade</span>() <span class="sc">+</span> </span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">exit_fade</span>() <span class="sc">+</span> </span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shadow_wake</span>(<span class="at">wake_length =</span> <span class="fl">0.05</span>, <span class="at">size =</span> T, <span class="at">colour=</span><span class="st">&quot;#60606040&quot;</span>) <span class="sc">+</span></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Distribution of solute at {closest_state}&quot;</span>)</span></code></pre></div>
+<pre class="r"><code>pulseAnim &lt;- ggplot(pulseFact, aes(x=x0, y=Particles)) + 
+  scale_y_reverse() +
+  geom_point(size=4, shape = 16, color=&quot;#0000B040&quot;) +
+  theme_bw() +
+  theme(legend.position=&quot;none&quot;,
+        axis.ticks.x = element_blank(),
+        axis.text.x = element_blank(),
+        title = element_text(size=18, face = &quot;bold&quot;, colour = &quot;blue3&quot;),
+        axis.title = element_text(size = 22, face = &quot;bold&quot;, colour=&quot;black&quot;),
+        axis.text = element_text(size = 18),
+        panel.border = element_rect(colour = 1,fill=NA)) + 
+  labs(y=&quot;Depth (cm)&quot;, x = &quot;&quot;) + 
+  transition_states(pulseFact$Timestep,
+                    transition_length = 1,
+                    state_length = c(3,rep(0,10),3),
+                    wrap = FALSE) +
+  enter_fade() + 
+  exit_fade() + 
+  shadow_wake(wake_length = 0.05, size = T, colour=&quot;#60606040&quot;) +
+  ggtitle(&quot;Distribution of solute at {closest_state}&quot;)</code></pre>
 <p>Now that we have made a <span
 style="font-family: monospace;   background-color: #e8e8e8;">gganimate</span>
 object, we can save it as an animated gif file using the <span
@@ -528,10 +424,10 @@ style="font-family: monospace;   background-color: #e8e8e8;">anim_save()</span>
 function from the <span
 style="font-family: monospace;  background-color: #e8e8e8;">gifski</span>
 package:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(gifski)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">gganimate.dev_args =</span> <span class="fu">list</span>(<span class="at">width =</span> <span class="dv">400</span>, <span class="at">height =</span> <span class="dv">600</span>))</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">anim_save</span>(<span class="st">&quot;pulseAnim.gif&quot;</span>, <span class="fu">animate</span>(pulseAnim, <span class="at">renderer =</span> <span class="fu">gifski_renderer</span>(), </span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">duration =</span> <span class="dv">12</span>))</span></code></pre></div>
+<pre class="r"><code>require(gifski)
+options(gganimate.dev_args = list(width = 400, height = 600))
+anim_save(&quot;pulseAnim.gif&quot;, animate(pulseAnim, renderer = gifski_renderer(), 
+                                  duration = 12))</code></pre>
 <div class="figure">
 <img src="pulseAnim.gif" alt="" />
 <p class="caption">Figure 3. Animation of simulated solute transport

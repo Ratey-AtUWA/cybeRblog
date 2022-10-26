@@ -13,23 +13,17 @@
 
 <title>miscellaneous R functions and chunks</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
-<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<style>h1 {font-size: 34px;}
-       h1.title {font-size: 38px;}
-       h2 {font-size: 30px;}
-       h3 {font-size: 24px;}
-       h4 {font-size: 18px;}
-       h5 {font-size: 16px;}
-       h6 {font-size: 12px;}
-       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
-       pre:not([class]) { background-color: white }</style>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<link href="site_libs/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-5.1.3/bootstrap.bundle.min.js"></script>
+<script src="site_libs/bs3compat-0.4.0/transition.js"></script>
+<script src="site_libs/bs3compat-0.4.0/tabs.js"></script>
+<script src="site_libs/bs3compat-0.4.0/bs3compat.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -42,109 +36,18 @@
   ul.task-list{list-style: none;}
     </style>
 
-
-
-<style type="text/css">
-  code {
-    white-space: pre;
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
   }
-  .sourceCode {
-    overflow: visible;
-  }
-</style>
-<style type="text/css" data-origin="pandoc">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
 }
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {  background-color: #f8f8f8; }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ef2929; } /* Alert */
-code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #c4a000; } /* Attribute */
-code span.bn { color: #0000cf; } /* BaseN */
-code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4e9a06; } /* Char */
-code span.cn { color: #000000; } /* Constant */
-code span.co { color: #8f5902; font-style: italic; } /* Comment */
-code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
-code span.dt { color: #204a87; } /* DataType */
-code span.dv { color: #0000cf; } /* DecVal */
-code span.er { color: #a40000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #0000cf; } /* Float */
-code span.fu { color: #000000; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
-code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
-code span.ot { color: #8f5902; } /* Other */
-code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-code span.sc { color: #000000; } /* SpecialChar */
-code span.ss { color: #4e9a06; } /* SpecialString */
-code span.st { color: #4e9a06; } /* String */
-code span.va { color: #000000; } /* Variable */
-code span.vs { color: #4e9a06; } /* VerbatimString */
-code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
-
-</style>
-<script>
-// apply pandoc div.sourceCode style to pre.sourceCode instead
-(function() {
-  var sheets = document.styleSheets;
-  for (var i = 0; i < sheets.length; i++) {
-    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
-    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    var j = 0;
-    while (j < rules.length) {
-      var rule = rules[j];
-      // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
-        j++;
-        continue;
-      }
-      var style = rule.style.cssText;
-      // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') {
-        j++;
-        continue;
-      }
-      // replace div.sourceCode by a pre.sourceCode rule
-      sheets[i].deleteRule(j);
-      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
-    }
-  }
-})();
 </script>
+
+
 
 
 
@@ -269,8 +172,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -278,16 +181,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -410,38 +306,38 @@ style="font-family: monospace; background-color: #e8e8e8;">legend()</span>
 function to display the colour palette with their colour names/strings.
 It tries to scale the legend to fit the number of colours in the
 palette. The only output is a blank plot showing just the legend.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>showpal <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">ncol =</span> <span class="dv">2</span>,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cex=</span><span class="fl">1.4</span>,</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">pt.cex=</span><span class="dv">4</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  {  lp0 <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">palette</span>())</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  xspac <span class="ot">&lt;-</span> pt.cex<span class="sc">/</span><span class="dv">5</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  yspac <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span>(pt.cex<span class="sc">/</span><span class="dv">5</span>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(lp0<span class="sc">&gt;</span><span class="dv">12</span><span class="sc">&amp;</span>ncol<span class="sc">==</span><span class="dv">2</span>) {        <span class="co"># trying to fit longer palettes - needs work</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    ncol <span class="ot">&lt;-</span> <span class="fu">ceiling</span>(lp0<span class="sc">/</span><span class="dv">6</span>)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    cex <span class="ot">&lt;-</span> <span class="dv">24</span><span class="sc">/</span>lp0</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    pt.cex <span class="ot">&lt;-</span> <span class="dv">72</span><span class="sc">/</span>lp0</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    xspac <span class="ot">&lt;-</span> pt.cex<span class="sc">/</span><span class="dv">2</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    yspac <span class="ot">&lt;-</span> <span class="fl">1.25</span><span class="sc">*</span>(pt.cex<span class="sc">/</span><span class="fl">2.5</span>)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">mar=</span><span class="fu">rep</span>(<span class="fl">0.5</span>,<span class="dv">4</span>))</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">type=</span><span class="st">&quot;n&quot;</span>, <span class="at">bty=</span><span class="st">&quot;n&quot;</span>, <span class="at">ann =</span> F, </span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">legend</span>(<span class="st">&quot;center&quot;</span>, <span class="at">ncol =</span> ncol, <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>, </span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>         <span class="at">legend=</span><span class="fu">paste</span>(<span class="fu">paste0</span>(<span class="fu">seq</span>(<span class="dv">1</span>,<span class="fu">length</span>(<span class="fu">palette</span>())),<span class="st">&quot;.&quot;</span>),</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>                                        <span class="fu">palette</span>()),</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="st">&quot;Current colour palette&quot;</span>,</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>         <span class="at">pt.bg =</span> <span class="fu">seq</span>(<span class="dv">1</span>,<span class="fu">length</span>(<span class="fu">palette</span>())), </span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>         <span class="at">pch =</span> <span class="dv">22</span>, </span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>         <span class="at">pt.cex =</span> pt.cex, </span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>         <span class="at">cex =</span> cex,</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>         <span class="at">x.intersp =</span> xspac,</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>         <span class="at">y.intersp =</span> yspac)</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">1</span>))</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="fu">palette</span>(<span class="fu">c</span>(<span class="st">&quot;black&quot;</span>,<span class="fu">rainbow</span>(<span class="dv">14</span>, <span class="at">v=</span><span class="fl">0.8</span>, <span class="at">end=</span><span class="fl">0.8</span>),<span class="st">&quot;gray64&quot;</span>,<span class="st">&quot;white&quot;</span>,<span class="st">&quot;transparent&quot;</span>))</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="fu">showpal</span>()</span></code></pre></div>
+<pre class="r"><code>showpal &lt;- function(
+    ncol = 2,
+    cex=1.4,
+    pt.cex=4
+)
+  {  lp0 &lt;- length(palette())
+  xspac &lt;- pt.cex/5
+  yspac &lt;- 2*(pt.cex/5)
+  if(lp0&gt;12&amp;ncol==2) {        # trying to fit longer palettes - needs work
+    ncol &lt;- ceiling(lp0/6)
+    cex &lt;- 24/lp0
+    pt.cex &lt;- 72/lp0
+    xspac &lt;- pt.cex/2
+    yspac &lt;- 1.25*(pt.cex/2.5)
+  }
+  par(mar=rep(0.5,4))
+  plot(c(0,1),c(0,1), type=&quot;n&quot;, bty=&quot;n&quot;, ann = F, 
+       xaxt=&quot;n&quot;, yaxt=&quot;n&quot;, xlab=&quot;&quot;, ylab=&quot;&quot;)
+  legend(&quot;center&quot;, ncol = ncol, bty = &quot;n&quot;, 
+         legend=paste(paste0(seq(1,length(palette())),&quot;.&quot;),
+                                        palette()),
+         title = &quot;Current colour palette&quot;,
+         pt.bg = seq(1,length(palette())), 
+         pch = 22, 
+         pt.cex = pt.cex, 
+         cex = cex,
+         x.intersp = xspac,
+         y.intersp = yspac)
+  par(mar = c(4,4,3,1))
+}
+palette(c(&quot;black&quot;,rainbow(14, v=0.8, end=0.8),&quot;gray64&quot;,&quot;white&quot;,&quot;transparent&quot;))
+showpal()</code></pre>
 <div class="figure">
 <img src="misc_files/figure-html/showpal-function-1.png" alt="Results of the showpal() function which displays a legend of the R colour palette." width="768" />
 <p class="caption">
@@ -470,64 +366,64 @@ to make a csv file but not a data frame</li>
 output specified by the function options!</p>
 <div id="xrdml-to-data-frame" class="section level2">
 <h2>xrdml to data frame</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>xrdml2df <span class="ot">&lt;-</span> <span class="cf">function</span>(xfile,</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">xdir =</span> <span class="st">&quot;wd&quot;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                     ) {</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(xdir <span class="sc">==</span> <span class="st">&quot;wd&quot;</span>) {</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    xdir <span class="ot">&lt;-</span> <span class="fu">getwd</span>()</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  xrdmlRaw <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="fu">paste0</span>(xdir, xfile))</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  twothet0 <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">&quot;2Theta&quot;</span>, xrdmlRaw)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  beg0 <span class="ot">&lt;-</span> xrdmlRaw[twothet0 <span class="sc">+</span> <span class="dv">1</span>]</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  beg0 <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;</span><span class="sc">\t\t\t\t\t</span><span class="st">&lt;startPosition&gt;&quot;</span>, <span class="st">&quot;&quot;</span>, beg0)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  beg0 <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;&lt;/startPosition&gt;&quot;</span>, <span class="st">&quot;&quot;</span>, beg0)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  beg0 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(beg0)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  end0 <span class="ot">&lt;-</span> xrdmlRaw[twothet0 <span class="sc">+</span> <span class="dv">2</span>]</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  end0 <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;</span><span class="sc">\t\t\t\t\t</span><span class="st">&lt;endPosition&gt;&quot;</span>, <span class="st">&quot;&quot;</span>, end0)</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  end0 <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;&lt;/endPosition&gt;&quot;</span>, <span class="st">&quot;&quot;</span>, end0)</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  end0 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(end0)</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  c0 <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">&quot;&lt;counts&quot;</span>, xrdmlRaw)</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  xrdmlRaw[c0] <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&#39;</span><span class="sc">\t\t\t\t</span><span class="st">&lt;counts unit=&quot;counts&quot;&gt;&#39;</span>, <span class="st">&quot;&quot;</span>, xrdmlRaw[c0])</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  xrdmlRaw[c0] <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;&lt;/counts&gt;&quot;</span>, <span class="st">&quot;&quot;</span>, xrdmlRaw[c0])</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  counts <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">unlist</span>(<span class="fu">strsplit</span>(xrdmlRaw[c0], <span class="st">&quot; &quot;</span>)))</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  counts2theta <span class="ot">&lt;-</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span>(<span class="at">Angle =</span> <span class="fu">seq</span>(beg0, end0, ((end0 <span class="sc">-</span> beg0) <span class="sc">/</span> (<span class="fu">length</span>(counts) <span class="sc">-</span> <span class="dv">1</span>))),</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">Counts =</span> counts)</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">c</span>(<span class="st">&quot;xrdmlRaw&quot;</span>,<span class="st">&quot;twothet0&quot;</span>,<span class="st">&quot;beg0&quot;</span>,<span class="st">&quot;end0&quot;</span>,<span class="st">&quot;c0&quot;</span>,<span class="st">&quot;counts&quot;</span>))</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(counts2theta)</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre class="r"><code>xrdml2df &lt;- function(xfile,
+                     xdir = &quot;wd&quot;
+                     ) {
+  if(xdir == &quot;wd&quot;) {
+    xdir &lt;- getwd()
+    }
+  xrdmlRaw &lt;- readLines(paste0(xdir, xfile))
+  twothet0 &lt;- grep(&quot;2Theta&quot;, xrdmlRaw)
+  beg0 &lt;- xrdmlRaw[twothet0 + 1]
+  beg0 &lt;- gsub(&quot;\t\t\t\t\t&lt;startPosition&gt;&quot;, &quot;&quot;, beg0)
+  beg0 &lt;- gsub(&quot;&lt;/startPosition&gt;&quot;, &quot;&quot;, beg0)
+  beg0 &lt;- as.numeric(beg0)
+  end0 &lt;- xrdmlRaw[twothet0 + 2]
+  end0 &lt;- gsub(&quot;\t\t\t\t\t&lt;endPosition&gt;&quot;, &quot;&quot;, end0)
+  end0 &lt;- gsub(&quot;&lt;/endPosition&gt;&quot;, &quot;&quot;, end0)
+  end0 &lt;- as.numeric(end0)
+  c0 &lt;- grep(&quot;&lt;counts&quot;, xrdmlRaw)
+  xrdmlRaw[c0] &lt;- gsub(&#39;\t\t\t\t&lt;counts unit=&quot;counts&quot;&gt;&#39;, &quot;&quot;, xrdmlRaw[c0])
+  xrdmlRaw[c0] &lt;- gsub(&quot;&lt;/counts&gt;&quot;, &quot;&quot;, xrdmlRaw[c0])
+  counts &lt;- as.numeric(unlist(strsplit(xrdmlRaw[c0], &quot; &quot;)))
+  counts2theta &lt;-
+    data.frame(Angle = seq(beg0, end0, ((end0 - beg0) / (length(counts) - 1))),
+    Counts = counts)
+  rm(list = c(&quot;xrdmlRaw&quot;,&quot;twothet0&quot;,&quot;beg0&quot;,&quot;end0&quot;,&quot;c0&quot;,&quot;counts&quot;))
+  return(counts2theta)
+}</code></pre>
 </div>
 <div id="xrdml-to-csv" class="section level2">
 <h2>xrdml to csv</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>xrdml2csv <span class="ot">&lt;-</span> <span class="cf">function</span>(xfile,</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">xdir =</span> <span class="st">&quot;wd&quot;</span>,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">toscreen =</span> <span class="cn">FALSE</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                     ) {</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(xdir <span class="sc">==</span> <span class="st">&quot;wd&quot;</span>) {</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    xdir <span class="ot">&lt;-</span> <span class="fu">getwd</span>()</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  xrdmlRaw <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="fu">paste0</span>(xdir, xfile))</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  twothet0 <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">&quot;2Theta&quot;</span>, xrdmlRaw)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  beg0 <span class="ot">&lt;-</span> xrdmlRaw[twothet0 <span class="sc">+</span> <span class="dv">1</span>]</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  beg0 <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;</span><span class="sc">\t\t\t\t\t</span><span class="st">&lt;startPosition&gt;&quot;</span>, <span class="st">&quot;&quot;</span>, beg0)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  beg0 <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;&lt;/startPosition&gt;&quot;</span>, <span class="st">&quot;&quot;</span>, beg0)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  beg0 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(beg0)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  end0 <span class="ot">&lt;-</span> xrdmlRaw[twothet0 <span class="sc">+</span> <span class="dv">2</span>]</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  end0 <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;</span><span class="sc">\t\t\t\t\t</span><span class="st">&lt;endPosition&gt;&quot;</span>, <span class="st">&quot;&quot;</span>, end0)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  end0 <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;&lt;/endPosition&gt;&quot;</span>, <span class="st">&quot;&quot;</span>, end0)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  end0 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(end0)</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  c0 <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">&quot;&lt;counts&quot;</span>, xrdmlRaw)</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  xrdmlRaw[c0] <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&#39;</span><span class="sc">\t\t\t\t</span><span class="st">&lt;counts unit=&quot;counts&quot;&gt;&#39;</span>, <span class="st">&quot;&quot;</span>, xrdmlRaw[c0])</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  xrdmlRaw[c0] <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;&lt;/counts&gt;&quot;</span>, <span class="st">&quot;&quot;</span>, xrdmlRaw[c0])</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  counts <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">unlist</span>(<span class="fu">strsplit</span>(xrdmlRaw[c0], <span class="st">&quot; &quot;</span>)))</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  counts2theta <span class="ot">&lt;-</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span>(<span class="at">Angle =</span> <span class="fu">seq</span>(beg0, end0, ((end0 <span class="sc">-</span> beg0) <span class="sc">/</span> (<span class="fu">length</span>(counts) <span class="sc">-</span> <span class="dv">1</span>))),</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">Counts =</span> counts)</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  cfile <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">substr</span>(xfile,<span class="dv">1</span>,<span class="fu">str_locate</span>(xfile,<span class="st">&quot;.xrdml&quot;</span>)[<span class="dv">1</span>]),<span class="st">&quot;csv&quot;</span>)</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write.csv</span>(counts2theta, <span class="at">file =</span> cfile, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">c</span>(<span class="st">&quot;xrdmlRaw&quot;</span>,<span class="st">&quot;twothet0&quot;</span>,<span class="st">&quot;beg0&quot;</span>,<span class="st">&quot;end0&quot;</span>,<span class="st">&quot;c0&quot;</span>,<span class="st">&quot;counts&quot;</span>))</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(toscreen<span class="sc">==</span><span class="cn">TRUE</span>) <span class="fu">return</span>(counts2theta)</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre class="r"><code>xrdml2csv &lt;- function(xfile,
+                     xdir = &quot;wd&quot;,
+                     toscreen = FALSE
+                     ) {
+  if(xdir == &quot;wd&quot;) {
+    xdir &lt;- getwd()
+    }
+  xrdmlRaw &lt;- readLines(paste0(xdir, xfile))
+  twothet0 &lt;- grep(&quot;2Theta&quot;, xrdmlRaw)
+  beg0 &lt;- xrdmlRaw[twothet0 + 1]
+  beg0 &lt;- gsub(&quot;\t\t\t\t\t&lt;startPosition&gt;&quot;, &quot;&quot;, beg0)
+  beg0 &lt;- gsub(&quot;&lt;/startPosition&gt;&quot;, &quot;&quot;, beg0)
+  beg0 &lt;- as.numeric(beg0)
+  end0 &lt;- xrdmlRaw[twothet0 + 2]
+  end0 &lt;- gsub(&quot;\t\t\t\t\t&lt;endPosition&gt;&quot;, &quot;&quot;, end0)
+  end0 &lt;- gsub(&quot;&lt;/endPosition&gt;&quot;, &quot;&quot;, end0)
+  end0 &lt;- as.numeric(end0)
+  c0 &lt;- grep(&quot;&lt;counts&quot;, xrdmlRaw)
+  xrdmlRaw[c0] &lt;- gsub(&#39;\t\t\t\t&lt;counts unit=&quot;counts&quot;&gt;&#39;, &quot;&quot;, xrdmlRaw[c0])
+  xrdmlRaw[c0] &lt;- gsub(&quot;&lt;/counts&gt;&quot;, &quot;&quot;, xrdmlRaw[c0])
+  counts &lt;- as.numeric(unlist(strsplit(xrdmlRaw[c0], &quot; &quot;)))
+  counts2theta &lt;-
+    data.frame(Angle = seq(beg0, end0, ((end0 - beg0) / (length(counts) - 1))),
+    Counts = counts)
+  cfile &lt;- paste0(substr(xfile,1,str_locate(xfile,&quot;.xrdml&quot;)[1]),&quot;csv&quot;)
+  write.csv(counts2theta, file = cfile, row.names = FALSE)
+  rm(list = c(&quot;xrdmlRaw&quot;,&quot;twothet0&quot;,&quot;beg0&quot;,&quot;end0&quot;,&quot;c0&quot;,&quot;counts&quot;))
+  if(toscreen==TRUE) return(counts2theta)
+}</code></pre>
 </div>
 </div>
 <div id="read-data-from-hydrus-1d-nod.inf.out-files"
@@ -542,64 +438,64 @@ Hydrus itself, open the output files in Excel, or figure out a way of
 using more flexible software. So here's my code to read the node
 (Profile) information output files from Hydrus-1D (Nod_Inf.out in the
 relevant Hydrus project folder) into an R data.frame.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R code to read Hydrus-1D Nod_Inf.out files into an R data frame</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># set Hydrus-1D project directory (folder)</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># -=-=-=-=- EDIT THIS TO MATCH THE FOLDER ON YOUR COMPUTER ! -=-=-=-=-</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>PCdir <span class="ot">&lt;-</span> <span class="fu">paste0</span>(MyPC,<span class="st">&quot;My Documents/aaTeaching/ENVT5503/Hydrus1D ENVT5503/PRB&quot;</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># read Nod_Inf.out file into a vector of character (text) strings</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>Nod_Inf_out <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="fu">paste0</span>(PCdir,<span class="st">&quot;/&quot;</span>,<span class="st">&quot;Nod_Inf.out&quot;</span>))</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># View(Nod_Inf_out) # optionally check what we just read</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># find indices of some rows we want to delete</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>head_rows <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">&quot;Node&quot;</span>, Nod_Inf_out)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># use indices to delete the rows</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>Nod_Inf_out <span class="ot">&lt;-</span> Nod_Inf_out[<span class="sc">-</span><span class="fu">c</span>(<span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">7</span>),head_rows<span class="dv">-2</span>, head_rows<span class="dv">-1</span>,</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>                              head_rows<span class="sc">+</span><span class="dv">1</span>, head_rows<span class="sc">+</span><span class="dv">2</span>)]</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># find indices of some more rows we want to delete</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>ends <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">&quot;end&quot;</span>,Nod_Inf_out)[<span class="sc">-</span><span class="dv">1</span><span class="sc">*</span><span class="fu">NROW</span>(<span class="fu">grep</span>(<span class="st">&quot;end&quot;</span>,Nod_Inf_out))]</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># use indices to delete the rows</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>Nod_Inf_out <span class="ot">&lt;-</span> Nod_Inf_out[<span class="sc">-</span><span class="fu">c</span>(ends, ends<span class="sc">+</span><span class="dv">1</span>, ends<span class="sc">+</span><span class="dv">2</span>)]</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co"># find indices of rows that have the Hydrus-1D print times</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>time_rows <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">&quot;Time:&quot;</span>, Nod_Inf_out)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co"># extract the rows with Hydrus-1D print times into a vector</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>timz <span class="ot">&lt;-</span> Nod_Inf_out[time_rows]</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co"># get rid of text around the Hydrus-1D print time values...</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>timz <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;Time: &quot;</span>,<span class="st">&quot;&quot;</span>,timz)</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>timz <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot; &quot;</span>,<span class="st">&quot;&quot;</span>,timz)</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co"># ...and convert to numbers...</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>timz <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(timz)</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co"># ...then delete the Hydrus-1D print time rows</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>Nod_Inf_out <span class="ot">&lt;-</span> Nod_Inf_out[<span class="sc">-</span><span class="fu">c</span>(time_rows)]</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co"># find the rows with column names for each block of print data...</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>head_rows <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">&quot;Node&quot;</span>, Nod_Inf_out)</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="co"># and remove all except the first one</span></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>Nod_Inf_out <span class="ot">&lt;-</span> Nod_Inf_out[<span class="sc">-</span><span class="fu">c</span>(head_rows[<span class="sc">-</span><span class="dv">1</span>])]</span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="co"># strip out all but single spaces from data...</span></span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span>(<span class="fu">NROW</span>(<span class="fu">grep</span>(<span class="st">&quot;  &quot;</span>, Nod_Inf_out)) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>  Nod_Inf_out <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;  &quot;</span>,<span class="st">&quot; &quot;</span>, Nod_Inf_out)</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="co"># ...and (finally!) delete the very last row (an &#39;end&#39; statement)</span></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>Nod_Inf_out <span class="ot">&lt;-</span> Nod_Inf_out[<span class="sc">-</span><span class="dv">1</span><span class="sc">*</span><span class="fu">NROW</span>(Nod_Inf_out)]</span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="co"># write the edited output to a file...</span></span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(Nod_Inf_out, <span class="at">con=</span><span class="st">&quot;./NodInf3.out&quot;</span>)</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="co"># ...and read the file in as space-delimited</span></span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>node_data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> <span class="st">&quot;NodInf3.out&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">&quot; &quot;</span>)</span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="co"># the is a blank column 1; rename it to &quot;Time&quot;</span></span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(node_data)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Time&quot;</span></span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="co"># use the print times vector to make a vector with</span></span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="co"># the relevant time repeated for each block</span></span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>timz0 <span class="ot">&lt;-</span> <span class="fu">rep</span>(timz[<span class="dv">1</span>], <span class="fu">NROW</span>(node_data)<span class="sc">/</span><span class="fu">NROW</span>(timz))</span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">NROW</span>(timz)) {</span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>  timz0 <span class="ot">&lt;-</span> <span class="fu">append</span>(timz0, <span class="fu">rep</span>(timz[i], <span class="fu">NROW</span>(node_data)<span class="sc">/</span><span class="fu">NROW</span>(timz)))</span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="co"># replace the Time colum with the vector we just made...</span></span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>node_data<span class="sc">$</span>Time <span class="ot">&lt;-</span> timz0</span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a><span class="co"># ...and convert Time to a factor</span></span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>node_data<span class="sc">$</span>Time <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(node_data<span class="sc">$</span>Time)</span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a><span class="co"># remove temporary objects...</span></span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">c</span>(<span class="st">&quot;i&quot;</span>,<span class="st">&quot;head_rows&quot;</span>,<span class="st">&quot;Nod_Inf_out&quot;</span>,<span class="st">&quot;timz&quot;</span>,<span class="st">&quot;timz0&quot;</span>,<span class="st">&quot;ends&quot;</span>))</span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a><span class="co"># ...and check the cleaned-up data</span></span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(node_data)</span></code></pre></div>
+<pre class="r"><code># R code to read Hydrus-1D Nod_Inf.out files into an R data frame
+# set Hydrus-1D project directory (folder)
+# -=-=-=-=- EDIT THIS TO MATCH THE FOLDER ON YOUR COMPUTER ! -=-=-=-=-
+PCdir &lt;- paste0(MyPC,&quot;My Documents/aaTeaching/ENVT5503/Hydrus1D ENVT5503/PRB&quot;)
+# read Nod_Inf.out file into a vector of character (text) strings
+Nod_Inf_out &lt;- readLines(paste0(PCdir,&quot;/&quot;,&quot;Nod_Inf.out&quot;))
+# View(Nod_Inf_out) # optionally check what we just read
+# find indices of some rows we want to delete
+head_rows &lt;- grep(&quot;Node&quot;, Nod_Inf_out)
+# use indices to delete the rows
+Nod_Inf_out &lt;- Nod_Inf_out[-c(seq(1,7),head_rows-2, head_rows-1,
+                              head_rows+1, head_rows+2)]
+# find indices of some more rows we want to delete
+ends &lt;- grep(&quot;end&quot;,Nod_Inf_out)[-1*NROW(grep(&quot;end&quot;,Nod_Inf_out))]
+# use indices to delete the rows
+Nod_Inf_out &lt;- Nod_Inf_out[-c(ends, ends+1, ends+2)]
+# find indices of rows that have the Hydrus-1D print times
+time_rows &lt;- grep(&quot;Time:&quot;, Nod_Inf_out)
+# extract the rows with Hydrus-1D print times into a vector
+timz &lt;- Nod_Inf_out[time_rows]
+# get rid of text around the Hydrus-1D print time values...
+timz &lt;- gsub(&quot;Time: &quot;,&quot;&quot;,timz)
+timz &lt;- gsub(&quot; &quot;,&quot;&quot;,timz)
+# ...and convert to numbers...
+timz &lt;- as.numeric(timz)
+# ...then delete the Hydrus-1D print time rows
+Nod_Inf_out &lt;- Nod_Inf_out[-c(time_rows)]
+# find the rows with column names for each block of print data...
+head_rows &lt;- grep(&quot;Node&quot;, Nod_Inf_out)
+# and remove all except the first one
+Nod_Inf_out &lt;- Nod_Inf_out[-c(head_rows[-1])]
+# strip out all but single spaces from data...
+while(NROW(grep(&quot;  &quot;, Nod_Inf_out)) &gt; 0) {
+  Nod_Inf_out &lt;- gsub(&quot;  &quot;,&quot; &quot;, Nod_Inf_out)
+}
+# ...and (finally!) delete the very last row (an &#39;end&#39; statement)
+Nod_Inf_out &lt;- Nod_Inf_out[-1*NROW(Nod_Inf_out)]
+#
+# write the edited output to a file...
+writeLines(Nod_Inf_out, con=&quot;./NodInf3.out&quot;)
+# ...and read the file in as space-delimited
+node_data &lt;- read.table(file = &quot;NodInf3.out&quot;, header = TRUE, sep = &quot; &quot;)
+# the is a blank column 1; rename it to &quot;Time&quot;
+colnames(node_data)[1] &lt;- &quot;Time&quot;
+# use the print times vector to make a vector with
+# the relevant time repeated for each block
+timz0 &lt;- rep(timz[1], NROW(node_data)/NROW(timz))
+for (i in 2:NROW(timz)) {
+  timz0 &lt;- append(timz0, rep(timz[i], NROW(node_data)/NROW(timz)))
+}
+# replace the Time colum with the vector we just made...
+node_data$Time &lt;- timz0
+# ...and convert Time to a factor
+node_data$Time &lt;- as.factor(node_data$Time)
+# remove temporary objects...
+rm(list = c(&quot;i&quot;,&quot;head_rows&quot;,&quot;Nod_Inf_out&quot;,&quot;timz&quot;,&quot;timz0&quot;,&quot;ends&quot;))
+# ...and check the cleaned-up data
+str(node_data)</code></pre>
 <pre><code>## &#39;data.frame&#39;:    707 obs. of  14 variables:
 ##  $ Time        : Factor w/ 7 levels &quot;0&quot;,&quot;80&quot;,&quot;160&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ Node        : int  1 2 3 4 5 6 7 8 9 10 ...
@@ -617,30 +513,30 @@ relevant Hydrus project folder) into an R data.frame.</p>
 ##  $ Sorb.1...NS.: num  0 0 0 0 0 0 0 0 0 0 ...</code></pre>
 <div id="plot-concentration-vs-depth" class="section level3">
 <h3>Plot concentration vs depth</h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check it with a plot</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># plot as concentration vs. depth</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">palette</span>(<span class="fu">c</span>(<span class="st">&quot;black&quot;</span>,<span class="st">&quot;red3&quot;</span>,<span class="st">&quot;tomato&quot;</span>,<span class="st">&quot;gold3&quot;</span>,<span class="st">&quot;green3&quot;</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;blue2&quot;</span>,<span class="st">&quot;darkcyan&quot;</span>, <span class="st">&quot;purple&quot;</span>,<span class="st">&quot;sienna&quot;</span>,<span class="st">&quot;gray67&quot;</span>))</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>), <span class="at">mgp =</span> <span class="fu">c</span>(<span class="fl">1.7</span>,<span class="fl">0.3</span>,<span class="dv">0</span>), <span class="at">tcl =</span> <span class="fl">0.3</span>, <span class="at">font.lab=</span><span class="dv">2</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(node_data<span class="sc">$</span>Depth <span class="sc">~</span> node_data[,<span class="dv">13</span>], </span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="dv">1</span>, </span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(node_data[,<span class="dv">13</span>], <span class="at">na.rm=</span>T)), </span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fu">min</span>(node_data<span class="sc">$</span>Depth, <span class="at">na.rm=</span>T), <span class="dv">0</span>), </span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">subset =</span> node_data<span class="sc">$</span>Time<span class="sc">==</span><span class="fu">levels</span>(node_data<span class="sc">$</span>Time)[<span class="dv">1</span>],</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">xaxt =</span> <span class="st">&quot;n&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Depth (cm)&quot;</span>)</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">3</span>)</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;Concentration&quot;</span>, <span class="at">side =</span> <span class="dv">3</span>, <span class="at">line =</span> <span class="fl">1.7</span>, <span class="at">font =</span> <span class="dv">2</span>)</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">nlevels</span>(node_data<span class="sc">$</span>Time)) {</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(node_data<span class="sc">$</span>Depth <span class="sc">~</span> node_data[,<span class="dv">13</span>], <span class="at">col =</span> i, </span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">subset =</span> node_data<span class="sc">$</span>Time<span class="sc">==</span><span class="fu">levels</span>(node_data<span class="sc">$</span>Time)[i],</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">type =</span> <span class="st">&quot;o&quot;</span>, <span class="at">pch =</span> i<span class="dv">-2</span>, <span class="at">cex =</span> <span class="fl">0.6</span>)</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="at">legend =</span> <span class="fu">levels</span>(node_data<span class="sc">$</span>Time),</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">seq</span>(<span class="dv">1</span>,<span class="fu">nlevels</span>(node_data<span class="sc">$</span>Time)),</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="fu">c</span>(<span class="cn">NA</span>,<span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">nlevels</span>(node_data<span class="sc">$</span>Time))),</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd =</span> <span class="dv">1</span>,</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">pt.cex=</span><span class="fl">0.85</span>, <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>, <span class="at">inset =</span> <span class="fl">0.02</span>, </span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="fu">expression</span>(<span class="fu">bold</span>(<span class="st">&quot;Time (days)&quot;</span>)))</span></code></pre></div>
+<pre class="r"><code># check it with a plot
+# plot as concentration vs. depth
+palette(c(&quot;black&quot;,&quot;red3&quot;,&quot;tomato&quot;,&quot;gold3&quot;,&quot;green3&quot;,
+         &quot;blue2&quot;,&quot;darkcyan&quot;, &quot;purple&quot;,&quot;sienna&quot;,&quot;gray67&quot;))
+par(mar = c(1,4,4,1), mgp = c(1.7,0.3,0), tcl = 0.3, font.lab=2)
+plot(node_data$Depth ~ node_data[,13], 
+     type = &quot;l&quot;, col = 1, 
+     xlim = c(0, max(node_data[,13], na.rm=T)), 
+     ylim = c(min(node_data$Depth, na.rm=T), 0), 
+     subset = node_data$Time==levels(node_data$Time)[1],
+     xaxt = &quot;n&quot;, xlab = &quot;&quot;, ylab = &quot;Depth (cm)&quot;)
+axis(3)
+mtext(&quot;Concentration&quot;, side = 3, line = 1.7, font = 2)
+for (i in 2:nlevels(node_data$Time)) {
+points(node_data$Depth ~ node_data[,13], col = i, 
+       subset = node_data$Time==levels(node_data$Time)[i],
+       type = &quot;o&quot;, pch = i-2, cex = 0.6)
+}
+legend(&quot;bottomright&quot;, legend = levels(node_data$Time),
+       col = seq(1,nlevels(node_data$Time)),
+       pch = c(NA,seq(0,nlevels(node_data$Time))),
+       lwd = 1,
+       pt.cex=0.85, bty = &quot;n&quot;, inset = 0.02, 
+       title = expression(bold(&quot;Time (days)&quot;)))</code></pre>
 <div class="figure">
 <img src="misc_files/figure-html/conc-depth-1.png" alt="Plot of simulated solute concentration vs. vertical depth for each simulation time step, using Hydrus-1D" width="384" />
 <p class="caption">
@@ -648,26 +544,26 @@ Plot of simulated solute concentration vs. vertical depth for each
 simulation time step, using Hydrus-1D
 </p>
 </div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot as concentration vs. horizontal distance</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">mgp =</span> <span class="fu">c</span>(<span class="fl">1.7</span>,<span class="fl">0.3</span>,<span class="dv">0</span>), <span class="at">tcl =</span> <span class="fl">0.3</span>, <span class="at">font.lab=</span><span class="dv">2</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>node_data<span class="sc">$</span>Distance <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span><span class="sc">*</span>node_data<span class="sc">$</span>Depth</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(node_data[,<span class="dv">13</span>] <span class="sc">~</span> <span class="sc">-</span><span class="dv">1</span><span class="sc">*</span>node_data<span class="sc">$</span>Distance, </span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="dv">1</span>, </span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(node_data[,<span class="dv">13</span>], <span class="at">na.rm=</span>T)), </span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(node_data<span class="sc">$</span>Distance, <span class="at">na.rm=</span>T)), </span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">subset =</span> node_data<span class="sc">$</span>Time<span class="sc">==</span><span class="fu">levels</span>(node_data<span class="sc">$</span>Time)[<span class="dv">1</span>],</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Concentration&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Distance (cm)&quot;</span>)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">nlevels</span>(node_data<span class="sc">$</span>Time)) {</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">points</span>(node_data[,<span class="dv">13</span>] <span class="sc">~</span> <span class="sc">-</span><span class="dv">1</span><span class="sc">*</span>node_data<span class="sc">$</span>Distance, <span class="at">col =</span> i, </span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">subset =</span> node_data<span class="sc">$</span>Time<span class="sc">==</span><span class="fu">levels</span>(node_data<span class="sc">$</span>Time)[i],</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">type =</span> <span class="st">&quot;o&quot;</span>, <span class="at">pch =</span> i<span class="dv">-2</span>, <span class="at">cex =</span> <span class="fl">0.6</span>)</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">levels</span>(node_data<span class="sc">$</span>Time),</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">seq</span>(<span class="dv">1</span>,<span class="fu">nlevels</span>(node_data<span class="sc">$</span>Time)),</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="fu">c</span>(<span class="cn">NA</span>,<span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">nlevels</span>(node_data<span class="sc">$</span>Time))),</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd =</span> <span class="dv">1</span>,</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">pt.cex=</span><span class="fl">0.85</span>, <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>, <span class="at">inset =</span> <span class="fl">0.02</span>, </span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="fu">expression</span>(<span class="fu">bold</span>(<span class="st">&quot;Time (days)&quot;</span>)))</span></code></pre></div>
+<pre class="r"><code># plot as concentration vs. horizontal distance
+par(mar = c(4,4,1,1), mgp = c(1.7,0.3,0), tcl = 0.3, font.lab=2)
+node_data$Distance &lt;- -1*node_data$Depth
+plot(node_data[,13] ~ -1*node_data$Distance, 
+     type = &quot;l&quot;, col = 1, 
+     ylim = c(0, max(node_data[,13], na.rm=T)), 
+     xlim = c(0, max(node_data$Distance, na.rm=T)), 
+     subset = node_data$Time==levels(node_data$Time)[1],
+     ylab = &quot;Concentration&quot;, xlab = &quot;Distance (cm)&quot;)
+for (i in 2:nlevels(node_data$Time)) {
+  points(node_data[,13] ~ -1*node_data$Distance, col = i, 
+         subset = node_data$Time==levels(node_data$Time)[i],
+         type = &quot;o&quot;, pch = i-2, cex = 0.6)
+}
+legend(&quot;topright&quot;, legend = levels(node_data$Time),
+       col = seq(1,nlevels(node_data$Time)),
+       pch = c(NA,seq(0,nlevels(node_data$Time))),
+       lwd = 1,
+       pt.cex=0.85, bty = &quot;n&quot;, inset = 0.02, 
+       title = expression(bold(&quot;Time (days)&quot;)))</code></pre>
 <div class="figure">
 <img src="misc_files/figure-html/conc-hdist-1.png" alt="Plot of simulated solute concentration vs. horizontal distance for each simulation time step, using Hydrus-1D" width="576" />
 <p class="caption">
