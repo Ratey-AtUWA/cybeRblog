@@ -24,8 +24,9 @@ navbar:
       href: work.html
 output:
   html_document:
-    theme: cerulean
-    highlight: tango
+    theme:
+      bootswatch: darkly
+    highlight: default
     md_extensions: -smart
     self_contained: no
     include:
