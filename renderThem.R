@@ -14,4 +14,6 @@ rmarkdown::render_site("pulse.Rmd")
 rmarkdown::render_site("vegan.Rmd")
 rmarkdown::render_site("Rmaps.Rmd")
 rmarkdown::render_site("profiles.Rmd")
+rmarkdown::render_site("showpal.Rmd")
+
 rmarkdown::render_site("testpage.Rmd")
