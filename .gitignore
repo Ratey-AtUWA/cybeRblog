@@ -19,3 +19,5 @@ old.gitignore.txt
 *.docx
 
 footer.html
+
+/rosm.cache/*
