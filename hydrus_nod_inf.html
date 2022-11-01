@@ -11,7 +11,7 @@
 
 
 
-<title>code</title>
+<title>Read data from Hydrus-1D nod_inf.out files</title>
 
 <script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -289,181 +289,156 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">code</h1>
+<h1 class="title toc-ignore">Read data from Hydrus-1D
+<code>nod_inf.out</code> files</h1>
 
 </div>
 
 
-<div id="a-growing-list-of-r-code-files-for-various-tasks"
-class="section level3">
-<h3>A growing list of <strong>R</strong> code files for various
-tasks</h3>
-<p>Code is only included in this list if it's well-formed enough to be
-worth sharing, and if the author decides it can go here. Most of the
-code is as nice html with code chunks, but some may be R source, or
-un-rendered R markdown.</p>
-<table style="width: 100%;">
-<tr>
-<td style="width: 48%; vertical-align: top; border: solid 3px #DDD; padding:3px; border-collapse: collapse;">
+<p>Users of <a
+href="https://www.pc-progress.com/en/Default.aspx?H1d-downloads"
+target="_blank">Hydrus-1D</a> either need to use the limited graphics in
+Hydrus itself, open the output files in Excel, or figure out a way of
+using more flexible software. So here's my code to read the node
+(Profile) information output files from Hydrus-1D
+(<code>Nod_Inf.out</code> in the relevant Hydrus-1D project folder) into
+an <strong>R</strong> data frame.</p>
+<pre class="r"><code># R code to read Hydrus-1D Nod_Inf.out files into an R data frame
+# set full path to Hydrus-1D project directory (folder)
+# -=-=-=-=- EDIT THIS TO MATCH THE FOLDER ON YOUR COMPUTER ! -=-=-=-=-
+PCdir &lt;- paste0(MyPC,&quot;My Documents/aaTeaching/ENVT5503/Hydrus1D ENVT5503/PRB&quot;)
+# read Nod_Inf.out file into a vector of character (text) strings
+Nod_Inf_out &lt;- readLines(paste0(PCdir,&quot;/&quot;,&quot;Nod_Inf.out&quot;))
+# View(Nod_Inf_out) # optionally check what we just read
+# find indices of some rows we want to delete
+head_rows &lt;- grep(&quot;Node&quot;, Nod_Inf_out)
+# use indices to delete the rows
+Nod_Inf_out &lt;- Nod_Inf_out[-c(seq(1,7),head_rows-2, head_rows-1,
+                              head_rows+1, head_rows+2)]
+# find indices of some more rows we want to delete
+ends &lt;- grep(&quot;end&quot;,Nod_Inf_out)[-1*NROW(grep(&quot;end&quot;,Nod_Inf_out))]
+# use indices to delete the rows
+Nod_Inf_out &lt;- Nod_Inf_out[-c(ends, ends+1, ends+2)]
+# find indices of rows that have the Hydrus-1D print times
+time_rows &lt;- grep(&quot;Time:&quot;, Nod_Inf_out)
+# extract the rows with Hydrus-1D print times into a vector
+timz &lt;- Nod_Inf_out[time_rows]
+# get rid of text around the Hydrus-1D print time values...
+timz &lt;- gsub(&quot;Time: &quot;,&quot;&quot;,timz)
+timz &lt;- gsub(&quot; &quot;,&quot;&quot;,timz)
+# ...and convert to numbers...
+timz &lt;- as.numeric(timz)
+# ...then delete the Hydrus-1D print time rows
+Nod_Inf_out &lt;- Nod_Inf_out[-c(time_rows)]
+# find the rows with column names for each block of print data...
+head_rows &lt;- grep(&quot;Node&quot;, Nod_Inf_out)
+# and remove all except the first one
+Nod_Inf_out &lt;- Nod_Inf_out[-c(head_rows[-1])]
+# strip out all but single spaces from data...
+while(NROW(grep(&quot;  &quot;, Nod_Inf_out)) &gt; 0) {
+  Nod_Inf_out &lt;- gsub(&quot;  &quot;,&quot; &quot;, Nod_Inf_out)
+}
+# ...and (finally!) delete the very last row (an &#39;end&#39; statement)
+Nod_Inf_out &lt;- Nod_Inf_out[-1*NROW(Nod_Inf_out)]
+#
+# write the edited output to a file...
+writeLines(Nod_Inf_out, con=&quot;./NodInf3.out&quot;)
+# ...and read the file in as space-delimited
+node_data &lt;- read.table(file = &quot;NodInf3.out&quot;, header = TRUE, sep = &quot; &quot;)
+# the is a blank column 1; rename it to &quot;Time&quot;
+colnames(node_data)[1] &lt;- &quot;Time&quot;
+# use the print times vector to make a vector with
+# the relevant time repeated for each block
+timz0 &lt;- rep(timz[1], NROW(node_data)/NROW(timz))
+for (i in 2:NROW(timz)) {
+  timz0 &lt;- append(timz0, rep(timz[i], NROW(node_data)/NROW(timz)))
+}
+# replace the Time colum with the vector we just made...
+node_data$Time &lt;- timz0
+# ...and convert Time to a factor
+node_data$Time &lt;- as.factor(node_data$Time)
+# remove temporary objects...
+rm(list = c(&quot;i&quot;,&quot;head_rows&quot;,&quot;Nod_Inf_out&quot;,&quot;timz&quot;,&quot;timz0&quot;,&quot;ends&quot;))
+# ...and check the cleaned-up data
+str(node_data)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    707 obs. of  14 variables:
+##  $ Time        : Factor w/ 7 levels &quot;0&quot;,&quot;80&quot;,&quot;160&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ Node        : int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ Depth       : num  0 -20 -40 -60 -80 -100 -120 -140 -160 -180 ...
+##  $ Head        : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ Moisture    : num  0.43 0.43 0.43 0.43 0.43 0.43 0.43 0.43 0.43 0.43 ...
+##  $ K           : num  25 25 25 25 25 ...
+##  $ C           : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ Flux        : num  -2.5 -2.5 -2.5 -2.5 -2.5 ...
+##  $ Sink        : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ Kappa       : int  -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 ...
+##  $ v.KsTop     : num  -0.1 -0.1 -0.1 -0.1 -0.1 -0.1 -0.1 -0.1 -0.1 -0.1 ...
+##  $ Temp        : num  20 20 20 20 20 20 20 20 20 20 ...
+##  $ Conc.1..NS. : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ Sorb.1...NS.: num  0 0 0 0 0 0 0 0 0 0 ...</code></pre>
+<div id="plot-concentration-vs-depth" class="section level2">
+<h2>Plot concentration vs depth</h2>
+<pre class="r"><code># check it with a plot
+# plot as concentration vs. depth
+palette(c(&quot;black&quot;,&quot;red3&quot;,&quot;tomato&quot;,&quot;gold3&quot;,&quot;green3&quot;,
+         &quot;blue2&quot;,&quot;darkcyan&quot;, &quot;purple&quot;,&quot;sienna&quot;,&quot;gray67&quot;))
+par(mar = c(1,4,4,1), mgp = c(1.7,0.3,0), tcl = 0.3, font.lab=2)
+plot(node_data$Depth ~ node_data[,13], 
+     type = &quot;l&quot;, col = 1, 
+     xlim = c(0, max(node_data[,13], na.rm=T)), 
+     ylim = c(min(node_data$Depth, na.rm=T), 0), 
+     subset = node_data$Time==levels(node_data$Time)[1],
+     xaxt = &quot;n&quot;, xlab = &quot;&quot;, ylab = &quot;Depth (cm)&quot;)
+axis(3)
+mtext(&quot;Concentration&quot;, side = 3, line = 1.7, font = 2)
+for (i in 2:nlevels(node_data$Time)) {
+points(node_data$Depth ~ node_data[,13], col = i, 
+       subset = node_data$Time==levels(node_data$Time)[i],
+       type = &quot;o&quot;, pch = i-2, cex = 0.6)
+}
+legend(&quot;bottomright&quot;, legend = levels(node_data$Time),
+       col = seq(1,nlevels(node_data$Time)),
+       pch = c(NA,seq(0,nlevels(node_data$Time))),
+       lwd = 1,
+       pt.cex=0.85, bty = &quot;n&quot;, inset = 0.02, 
+       title = expression(bold(&quot;Time (days)&quot;)))</code></pre>
+<div class="figure">
+<img src="hydrus_nod_inf_files/figure-html/conc-depth-1.png" alt="Figure 1: Plot of simulated solute concentration vs. vertical depth for each simulation time step, using Hydrus-1D" width="384" />
+<p class="caption">
+Figure 1: Plot of simulated solute concentration vs. vertical depth for
+each simulation time step, using Hydrus-1D
+</p>
 </div>
-<div id="mapping-and-spatial-analysis" class="section level2">
-<h2><span class="fa fa-atlas"></span> Mapping and spatial analysis</h2>
-<ul>
-<li><span style="font-size: 12pt;"><a href="Rmaps.html"><span
-class="fa fa-globe-asia"></span> basic tile-based maps with data
-overlays in <strong>R</strong></a>
-<ul>
-<li>based on the <code>sf</code> package, and includes coordinate
-conversion</span></li>
-</ul></li>
-</ul>
-</td>
-<td style="width: 4%;">
- 
-</td>
-<td style="width: 48%; vertical-align: top; border: solid 3px #DDD; padding:3px; border-collapse: collapse;">
 </div>
-<div id="exploratory-data-analysis" class="section level2">
-<h2><span class="fa fa-chart-bar"></span> exploratory data analysis</h2>
-<ul>
-<li>
-<span style="font-size: 12pt;"><a href="boxplot.html"><span
-class="fa fa-project-diagram"></span> How to boxplot</a></span>
-</li>
-<ul>
-<li>
-For exploratory data analysis I draw a lot of boxplots, . . . [for]
-mainly positively skewed variables . . .
-</li>
-</ul>
-<li>
-<span style="font-size: 12pt;"><a href="showpal.html"><span
-class="fa fa-project-diagram"></span> Function to show the colour
-palette</a></span>
-</li>
-<ul>
-<li>
-I tend to change palettes often for different plot of map types, so it's
-good to get a quick visual reminder . . .
-</li>
-</ul>
-</ul>
-</td>
-</tr>
-<tr>
-<td style="width: 48%;">
- 
-</td>
-<td style="width: 4%;">
- 
-</td>
-<td style="width: 48%;">
- 
-</td>
-</tr>
-<tr>
-<td style="width: 48%; vertical-align: top; border: solid 3px #DDD; padding:3px; border-collapse: collapse;">
+<div id="plot-as-concentration-vs.-horizontal-distance"
+class="section level2">
+<h2>plot as concentration vs. horizontal distance</h2>
+<pre class="r"><code>par(mar = c(4,4,1,1), mgp = c(1.7,0.3,0), tcl = 0.3, font.lab=2)
+node_data$Distance &lt;- -1*node_data$Depth
+plot(node_data[,13] ~ -1*node_data$Distance, 
+     type = &quot;l&quot;, col = 1, 
+     ylim = c(0, max(node_data[,13], na.rm=T)), 
+     xlim = c(0, max(node_data$Distance, na.rm=T)), 
+     subset = node_data$Time==levels(node_data$Time)[1],
+     ylab = &quot;Concentration&quot;, xlab = &quot;Distance (cm)&quot;)
+for (i in 2:nlevels(node_data$Time)) {
+  points(node_data[,13] ~ -1*node_data$Distance, col = i, 
+         subset = node_data$Time==levels(node_data$Time)[i],
+         type = &quot;o&quot;, pch = i-2, cex = 0.6)
+}
+legend(&quot;topright&quot;, legend = levels(node_data$Time),
+       col = seq(1,nlevels(node_data$Time)),
+       pch = c(NA,seq(0,nlevels(node_data$Time))),
+       lwd = 1,
+       pt.cex=0.85, bty = &quot;n&quot;, inset = 0.02, 
+       title = expression(bold(&quot;Time (days)&quot;)))</code></pre>
+<div class="figure">
+<img src="hydrus_nod_inf_files/figure-html/conc-hdist-1.png" alt="Figure 2: Plot of simulated solute concentration vs. horizontal distance for each simulation time step, using Hydrus-1D" width="576" />
+<p class="caption">
+Figure 2: Plot of simulated solute concentration vs. horizontal distance
+for each simulation time step, using Hydrus-1D
+</p>
 </div>
-<div id="soil-science" class="section level2">
-<h2><span class="fa fa-image"></span> soil science</h2>
-<ul>
-<li>
-<span style="font-size: 12pt;"><a href="profiles.html"><span
-class="fa fa-project-diagram"></span> different ways to plot soil depth
-profiles</a></span>
-</li>
-<ul>
-<li>
-plotting the change in a variable <em>vs</em>. depth is a common task in
-soil science. This code will plot depth profiles at continuous or
-discrete depths
-</li>
-</ul>
-<li>
-<span style="font-size: 12pt;"><a href="hydrus_nod_inf.html"><span
-class="fa fa-project-diagram"></span> read Hydrus-1D Nod_Inf.out files,
-convert to <strong>R</strong> data frame</a>
-</li>
-<ul>
-<li>
-useful to make use of the plotting capabilities in <strong>R</strong>
-(Hydrus-1D in-built plots are not report- or publication-quality)
-</li>
-</ul>
-<li>
-<span style="font-size: 12pt;"><a href="pulse.html"><span
-class="fa fa-project-diagram"></span> solute transport animation using
-gganimate</a> </span>
-</li>
-<ul>
-<li>
-a simple demonstration of solute dispersion during transport, and a way
-to learn <code>gganimate</code>
-</li>
-</ul>
-</ul>
-</td>
-<td style="width: 4%;">
- 
-</td>
-<td style="width: 48%; vertical-align: top; border: solid 3px #DDD; padding:3px; border-collapse: collapse;">
-</div>
-<div id="file-conversions" class="section level2">
-<h2><span class="fa fa-joomla"></span> File conversions</h2>
-<ul>
-<li>
-<span style="font-size: 12pt;"><a href="xrdml.html"><span
-class="fa fa-file-contract"></span> convert xrdml XRD output file(s) to
-<strong>R</strong> data frame or csv</a></span>
-</li>
-<ul>
-<li>
-converts a widely-used format for X-Ray Diffraction output
-</li>
-</ul>
-</ul>
-</td>
-</tr>
-<tr>
-<td style="width: 48%;">
- 
-</td>
-<td style="width: 4%;">
- 
-</td>
-<td style="width: 48%;">
- 
-</td>
-</tr>
-<tr>
-<td style="width: 48%; vertical-align: top; border: solid 3px #DDD; padding:3px; border-collapse: collapse;">
-</div>
-<div id="environmental-biology" class="section level2">
-<h2><span class="fa fa-dna"></span> environmental biology</h2>
-<ul>
-<li>
-<span style="font-size: 12pt;"><a href="vegan.html"><span
-class="fa fa-project-diagram"></span> using vegan for environmental DNA
-data analysis</a>
-</li>
-</span>
-<ul>
-<li>
-trying to emulate the procedures we have been teaching using
-<em>Primer</em> software
-</li>
-</ul>
-</ul>
-</td>
-<td style="width: 4%;">
- 
-</td>
-<td style="width: 48%; vertical-align: top; border: solid 3px #DDD; padding:3px; border-collapse: collapse;">
- 
-</td>
-</tr>
-</tbody>
-</table>
 </div>
 
 <!DOCTYPE html>
