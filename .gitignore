@@ -18,6 +18,8 @@ old.gitignore.txt
 
 *.docx
 
+*.kml
+
 footer.html
 
 /rosm.cache/*
