@@ -298,56 +298,45 @@ $(document).ready(function () {
 data that I typically look at have mainly positively skewed variables.
 When drawing boxplots, this means that some categories can be hard to
 visualise because they have much lower concentrations than others, and
-the high values dominate the plot (see panel (a) in the attached
-image).</p>
-<p>We usually deal with this by log transformation - panel (b) shows
+the high values dominate the plot (see Figure 1(a)).</p>
+<p>We usually deal with this by log transformation - Figure 1(b) shows
 this, and the variables (and therefore boxplot boxes) now have more
 symmetrical distributions which are all clearly visible on the plot. But
 the y axis (concentration, in this case) doesn't show the actual
 values.</p>
-<p>Panel (c) shows the plot with a log-transformed axis scale, but this
-is not really satisfying either since the distribution is still skewed
-but plotted on the compressed log-transformed y-axis.</p>
-<p>I think the best option, shown in panel (d), is to plot the
+<p>Figure 1(c) shows the plot with a log-transformed axis scale, but
+this is not really satisfying either since the distribution is still
+skewed but plotted on the compressed log-transformed y-axis.</p>
+<p>I think the best option, shown in Figure 1(d), is to plot the
 log-transformed variable, but suppress the automatic axis and manually
 add a y-axis with a transformed scale. It's a bit trickier, but worth
 it. Now we can compare all the factor levels easily, yet still have
-actual values on the axis (e.g. for comparison with environmental
-guidelines).</p>
+actual values on the axis (<em>e.g</em>. for comparison with
+environmental guidelines).</p>
 <div class="figure">
-<img src="boxplot_files/figure-html/boxplots-2x2-1.png" alt="Four styles of boxplots based on the same data." width="672" />
+<img src="boxplot_files/figure-html/boxplots-2x2-1.png" alt="Figure 1: Four styles of boxplots based on the same data." width="672" />
 <p class="caption">
-Four styles of boxplots based on the same data.
+Figure 1: Four styles of boxplots based on the same data.
 </p>
 </div>
-<pre class="r"><code>with(afsed1922, boxplot(Zn ~ Zone, col=rainbow(11,s=0.35,end=0.75), 
-                        las=2, xlab=&quot;&quot;, cex = 1.4, cex.lab = 1.4))
-mtext(&quot;Sampling Zone&quot;,1,3,font=2)
-mtext(&quot;(a)&quot;, 3, -1.2, adj = 0.03, font = 2)
-mtext(&quot;Untransformed variable or axis&quot;, 3, 0.2, font=3)
-
-with(afsed1922, boxplot(log10(Zn) ~ Zone, col=rainbow(11,s=0.35,end=0.75), 
-                        las=2, xlab=&quot;&quot;, cex = 1.4, cex.lab = 1.4,
-                        ylab=expression(bold(paste(log[10],&quot;(Zn)&quot;)))))
-mtext(&quot;Sampling Zone&quot;,1,3,font=2)
-mtext(&quot;(b)&quot;, 3, -1.2, adj = 0.03, font = 2)
-mtext(&quot;Log-transformed variable&quot;, 3, 0.2, font=3)
-
-with(afsed1922, boxplot(Zn ~ Zone, log = &quot;y&quot;, col=rainbow(11,s=0.35,end=0.75), 
-                        las=2, xlab=&quot;&quot;, cex = 1.4, cex.lab = 1.4))
-mtext(&quot;Sampling Zone&quot;,1,3,font=2)
-mtext(&quot;(c)&quot;, 3, -1.2, adj = 0.03, font = 2)
-mtext(&quot;Log-transformed axis&quot;, 3, 0.2, font=3)
-
-with(afsed1922, boxplot(log10(Zn) ~ Zone, col=rainbow(11,s=0.35,end=0.75), 
-                        las=2, xlab=&quot;&quot;, cex = 1.4, cex.lab = 1.4, yaxt=&quot;n&quot;,
-                        ylab = &quot;Zn&quot;))
-axis(2, at=log10(c(10,20,50,100,100,200,500,1000,2000,5000)), 
-     labels=c(10,20,50,100,100,200,500,1000,2000,5000),las=2)
-mtext(&quot;Sampling Zone&quot;,1,3,font=2)
-mtext(&quot;(d)&quot;, 3, -1.2, adj = 0.03, font = 2, col = &quot;blue3&quot;)
-rect(-0.5,log10(10000),12.5,log10(20000), border = NA, col = &quot;#FFFF80&quot;)
-mtext(&quot;Best option: log variable, custom axis&quot;, 3, 0.2, font=3, col = &quot;blue3&quot;)</code></pre>
+<p>Of course, this is not the only modification we can make with box
+plots. A box plot is a good way to compare the spread of values between
+different levels of a factor, and the thick line inside boxes shows how
+the medians in each group vary. Sometimes we also like to look at where
+the mean values are, especially if we have a parametric statistical test
+to compare these means. It's not too difficult too superimpose the means
+together with some measure of variability; the following example (Figure
+2) shows 95% confidence intervals around each group mean. We use the
+<code>group.CI()</code> function in the <code>Rmisc</code> package to
+calculate confidence intervals for a variable in groups defined by a
+factor.</p>
+<div class="figure">
+<img src="boxplot_files/figure-html/boxplots-with-means-1.png" alt="Figure 2: Including additional information on boxplots; (a) mean and CI, (b) individual observations." width="768" />
+<p class="caption">
+Figure 2: Including additional information on boxplots; (a) mean and CI,
+(b) individual observations.
+</p>
+</div>
 
 <!DOCTYPE html>
 
