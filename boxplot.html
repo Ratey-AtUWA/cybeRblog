@@ -350,13 +350,13 @@ mtext(&quot;Best option: log variable, custom axis&quot;, 3, 0.2, font=3, col = 
 Figure 1: Four styles of boxplots based on the same data.
 </p>
 </div>
-<pre class="r"><code>par(xpd = FALSE)</code></pre>
+<hr />
 <p>Of course, this is not the only modification we can make with box
 plots. A box plot is a good way to compare the spread of values between
 different levels of a factor, and the thick line inside boxes shows how
 the medians in each group vary. Sometimes we also like to look at where
 the mean values are, especially if we have a parametric statistical test
-to compare these means. It's not too difficult too superimpose the means
+to compare these means. It's not too difficult to superimpose the means
 together with some measure of variability; the following example (Figure
 2) shows 95% confidence intervals around each group mean. We use the
 <code>group.CI()</code> function in the <code>Rmisc</code> package to
