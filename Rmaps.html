@@ -359,17 +359,15 @@ UTM50 &lt;- CRS(&quot;+proj=utm +zone=50 +south&quot;) # just for Zone 50, S hem
 <p>We will use these coordinate reference system objects later. For now
 we're going to work in UTM coordinates.</p>
 <p>Next we'll convert our data frames to <em>Simple Features</em>
-spatial data, using the <strong>R</strong> package <span
-style="font-family: monospace; background-color:#e8e8e8;">sf</span>
+spatial data, using the <strong>R</strong> package <code>sf</code>
 (Pebesma, 2018). Simple Features is a formal standard (ISO 19125-1:2004)
 that describes how objects in the real world can be represented in
 computers - see <a
 href="https://r-spatial.github.io/sf/articles/sf1.html"
 class="uri">https://r-spatial.github.io/sf/articles/sf1.html</a>.</p>
-<p>We also make equivalents of these two sf-dataframes in the
-longitude--latitiude coordinate system, using the <span
-style="font-family: monospace; background-color: #e8e8e8;">st_transform</span>
-function.</p>
+<p>We also make equivalents of these two <code>sf</code>-dataframes in
+the longitude--latitiude coordinate system, using the
+<code>st_transform</code> function.</p>
 <pre class="r"><code>afs19utm &lt;- st_as_sf(afs19[-9,], # omitting row 9 where coordinates are missing
                      coords = c(&quot;Easting&quot;,&quot;Northing&quot;),
                      crs = UTM50)
@@ -385,8 +383,7 @@ class="section level2">
 <div id="defining-the-mapped-area" class="section level3">
 <h3>Defining the mapped area</h3>
 <p>We define the area we need for our map and save it in a simple
-features object called <span
-style="font-family: monospace; background-color:#e8e8e8;">extent</span>.</p>
+features object called <code>extent</code>.</p>
 <p>An easy way to get bounding coordinates (in longitude, latitude) is
 by using Google Maps or Google Earth. Google Earth allows the option to
 set the coordinate system to UTM. If we generate latitude--longitude
@@ -401,10 +398,7 @@ style="font-family: monospace;">.kml</span> files) are in the order
 class="math inline">\((y,x)\)</span>, whereas <span
 class="math inline">\((x,y)\)</span> (Longitude, Latitude) seems to make
 more sense.</p>
-<p>For coordinates in the <span
-style="font-family: monospace; background-color:#e8e8e8;">sf</span> and
-<span
-style="font-family: monospace; background-color:#e8e8e8;">maptiles</span>
+<p>For coordinates in the <code>sf</code> and <code>maptiles</code>
 packages, <span class="math inline">\(x\)</span> coordinates are
 commonly Eastings or Longitudes, and <span
 class="math inline">\(y\)</span> coordinates are commonly Northings or
@@ -416,34 +410,24 @@ the map plots in!</p>
 </div>
 <div id="getting-the-map-tile-data" class="section level3">
 <h3>Getting the map tile data</h3>
-<p>We now need some functions from the <span
-style="font-family: monospace; background-color:#e8e8e8;">maptiles</span>
-package (Giraud 2021). We're using one of the OpenStreetMap tile
-options, but the following tile providers also work: <br> <span
-style="font-family: monospace; background-color:#e8e8e8;">OpenStreetMap,
-OpenStreetMap.HOT, Esri.WorldStreetMap, Esri.WorldTopoMap,
-Esri.WorldImagery, Esri.WorldGrayCanvas, Stamen.Toner,
-Stamen.TonerBackground, Stamen.TonerHybrid, Stamen.TonerLines,
-Stamen.TonerLabels, Stamen.TonerLite, CartoDB.Positron,
-CartoDB.DarkMatter, CartoDB.Voyager</span> (all CartoDB... tiles have
-variants which work), and <span
-style="font-family: monospace; background-color:#e8e8e8;">OpenTopoMap</span>
-<br> The option <span
-style="font-family: monospace; background-color:#e8e8e8;">crop =
-TRUE</span> is included to crop the tiles to our defined area in the
-<span
-style="font-family: monospace; background-color:#e8e8e8;">extent</span>
-object. If we leave it out, the map may change shape as it will use only
-square (uncropped) map tiles.</p>
+<p>We now need some functions from the <code>maptiles</code> package
+(Giraud 2021). We're using one of the OpenStreetMap tile options, but
+the following tile providers also work: <br>
+<code>OpenStreetMap, OpenStreetMap.HOT, Esri.WorldStreetMap, Esri.WorldTopoMap, Esri.WorldImagery, Esri.WorldGrayCanvas, Stamen.Toner, Stamen.TonerBackground, Stamen.TonerHybrid, Stamen.TonerLines, Stamen.TonerLabels, Stamen.TonerLite, CartoDB.Positron, CartoDB.DarkMatter, CartoDB.Voyager</code>
+(all <code>CartoDB...</code> tiles have variants which work), and
+<code>OpenTopoMap</code> <br> The option <code>crop = TRUE</code> is
+included to crop the tiles to our defined area in the
+<code>extent</code> object. If we leave it out, the map may change shape
+as it will use only square (uncropped) map tiles.</p>
 <pre class="r"><code># NOTE: projection of input object e.g. &#39;extent&#39; sets map projection
 aftiles &lt;- get_tiles(extent, provider = &quot;OpenStreetMap.HOT&quot;, crop = TRUE)</code></pre>
 </div>
 <div id="plotting-the-map" class="section level3">
 <h3>Plotting the map</h3>
-<p>The 'aftiles' object we created is a 'SpatRaster' object which needs
-the maptiles package loaded to be able to plot it. We need to set the
-outer margins of the plot area (by default they are zeros) to allow
-plotting of axes <em>etc</em> -- see Figure 1.</p>
+<p>The <code>aftiles</code> object we created is a 'SpatRaster' object
+which needs the maptiles package loaded to be able to plot it. We need
+to set the outer margins of the plot area (by default they are zeros) to
+allow plotting of axes <em>etc</em> -- see Figure 1.</p>
 <pre class="r"><code>par(oma=c(3,3,1,1), lend=&quot;square&quot;)
 plot(aftiles)
 
@@ -460,13 +444,11 @@ Figure 1. Map of Ashfield Flats in the UTM projection, generated using
 the maptiles R package, with OpenStreetMap tiles.
 </p>
 </div>
-<p>The next chunk of code adds the <span
-style="font-family: monospace; background-color: #e8e8e8;">prettymapr</span>
-features shown in Figure 2. In this code, <span
-style="font-family: monospace; background-color: #e8e8e8;">plotepsg =
-32750</span> refers to the EPSG code for the UTM projection in Zone 50
-(EPSG 32750), which we need so that the scale bar shows the correct
-distances. (Long-Lat is EPSG 4326 in WGS84)</p>
+<p>The next chunk of code adds the <code>prettymapr</code> features
+shown in Figure 2. In this code, plotepsg = 32750 refers to the EPSG
+code for the UTM projection in Zone 50 (EPSG 32750), which we need so
+that the scale bar shows the correct distances. (Long-Lat is EPSG 4326
+in WGS84)</p>
 <pre class="r"><code># . . . continuing previous code . . .
 addnortharrow(text.col=1, border=1)
 addscalebar(plotepsg = 32750, label.col = 1, linecol = 1, 
@@ -487,15 +469,10 @@ sizes, shapes, or colours of symbols to represent numerical
 information.</p>
 <p>Since we have a map in UTM coordinates, we can now add plots of our
 data based on UTM locations (with a legend, of course -- see Figure 3).
-We can plot the points from the non-spatial data frame <span
-style="font-family: monospace; background-color: #e8e8e8;">afs19</span>,
-but here we <span
-style="font-family: monospace; background-color: #e8e8e8;">plot</span>
-the points from <span
-style="font-family: monospace; background-color: #e8e8e8;">afs19utm</span>,
-with the <span
-style="font-family: monospace; background-color: #e8e8e8;">add=TRUE</span>
-option. We add a legend to the plot in the usual way.</p>
+We can plot the points from the non-spatial data frame
+<code>afs19</code>, but here we <code>plot</code> the points from
+<code>afs19utm</code>, with the <code>add=TRUE</code> option. We add a
+legend to the plot in the usual way.</p>
 <pre class="r"><code># . . . continuing from previous code . . .
 with(afs19utm, plot(geometry, add=TRUE, lwd = 2, 
                     pch = c(0,1,2,3,5,6,15,17,18,19)[Group], 
@@ -545,20 +522,16 @@ OpenStreetMap tiles acquired using maptiles.
 <h3>Making a bubble map</h3>
 <p>We use essentially the same code as for the maps above (except
 plotting the annotations and data in the correct order!). Then we use
-the <span
-style="font-family: monospace; background-color: #e8e8e8;">symbols()</span>
-function to make the 'bubbles', making sure that we include the options
-<span style="font-family: monospace; background-color: #e8e8e8;">add =
-TRUE</span> so we overplot the map, and <span
-style="font-family: monospace; background-color: #e8e8e8;">inches =
-FALSE</span> so we can manually scale the bubbles. The factor of <span
-style="font-family: monospace; background-color: #e8e8e8;">0.4</span>
-used to scale the circles in the code for bubbles and legend is
-<em>found by trial-and-error</em> (it <em>is</em> possible to write an
-algorithm to estimate a scaling factor from the data). A map like that
-shown in Figure 6 is a good exploratory data analysis tool, as even
-without the legend it shows any unevenness in concentrations, including
-where high concentrations are located.</p>
+the <code>symbols()</code> function to make the 'bubbles', making sure
+that we include the options <code>add = TRUE</code> so we overplot the
+map, and <code>inches = FALSE</code> so we can manually scale the
+bubbles. The factor of <code>0.4</code> used to scale the circles in the
+code for bubbles and legend is <em>found by trial-and-error</em> (it
+<em>is</em> possible to write a simple algorithm to estimate a scaling
+factor from the data). A map like that shown in Figure 6 is a good
+exploratory data analysis tool, as even without the legend it shows any
+unevenness in concentrations, including where high concentrations are
+located.</p>
 <pre class="r"><code>par(oma=c(3,3,1,1), lend=&quot;square&quot;)
 plot(aftiles)
 box(lwd=6,col=&quot;white&quot;) # tidies up skewness of UTM tiles a bit
@@ -602,14 +575,10 @@ maptiles.
 <h3>Categorized (<em>e.g</em>. percentile) bubble map</h3>
 <p>We make a new column in our data frame by cutting the measurement of
 interest, in this example <strong>Zn</strong>, into percentiles. The new
-column called <span
-style="font-family: monospace; background-color: #e8e8e8;">QZn</span> is
-a factor which identifies which percentile of Zn concentration each
-sample is in. We then use this factor to define symbols, sizes, and
-colours for each sample location. We add a line break to text labels
-using <span
-style="font-family: monospace; background-color: #e8e8e8;"><span
-class="math inline">\(\backslash\)</span>n</span>.</p>
+column called <code>QZn</code> is a factor which identifies which
+percentile of Zn concentration each sample is in. We then use this
+factor to define symbols, sizes, and colours for each sample location.
+We add a line break to text labels using <code>$\backslash$n</code>.</p>
 <pre class="r"><code>par(oma=c(3,3,1,1), lend=&quot;square&quot;)
 plot(aftiles)
 box(lwd=6,col=&quot;white&quot;) # tidies up skewness of UTM tiles a bit
@@ -660,10 +629,8 @@ afs19$QZn &lt;- NULL # to delete quantile column (optional; you can leave it in)
 'standard' bubble map (Figure 6), as it adds some statistical meaning to
 the bubble sizes. A similar map could be created by using the Tukey
 boxplot thresholds instead of percentiles which could show potential
-outliers (<em>i.e</em>. using the <span
-style="font-family: monospace; background-color: #e8e8e8;">boxplot.stats()</span>
-function to generate categories instead of the <span
-style="font-family: monospace; background-color: #e8e8e8;">quantile()</span>
+outliers (<em>i.e</em>. using the <code>boxplot.stats()</code> function
+to generate categories instead of the <code>quantile()</code>
 function.)</p>
 <hr>
 </div>
@@ -671,47 +638,32 @@ function.)</p>
 <div id="alternative-2----maps-in-r-using-the-ggmap-package"
 class="section level2">
 <h2>Alternative 2 -- Maps in R using the ggmap package</h2>
-<p>The <span
-style="font-family: monospace; background-color: #e8e8e8;">ggmap</span>
-package (Kahle and Wickham 2013) is an extension of <span
-style="font-family: monospace; background-color: #e8e8e8;">ggplot</span>,
-so it's easier to use if you are familiar with <span
-style="font-family: monospace; background-color: #e8e8e8;">ggplot</span>
-and the associated family of packages. <span
-style="color: #A00000;"><em>You need to register for and obtain</em>
-<em>your own Google maps key to run this code!</em></span></p>
-<p>First we make a <span
-style="font-family: monospace; background-color: #e8e8e8;">ggmap</span>
-object, locating the map by its central coordinate with the extent
-controlled by the <span
-style="font-family: monospace; background-color: #e8e8e8;">zoom</span>
+<p>The <code>ggmap</code> package (Kahle and Wickham 2013) is an
+extension of <code>ggplot</code>, so it's easier to use if you are
+familiar with <code>ggplot</code> and the associated family of packages.
+<span style="color: #A00000;"><em>You need to register for and obtain
+your own Google maps key to</em> <em>run this code!</em></span></p>
+<p>First we make a <code>ggmap</code> object, locating the map by its
+central coordinate with the extent controlled by the <code>zoom</code>
 option:</p>
 <pre class="r"><code>## library(ggmap)
 register_google(key = secret) # you need your own Google Maps API code
 udubua.gg &lt;- get_googlemap(center=c(115.8213,-31.98165), 
                            zoom = 16, maptype = &quot;terrain&quot;, color = &quot;bw&quot;)</code></pre>
 <p>Next we plot the ggmap object using ggplot grammar. It's possible to
-just plot the object (<em>i.e</em>. run <span
-style="font-family: monospace;  background-color: #e8e8e8;">ggmap(udubua.gg)</span>),
+just plot the object (<em>i.e</em>. run <code>ggmap(udubua.gg)</code>),
 but it's good to have more control over plot options
 <strong>and</strong> to plot some data over the base map. In the example
-in Figure 8, we use the aesthetic in <span
-style="font-family: monospace; background-color: #e8e8e8;">geom_point()</span>
-to plot different categories with different shapes and colours, with the
-categories defined by the factor <span
-style="font-family: monospace; background-color: #e8e8e8;">Type</span>.
-A range of map styles is available by selecting a combination of one of
-<span style="font-family: monospace; background-color: #e8e8e8;">maptype
-= "terrain", "satellite", "roadmap"</span>, or <span
-style="font-family: monospace; background-color: #e8e8e8;">"hybrid"</span>,
-together with <span
-style="font-family: monospace; background-color: #e8e8e8;">color =
-"color"</span> or <span
-style="font-family: monospace; background-color: #e8e8e8;">"bw"</span>.
-Note: the <span
-style="font-family: monospace; background-color: #e8e8e8;">ggsm</span>
-package is designed to add scale bar and north arrow to ggmaps, but it
-seems buggy and we currently don't recommend it.</p>
+in Figure 8, we use the aesthetic in <code>geom_point()</code> to plot
+different categories with different shapes and colours, with the
+categories defined by the factor <code>Type</code>. A range of map
+styles is available by selecting a combination of one of
+<code>maptype = "terrain", "satellite", "roadmap"</code>, or
+<code>"hybrid"</code>, together with <code>color = "color"</code> or
+<code>"bw"</code>. <strong>Note</strong>: the <code>ggsm</code> package
+is designed to add scale bar and north arrow to ggmaps, but it seems
+buggy and we currently don't recommend it - the north arrow seems OK
+though.</p>
 <pre class="r"><code>ggmap(udubua.gg) + 
   labs(y=&quot;Latitude (\u00B0S)&quot;, x = &quot;Longitude (\u00B0E)&quot;) + 
   geom_text(aes(x = 115.825, y = -31.98, label = &quot;Swan\nRiver&quot;,
@@ -729,36 +681,25 @@ showing the location of libraries and cafés, plotted over Google maps
 tiles acquired using the R package ggmap.
 </p>
 </div>
-<p>There are numerous possibilities with <span
-style="font-family: monospace; background-color: #e8e8e8;">ggmap</span>
-and the features made possible by <span
-style="font-family: monospace; background-color: #e8e8e8;">ggplot2</span>
-that are not illustrated by Figure 8. For example, we could use <span
-style="font-family: monospace; background-color: #e8e8e8;">size</span>
-as an aesthetic (<em>i.e</em>. include within <span
-style="font-family: monospace; background-color: #e8e8e8;">aes(...)</span>
-with <span
-style="font-family: monospace; background-color: #e8e8e8;">size =
-variableName</span>), to generate something like a bubble map. Although
-there is an option to set the map size (and therefore aspect ratio) in
-the <span
-style="font-family: monospace; background-color: #e8e8e8;">get</span>_<span
-style="font-family: monospace; background-color: #e8e8e8;">googlemap</span>,
-we have found that this doesn't work consistently, so we recommend
-leaving the map dimensions and aspect ratio at their default values.</p>
+<p>There are numerous possibilities with <code>ggmap</code> and the
+features made possible by <code>ggplot2</code> that are not illustrated
+by Figure 8. For example, we could use <code>size</code> as an aesthetic
+(<em>i.e</em>. include within <code>aes(...)</code> with
+<code>size = variableName</code>), to generate something like a bubble
+map. Although there is an option to set the map size (and therefore
+aspect ratio) in the <code>get_googlemap()</code> function, we have
+found that this doesn't work consistently, so we recommend leaving the
+map dimensions and aspect ratio at their default values.</p>
 <div id="other-map-types-using-ggmap" class="section level3">
 <h3>Other map types using ggmap</h3>
-<p>Another option currently implemented in <span
-style="font-family: monospace; background-color: #e8e8e8;">ggmap</span>
-are some of the <em>Stamen</em> map tiles, accessible with the <span
-style="font-family: monospace; background-color: #e8e8e8;">get</span>_<span
-style="font-family: monospace; background-color: #e8e8e8;">stamenmap()</span>
-function.</p>
+<p>Another option currently implemented in <code>ggmap</code> are some
+of the <em>Stamen</em> map tiles, accessible with the
+<code>get_stamenmap()</code> function.</p>
 <ul>
-<li>The Stamen "terrain" tiles seem to be available up to <span
-style="font-family: monospace; background-color: #e8e8e8;">zoom =
-13</span>, and are good for showing maps at the scale of 1-2 suburbs or
-a small town (Figure 9), with 'hill shading' to show terrain.</li>
+<li>The Stamen "terrain" tiles seem to be available up to
+<code>zoom = 13</code>, and are good for showing maps at the scale of
+1-2 suburbs or a small town (Figure 9), with 'hill shading' to show
+terrain.</li>
 <li>The Stamen toner variants are minimalist maps which are good at
 de-emphasizing the base map background to emphasise added data (see the
 example in Figure 10).</li>
@@ -794,24 +735,14 @@ Stamen terrain map tiles acquired using the R package ggmap.
 </div>
 <p><span style="size: 14pt"><strong>The next example</strong></span>
 (Figure 10) uses the simple features information in one of the data
-frames we made at the beginning. The <span
-style="font-family: monospace; background-color: #e8e8e8;">sf</span>
-package introduces a new 'geom', <span
-style="font-family: monospace; background-color: #e8e8e8;">geom_sf()</span>
-for plotting in <span
-style="font-family: monospace; background-color: #e8e8e8;">ggmap</span>.
-We need to use the option <span
-style="font-family: monospace; background-color: #e8e8e8;">inherit.aes =
-FALSE</span> in <span
-style="font-family: monospace; background-color: #e8e8e8;">geom_sf</span>,
-to overrides the default aesthetics from the <span
-style="font-family: monospace; background-color: #e8e8e8;">ggmap</span>
-object. We also add <span
-style="font-family: monospace; background-color: #e8e8e8;">coord_sf</span>
-to ensure that all layers use a common CRS (<u>C</u>oordinate
-<u>R</u>eference <u>S</u>ystem). Run <span
-style="font-family: monospace; background-color: #e8e8e8;">help(geom_sf)</span>
-for more information.</p>
+frames we made at the beginning. The <code>sf</code> package introduces
+a new 'geom', <code>geom_sf()</code> for plotting in <code>ggmap.</code>
+We need to use the option <code>inherit.aes = FALSE</code> in
+<code>geom_sf()</code>, to override the default aesthetics from the
+<code>ggmap</code> object. We also add <code>coord_sf</code> to ensure
+that all layers use a common CRS (<u>C</u>oordinate <u>R</u>eference
+<u>S</u>ystem). <br> Run <code>help(geom_sf)</code> for more
+information.</p>
 <pre class="r"><code>afr.gg &lt;- get_stamenmap(bbox=c(left=115.941, bottom = -31.92,
                                    right = 115.948, top = -31.916), 
                         zoom=17, col = &quot;bw&quot;,maptype = &quot;toner-lite&quot;)
@@ -849,21 +780,12 @@ locations.
 <h2>Alternative 3 -- the 'rosm' package</h2>
 <p>The rosm package (Dunnington 2022) allows users to produce background
 maps from several map tile providers.</p>
-<p>The following map tile types seem to work using <span
-style="font-family: monospace; background-color: #e8e8e8;">osm.plot()</span>
-in the <span
-style="font-family: monospace; background-color: #e8e8e8;">rosm</span>
-package: <br><span
-style="font-family: monospace; background-color: #e8e8e8;">"osm",
-"hotstyle", "stamenbw", "stamenwatercolor", "cartodark",
-"cartolight"</span></p>
-<p>The following map tile types seem to work using <span
-style="font-family: monospace; background-color: #e8e8e8;">bmaps.plot()</span>
-in the <span
-style="font-family: monospace; background-color: #e8e8e8;">rosm</span>
-package:<br> <span
-style="font-family: monospace; background-color: #e8e8e8;">"Aerial",
-"AerialWithLabels"</span></p>
+<p>The following map tile types seem to work using
+<code>osm.plot()</code> in the <code>rosm</code> package:
+<br><code>"osm", "hotstyle", "stamenbw", "stamenwatercolor", "cartodark", "cartolight"</code></p>
+<p>The following map tile types seem to work using
+<code>bmaps.plot()</code> in the <code>rosm</code> package:<br>
+<code>"Aerial", "AerialWithLabels"</code></p>
 <pre class="r"><code>par(mar = c(.1,.1,.1,.1), mgp = c(1.7,0.3,0), lend=2, ljoin=1, tcl=0.25)
 
 # specify limits of map in order N, E, S, W
@@ -884,22 +806,9 @@ Figure 11. UWA campus map using cartolight tiles acquired using the rosm
 package.
 </p>
 </div>
-<pre><code>## 
-  |                                                                                   
-  |                                                                             |   0%
-  |                                                                                   
-  |===================                                                          |  25%
-  |                                                                                   
-  |======================================                                       |  50%
-  |                                                                                   
-  |==========================================================                   |  75%
-  |                                                                                   
-  |=============================================================================| 100%</code></pre>
-<p>The map in Figure 11 uses the <span
-style="font-family: monospace; background-color: #e8e8e8;">cartolight</span>
-map tile style to produce a base map with light colours -- this can be
-useful when we are trying to emphasise the data rather than the map
-features.</p>
+<p>The map in Figure 11 uses the <code>cartolight</code> map tile style
+to produce a base map with light colours -- this can be useful when we
+are trying to emphasise the data rather than the map features.</p>
 <div id="another-option-using-a-bing-map-as-background"
 class="section level3">
 <h3>another option using a Bing map as background</h3>
@@ -917,17 +826,6 @@ Figure 12. UWA campus map using Bing tiles acquired using the rosm
 package.
 </p>
 </div>
-<pre><code>## 
-  |                                                                                   
-  |                                                                             |   0%
-  |                                                                                   
-  |===================                                                          |  25%
-  |                                                                                   
-  |======================================                                       |  50%
-  |                                                                                   
-  |==========================================================                   |  75%
-  |                                                                                   
-  |=============================================================================| 100%</code></pre>
 <p>As shown by the output in Figure 12, the Bing map tiles are aerial
 photographs. Sometimes this is useful for showing features like
 vegetation <em>etc</em>. on the base map.</p>
@@ -962,13 +860,6 @@ Figure 13. UWA campus map using Stamen-toner tiles acquired using the
 rosm package, and illustrating the axis problem.
 </p>
 </div>
-<pre><code>## 
-  |                                                                                   
-  |                                                                             |   0%
-  |                                                                                   
-  |======================================                                       |  50%
-  |                                                                                   
-  |=============================================================================| 100%</code></pre>
 <p>It's helpful to include a scale and North arrow on the plot, but the
 axes in Figure 13, however, are in web Mercator coordinates (and are
 messy). This is a problem with no easy fix. Either we don't include axes
@@ -982,23 +873,21 @@ id="alternative-4---use-the-openstreetmap-package-to-make-an-initial-map-object"
 class="section level2">
 <h2>Alternative 4 - use the OpenStreetMap package to make an initial map
 object</h2>
-<p>We can also use the <span
-style="font-family: monospace; background-color: #e8e8e8;">OpenStreetMap</span>
-R package (Fellows, 2019) to make a plot-able map object, based on the
-coordinates which bound a rectangular area. We need the north-west
-(upper left) and south-east (lower right) coordinates of the rectangular
-map we want to plot. (<strong>Note</strong> that the coordinates are in
-the order (Latitude, Longitude); <em>i.e</em>. <span
+<p>We can also use the <code>OpenStreetMap</code> R package (Fellows,
+2019) to make a plot-able map object, based on the coordinates which
+bound a rectangular area. We need the north-west (upper left) and
+south-east (lower right) coordinates of the rectangular map we want to
+plot.<br> (<strong>Note</strong> that the coordinates are in the order
+(Latitude, Longitude); <em>i.e</em>. <span
 class="math inline">\((y,x)\)</span>, whereas <span
 class="math inline">\((x,y)\)</span> seems more intuitive.)</p>
 <p><strong>Note that <span style="background-color: #FFFF00;">there can
-be problems</span> trying</strong> <strong>to use the</strong> <span
-style="font-family: monospace; background-color: #e8e8e8;">OpenStreetMap</span>
-<strong>package</strong>, especially on Mac/Apple computers. This
-relates to the need for a working Java installation (Windows and Mac)
-and the requirement for the XQuartz app on Mac OS. Otherwise the <span
-style="font-family: monospace; background-color: #e8e8e8;">OpenStreetMap</span>
-package can be very useful!</p>
+be problems</span></strong> <strong>trying to use the</strong>
+<code>OpenStreetMap</code> <strong>package</strong>, especially on
+Mac/Apple computers. This relates to the need for a working Java
+installation (Windows and Mac) and the requirement for the XQuartz app
+on Mac OS. Otherwise the <code>OpenStreetMap</code> package can be very
+useful!</p>
 <pre class="r"><code>UWA_osm &lt;- openmap(upperLeft = c(-31.974, 115.812), # latitude first
                    lowerRight = c(-31.988, 115.828), 
                    zoom = 16,
@@ -1041,9 +930,8 @@ but finding our location on Earth is tricky because the OpenStreetMap
 map projection is "Google Mercator" (<em>a.k.a</em>. "Web Mercator")
 which is not a projection most people are familiar with. We need a map
 in a commonly-used projection such as Longitude-Latitude, or Universal
-Transverse Mercator (UTM). We can change projections using the <span
-style="font-family: monospace; background-color: #e8e8e8;">openproj()</span>
-function in the OpenStreetMap package.</p>
+Transverse Mercator (UTM). We can change projections using the
+<code>openproj()</code> function in the OpenStreetMap package.</p>
 </div>
 <div
 id="plot-a-re-projected-uwa-campus-map-in-utm-with-margins-axes-and-annotations"
@@ -1089,41 +977,27 @@ field GPS to show.</p>
 </div>
 <div id="final-words" class="section level2">
 <h2>Final Words</h2>
-<p>We recommend using either the <span
-style="font-family: monospace; background-color: #e8e8e8;">maptiles</span>
-or <span
-style="font-family: monospace; background-color: #e8e8e8;">ggmap</span>
-packages to draw maps with tiled backgrounds, as they allow use of the
-state-of-the-art <em>simple features</em> system <em>via</em> the <span
-style="font-family: monospace; background-color: #e8e8e8;">sf</span>
-package.</p>
+<p>We recommend using either the <code>maptiles</code> or
+<code>ggmap</code> packages to draw maps with tiled backgrounds, as they
+allow use of the state-of-the-art <em>simple features</em> system
+<em>via</em> the <code>sf</code> package.</p>
 </div>
 <div id="appendix---coordinate-conversions" class="section level2">
 <h2>Appendix - coordinate conversions</h2>
 <p><strong>Converting UTM to LongLat</strong></p>
-<p>Make a simple features (package <span
-style="font-family: monospace; background-color: #e8e8e8;">sf</span>)
-object containing the UTM coordinates</p>
+<p>Make a simple features (package <code>sf</code>) object containing
+the UTM coordinates</p>
 <p>Example uses explicit values (as used previously to generate the
-<span
-style="font-family: monospace; background-color: #e8e8e8;">maptiles</span>
-map), but the coordinates could also be obtained from a data frame -
-edit to suit!</p>
+<code>maptiles</code> map), but the coordinates could also be obtained
+from a data frame - edit to suit!</p>
 <pre class="r"><code>utm.temp &lt;- st_as_sf(data.frame(x=c(399800,400700),y=c(6467900,6468400)),
                      coords = c(&quot;x&quot;,&quot;y&quot;), crs = UTM50)</code></pre>
-<p>We then use the <span
-style="font-family: monospace; background-color: #e8e8e8;">st_transform()</span>
-function from the <span
-style="font-family: monospace; background-color: #e8e8e8;">sf</span>
-package to convert to long-lat (or another projection), which results in
-another spatial object:</p>
+<p>We then use the <code>st_transform()</code> function from the
+<code>sf</code> package to convert to long-lat (or another projection),
+which results in another spatial object:</p>
 <pre class="r"><code>longlat.temp &lt;- st_transform(utm.temp, crs = LongLat)</code></pre>
-<p>We now have two <span
-style="font-family: monospace; background-color: #e8e8e8;">sf</span>
-spatial objects which we can use (for instance) to define the map extent
-for a <span
-style="font-family: monospace; background-color: #e8e8e8;">maptiles</span>
-map:</p>
+<p>We now have two <code>sf</code> spatial objects which we can use (for
+instance) to define the map extent for a <code>maptiles</code> map:</p>
 <pre class="r"><code>require(sf); require(maptiles) # load packages if not done already
 # using the utm object
 tiles_utm &lt;- get_tiles(utm.temp, provider = &quot;OpenStreetMap&quot;, crop = TRUE)
@@ -1135,16 +1009,12 @@ tiles_longlat &lt;- get_tiles(longlat.temp, provider = &quot;OpenStreetMap&quot;
 (<strong>NOTE</strong> - missing coordinates are not allowed!)</p>
 <pre class="r"><code>afs19 &lt;- afs19[-which(is.na(afs19[,c(&quot;Easting&quot;)])==1),] # remove rows with NAs
 afs19utm &lt;-  st_as_sf(afs19, coords = c(&quot;Easting&quot;,&quot;Northing&quot;), crs = UTM50)</code></pre>
-<p>We then use the <span
-style="font-family: monospace; background-color: #e8e8e8;">st_transform()</span>
-function from the <span
-style="font-family: monospace; background-color: #e8e8e8;">sf</span>
-package to convert to longitude-latitude, which results in another
-spatial data frame:</p>
+<p>We then use the <code>st_transform()</code> function from the
+<code>sf</code> package to convert to longitude-latitude, which results
+in another spatial data frame:</p>
 <pre class="r"><code>afs19ll &lt;- st_transform(afs19utm, crs = LongLat)</code></pre>
 <p>To extract just the coordinate values in non-spatial form, we use the
-function <span
-style="font-family: monospace; background-color: #e8e8e8;">st_coordinates()</span>:</p>
+function <code>st_coordinates()</code>:</p>
 <pre class="r"><code># extract sf coordinates to console (can assign to object of class &quot;matrix&quot;)
 st_coordinates(afs19utm)
 
