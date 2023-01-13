@@ -239,28 +239,28 @@ $(document).ready(function () {
         <li>
   <a href="index.html">
     <span class="fa fa-home"></span>
-     
+
     Home
   </a>
 </li>
 <li>
   <a href="code.html">
     <span class="fa fa-project-diagram"></span>
-     
+
     Code
   </a>
 </li>
 <li>
   <a href="rants.html">
     <span class="fa fa-bell"></span>
-     
+
     Rants
   </a>
 </li>
 <li>
   <a href="about.html">
     <span class="fa fa-address-card"></span>
-     
+
     About
   </a>
 </li>
@@ -269,14 +269,14 @@ $(document).ready(function () {
         <li>
   <a href="social.html">
     <span class="fa fa-twitter"></span>
-     
+
     Social
   </a>
 </li>
 <li>
   <a href="work.html">
     <span class="fa fa-user-graduate"></span>
-     
+
     UWA
   </a>
 </li>
@@ -315,47 +315,52 @@ maps, and many other map plotting methods.</p>
 <p>...also read some <em>data</em> we need for map annotations, make
 some <em>colour</em> <em>palettes</em> to use later, and set any
 alternative Windows <em>fonts</em>:</p>
-<pre class="r"><code>library(sp)
-library(sf)
-library(maptiles)
-library(prettymapr)
-library(rosm)
-library(ggmap)
-library(ggsn)
-# un-comment next line if you can run it from the console without crashing R!
-# library(OpenStreetMap) </code></pre>
+<pre class="r"><code>library(sp)            # older package for spatial data in R
+library(sf)            # Simple Features spatial data in R
+library(maptiles)      # get open-source map tiles for background maps
+library(prettymapr)    # add scale bar and north arrows to maps
+library(viridis)       # colourblind-friendly colour palettes
+library(rosm)          # alternative open-source map tiles for background maps
+library(ggmap)         # plotting spatial data with ggplot syntax
+library(ggsn)          # add scale and north to ggmap maps (doesn&#39;t always work)
+# only run next line if you can run it from the console without crashing R!
+library(OpenStreetMap) # alternative open-source map tiles for background maps</code></pre>
 <pre class="r"><code>git &lt;- &quot;https://raw.githubusercontent.com/Ratey-AtUWA/&quot;
-afr_map &lt;- read.csv(file=paste0(git,&quot;spatial/main/afr_map_v2.csv&quot;), 
+afr_map &lt;- read.csv(file=paste0(git,&quot;spatial/main/afr_map_v2.csv&quot;),
                       stringsAsFactors = TRUE)
 places &lt;- read.csv(file=paste0(git,&quot;learningR/main/places.csv&quot;),
                    stringsAsFactors = TRUE)
-taita &lt;- data.frame(lon = c(174.967,174.9549,174.9489,174.9521), 
-                    lat = c(-41.1761,-41.1812,-41.1831,-41.1838), 
+taita &lt;- data.frame(lon = c(174.967,174.9549,174.9489,174.9521),
+                    lat = c(-41.1761,-41.1812,-41.1831,-41.1838),
                     name = c(&quot;Tait\u0101 College&quot;, &quot;Tait\u0101 School&quot;,
                           &quot;Fraser Park&quot;,&quot;Home&quot;)) # we need this later...
 taita$name &lt;- as.factor(taita$name) # ...and this
-pal4lite &lt;- c(&quot;black&quot;, &quot;purple2&quot;, &quot;blue2&quot;, &quot;cyan4&quot;, &quot;forestgreen&quot;, 
+pal4lite &lt;- c(&quot;black&quot;, &quot;purple2&quot;, &quot;blue2&quot;, &quot;cyan4&quot;, &quot;forestgreen&quot;,
               &quot;darkorange&quot;, &quot;gold3&quot;, &quot;red3&quot;, &quot;gray80&quot;, &quot;white&quot;)
 pal4liteTransp &lt;- c(&quot;#000000&quot;,&quot;#912CEEb0&quot;,&quot;#0000EEb0&quot;,&quot;#008B8Bb0&quot;,&quot;#228B22b0&quot;,
                     &quot;#CDAD00b0&quot;, &quot;#FF8C00b0&quot;, &quot;#CD0000b0&quot;, &quot;#CCCCCC&quot;, &quot;#FFFFFF&quot;)
-pal4dark &lt;- c(&quot;white&quot;, &quot;pink1&quot;, &quot;orange&quot;, &quot;khaki1&quot;, &quot;lightgreen&quot;, &quot;cadetblue1&quot;, 
+pal4dark &lt;- c(&quot;white&quot;, &quot;pink1&quot;, &quot;orange&quot;, &quot;khaki1&quot;, &quot;lightgreen&quot;, &quot;cadetblue1&quot;,
               &quot;deepskyblue&quot;, &quot;plum&quot;, &quot;gray80&quot;, &quot;black&quot;)
 windowsFonts(nar=windowsFont(&quot;Arial Narrow&quot;), monosans=windowsFont(&quot;Consolas&quot;))</code></pre>
 <p>Code to read data from csv file on website into an R data frame:</p>
 <pre class="r"><code>## # afs19 &lt;- read.table(&#39;clipboard&#39;, header=T, sep=&quot;\t&quot;, stringsAsFactors = TRUE)
 # alternative code reading data from a file:
-afs19 &lt;- read.csv(file=paste0(git,&quot;learningR/main/afs19.csv&quot;), 
+afs19 &lt;- read.csv(file=paste0(git,&quot;learningR/main/afs19.csv&quot;),
                   stringsAsFactors = TRUE) # use this one
-afs22 &lt;- read.csv(file=paste0(git,&quot;learningR/main/afs22S1.csv&quot;), 
+afs22 &lt;- read.csv(file=paste0(git,&quot;learningR/main/afs22S1.csv&quot;),
                   stringsAsFactors = TRUE)</code></pre>
 </div>
 <div id="preparing-to-make-maps" class="section level2">
 <h2>Preparing to make maps</h2>
 <p>First we define some commonly-used coordinate reference systems which
-define the projection of our GPS data</p>
-<pre class="r"><code>LongLat &lt;- CRS(&quot;+proj=longlat +ellps=WGS84 
-           +datum=WGS84 +no_defs&quot;) # uses Earth ellipsis specs from WGS84 datum
-UTM50 &lt;- CRS(&quot;+proj=utm +zone=50 +south&quot;) # just for Zone 50, S hemisphere!</code></pre>
+define the projection of our GPS data. The function
+<code>st_crs()</code> is from the <code>sf</code> package (see
+explanation below), and the argument for the <code>st_crs()</code>
+function is the EPSG code for the desired projection. See <a
+href="https://epsg.io" class="uri" target="_blank">https://epsg.io</a> for more
+information.</p>
+<pre class="r"><code>LongLat &lt;- st_crs(4326) # uses Earth ellipsis specs from WGS84 datum
+UTM50S &lt;- st_crs(32750) # just for Zone 50, S hemisphere!</code></pre>
 <p>We will use these coordinate reference system objects later. For now
 we're going to work in UTM coordinates.</p>
 <p>Next we'll convert our data frames to <em>Simple Features</em>
@@ -370,9 +375,9 @@ the longitude--latitiude coordinate system, using the
 <code>st_transform</code> function.</p>
 <pre class="r"><code>afs19utm &lt;- st_as_sf(afs19[-9,], # omitting row 9 where coordinates are missing
                      coords = c(&quot;Easting&quot;,&quot;Northing&quot;),
-                     crs = UTM50)
+                     crs = UTM50S)
 afs22utm &lt;- st_as_sf(afs22, coords = c(&quot;Easting&quot;,&quot;Northing&quot;),
-                     crs = UTM50)
+                     crs = UTM50S)
 afs19ll &lt;- st_transform(afs19utm, crs = LongLat)
 afs21ll &lt;- st_transform(afs19utm, crs = LongLat)</code></pre>
 <hr>
@@ -404,7 +409,7 @@ commonly Eastings or Longitudes, and <span
 class="math inline">\(y\)</span> coordinates are commonly Northings or
 Latitudes.</p>
 <pre class="r"><code>extent &lt;- st_as_sf(data.frame(x=c(399800,400700),y=c(6467900,6468400)),
-                   coords = c(&quot;x&quot;,&quot;y&quot;), crs = UTM50)</code></pre>
+                   coords = c(&quot;x&quot;,&quot;y&quot;), crs = UTM50S)</code></pre>
 <p><strong>NOTE</strong>: The projection we specify here will be the one
 the map plots in!</p>
 </div>
@@ -417,17 +422,17 @@ the following tile providers also work: <br>
 (all <code>CartoDB...</code> tiles have variants which work), and
 <code>OpenTopoMap</code> <br> The option <code>crop = TRUE</code> is
 included to crop the tiles to our defined area in the
-<code>extent</code> object. If we leave it out, the map may change shape
-as it will use only square (uncropped) map tiles.</p>
+<code>extent</code> object. If we leave it out, the map will probably
+change shape as it will use only square (uncropped) map tiles.</p>
 <pre class="r"><code># NOTE: projection of input object e.g. &#39;extent&#39; sets map projection
 aftiles &lt;- get_tiles(extent, provider = &quot;OpenStreetMap.HOT&quot;, crop = TRUE)</code></pre>
 </div>
 <div id="plotting-the-map" class="section level3">
 <h3>Plotting the map</h3>
 <p>The <code>aftiles</code> object we created is a 'SpatRaster' object
-which needs the maptiles package loaded to be able to plot it. We need
-to set the outer margins of the plot area (by default they are zeros) to
-allow plotting of axes <em>etc</em> -- see Figure 1.</p>
+which needs the <code>maptiles</code> package loaded to be able to plot
+it. We need to set the outer margins of the plot area (by default they
+are zeros) to allow plotting of axes <em>etc</em> -- see Figure 1.</p>
 <pre class="r"><code>par(oma=c(3,3,1,1), lend=&quot;square&quot;)
 plot(aftiles)
 
@@ -445,13 +450,13 @@ the maptiles R package, with OpenStreetMap tiles.
 </p>
 </div>
 <p>The next chunk of code adds the <code>prettymapr</code> features
-shown in Figure 2. In this code, plotepsg = 32750 refers to the EPSG
-code for the UTM projection in Zone 50 (EPSG 32750), which we need so
-that the scale bar shows the correct distances. (Long-Lat is EPSG 4326
-in WGS84)</p>
+shown in Figure 2. In this code, <code>plotepsg = 32750</code> refers to
+the EPSG code for the UTM projection in Zone 50 (EPSG 32750), which we
+need to include so that the scale bar shows the correct distances.
+(Long-Lat is EPSG 4326 in WGS84)</p>
 <pre class="r"><code># . . . continuing previous code . . .
 addnortharrow(text.col=1, border=1)
-addscalebar(plotepsg = 32750, label.col = 1, linecol = 1, 
+addscalebar(plotepsg = 32750, label.col = 1, linecol = 1,
             label.cex = 1.2, htin=0.15, widthhint = 0.15)</code></pre>
 <div class="figure" style="text-align: center">
 <img src="Rmaps_files/figure-html/map-north-scale-1.png" alt="Figure 2. Map of Ashfield Flats (UTM), with added North arrow and scale bar from prettymapr, over OpenStreetMap tiles acquired using maptiles." width="70%" />
@@ -474,12 +479,13 @@ We can plot the points from the non-spatial data frame
 <code>afs19utm</code>, with the <code>add=TRUE</code> option. We add a
 legend to the plot in the usual way.</p>
 <pre class="r"><code># . . . continuing from previous code . . .
-with(afs19utm, plot(geometry, add=TRUE, lwd = 2, 
-                    pch = c(0,1,2,3,5,6,15,17,18,19)[Group], 
-                    col = rainbow(10,v=0.6,end=0.75)[Group]))
+clrz &lt;- viridis(15)[6:15]
+with(afs19utm, plot(geometry, add=TRUE,
+                    pch = rep(21:25,2)[Group],
+                    bg = clrz[Group]))
 legend(&quot;bottomright&quot;, legend=levels(as.factor(afs19$Group)),
-       pch = c(0,1,2,3,5,6,15,17,18,19), col = rainbow(10,v=0.6,end=0.75),
-       pt.lwd = 2, title = &quot;Group&quot;, inset = 0.02, ncol = 2)</code></pre>
+       pch = rep(21:25,2), pt.bg = clrz,
+       title = &quot;Group&quot;, inset = 0.02, ncol = 2)</code></pre>
 <div class="figure" style="text-align: center">
 <img src="Rmaps_files/figure-html/add-data-1.png" alt="Figure 3. Map of Ashfield Flats (UTM), with added North arrow, scale bar, and user data, over OpenStreetMap tiles acquired using maptiles." width="70%" />
 <p class="caption">
@@ -546,7 +552,7 @@ text(c(400263, 399962, 400047), c(6468174, 6468083, 6468237),
      labels = c(&quot;Chapman Drain&quot;,&quot;Kitchener Drain&quot;, &quot;Woolcock Drain&quot;),
      pos = c(2,2,4), cex = 0.8, font = 3, col = &quot;cadetblue&quot;)
 addnortharrow(text.col=1, border=1)
-addscalebar(plotepsg = 32750, label.col = 1, linecol = 1, 
+addscalebar(plotepsg = 32750, label.col = 1, linecol = 1,
             label.cex = 1.2, htin=0.15, widthhint = 0.15)
 # plot bubbles using the symbols() function
 with(afs19, symbols(Easting, Northing, add = TRUE, circles = 0.4*sqrt(Zn),
@@ -560,7 +566,7 @@ if (pretty(afs19$Zn)[1] &lt; 0.001) {
 bubhi &lt;- pretty(afs19$Zn)[NROW(pretty(afs19$Zn))]
 symbols(c(400600,400600),c(6468040,6467980), circles=0.4*sqrt(c(bublo,bubhi)), add=T,
         lwd=1, inches=F, fg = &quot;purple&quot;, bg = &quot;#8000FF40&quot;)
-text(c(400600,400620,400620),c(6468100,6468040,6467980), 
+text(c(400600,400620,400620),c(6468100,6468040,6467980),
      labels=c(&quot;Zn (mg/kg)&quot;,bublo,bubhi), cex=0.85, pos = c(1,4,4))</code></pre>
 <div class="figure" style="text-align: center">
 <img src="Rmaps_files/figure-html/map-bubbles-1.png" alt="Figure 6. Bubble map of zinc concentrations in sediment and soil at Ashfield Flats in 2019, over OpenStreetMap tiles acquired using maptiles." width="70%" />
@@ -578,7 +584,8 @@ interest, in this example <strong>Zn</strong>, into percentiles. The new
 column called <code>QZn</code> is a factor which identifies which
 percentile of Zn concentration each sample is in. We then use this
 factor to define symbols, sizes, and colours for each sample location.
-We add a line break to text labels using <code>$\backslash$n</code>.</p>
+We add a line break to text labels using <span
+class="math inline">\(\backslash\)</span><code>n</code>.</p>
 <pre class="r"><code>par(oma=c(3,3,1,1), lend=&quot;square&quot;)
 plot(aftiles)
 box(lwd=6,col=&quot;white&quot;) # tidies up skewness of UTM tiles a bit
@@ -588,31 +595,31 @@ axis(2, tcl=-0.2, mgp = c(1.6,0.3,0))
 mtext(&quot;Northing (UTM Zone 50, m)&quot;, side = 2, line = 1.5, font=2)
 box()
 with(afr_map, lines(drain_E, drain_N, col = &quot;cadetblue3&quot;, lwd = 2))
-with(afr_map, polygon(wetland_E, wetland_N, col = &quot;cadetblue2&quot;, 
+with(afr_map, polygon(wetland_E, wetland_N, col = &quot;cadetblue2&quot;,
                       border = &quot;cadetblue3&quot;))
 text(c(400263, 399962, 400047), c(6468174, 6468083, 6468237),
      labels = c(&quot;Chapman\nDrain&quot;,&quot;Kitchener\nDrain&quot;, &quot;Woolcock\nDrain&quot;),
      pos = c(2,2,4), cex = 0.8, font = 3, col = &quot;cadetblue&quot;)
 addnortharrow(text.col=1, border=1)
-addscalebar(plotepsg = 32750, label.col = 1, linecol = 1, 
+addscalebar(plotepsg = 32750, label.col = 1, linecol = 1,
             label.cex = 1.2, htin=0.15, widthhint = 0.15)
 # percentile plot
-afs19$QZn &lt;- cut(afs19$Zn, quantile(afs19$Zn, 
-                 p=c(0,0.02,0.05,0.25,0.5,0.75,0.95,0.98,1), 
+afs19$QZn &lt;- cut(afs19$Zn, quantile(afs19$Zn,
+                 p=c(0,0.02,0.05,0.25,0.5,0.75,0.95,0.98,1),
                  na.rm=T), labels=c(&quot;Q0-02&quot;,&quot;Q02-05&quot;,&quot;Q05-25&quot;,&quot;Q25-50&quot;,
                                     &quot;Q50-75&quot;,&quot;Q75-95&quot;,&quot;Q95-98&quot;,&quot;Q98-max&quot;))
 palette(pal4liteTransp) # use colours with semi-transparency (defined near top)
 # use percentile factor column to categorize points
-with(afs19, 
-     points(Easting, Northing, 
-            pch = c(22,22,22,3,4,21,21,21)[QZn], 
+with(afs19,
+     points(Easting, Northing,
+            pch = c(22,22,22,3,4,21,21,21)[QZn],
             col = c(1,1,1,4,5,1,1,1)[QZn], bg = c(1:8)[QZn],
-            lwd = c(1,1,1,2,2,1,1)[QZn], 
+            lwd = c(1,1,1,2,2,1,1)[QZn],
             cex = c(0.5,0.65,0.8,1,1,1.5,2.2,3)[QZn])
      )
 legend(&quot;bottomright&quot;, legend = levels(afs19$QZn), title=&quot;Zn&quot;,
        pch = c(22,22,22,3,4,21,21,21), col = c(1,1,1,4,5,1,1,1),
-       pt.lwd = c(1,1,1,2,2,1,1), pt.bg = c(1:8), 
+       pt.lwd = c(1,1,1,2,2,1,1), pt.bg = c(1:8),
        pt.cex = c(0.5,0.65,0.8,1,1,1.5,2.2,3),
        bty = &quot;n&quot;, inset = 0.02, cex = 0.85, y.intersp = 1.2)</code></pre>
 <div class="figure" style="text-align: center">
@@ -648,7 +655,7 @@ central coordinate with the extent controlled by the <code>zoom</code>
 option:</p>
 <pre class="r"><code>## library(ggmap)
 register_google(key = secret) # you need your own Google Maps API code
-udubua.gg &lt;- get_googlemap(center=c(115.8213,-31.98165), 
+udubua.gg &lt;- get_googlemap(center=c(115.8213,-31.98165),
                            zoom = 16, maptype = &quot;terrain&quot;, color = &quot;bw&quot;)</code></pre>
 <p>Next we plot the ggmap object using ggplot grammar. It's possible to
 just plot the object (<em>i.e</em>. run <code>ggmap(udubua.gg)</code>),
@@ -664,12 +671,12 @@ styles is available by selecting a combination of one of
 is designed to add scale bar and north arrow to ggmaps, but it seems
 buggy and we currently don't recommend it - the north arrow seems OK
 though.</p>
-<pre class="r"><code>ggmap(udubua.gg) + 
-  labs(y=&quot;Latitude (\u00B0S)&quot;, x = &quot;Longitude (\u00B0E)&quot;) + 
+<pre class="r"><code>ggmap(udubua.gg) +
+  labs(y=&quot;Latitude (\u00B0S)&quot;, x = &quot;Longitude (\u00B0E)&quot;) +
   geom_text(aes(x = 115.825, y = -31.98, label = &quot;Swan\nRiver&quot;,
-                fontface = &quot;italic&quot;, family=&quot;sans&quot;), 
-            size = 4, vjust = 0, hjust = 0, color=&quot;gray40&quot;) + 
-  geom_point(aes(x = Longitude, y = Latitude, col=Type, shape=Type), 
+                fontface = &quot;italic&quot;, family=&quot;sans&quot;),
+            size = 4, vjust = 0, hjust = 0, color=&quot;gray40&quot;) +
+  geom_point(aes(x = Longitude, y = Latitude, col=Type, shape=Type),
              data = places, size=3) +
   theme(axis.text=element_text(size=9, color=&quot;black&quot;),
         axis.title=element_text(size=11,face=&quot;bold&quot;))</code></pre>
@@ -709,14 +716,14 @@ example in Figure 10).</li>
                                    right = 175.0, top = -41.15),
                             zoom=13, # seems to be max zoom
                             maptype = &quot;terrain&quot;, color = &quot;color&quot;)
-ggmap(tai_Stamen) + 
-  labs(y=&quot;Latitude (\u00B0S)&quot;, x = &quot;Longitude (\u00B0E)&quot;) + 
+ggmap(tai_Stamen) +
+  labs(y=&quot;Latitude (\u00B0S)&quot;, x = &quot;Longitude (\u00B0E)&quot;) +
   geom_rect(aes(xmin=174.94, xmax=174.96, ymin=-41.178,ymax=-41.188),
                colour=&quot;red3&quot;, fill=NA, size=1.2) +
   geom_text(aes(x = 174.961, y = -41.183, label = &quot;live\nplay\nschool&quot;,
-                fontface = &quot;bold&quot;, family=&quot;mono&quot;), 
+                fontface = &quot;bold&quot;, family=&quot;mono&quot;),
             size = 5, vjust = 0.5, hjust = 0, color=&quot;red3&quot;, lineheight=0.8) +
-  geom_text(aes(x = 174.91, y = -41.16, 
+  geom_text(aes(x = 174.91, y = -41.16,
                 label = paste(&quot;(author&#39;s childhood neighbourhood,\n&quot;,
                               &quot;Tait\u0101,&quot;,&quot;Aotearoa New Zealand)&quot;),
                 fontface = &quot;italic&quot;, family=&quot;serif&quot;),
@@ -724,7 +731,7 @@ ggmap(tai_Stamen) +
   geom_point(aes(x = lon, y = lat, color=name), data=taita, size = 4) +
   scale_color_manual(values = c(&quot;navy&quot;,&quot;goldenrod&quot;,&quot;darkorchid&quot;,&quot;seagreen&quot;)) +
   theme(axis.text=element_text(size=9, color=&quot;black&quot;),
-        axis.title=element_text(size=11,face=&quot;bold&quot;)) + 
+        axis.title=element_text(size=11,face=&quot;bold&quot;)) +
   theme_bw()</code></pre>
 <div class="figure" style="text-align: center">
 <img src="Rmaps_files/figure-html/ggStamenNZ-1.png" alt="Figure 9. Map of the central Hutt Valley, New Zealand, plotted with Stamen terrain map tiles acquired using the R package ggmap." width="80%" />
@@ -744,21 +751,21 @@ that all layers use a common CRS (<u>C</u>oordinate <u>R</u>eference
 <u>S</u>ystem). <br> Run <code>help(geom_sf)</code> for more
 information.</p>
 <pre class="r"><code>afr.gg &lt;- get_stamenmap(bbox=c(left=115.941, bottom = -31.92,
-                                   right = 115.948, top = -31.916), 
+                                   right = 115.948, top = -31.916),
                         zoom=17, col = &quot;bw&quot;,maptype = &quot;toner-lite&quot;)
-ggmap(afr.gg) + 
-  labs(y=&quot;Latitude (\u00B0S)&quot;, x = &quot;Longitude (\u00B0E)&quot;) + 
+ggmap(afr.gg) +
+  labs(y=&quot;Latitude (\u00B0S)&quot;, x = &quot;Longitude (\u00B0E)&quot;) +
   geom_text(aes(x = 115.944, y = -31.918, label = &quot;Ashfield\nFlats&quot;,
-                fontface = &quot;italic&quot;, family=&quot;sans&quot;), 
+                fontface = &quot;italic&quot;, family=&quot;sans&quot;),
             size = 4, color=&quot;gray65&quot;, lineheight=0.8) +
   geom_text(aes(x = 115.942, y = -31.9199, label = &quot;Swan River&quot;,
                 fontface=&quot;italic&quot;, family=&quot;sans&quot;), size=4, color=&quot;gray65&quot;) +
-  geom_path(aes(x = drain_lon, y=drain_lat), data=afr_map, 
+  geom_path(aes(x = drain_lon, y=drain_lat), data=afr_map,
             color = &quot;slategray2&quot;, size = 1.25) +
   geom_polygon(aes(x=wetland_lon, y=wetland_lat), data = afr_map,
-               color = &quot;slategray&quot;, fill=&quot;azure3&quot;) + 
+               color = &quot;slategray&quot;, fill=&quot;azure3&quot;) +
   geom_sf(data = afs21ll, aes(bg=Zn, size=Zn), shape=21, inherit.aes = FALSE) +
-  scale_fill_viridis_c(alpha = 0.7) + 
+  scale_fill_viridis_c(alpha = 0.7) +
   scale_size_area(breaks = c(30,100,300,1000,3000,5000), max_size = 9) +
   theme_bw() +
   theme(axis.title = element_text(size = 12, face = &quot;bold&quot;)) +
@@ -781,8 +788,8 @@ locations.
 <p>The rosm package (Dunnington 2022) allows users to produce background
 maps from several map tile providers.</p>
 <p>The following map tile types seem to work using
-<code>osm.plot()</code> in the <code>rosm</code> package:
-<br><code>"osm", "hotstyle", "stamenbw", "stamenwatercolor", "cartodark", "cartolight"</code></p>
+<code>osm.plot()</code> in the <code>rosm</code> package:<br>
+<code>"osm", "hotstyle", "stamenbw", "stamenwatercolor", "cartodark", "cartolight"</code></p>
 <p>The following map tile types seem to work using
 <code>bmaps.plot()</code> in the <code>rosm</code> package:<br>
 <code>"Aerial", "AerialWithLabels"</code></p>
@@ -795,8 +802,8 @@ udubua.rosm &lt;- makebbox(-31.9751,115.8284,-31.9882,115.8143)
 osm.plot(udubua.rosm, type=&quot;cartolight&quot;, zoomin=0)
 
 # add some points to the plot
-osm.points(c(115.82, 115.8186, 115.8211, 115.8182, 115.8184), 
-           c(-31.9835, -31.9829, -31.9821, -31.9790, -31.9765), 
+osm.points(c(115.82, 115.8186, 115.8211, 115.8182, 115.8184),
+           c(-31.9835, -31.9829, -31.9821, -31.9790, -31.9765),
            col=&quot;purple&quot;, lwd=2, pch=7, cex=1.5)
 box(which = &quot;plot&quot;)</code></pre>
 <div class="figure" style="text-align: center">
@@ -813,8 +820,8 @@ are trying to emphasise the data rather than the map features.</p>
 class="section level3">
 <h3>another option using a Bing map as background</h3>
 <pre class="r"><code>bmaps.plot(udubua.rosm, type=&quot;AerialWithLabels&quot;, zoomin=0)
-osm.points(c(115.82, 115.8186, 115.8211, 115.8182, 115.8184), 
-           c(-31.9835, -31.9829, -31.9821, -31.9790, -31.9765), 
+osm.points(c(115.82, 115.8186, 115.8211, 115.8182, 115.8184),
+           c(-31.9835, -31.9829, -31.9821, -31.9790, -31.9765),
            col=&quot;yellow&quot;, lwd=2, pch=10, cex=1.5)
 osm.text(c(115.825,115.826), c(-31.98, -31.988),
          labels = c(&quot;Matilda\nBay&quot;, &quot;Pelican Point&quot;),
@@ -835,17 +842,17 @@ class="section level3">
 <h3>embedding rosm functions inside prettymap()</h3>
 <pre class="r"><code>prettymap({
   osm.plot(udubua.rosm, type=&quot;stamenbw&quot;, zoomin = -1)
-  osm.points(c(115.82, 115.8186, 115.8211, 115.8182, 115.8184), 
-             c(-31.9835, -31.9829, -31.9821, -31.9790, -31.9765), 
+  osm.points(c(115.82, 115.8186, 115.8211, 115.8182, 115.8184),
+             c(-31.9835, -31.9829, -31.9821, -31.9790, -31.9765),
              col=&quot;red&quot;, lwd=3, pch = 15, cex=1.5)
-  osm.text(115.825, -31.98, labels = &quot;Matilda\nBay&quot;, 
+  osm.text(115.825, -31.98, labels = &quot;Matilda\nBay&quot;,
            font = 3, col = &quot;azure&quot;)
-  osm.text(115.824, -31.9865, labels = &quot;Pelican Point&quot;, 
+  osm.text(115.824, -31.9865, labels = &quot;Pelican Point&quot;,
            font = 3, col = &quot;navy&quot;)
 },
-oma = c(3,3,1,1), drawarrow = T, arrow.scale = 1, 
+oma = c(3,3,1,1), drawarrow = T, arrow.scale = 1,
 arrow.border = &quot;pink&quot;, arrow.text.col = &quot;pink&quot;,
-scale.htin = 0.15, scale.label.cex = 1.2, scale.label.col = &quot;pink&quot;, 
+scale.htin = 0.15, scale.label.cex = 1.2, scale.label.col = &quot;pink&quot;,
 scale.linecol = &quot;pink&quot;, scale.pos = &quot;bottomright&quot;
 )
 legend(&quot;right&quot;, legend = &quot;Coffee is\nfound here&quot;,
@@ -864,7 +871,7 @@ rosm package, and illustrating the axis problem.
 axes in Figure 13, however, are in web Mercator coordinates (and are
 messy). This is a problem with no easy fix. Either we don't include axes
 (not ideal, since we should show some coordinates), figure out how to
-plot them, or use another package.</p>
+plot them, or use another <strong>R</strong> package.</p>
 <hr>
 </div>
 </div>
@@ -889,7 +896,7 @@ installation (Windows and Mac) and the requirement for the XQuartz app
 on Mac OS. Otherwise the <code>OpenStreetMap</code> package can be very
 useful!</p>
 <pre class="r"><code>UWA_osm &lt;- openmap(upperLeft = c(-31.974, 115.812), # latitude first
-                   lowerRight = c(-31.988, 115.828), 
+                   lowerRight = c(-31.988, 115.828),
                    zoom = 16,
                    type = &quot;osm&quot;)
 plot(UWA_osm)</code></pre>
@@ -946,7 +953,7 @@ print(UWA_utm$bbox, digits=6) # show bounding coordinates to check</code></pre>
 <pre><code>## Show upper left (p1) and lower right (p2) coordinates
 ## $p1
 ## [1]  387742 6461857
-## 
+##
 ## $p2
 ## [1]  389290 6460267</code></pre>
 <p><strong>...then plot the map in its new projection.</strong></p>
@@ -991,7 +998,7 @@ the UTM coordinates</p>
 <code>maptiles</code> map), but the coordinates could also be obtained
 from a data frame - edit to suit!</p>
 <pre class="r"><code>utm.temp &lt;- st_as_sf(data.frame(x=c(399800,400700),y=c(6467900,6468400)),
-                     coords = c(&quot;x&quot;,&quot;y&quot;), crs = UTM50)</code></pre>
+                     coords = c(&quot;x&quot;,&quot;y&quot;), crs = UTM50S)</code></pre>
 <p>We then use the <code>st_transform()</code> function from the
 <code>sf</code> package to convert to long-lat (or another projection),
 which results in another spatial object:</p>
@@ -1008,7 +1015,7 @@ tiles_longlat &lt;- get_tiles(longlat.temp, provider = &quot;OpenStreetMap&quot;
 <p>To extract coordinates from a data frame, for example: <br>
 (<strong>NOTE</strong> - missing coordinates are not allowed!)</p>
 <pre class="r"><code>afs19 &lt;- afs19[-which(is.na(afs19[,c(&quot;Easting&quot;)])==1),] # remove rows with NAs
-afs19utm &lt;-  st_as_sf(afs19, coords = c(&quot;Easting&quot;,&quot;Northing&quot;), crs = UTM50)</code></pre>
+afs19utm &lt;-  st_as_sf(afs19, coords = c(&quot;Easting&quot;,&quot;Northing&quot;), crs = UTM50S)</code></pre>
 <p>We then use the <code>st_transform()</code> function from the
 <code>sf</code> package to convert to longitude-latitude, which results
 in another spatial data frame:</p>
