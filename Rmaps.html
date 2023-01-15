@@ -945,7 +945,9 @@ id="plot-a-re-projected-uwa-campus-map-in-utm-with-margins-axes-and-annotations"
 class="section level3">
 <h3>Plot a re-projected UWA campus map in UTM with margins, axes, and
 annotations</h3>
-<p>First convert the projection...</p>
+<p>First convert the projection (we need to specify the new projection
+using a 'proj4' string – for UTM Zone 50, southern hemisphere, this is
+<code>"+proj=utm +zone=50 +south"</code>) ...</p>
 <pre class="r"><code>require(OpenStreetMap)
 UWA_utm &lt;- openproj(UWA_osm, projection = &quot;+proj=utm +zone=50 +south&quot;)
 cat(&quot;Show upper left (p1) and lower right (p2) coordinates\n&quot;)
@@ -956,7 +958,10 @@ print(UWA_utm$bbox, digits=6) # show bounding coordinates to check</code></pre>
 ## 
 ## $p2
 ## [1]  389290 6460267</code></pre>
-<p><strong>...then plot the map in its new projection.</strong></p>
+</div>
+<div id="then-plot-the-map-in-its-new-projection."
+class="section level3">
+<h3>...then plot the map in its new projection.</h3>
 <pre class="r"><code># plot the map in its new projection
 par(mar = c(3, 3, 0.5, 0.5), mgp = c(1.6, 0.3, 0), tcl = 0.4)
 plot(UWA_utm, removeMargin = FALSE)
@@ -980,6 +985,9 @@ changed from the OpenStreetMap default to Universal Transverse Mercator
 direction, and we have axes in the Universal Transverse Mercator (UTM)
 projection with units of metres, which we would normally set up our
 field GPS to show.</p>
+<p>We could easily add data and annotations to this plot using standard
+plotting functions such as <code>points()</code>, <code>text()</code>,
+and <code>legend()</code>.</p>
 </div>
 </div>
 <div id="final-words" class="section level2">
