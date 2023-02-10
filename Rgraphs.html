@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>More graphs in R</title>
+
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<link href="site_libs/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-5.1.3/bootstrap.bundle.min.js"></script>
+<script src="site_libs/bs3compat-0.4.0/transition.js"></script>
+<script src="site_libs/bs3compat-0.4.0/tabs.js"></script>
+<script src="site_libs/bs3compat-0.4.0/bs3compat.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">cyboRg</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li>
+  <a href="code.html">
+    <span class="fa fa-project-diagram"></span>
+     
+    Code
+  </a>
+</li>
+<li>
+  <a href="rants.html">
+    <span class="fa fa-bell"></span>
+     
+    Rants
+  </a>
+</li>
+<li>
+  <a href="about.html">
+    <span class="fa fa-address-card"></span>
+     
+    About
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="social.html">
+    <span class="fa fa-twitter"></span>
+     
+    Social
+  </a>
+</li>
+<li>
+  <a href="work.html">
+    <span class="fa fa-user-graduate"></span>
+     
+    UWA
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">More graphs in R</h1>
+
+</div>
+
+
+<style type="text/css">
+  body{
+  font-size: 12pt;
+}
+</style>
+<p><img src="Rgraphs_files/figure-html/page%201%20header%20hide%20code-1.png" width="100%" style="display: block; margin: auto 0 auto auto;" /></p>
+<div id="more-basic-information-on-plots-in-r" class="section level1">
+<h1>More basic information on plots in <strong>R</strong></h1>
+<p>This is a supplement to the other preliminary material on
+<strong>R</strong> graphics. We have tried to avoid any overlap with
+other sessions.</p>
+<p><span style="font-size: 14pt; background-color:#FFFF80;">In
+Environmental Science at UWA we try to promote the principles of
+"<strong>graphical excellence</strong>". This means:</span></p>
+<ul>
+<li><strong>Show the data</strong> – <span
+style="font-size:10pt; color:#404040;">that is, the data are the
+important thing we want to communicate in graphics; "looking good" is
+only useful if it shows the data better!</span>.</li>
+<li>Give your viewer the <strong>greatest number of ideas</strong> in
+the <strong>shortest time</strong> with the <strong>least ink</strong>
+in the <strong>smallest space</strong> (Tufte, 1983)<sup>1</sup></li>
+<li>Graphical excellence is
+<ul>
+<li>almost always <strong>multivariate</strong>...</li>
+<li>...requires <strong>telling the truth</strong> about the data <span
+style="font-size:10pt; color:#404040;">(no distortions, fair
+comparisons, <em>etc</em>.)</span>.</li>
+</ul></li>
+</ul>
+<p><strong>Some practical tips</strong>:</p>
+<ul>
+<li>Increase the default text and symbol sizes</li>
+<li>Remove unnecessary lines (smooth, spread)</li>
+<li>in RStudio, use the Export▾ button » Copy to clipboard » select
+◉Metafile (best pasting into Word, <em>etc.</em>)</li>
+<li>Graph plus caption should be self-contained</li>
+<li>Transform axes if necessary (using arguments in <strong>R</strong>
+plotting functions)</li>
+<li>Use appropriate proportions (width/height) for the plot you are
+creating</li>
+</ul>
+<p><span style="font-size:10pt"><sup>1</sup> Tufte, E.R., 1983. <em>The
+visual display of quantitative information</em>. Graphics Press,
+Cheshire, Connecticut, USA. </span></p>
+<hr style="height: 1px; background-color: #5560A4;" />
+<p>We first load a dataset that we may have seen before (we use it a lot
+for illustration).</p>
+<pre class="r"><code>sv2017 &lt;- read.csv(file=&quot;sv2017_original.csv&quot;, stringsAsFactors = TRUE)
+sv2017$Group &lt;- as.factor(sv2017$Group)</code></pre>
+<p>We then make an <em>xy</em>-plot (Figure @ref(fig:sp-1)) using the
+<code>scatterplot()</code> function from the <code>car</code> package,
+first setting graphics output parameters with <code>par()</code> and
+making a custom palette with <code>palette()</code>.</p>
+<table width="100%" border="1">
+<tr>
+<td>
+<p><strong>Colours in R</strong> <br>The <code>palette()</code> function
+needs a vector of colour names or codes, which we can then refer to by
+numbers in subsequent functions. <strong>R</strong> has over 600
+built-in colour names – to see these, run the function
+<code>colors()</code> or run <code>demo("colors")</code>. Colour codes
+are a character string with 6 digits or letters after the <code>#</code>
+symbol, like <code>"#A1B2C3"</code>. The first 2 characters after
+<code>#</code> are a hexadecimal number specifying the intensity of the
+<span style="color:white; background-color:red;"> red </span> component
+of the colour, the next 2 specify <span
+style="background-color:#00FF00;"> green </span>, and the next 2 <span
+style="color:white; background-color:blue;"> blue </span>.</p>
+<p>The greatest 2-digit hexadecimal number is <code>FF</code>, equal to
+the decimal number 255. Since we can include zero, this means there will
+be 256<sup>3</sup> = 16,777,216 unique colours in
+<strong>R</strong>.</p>
+Optionally we can use an 8-character colour code, such as
+<code>"#A1B2C399"</code>, where the last 2 characters define the colour
+transparency. <code>"#xxxxxx00"</code> would be fully transparent, and
+<code>"#xxxxxxFF"</code> would be fully opaque. We can also use the
+colour name <code>"transparent"</code> in <strong>R</strong> which can
+sometimes be useful.
+</td>
+</tr>
+</table>
+<p>
+ 
+</p>
+<pre class="r"><code>require(car)
+# adjust overall plot appearance using options within par()
+# mar sets plot margins, mgp sets distance of axis details from axis
+par(font.lab=2, mar=c(4,4,1,1), mgp=c(2.2,0.7,0.0))
+# create custom palette with nice colours :)
+palette(c(&quot;black&quot;,&quot;red3&quot;,&quot;blue3&quot;,&quot;gold3&quot;,&quot;sienna&quot;))
+# draw scatterplot with customised options
+# pch sets plot character (symbol); cex sets symbol/font sizes
+scatterplot(Ca~pH | Type, data=sv2017, log=&quot;y&quot;, smooth=FALSE,
+            legend = list(coords=&quot;topleft&quot;), col=c(5,3,1), 
+            pch=c(16,0,2), cex=1.5, cex.lab=1.5, cex.axis=1.2)</code></pre>
+<div class="figure">
+<img src="Rgraphs_files/figure-html/sp-1-1.png" alt="Scatterplot of Ca vs. pH from the sv2017 dataset, made using car::scatterplot() after setting graphics parameters and colour palette." width="480" />
+<p class="caption">
+Scatterplot of Ca vs. pH from the sv2017 dataset, made using
+car::scatterplot() after setting graphics parameters and colour palette.
+</p>
+</div>
+<hr style="height: 1px; background-color: #5560A4;" />
+<div id="histogram-with-density-line" class="section level3">
+<h3>histogram with density line</h3>
+<p>We have seen a modified boxplot similar to that in Figure
+@ref(fig:histogram-density) before. Adding a density line to a histogram
+can help us identify <em>bimodal distributions</em>, or see more easily
+if the distribution is symmetrical or not.</p>
+<pre class="r"><code># load required package(s)
+require(RcmdrMisc)
+# plot histogram with custom scale and y-axis limits
+Hist(log10(sv2017$EC), scale=&quot;density&quot;, breaks=15, 
+     col=&quot;gray&quot;, ylim=c(0,2))
+# add density plot overlay onto histogram
+lines(density(log10(sv2017$EC), na.rm=TRUE), col=&quot;blue&quot;)</code></pre>
+<div class="figure">
+<img src="Rgraphs_files/figure-html/histogram-density-1.png" alt="Histogram of EC from the sv2017 data with density line plot added." width="576" />
+<p class="caption">
+Histogram of EC from the sv2017 data with density line plot added.
+</p>
+</div>
+<hr style="height: 1px; background-color: #5560A4;" />
+</div>
+<div id="boxplot-by-groups" class="section level3">
+<h3>Boxplot by groups</h3>
+<p>We also made a grouped box plot like the one in Figure
+@ref(fig:boxplot-by-groups) in a previous session.</p>
+<pre class="r"><code># set up overall plot parameters with par()
+par(mar=c(4,4,1,1), mgp=c(2.2,0.7,0),
+    font.lab=2, lend=&quot;square&quot;, ljoin=&quot;mitre&quot;)
+# make an object containing a table of means
+Cu_means&lt;-tapply(log10(sv2017$Cu), sv2017$Type, mean, na.rm=T)
+# plot the boxplot with nice axis titles etc.
+boxplot(log10(sv2017$Cu) ~ sv2017$Type, id.method=&quot;y&quot;,
+        col=c(&quot;skyblue&quot;,&quot;tan&quot;,&quot;grey&quot;), id.n=0,
+        xlab=&quot;Sample Type&quot;, cex=1.4, cex.lab=1.4, cex.axis=1.3, 
+        ylab=expression(bold(paste(log[10],&quot;(Cu, mg/kg)&quot;))))
+# plot the means as a symbol 
+points(Cu_means, col=&quot;blue&quot;, pch=3, cex=1.5, lwd=2)
+# optionally add a horizontal line to represent some 
+# threshold or guideline value(s)
+abline(h=log10(65), col=&quot;red&quot;, lty=2)
+# add a legend (especially if a threshold line was added!)
+# Note use of \n to add a line break
+legend(&quot;bottomright&quot;,legend=c(&quot;Mean&quot;,&quot;ISQG-Low:\nCu 65 mg/kg&quot;),
+       pch=c(3,3), pt.cex=c(1.5,0), pt.lwd=c(2,-1), cex=1.,
+       col=c(&quot;blue&quot;,&quot;red&quot;),lty=c(-1,2),lwd=c(-1,2), bty=&quot;n&quot;, 
+       seg.len=2.5, inset=0.03, x.intersp = 0.5)</code></pre>
+<div class="figure">
+<img src="Rgraphs_files/figure-html/boxplot-by-groups-1.png" alt="Boxplot of Cu by Type, showing means, in the sv2017 data." width="672" />
+<p class="caption">
+Boxplot of Cu by Type, showing means, in the sv2017 data.
+</p>
+</div>
+<pre class="r"><code># delete the object containing the table of means
+# (to keep your R workspace tidy)
+rm(Cu_means)</code></pre>
+<hr style="height: 1px; background-color: #5560A4;" />
+</div>
+<div id="scatterplot-of-water-sample-points-by-group"
+class="section level3">
+<h3>scatterplot of water sample points by group</h3>
+<p>First read the water data:</p>
+<pre class="r"><code>SL_water &lt;- read.csv(file=&quot;SL18.csv&quot;, stringsAsFactors = TRUE)
+SL_water$Group &lt;- as.factor(SL_water$Group)</code></pre>
+<p>We can then use <code>scatterplot()</code> from the <code>car</code>
+package to plot the points. Important arguments in the
+<code>scatterplot()</code> function in this example are:</p>
+<ul>
+<li><code>regLine = FALSE</code> to <em>not</em> plot regression lines
+for the points</li>
+<li><code>smooth = FALSE</code> to <em>not</em> plot smoothed curves for
+the points</li>
+<li><code>asp = 1</code> sets the plot aspect ratio to 1 so the geometry
+is not distorted (this is important for anything resembling maps!)</li>
+<li><code>legend = list(...)</code> to set legend position, size,
+<em>etc</em>.</li>
+<li><code>pch = c(...)</code> to select specific symbols for each group
+of points</li>
+</ul>
+<p>We also define the colour palette to be used; <code>viridis::</code>
+specifies the package to use without actually loading it, so we can use
+the function <code>viridis(n)</code>, which gives a palette of
+<code>n</code> <strong>colourblind-friendly</strong> colours<br> (In
+general we can run <code>packageName::function()</code> without
+explicitly loading packages.)</p>
+<pre class="r"><code># define the colour palette to choose plot colours from
+palette(c(&quot;black&quot;, viridis::viridis(8)))
+carPalette(palette())
+# note the asp=1 option constrains the height/width ratio
+scatterplot(Northing ~ Easting | Group,
+            regLine = FALSE,
+            smooth = FALSE,
+            boxplots = FALSE,
+            cex = 1.25,
+            cex.axis = 1.2,
+            cex.lab = 1.3,
+            data = SL_water,
+            asp = 1,
+            lwd = 2,
+            legend = list(coords=&quot;topright&quot;, cex=1.25),
+            pch = c(0,1,2,5,6,15,16,17,18,7,9,10),
+            xlab = &quot;Easting UTM Zone 50 (m)&quot;,
+            ylab = &quot;Northing UTM Zone 50 (m)&quot;,
+            main = &quot;Smith&#39;s Lake Water Sample Locations 2017&quot;,
+            cex.main = 0.7
+)
+text(
+  c(391380, 391390),
+  c(6466498, 6466405),
+  labels = c(&quot;Inlet&quot;, &quot;Outlet&quot;),
+  pos = 2,
+  col = c(2, 5)
+)</code></pre>
+<div class="figure">
+<img src="Rgraphs_files/figure-html/water-scatterplot-1.png" alt="Plot of water sample locations in Smith's Lake in 2018 made using car::scatterplot()." width="576" />
+<p class="caption">
+Plot of water sample locations in Smith's Lake in 2018 made using
+car::scatterplot().
+</p>
+</div>
+<hr style="height: 1px; background-color: #5560A4;" />
+</div>
+<div id="base-r-plot-of-water-sample-points-by-group"
+class="section level3">
+<h3>'base <strong>R</strong>' plot of water sample points by group</h3>
+<p>We can reproduce Figure @ref(fig:water-scatterplot) made using
+<code>car::scatterplot()</code> in base-<strong>R</strong> graphics as
+well:</p>
+<pre class="r"><code># set up overall plot parameters with par()
+# font.lab=2 makes axis titles bold
+# &#39;lend&#39; sets line end style, &#39;ljoin&#39; sets line join style
+par(
+  mar=c(4,4,1,1),
+  mgp=c(2.2,0.7,0),
+  font.lab=2,
+  lend=&quot;square&quot;,
+  ljoin=&quot;mitre&quot;
+)
+# define the colour palette to be used
+# viridis:: specifies the package to use without actually loading it, so
+# we can use viridis(n) which gives a palette of n colourblind-friendly colours
+palette(  c(&quot;black&quot;, viridis::viridis(8)))
+# plot the points, separating by the factor &#39;Group&#39;
+# note the asp=1 option constrains the height/width ratio
+plot(SL_water$Northing ~ SL_water$Easting,
+     cex = 1.3,
+     cex.axis = 1.2,
+     cex.lab = 1.3,
+     asp = 1,
+     lwd = 1,
+     pch = c(21:25,21:24)[SL_water$Group], # better plot symbols!
+     bg = c(1:9)[SL_water$Group],          # fill colour for pch 21-25
+     xlab = &quot;Easting UTM Zone 50 (m)&quot;,
+     ylab = &quot;Northing UTM Zone 50 (m)&quot;,
+     main = &quot;Smith&#39;s Lake Water Sample Locations 2017&quot;,
+     cex.main = 0.7
+)
+# add a grid (optional)
+grid()
+# draw the legend to identify groups by symbol/colour
+# note similar usage of cex, pch, etc.
+legend(
+  &quot;topright&quot;,
+  title=&quot;Group&quot;,
+  legend=levels(SL_water$Group),
+  cex=1.2,
+  pch = c(21:25,21:24), # vector for pch= same as for plot
+  pt.bg = 1:9,          # fill colour for pch 21-25
+  pt.cex=1.3,
+  pt.lwd=1,
+  box.col=&quot;grey&quot;,
+  box.lwd=2,
+  inset=0.02
+)
+# add some text at appropriate coordinates
+#  vector of x&#39;s, vector of y&#39;s, vector of text labels, etc.
+text(
+  c(391380, 391390),
+  c(6466498, 6466405),
+  labels = c(&quot;Inlet&quot;, &quot;Outlet&quot;),
+  pos = 2,
+  col = c(6, 3)
+)</code></pre>
+<div class="figure">
+<img src="Rgraphs_files/figure-html/baseR-water-plot-1.png" alt="Plot of water sample locations in Smith's Lake in 2018 made using base-R graphics." width="576" />
+<p class="caption">
+Plot of water sample locations in Smith's Lake in 2018 made using base-R
+graphics.
+</p>
+</div>
+<p>The code to make Figure @ref(fig:baseR-water-plot) is somewhat more
+intricate than that for Figure @ref(fig:water-scatterplot), but
+base-<strong>R</strong> plotting can give us more control over plot
+appearance. (Note that we don't need to have each function argument on a
+separate line, as we have done in the previous code block.)</p>
+<hr style="height: 1px; background-color: #5560A4;" />
+<blockquote>
+<p>"...when we look at the <strong>graphs of rising ocean
+temperatures</strong>, rising carbon dioxide in the atmosphere and so
+on, we know that they are climbing far more steeply than can be
+accounted for by the natural oscillation of the weather ... What people
+(must) do is to change their behavior and their attitudes ... If we do
+care about our grandchildren then we have to do something, and we have
+to demand that our governments do something."</p>
+<p>--- David Attenborough</p>
+</blockquote>
+<hr style="height: 1px; background-color: #5560A4;" />
+</div>
+<div id="manipulating-graphics-parameters" class="section level2">
+<h2>Manipulating graphics parameters</h2>
+<p>First read some more data 🙂</p>
+<pre class="r"><code>sv18 &lt;- read.csv(&quot;sv18.csv&quot;, stringsAsFactors = TRUE)
+sv18$Group &lt;- as.factor(sv18$Group)</code></pre>
+<div
+id="using-xy-plots-to-look-at-the-effect-of-changing-par-function-arguments"
+class="section level3">
+<h3>1. Using <em>xy</em>-plots to look at the effect of changing
+<code>par()</code> function arguments</h3>
+<p>We use the base-<strong>R</strong> function <code>par()</code> to
+change graphics parameters like plot margins. After using
+<code>par()</code> these stay changed until changed again by running
+<code>par()</code> with different arguments.</p>
+<p>For example let's plot an <em>x-y</em> plot using the default
+settings in <code>par()</code>:</p>
+<pre class="r"><code>plot(sv18$Ca ~ sv18$pH, log=&quot;y&quot;)</code></pre>
+<div class="figure">
+<img src="Rgraphs_files/figure-html/Ca-pH-baseR-1.png" alt="Default plot of Ca vs. pH." width="576" />
+<p class="caption">
+Default plot of Ca vs. pH.
+</p>
+</div>
+<p>
+ 
+</p>
+<p>Now, try changing some graphics options using the <code>par()</code>
+function and re-running the simple plot</p>
+<pre class="r"><code>par(mar=c(4,4,1,1), mgp=c(1.8,0.7,0), font.lab=2, cex=1.5, cex.axis=1.25, 
+    cex.lab=1.5, tcl=0.2)
+plot(sv18$Ca ~ sv18$pH, log=&quot;y&quot;)</code></pre>
+<div class="figure">
+<img src="Rgraphs_files/figure-html/big-labels-1.png" alt="Plot of Ca vs. pH with plot margins, symbol sizes, and font size and style changed using par()." width="576" />
+<p class="caption">
+Plot of Ca vs. pH with plot margins, symbol sizes, and font size and
+style changed using par().
+</p>
+</div>
+<p>
+ 
+</p>
+<p>This time we adjust the settings in <code>par()</code> to plot
+multiple plots on a page using the <code>mfrow</code> argument, which
+needs a two-value vector <code>c(rows,columns)</code>.</p>
+<pre class="r"><code>par(mfrow=c(2,2), mar=c(4,4,1,1), mgp=c(1.2,0.2,0), 
+    font.lab=2, cex=1., cex.axis=.8, cex.lab=1.,
+    tcl=0.2)
+with(sv18, plot(Ca ~ pH, log=&quot;y&quot;, pch=0))
+with(sv18, plot(Mg ~ pH, log=&quot;y&quot;, pch=1, col = &quot;red3&quot;))
+with(sv18, plot(Na ~ pH, log=&quot;y&quot;, pch=2, col = &quot;purple&quot;))
+with(sv18, plot(Sr ~ pH, log=&quot;y&quot;, pch=3, col = &quot;blue2&quot;))</code></pre>
+<div class="figure">
+<img src="Rgraphs_files/figure-html/plot-2x2-1.png" alt="Plot of Ca, Mg, Na, and Sr vs. pH with multiple plots specified using par() and different sub-plot appearances set using arguments in plot()." width="576" />
+<p class="caption">
+Plot of Ca, Mg, Na, and Sr vs. pH with multiple plots specified using
+par() and different sub-plot appearances set using arguments in plot().
+</p>
+</div>
+</div>
+<div id="plots-of-variable-distributions" class="section level3">
+<h3>2. Plots of variable distributions</h3>
+<p>Cumulative Distribution Function using <code>plot.ecdf()</code>. The
+custom <em>y</em>-axis label explains the plot! <br> (note use of
+<code>\u</code> to insert a Unicode character by its 4-digit code
+[Unicode character 2264 is 'less than or equal to' (≤)] )</p>
+<pre class="r"><code>plot.ecdf(sv18$pH, xlab=&quot;x = pH&quot;, 
+          ylab=&quot;Proportion of samples with pH \u2264 x&quot;, main=&quot;&quot;) </code></pre>
+<div class="figure">
+<img src="Rgraphs_files/figure-html/ecdfPlot-pH-1.png" alt="Cumulative distribution of pH in the sv18 dataset." width="576" />
+<p class="caption">
+Cumulative distribution of pH in the sv18 dataset.
+</p>
+</div>
+<p>
+ 
+</p>
+<p>A better cumulative plot is the normal quantile or 'q-q' plot
+specially transformed axes mean that a normally distributed variable
+will plot as a straight line. <code>qqPlot()</code> from the
+<code>car</code> package is best; the plot shows the theoretical line
+and the 95% confidence range.</p>
+<pre class="r"><code>require(car)
+qqPlot(sv18$pH, 
+       xlab=&quot;Theoretical normal distribution quantiles&quot;,
+       ylab=&quot;Soil pH&quot;)</code></pre>
+<div class="figure">
+<img src="Rgraphs_files/figure-html/qqplot-pH-1.png" alt="Normal quantile (QQ) plot of soil pH in the sv18 dataset. The values in the output block below are the row numbers for unusual observations, which also appear on the plot." width="576" />
+<p class="caption">
+Normal quantile (QQ) plot of soil pH in the sv18 dataset. The values in
+the output block below are the row numbers for unusual observations,
+which also appear on the plot.
+</p>
+</div>
+<pre><code>## [1] 59 58</code></pre>
+<p>
+ 
+</p>
+<p>We can group q-q–plots by a factor:</p>
+<pre class="r"><code>par(oma=c(1,1,1,1))
+with(sv18, qqPlot(Na ~ Type, 
+       xlab=&quot;Theoretical normal distribution quantiles&quot;,
+       ylab=&quot;Soil pH&quot;))</code></pre>
+<p><img src="Rgraphs_files/figure-html/qq-byfactor-1.png" width="672" /></p>
+<p>
+ 
+</p>
+<p>Here's another customization of <strong>histograms</strong> - we've
+seen these in a previous Workshop. Adding a reference concentration
+shows what proportion of samples have concentrations exceeding this
+value (or not).</p>
+<pre class="r"><code>with(sv18, hist(log10(Zn), breaks=seq(0.4,3.2,0.2),
+     xlab=&quot;log10(Zn, mg/kg)&quot;, main=&quot;&quot;))
+    # add a vertical line at a threshold value (e.g guideline)
+abline(v=log10(300), lty=2, col=&quot;red&quot;)
+text(log10(300),12, labels = &quot;Zn guideline\n300 mg/kg&quot;, 
+     pos=4, col=&quot;red&quot;)</code></pre>
+<div class="figure">
+<img src="Rgraphs_files/figure-html/hist-abline-1.png" alt="Histogram of Zn in the sv18 data, showing a reference concentration added using abline() and text()." width="672" />
+<p class="caption">
+Histogram of Zn in the sv18 data, showing a reference concentration
+added using abline() and text().
+</p>
+</div>
+<p>
+ 
+</p>
+<p>Here's a similar customization of <strong>box plots</strong> - we've
+also seen these in a previous Workshop (the only way to get
+<strong>complex formatting</strong> in plot axis labels is to use
+<code>expression()</code> – this code has an example for a
+<strong><sub>sub</sub>script</strong> in the <em>y</em>-axis label):</p>
+<pre class="r"><code>boxplot(log10(sv18$Zn) ~ sv18$Type, 
+     xlab=&quot;Sample Type&quot;, 
+     ylab=expression(bold(paste(log[10],&quot;(Zn, mg/kg)&quot;))), main=&quot;&quot;)</code></pre>
+<div class="figure">
+<img src="Rgraphs_files/figure-html/plain-boxplot-1.png" alt="Boxplot of Zn by sample type in the sv18 data, with complex formatting in the y-axis label using an R expression()." width="672" />
+<p class="caption">
+Boxplot of Zn by sample type in the sv18 data, with complex formatting
+in the y-axis label using an R expression().
+</p>
+</div>
+<p>
+ 
+</p>
+<p>Let's plot it again with better font size to copy-paste into a
+report:</p>
+<pre class="r"><code>par(mar=c(4,4,1,1), mgp=c(2,0.6,0), font.lab=2)
+boxplot(log10(sv18$Zn) ~ sv18$Type, 
+        xlab=&quot;Sample Type&quot;, 
+        ylab=expression(bold(paste(log[10],&quot;(Zn, mg/kg)&quot;))), 
+        main=&quot;&quot;,
+        cex.axis=1.5, cex.lab=1.5,
+        col=&quot;moccasin&quot;)
+    # add a HORIZONTAL line at a threshold value (e.g guideline)
+    abline(h=log10(300), lty=2, col=&quot;red&quot;)
+    # label it using text()
+    text(1,log10(300), labels=&quot;Zn limit 300 mg/kg&quot;, 
+         cex=1.25, col=&quot;red&quot;, pos=3)</code></pre>
+<div class="figure">
+<img src="Rgraphs_files/figure-html/better-boxplot-1.png" alt="Modified boxplot of Zn by sample type in the sv18 data, with complex formatting in the y-axis label using an R expression()." width="672" />
+<p class="caption">
+Modified boxplot of Zn by sample type in the sv18 data, with complex
+formatting in the y-axis label using an R expression().
+</p>
+</div>
+</div>
+<div id="variations-on-scatter-plots" class="section level3">
+<h3>3. Variations on scatter plots</h3>
+<p>In this sequence of plots we show one way to informatively plot a
+concentration <em>vs</em>. sediment/soil depth, with depth displayed
+vertically as we would expect in the real world.</p>
+<pre class="r"><code>par(mfrow = c(1,2))
+plot(sv18$Fe ~ sv18$Depth_lower, pch=&quot;-&quot;)
+plot(sv18$Fe ~ sv18$Depth_upper, pch=&quot;+&quot;)</code></pre>
+<div class="figure">
+<img src="Rgraphs_files/figure-html/lower-upper-depth-1.png" alt="Plots of Fe vs. depth measurements in the sv18 data." width="672" />
+<p class="caption">
+Plots of Fe vs. depth measurements in the sv18 data.
+</p>
+</div>
+<p>
+<br>Ideally we would like to plot concentration against <em>mean
+depth</em>, but we can't use a formula (<em>i.e</em>. anything in
+<strong>R</strong> that uses <code>~</code>) in another formula! ...<br>
+...so we change the syntax for the variables in <code>plot()</code> to
+use comma instead of <code>~</code> to allow us to put a calculation in:
+</p>
+<pre class="r"><code>plot(((sv18$Depth_upper+sv18$Depth_lower)/2), sv18$Fe)</code></pre>
+<p><img src="Rgraphs_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>
+ 
+</p>
+<p>We could also do this by calculating a new variable,
+<em>e.g</em>.:</p>
+<pre class="r"><code>sv18$Depth.mean &lt;- (sv18$Depth_upper+sv18$Depth_lower)/2</code></pre>
+<p>We would then use the newly-calculated <code>sv18$Depth.mean</code>
+as the variable.</p>
+<p>For this type of plot, we would prefer to plot depth on the [more
+intuitive] vertical axis</p>
+<pre class="r"><code>plot(sv18$Fe, ((sv18$Depth_upper+sv18$Depth_lower)/2), ylim=c(0,100))</code></pre>
+<div class="figure">
+<img src="Rgraphs_files/figure-html/switch-axes-1.png" alt="Plot of Fe vs. depth with x- and y-axis positions switched (so really it's depth vs. Fe, but we have our reasons)." width="384" />
+<p class="caption">
+Plot of Fe vs. depth with x- and y-axis positions switched (so really
+it's depth vs. Fe, but we have our reasons).
+</p>
+</div>
+<p>
+ 
+</p>
+<p>This puts depth in the wrong direction, though, so we use
+<code>ylim =</code> to reverse direction of y axis - swap
+<code>(0,100)</code> for <code>(100,0)</code>.</p>
+<pre class="r"><code>plot(sv18$Fe, ((sv18$Depth_upper+sv18$Depth_lower)/2), ylim=c(100,0))</code></pre>
+<div class="figure">
+<img src="Rgraphs_files/figure-html/reverse-y-1.png" alt="Plot of Fe vs. depth with x- and y-axis positions switched and the vertical axis (depth) scale reversed." width="384" />
+<p class="caption">
+Plot of Fe vs. depth with x- and y-axis positions switched and the
+vertical axis (depth) scale reversed.
+</p>
+</div>
+<p>
+ 
+</p>
+<p>Now tidy up plot margins, axis labels, <em>etc</em>. - use
+<code>help()</code> to understand the function arguments for
+<code>par()</code> and <code>plot()</code>...</p>
+<pre class="r"><code>par(mar=c(4,4,1,1),
+    mgp=c(1.6,0.5,0),
+    font.lab=2)
+#... and plot it again with nice axis labels
+plot(sv18$Fe, ((sv18$Depth_upper+sv18$Depth_lower)/2), ylim=c(100,0), 
+     xlab=&quot;Fe (mg/kg)&quot;, ylab=&quot;Mean depth (cm)&quot;)</code></pre>
+<div class="figure">
+<img src="Rgraphs_files/figure-html/best-par-and-labels-1.png" alt="Plot of Fe vs. depth with x- and y-axis positions switched, y axis scale reversed, and tidy axis labels." width="384" />
+<p class="caption">
+Plot of Fe vs. depth with x- and y-axis positions switched, y axis scale
+reversed, and tidy axis labels.
+</p>
+</div>
+<p>
+ 
+</p>
+<p>What if we want the horizontal axis 'on top'? We do this by omitting
+axis plotting (<em>i.e</em>. <code>xaxt="n"</code>) and axis label
+(<code>xlab=""</code>)...<br> ... then plot the <em>x</em>-axis
+manually, first adjusting plot margins so that there is more space at
+the top of the plot and less at the bottom.</p>
+<pre class="r"><code>par(mar=c(1,4,4,1)) # won&#39;t change anything except margins
+plot(sv18$Fe, ((sv18$Depth_upper+sv18$Depth_lower)/2),
+     xlab=&quot;&quot;, xaxt=&quot;n&quot;,
+     ylim=c(100,0), 
+     ylab=&quot;Mean depth (cm)&quot;)
+# two code lines for manual axis plus label
+axis(3)
+mtext(side=3, line=2.5, font=2, text=&quot;Fe (mg/kg)&quot;)</code></pre>
+<div class="figure">
+<img src="Rgraphs_files/figure-html/x-axis-to-top-1.png" alt="Plot of Fe vs. depth with x- and y-axis positions switched, y axis scale reversed, tidy axis labels, and x-axis label and ticks at the top." width="384" />
+<p class="caption">
+Plot of Fe vs. depth with x- and y-axis positions switched, y axis scale
+reversed, tidy axis labels, and x-axis label and ticks at the top.
+</p>
+</div>
+<p>
+ 
+</p>
+<table width="100%" border="1">
+<tr>
+<td>
+<strong>Axis values in R</strong><br> In <strong>R</strong> the plot
+axes have a specific order. For example in the <code>par()</code>
+function when setting margins, <em>e.g</em>.
+<code>mar=c(4,4,1,1)</code>, the margins are set with a four-value
+vector. The values of this vector are always in the same order:
+<code>c(bottom, left, top, right)</code>, that is, clockwise starting
+from the bottom axis = 1.
+</td>
+</tr>
+</table>
+<p><img src="Rgraphs_files/figure-html/axis-positions-1.png" width="288" /></p>
+</div>
+<div id="scatterplot-matrices" class="section level3">
+<h3>4. Scatterplot matrices</h3>
+<p>A scatterplot matrix can be a very useful data exploration tool (for
+the most effective visualization, you might need to change the default
+colours).</p>
+<p>Scatterplot matrices are available using the
+<code>scatterplotMatrix()</code> function (which can be shortened to
+<code>spm()</code>) from the <code>car</code> package.</p>
+<p>The most basic implementation is plotting without grouping by a
+Factor variable. Note the different way in which the variables (a list
+starting with <code>~</code> and separated by <code>+</code>) and data
+frame (<code>data=</code>) are specified. The smoothed trend through the
+points can be included by changing the <code>smooth=</code> argument to
+<code>smooth=TRUE</code>.</p>
+<p>A very useful feature of scatter plot matrices is the display of each
+variable's <em>distribution along the diagonal</em> of the plot matrix.
+In the example in Figure @ref(fig:spm-ungrouped), we can see that all
+variables have a positively skewed distribution (which might be made
+more symmetrical by log-transformation).</p>
+<pre class="r"><code>require(car)
+scatterplotMatrix(~Al + Ca + Fe + Na, data=sv18, smooth=FALSE)</code></pre>
+<div class="figure">
+<img src="Rgraphs_files/figure-html/spm-ungrouped-1.png" alt="Scatter plot matrix of Al, Ca, Fe, and Na concentrations in sediment + soil + street dust samples from Smith's Lake and Charles Veryard Reserves, North Perth, WA, sampled in 2018." width="576" />
+<p class="caption">
+Scatter plot matrix of Al, Ca, Fe, and Na concentrations in sediment +
+soil + street dust samples from Smith's Lake and Charles Veryard
+Reserves, North Perth, WA, sampled in 2018.
+</p>
+</div>
+<p>
+ 
+</p>
+<p>To distinguish the points according to the categories in a Factor
+variable, the Factor is included after the list of plotted variables
+using the <code>|</code> operator. We also see the distributions
+separated by group along the diagonal.</p>
+<p>Separating the plots by a factor allows us to see if trends are
+consistent between groups, or if groups behave very differently.</p>
+<pre class="r"><code>scatterplotMatrix(~Al + Ca + Fe + Na | Type, data=sv18, smooth=FALSE,
+                  col=c(&quot;sienna&quot;, &quot;blue3&quot;, &quot;grey50&quot;), 
+                  pch = c(15,1,3), cex=1.4)</code></pre>
+<div class="figure">
+<img src="Rgraphs_files/figure-html/spm-by-group-1.png" alt="Scatter plot matrix of Al, Ca, Fe, and Na concentrations in samples from Smith's Lake and Charles Veryard Reserves, North Perth, WA, sampled in 2018 and grouped by sample type (sediment, soil, or street dust)." width="576" />
+<p class="caption">
+Scatter plot matrix of Al, Ca, Fe, and Na concentrations in samples from
+Smith's Lake and Charles Veryard Reserves, North Perth, WA, sampled in
+2018 and grouped by sample type (sediment, soil, or street dust).
+</p>
+</div>
+<p>
+ 
+</p>
+<p>Often we can get a better idea of the trends and differences between
+variables by transforming variables (log<sub>10</sub>-transformation
+usually is OK).</p>
+<pre class="r"><code>scatterplotMatrix(~log10(Al) + log10(Ca) + log10(Fe) + log10(Na) | Type, 
+                  data=sv18, 
+                  smooth=FALSE,
+                  col=c(&quot;sienna&quot;, &quot;blue3&quot;, &quot;grey50&quot;), 
+                  pch = c(15,1,3), cex=1.4)</code></pre>
+<div class="figure">
+<img src="Rgraphs_files/figure-html/spm-by-group-log-1.png" alt="Scatter plot matrix of log-transformed Al, Ca, Fe, and Na concentrations in samples from Smith's Lake and Charles Veryard Reserves, North Perth, WA, sampled in 2018 and grouped by sample type (sediment, soil, or street dust)." width="576" />
+<p class="caption">
+Scatter plot matrix of log-transformed Al, Ca, Fe, and Na concentrations
+in samples from Smith's Lake and Charles Veryard Reserves, North Perth,
+WA, sampled in 2018 and grouped by sample type (sediment, soil, or
+street dust).
+</p>
+</div>
+<p>
+ 
+</p>
+</div>
+<div id="simple-maps" class="section level3">
+<h3>5. Simple maps</h3>
+<p>Maps are [mostly] just scatterplots with a map background – we will
+spend a separate session on maps in R later</p>
+<p><img src="Rgraphs_files/figure-html/map-code-hidden-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<hr style="height: 1px; background-color: #5560A4;" />
+</div>
+</div>
+</div>
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<hr />
+<p><a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank"><strong>CC-BY-SA</strong></a> • All content by <a href="https://github.com/Ratey-AtUWA" target="_blank">Ratey-AtUWA</a>. My <a href="https://www.uwa.edu.au/schools/agriculture-and-environment" target="_blank">employer</a> does not necessarily know about or endorse the content of this website.<br>
+<span style="font-size:9pt">Created with <span style="font-family: monospace; background-color: #e8e8e8;">rmarkdown</span> in <a href="https://www.rstudio.com/" target="_blank"><span class="fa fa-registered"></span> RStudio</a> using the <span style="font-family: monospace; background-color: #e8e8e8;">darkly</span> theme from <a href="https://bootswatch.com/" target="_blank"><span class="fa fa-swatchbook"></span> Bootswatch</a> via the <span style="font-family: monospace; background-color: #e8e8e8;">bslib</span> package, and <a href="https://fontawesome.com/v5/search?o=r&m=free" target="_blank"><span class="fa fa-font-awesome"></span> fontawesome v5 icons</a>.</span></p>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

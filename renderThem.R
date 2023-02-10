@@ -19,4 +19,9 @@ rmarkdown::render_site("xrdml.Rmd")
 rmarkdown::render_site("hydrus_nod_inf.Rmd")
 rmarkdown::render_site("kmlconv.Rmd")
 
+# code for learning and teaching
+rmarkdown::render_site("WhatsR.Rmd")
+rmarkdown::render_site("Rbasics.Rmd")
+rmarkdown::render_site("Rgraphs.Rmd")
+
 rmarkdown::render_site("testpage.Rmd")
