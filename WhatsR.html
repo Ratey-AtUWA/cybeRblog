@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>R and RStudio for absolute beginners</title>
+
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<link href="site_libs/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-5.1.3/bootstrap.bundle.min.js"></script>
+<script src="site_libs/bs3compat-0.4.0/transition.js"></script>
+<script src="site_libs/bs3compat-0.4.0/tabs.js"></script>
+<script src="site_libs/bs3compat-0.4.0/bs3compat.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">cyboRg</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li>
+  <a href="code.html">
+    <span class="fa fa-project-diagram"></span>
+     
+    Code
+  </a>
+</li>
+<li>
+  <a href="rants.html">
+    <span class="fa fa-bell"></span>
+     
+    Rants
+  </a>
+</li>
+<li>
+  <a href="about.html">
+    <span class="fa fa-address-card"></span>
+     
+    About
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="social.html">
+    <span class="fa fa-twitter"></span>
+     
+    Social
+  </a>
+</li>
+<li>
+  <a href="work.html">
+    <span class="fa fa-user-graduate"></span>
+     
+    UWA
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">R and RStudio for absolute beginners</h1>
+
+</div>
+
+
+<style type="text/css">
+  body{
+  font-size: 12pt;
+}
+</style>
+<p><img src="WhatsR_files/figure-html/page%201%20header%20hide%20code-1.png" width="100%" style="display: block; margin: auto 0 auto auto;" /></p>
+<div id="what-is-r" class="section level1">
+<h1>What is R?</h1>
+<p><strong>R</strong> is called a "<strong>statistical computing
+environment</strong>". This means two things:</p>
+<ol style="list-style-type: decimal">
+<li><strong>R</strong> is software that allows us to perform statistical
+analysis of data;</li>
+<li><strong>R</strong> is a type of computer programming code (a
+language).</li>
+</ol>
+<p>In <strong>R</strong> these two features are combined so that we
+perform the tasks we need to by writing instructions in
+<strong>R</strong> code. We commonly want to:</p>
+<ul>
+<li>create or input data</li>
+<li>format, store, and save our data</li>
+<li>perform statistical and numerical analysis of our data</li>
+<li>display our data and report our analysis in graphs and tables</li>
+</ul>
+<p>By using <strong>R</strong> code to do this, we can easily
+<em>reproduce</em> our analyses, that is, use <em>exactly</em> the same
+procedures again on additional data, or simply re-create what we have
+done. We can save our <strong>R</strong> code in simple 'text' files, or
+even in a document called an <strong>R Notebook</strong> which uses a
+few additional coding features (called 'R markdown') to let us save our
+code and the results of our analysis in the same document. We use R
+markdown to produce documents such as reports (this document is created
+using R markdown).</p>
+<hr style="height: 2px; background-color: #660F00;" />
+<blockquote>
+<p>"...R has developed into a powerful and much used open source tool
+... for advanced statistical data analysis..."</p>
+<p>--- <a
+href="https://onesearch.library.uwa.edu.au/permalink/61UWA_INST/1vk1d8f/alma99584168302101"
+target="_blank">Reimann <em>et al</em>. (2008) – <em>Statistical Data
+Analysis Explained: Applied Environmental Statistics with R</em></a>,
+p.3.</p>
+</blockquote>
+<hr style="height: 2px; background-color: #660F00;" />
+<div id="r-and-rstudio" class="section level2">
+<h2>R and RStudio</h2>
+<p>To make our job of using <strong>R</strong> easier, we'll be using
+the <strong>RStudio</strong> program. RStudio is an IDE or 'integrated
+development environment' which puts everything we need for R coding in
+one place, and has some helpful tools (such as predictive text for code,
+and some menu-driven functions) to make coding easier. In this document,
+when we say '<strong>R</strong>', we really mean 'R in the RStudio
+environment'.</p>
+<div class="figure" style="text-align: center">
+<img src="WhatsR_files/figure-html/fig-RStudio-1.png" alt="The RStudio window with a very brief explanation of some different sub-panes." width="691.2" />
+<p class="caption">
+The RStudio window with a very brief explanation of some different
+sub-panes.
+</p>
+</div>
+</div>
+<div id="three-things-we-really-need-to-know-about-using-r"
+class="section level2">
+<h2>Three things we really need to know about using
+<strong>R</strong></h2>
+<ol style="list-style-type: decimal">
+<li><p><strong>How data are stored</strong>. <strong>R</strong> can
+handle many different types of data, such as numbers, text, categories,
+spatial coordinates, images, and so on. <strong>R</strong> uses various
+types of <em>objects</em> to store different types of data in different
+ways.</p></li>
+<li><p><strong>Code-based instructions</strong>. If we want
+<strong>R</strong> to do something for us, we need to give it
+instructions. We do this in other software too, commonly by using a
+mouse or other pointing device to click and select options from a menu.
+For example, in Excel we can sort a table of data by:</p>
+<ol style="list-style-type: lower-alpha">
+<li>using the mouse to select the cells we want to sort;</li>
+<li>clicking on the Data menu;</li>
+<li>clicking on the Sort button;</li>
+<li>choosing the column we want to sort by in the dialog box that
+appears;</li>
+<li>clicking 'OK'.</li>
+</ol>
+<p>In <strong>R</strong>, we can do the same thing, but we would write
+the instructions in <strong>R</strong> code, such as that shown
+below:</p>
+<p>You don't have to remember this (yet). The code here is also to
+illustrate that, in this document, <strong>R</strong> code will be shown
+in blocks like the one below having a
+<code>shaded background and fixed-space font</code>.</p></li>
+</ol>
+<pre class="r"><code>data_sorted &lt;- data[order(data$column1, data$column2),] </code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>(We did say three things.) <strong>R</strong> is
+<strong>very</strong> literal, and needs precise instructions to do
+everything. A small error in our code will mean we get wrong, or no,
+results. For example, all <strong>R</strong> code is case-sensitive.
+Also, if we don't tell R where to look for things, it won't try anywhere
+else just in case we might have intended another location!</li>
+</ol>
+</div>
+<div id="types-of-data-we-commonly-use-in-r" class="section level2">
+<h2>Types of data we commonly use in <strong>R</strong></h2>
+<div id="single-numbers" class="section level3">
+<h3>Single numbers</h3>
+<p><strong>R</strong> can work with single numbers, much like a complex
+calculator.</p>
+<p>To "run" <strong>R</strong> code, we can type it into the RStudio
+Console and press the <code>enter</code> key. We will see the results of
+running the code also in the Console, below the code we just
+entered.</p>
+<pre class="r"><code>123 + 456</code></pre>
+<pre><code>## [1] 579</code></pre>
+<pre class="r"><code>sqrt(731)</code></pre>
+<pre><code>## [1] 27.03701</code></pre>
+<div class="figure" style="text-align: center">
+<img src="WhatsR_files/figure-html/fig-1-1.png" alt="Understanding simple R functions and output." width="591.36" />
+<p class="caption">
+Understanding simple R functions and output.
+</p>
+</div>
+<p>We don't usually use R like this, but it's handy to know that we have
+a calculator handy if we need in in the <strong>R</strong> Console!</p>
+<table border=2 width="100%" cellpadding="5" style="border-collapse: collapse; width: 100%; border-color: #3F57B8;">
+<tr>
+<td>
+<p><strong>R functions</strong></p>
+<p>This is also the place to introduce Functions in <strong>R</strong>.
+We just used a function -- to calculate a square root:
+<code>sqrt(731)</code>.</p>
+<p>An R function is identified by a <strong>name</strong> such as
+<code>sqrt</code>, <code>t.test</code> or <code>plot</code>, followed by
+<strong>arguments</strong> in parentheses <code>( )</code> (the
+parentheses can be empty, for example <code>help.start()</code> -- try
+it!). We used the argument <code>731</code> in the <code>sqrt()</code>
+function -- some functions require several arguments, as you will see.
+Some arguments have default 'built-in' values.</p>
+<p>There are huge numbers of built-in functions in <strong>R</strong>
+which we can use after first installing <strong>R</strong>, "straight
+out of the box" (we call this "<strong>base R</strong>"). For instance,
+see the
+<a href="https://cran.r-project.org/doc/contrib/Baggott-refcard-v2.pdf" target="_blank">R
+reference card v2 by Matt Baggott</a>.</p>
+<p>If we can't find the functions we need, they may be available in
+<strong>R packages</strong> which are additional libraries of functions
+that we can install from within the <strong>R</strong> environment. A
+commonly used package is <code>car</code>, the <u>c</u>ompanion to
+<u>a</u>pplied <u>r</u>egression. We would install this into
+<strong>R</strong> using a function
+<code>install.packages("car")</code>, which stores the library on our
+device. To use the functions in the <code>car</code> package we would
+load the library into our <strong>R</strong> session by running
+<code>library(car)</code>.</p>
+We can also write our own functions in <strong>R</strong> and we may
+show you examples of these as you progress through this course.
+</td>
+</tr>
+<table>
+</div>
+<div id="vectors" class="section level3">
+<h3>Vectors</h3>
+<p>A vector is a one-dimensional set of numbers, similar to a column or
+row of values in a spreadsheet. We use the simple function
+<code>c()</code> to <strong>c</strong>oncatenate, or put together, a set
+of values. The code below shows how we can make a vector
+<strong>object</strong> using the assign code <code>\&lt;-</code> to
+give our vector a name of our choice. Just by entering the vector
+object's name, we can then see its contents:</p>
+<pre class="r"><code>a &lt;- c(1,3,5,7,9,2,4,6,8,10)
+a</code></pre>
+<pre><code>##  [1]  1  3  5  7  9  2  4  6  8 10</code></pre>
+<p>We can also check the type of object using the <code>class()</code>
+function, or using another function that asks if the object is in a
+specific class (<em>e.g</em>. <code>is.vector()</code> or
+<code>is.character()</code>).</p>
+<pre class="r"><code>class(a)</code></pre>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<pre class="r"><code>is.vector(a)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>is.character(a)</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<p>We can also make use of the square brackets: remember from Figure 1
+that the values in square brackets <code>[ ]</code> are the index for a
+set of values. For a vector, which is one dimensional, we just need one
+value in <code>[ ]</code> at the end of our object name to select
+particular values:</p>
+<pre class="r"><code>a[3]</code></pre>
+<pre><code>## [1] 5</code></pre>
+<pre class="r"><code># we can also use a range of values
+a[7:10]</code></pre>
+<pre><code>## [1]  4  6  8 10</code></pre>
+<p>There are some other useful ways to make vectors in
+<strong>R</strong>, such as the functions <code>seq()</code>
+(<strong>seq</strong>uence) and <code>rep()</code>
+(<strong>rep</strong>eat) (and many others!). Try changing some of the
+code below and running it, to make sure you understand the results each
+time.</p>
+<pre class="r"><code># make a vector with a sequence of numbers from 2 to 80 in steps of 2
+b &lt;- seq(2,80,2)
+b</code></pre>
+<pre><code>##  [1]  2  4  6  8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54
+## [28] 56 58 60 62 64 66 68 70 72 74 76 78 80</code></pre>
+<p>Notice that if we have a long vector, the number in square brackets
+at the beginning of each line tells us which item the line starts
+with.</p>
+<pre class="r"><code># make a vector of the number 12 repeated 20 times
+d &lt;- rep(12,20)
+d</code></pre>
+<pre><code>##  [1] 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12</code></pre>
+</div>
+<div id="matrices" class="section level3">
+<h3>Matrices</h3>
+<p>A matrix is a two-dimensional set of data with rows and columns. All
+of the entries must be the same type (<em>e.g</em>. integer, numeric,
+character). We can make a matrix using a vector (<em>e.g</em>.
+<code>b</code> from above), so long as we specify how many rows and/or
+columns we want:</p>
+<pre class="r"><code>m &lt;- matrix(b, nrow = 5)
+m</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
+## [1,]    2   12   22   32   42   52   62   72
+## [2,]    4   14   24   34   44   54   64   74
+## [3,]    6   16   26   36   46   56   66   76
+## [4,]    8   18   28   38   48   58   68   78
+## [5,]   10   20   30   40   50   60   70   80</code></pre>
+<p>By default we fill each column in order, but we can change this by
+using the <span
+style="font-family: monospace; background-color:#e8e8e8;">byrow
+= </span><span
+style="font-family: monospace; color:#600080; background-color:#e8e8e8;">TRUE</span>
+option.</p>
+<pre class="r"><code>m &lt;- matrix(b, ncol = 8, byrow = TRUE)
+m</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
+## [1,]    2    4    6    8   10   12   14   16
+## [2,]   18   20   22   24   26   28   30   32
+## [3,]   34   36   38   40   42   44   46   48
+## [4,]   50   52   54   56   58   60   62   64
+## [5,]   66   68   70   72   74   76   78   80</code></pre>
+<p>We can locate each value in the matrix using a two-part index in
+square brackets <code>[row, column]</code>. Here are some examples (note
+that we <em>always</em> need the comma):</p>
+<pre class="r"><code># single value at [row,column]
+selection &lt;- m[2,3] 
+selection</code></pre>
+<pre><code>## [1] 22</code></pre>
+<pre class="r"><code># a whole row by itself
+selection &lt;- m[4,]
+selection</code></pre>
+<pre><code>## [1] 50 52 54 56 58 60 62 64</code></pre>
+<pre class="r"><code># a whole column by itself
+selection &lt;- m[,8]
+selection</code></pre>
+<pre><code>## [1] 16 32 48 64 80</code></pre>
+</div>
+<div id="data-frames" class="section level3">
+<h3>Data frames</h3>
+<p>Data frames are one of the most common ways to store data in
+<strong>R</strong>. They are two-dimensional like matrices, with rows
+and columns, but the columns can contain different types of data such as
+numbers (integer or numeric), text (character), or categories (factor),
+<em>etc</em>..</p>
+<p>Data frame are one of the best ways to store "real" data which can
+contain information such as sample IDs, treatments, replicates,
+coordinates, categories, measurements, dates/times, <em>etc</em>. Let's
+make one and look at its properties.</p>
+<pre class="r"><code>df &lt;- data.frame(Name = c(&quot;Sample 1&quot;,&quot;Sample 2&quot;,&quot;Sample 3&quot;,&quot;Sample 4&quot;,&quot;Sample 5&quot;),
+                 Group = as.factor(c(&quot;New&quot;,&quot;New&quot;,&quot;Old&quot;,&quot;Old&quot;,&quot;Old&quot;)),
+                 Value = c(2.34,4.56,3.45,5.67,6.54),
+                 Count = as.integer(c(21,35,19,18,27)))
+df</code></pre>
+<pre><code>##       Name Group Value Count
+## 1 Sample 1   New  2.34    21
+## 2 Sample 2   New  4.56    35
+## 3 Sample 3   Old  3.45    19
+## 4 Sample 4   Old  5.67    18
+## 5 Sample 5   Old  6.54    27</code></pre>
+<p>We can see that we made a data frame '<code>df</code>' with 4 columns
+and 5 rows (the first column of output is the row number, not part of
+the data frame's column count). All the columns contain a different type
+of information which we can see using the <code>str()</code>
+(<strong>str</strong>ucture) function:</p>
+<pre class="r"><code>str(df)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    5 obs. of  4 variables:
+##  $ Name : chr  &quot;Sample 1&quot; &quot;Sample 2&quot; &quot;Sample 3&quot; &quot;Sample 4&quot; ...
+##  $ Group: Factor w/ 2 levels &quot;New&quot;,&quot;Old&quot;: 1 1 2 2 2
+##  $ Value: num  2.34 4.56 3.45 5.67 6.54
+##  $ Count: int  21 35 19 18 27</code></pre>
+<p>The output of str() shows that the column called <code>Name</code>
+contains <code>chr</code> (character = text) information,
+<code>Group</code> is a <code>Factor</code> <em>(i.e</em>. categorical
+information) with two <code>levels</code> or categories,
+<code>Value</code> is <code>num</code> (numeric = real numbers), and
+<code>Count</code> is <code>int</code> (integer).</p>
+<p><strong>Data frames</strong> are a very common way of storing our
+data in the <strong>R</strong> environment. The rows of our data frame
+represent our <strong>observations</strong> or 'samples'. The columns of
+a data frame are the <strong>variables</strong> -- information about the
+samples which may be identifying information (character or categorical
+information), or measurements (usually numeric information such as
+counts or concentrations).</p>
+<p>We should notice that each column name is preceded by a dollar sign
+<code>$</code>, and we also use this to specify single columns from a
+data frame:</p>
+<pre class="r"><code># both lines of code below should give the same output!
+df$Value</code></pre>
+<pre><code>## [1] 2.34 4.56 3.45 5.67 6.54</code></pre>
+<pre class="r"><code>df[,3]</code></pre>
+<pre><code>## [1] 2.34 4.56 3.45 5.67 6.54</code></pre>
+</div>
+<div id="other-types-of-object-in-r" class="section level3">
+<h3>Other types of object in R</h3>
+<p>There are <em>many</em> other object types in <strong>R</strong>!
+Many of these are specialised to handle specific types of data, such as
+time series, spatial data, or raster images. One of the more common
+<strong>R</strong> objects is the <strong>list</strong>, which is a
+collection of different object types -- often if we save the output of a
+function, it will be as an object of class <code>list</code>.</p>
+</div>
+</div>
+<div id="working-with-files" class="section level2">
+<h2>Working with files</h2>
+<div id="telling-rstudio-where-to-find-our-files"
+class="section level3">
+<h3>Telling RStudio where to find our files</h3>
+<p>We've just seen how we can create data in R by typing it in, and some
+of our examples in class will do this, but the most common way of
+getting our data into <strong>R</strong> is to <strong>read (input) from
+a file</strong>.</p>
+<p>Before we read any files, though, we need to tell <strong>R</strong>
+where to find the files we've saved, downloaded, or created. There are 2
+ways to do this in RStudio:</p>
+<ol style="list-style-type: decimal">
+<li><p>In the top level menu, click Session » Set Working Directory »
+Choose Directory. This will open a window showing just folders (=
+<em>directories</em>). Click on the folder where your files are, and
+click the <span style="background-color:#d0d0d0;">Open</span>
+button.</p></li>
+<li><p>With the RStudio <span
+style="background-color:#d0d0d0;">Files</span> pane already showing the
+files you are working with, click <span
+style="background-color:#d0d0d0;">More</span>, then <span
+style="background-color:#d0d0d0;">Set As Working
+Directory</span>.</p></li>
+</ol>
+</div>
+<div id="opening-a-file" class="section level3">
+<h3>Opening a file</h3>
+<p>In classes, we will mainly supply data as CSV (<u>C</u>omma
+<u>S</u>eparated <u>V</u>alue, or .csv) files. These are a simple and
+widely-used way to store tabular data such as found in an
+<strong>R</strong> data frame, and can also be opened in Excel and other
+software.</p>
+<p><strong>R</strong> has a specific function for reading .csv files,
+<code>read.csv()</code>. If we know that our file contains categorical
+information present as text, we should also include the option <span
+style="font-family: monospace; background-color:#e8e8e8;">stringsAsFactors
+= </span><span
+style="font-family: monospace; color:#600080; background-color:#e8e8e8;">TRUE</span>
+(we can shorten <span
+style="font-family: monospace; color:#600080; background-color:#e8e8e8;">TRUE</span>
+to <span
+style="font-family: monospace; color:#600080; background-color:#e8e8e8;">T</span>).</p>
+<pre class="r"><code>df &lt;- read.csv(file = &quot;df.csv&quot;, stringsAsFactors = T)
+df</code></pre>
+<pre><code>##       Name Group Value Count
+## 1 Sample 1   New  2.34    21
+## 2 Sample 2   New  4.56    35
+## 3 Sample 3   Old  3.45    19
+## 4 Sample 4   Old  5.67    18
+## 5 Sample 5   Old  6.54    27</code></pre>
+<p>If the file is not in our Working Directory, we would need to specify
+the whole path. We can also read directly from an internet address:</p>
+<pre class="r"><code>df &lt;- read.csv(file = &quot;C:/Users/neo/LocalData/R Projects/Learning R/df.csv&quot;,
+               stringsAsFactors = T)
+df &lt;- read.csv(&quot;https://raw.githubusercontent.com/Ratey-AtUWA/learningR/main/df.csv&quot;,
+               stringsAsFactors = T)</code></pre>
+<p>You might notice that we didn't include <code>file = </code> in the
+second example above. We can do this because <code>file = </code> is the
+option <strong>R</strong> expects first in the <code>read.csv()</code>
+function.</p>
+<center>
+<img src="helpStress.png" width="326" height="300" />
+</center>
+</div>
+<div id="built-in-r-help" class="section level3">
+<h3>Built-in R Help</h3>
+<p>How do we find out the order of options in a function? Well,
+<strong>R</strong> and RStudio have excellent <strong>Help</strong>
+utilities. For example, if we run the code <code>help("read.csv")</code>
+or just <code>?read.csv</code> in the RStudio Console (usually the
+bottom-left pane), this will open the relevant help page in the Help
+pane at (lower) right. We can also search directly in the help pane.</p>
+<p>If we're unsure about anything in R, especially, we may be able to
+find it in the Help system. A very useful place to start is by running
+the code below to get to the general help page:</p>
+<pre class="r"><code>help.start()</code></pre>
+<p>Hopefully we don't need to manually open the <a
+href="http://127.0.0.1:30394/doc/html/index.html"
+class="uri">http://127.0.0.1:30394/doc/html/index.html</a> link; either
+way we will see a page like that below in our RStudio help pane, or in
+our web browser. More detailed help is always available here:
+<strong><a href="https://www.r-project.org/help.html" title="Detailed R help" target="_blank" rel="noopener">https://www.r-project.org/help.html</a></strong></p>
+<p><a href="https://statsandr.com/blog/top-10-errors-in-r/"
+target="_blank">Go here for a great page on common errors in
+<strong>R</strong> and how to fix them</a></p>
+<table width="100%" border="1">
+<tbody>
+<tr>
+<td>
+<h2>
+Statistical Data
+Analysis <img style="width: 4em;" alt="[R logo]" src="https://www.r-project.org/logo/Rlogo.png" />
+</h2>
+<hr style="height: 2px; background-color: #5560A4;" />
+<h3>
+Manuals
+</h3>
+<table width="100%" cols="2">
+<tbody>
+<tr>
+<td width="50%" align="center">
+<a href="http://127.0.0.1:30394/doc/manual/R-intro.html">An Introduction
+to R</a>
+</td>
+<td width="50%" align="center">
+<a href="http://127.0.0.1:30394/doc/manual/R-lang.html">The R Language
+Definition</a>
+</td>
+</tr>
+<tr>
+<td width="50%" align="center">
+<a href="http://127.0.0.1:30394/doc/manual/R-exts.html">Writing R
+Extensions</a>
+</td>
+<td width="50%" align="center">
+<a href="http://127.0.0.1:30394/doc/manual/R-admin.html">R Installation
+and Administration</a>
+</td>
+</tr>
+<tr>
+<td width="50%" align="center">
+<a href="http://127.0.0.1:30394/doc/manual/R-data.html">R Data
+Import/Export</a>
+</td>
+<td width="50%" align="center">
+<a href="http://127.0.0.1:30394/doc/manual/R-ints.html">R Internals</a>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>
+Reference
+</h3>
+<table width="100%" cols="2">
+<tbody>
+<tr>
+<td width="50%" align="center">
+<a href="http://127.0.0.1:30394/doc/html/packages.html">Packages</a>
+</td>
+<td width="50%" align="center">
+<a href="http://127.0.0.1:30394/doc/html/Search.html">Search Engine
+&amp; Keywords</a>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>
+Miscellaneous Material
+</h3>
+<table width="100%" cols="3">
+<tbody>
+<tr>
+<td width="33%" align="center">
+<a href="http://127.0.0.1:30394/doc/html/about.html">About R</a>
+</td>
+<td width="33%" align="center">
+<a href="http://127.0.0.1:30394/doc/AUTHORS">Authors</a>
+</td>
+<td width="33%" align="center">
+<a href="http://127.0.0.1:30394/doc/html/resources.html">Resources</a>
+</td>
+</tr>
+<tr>
+<td width="33%" align="center">
+<a href="http://127.0.0.1:30394/doc/COPYING">License</a>
+</td>
+<td width="33%" align="center">
+<a href="http://127.0.0.1:30394/doc/manual/R-FAQ.html">Frequently Asked
+Questions</a>
+</td>
+<td width="33%" align="center">
+<a href="http://127.0.0.1:30394/doc/THANKS">Thanks</a>
+</td>
+</tr>
+<tr>
+<td width="33%" align="center">
+<a href="http://127.0.0.1:30394/doc/html/NEWS.html">NEWS</a>
+</td>
+<td width="33%" align="center">
+<a href="http://127.0.0.1:30394/doc/html/UserManuals.html">User
+Manuals</a>
+</td>
+<td width="33%" align="center">
+<a href="http://developer.r-project.org/TechDocs">Technical papers</a>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<hr style="height: 2px; background-color: #5560A4;" />
+</div>
+</div>
+</div>
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<hr />
+<p><a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank"><strong>CC-BY-SA</strong></a> • All content by <a href="https://github.com/Ratey-AtUWA" target="_blank">Ratey-AtUWA</a>. My <a href="https://www.uwa.edu.au/schools/agriculture-and-environment" target="_blank">employer</a> does not necessarily know about or endorse the content of this website.<br>
+<span style="font-size:9pt">Created with <span style="font-family: monospace; background-color: #e8e8e8;">rmarkdown</span> in <a href="https://www.rstudio.com/" target="_blank"><span class="fa fa-registered"></span> RStudio</a> using the <span style="font-family: monospace; background-color: #e8e8e8;">darkly</span> theme from <a href="https://bootswatch.com/" target="_blank"><span class="fa fa-swatchbook"></span> Bootswatch</a> via the <span style="font-family: monospace; background-color: #e8e8e8;">bslib</span> package, and <a href="https://fontawesome.com/v5/search?o=r&m=free" target="_blank"><span class="fa fa-font-awesome"></span> fontawesome v5 icons</a>.</span></p>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
