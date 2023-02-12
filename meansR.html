@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Statistics for Comparing Means</title>
+
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<link href="site_libs/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-5.1.3/bootstrap.bundle.min.js"></script>
+<script src="site_libs/bs3compat-0.4.0/transition.js"></script>
+<script src="site_libs/bs3compat-0.4.0/tabs.js"></script>
+<script src="site_libs/bs3compat-0.4.0/bs3compat.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">cyboRg</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li>
+  <a href="code.html">
+    <span class="fa fa-project-diagram"></span>
+     
+    Code
+  </a>
+</li>
+<li>
+  <a href="rants.html">
+    <span class="fa fa-bell"></span>
+     
+    Rants
+  </a>
+</li>
+<li>
+  <a href="about.html">
+    <span class="fa fa-address-card"></span>
+     
+    About
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="social.html">
+    <span class="fa fa-twitter"></span>
+     
+    Social
+  </a>
+</li>
+<li>
+  <a href="work.html">
+    <span class="fa fa-user-graduate"></span>
+     
+    UWA
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Statistics for Comparing Means</h1>
+
+</div>
+
+
+<style type="text/css">
+  body{
+  font-size: 12pt;
+}
+</style>
+<p><img src="meansR_files/figure-html/banner%20hide%20code-1.png" width="100%" style="display: block; margin: auto 0 auto auto;" /></p>
+<div id="intro-comparisons-of-means-between-groups"
+class="section level2">
+<h2>Intro: Comparisons of means between groups</h2>
+<p><strong>Comparison of means</strong> tests help you determine whether
+or not your groups of observations have similar means. The groups are
+defined by the value of a <strong>factor</strong> (a categorical
+variable) for each row (observation) of our dataset.</p>
+<p>There are many cases in statistics where you'll want to compare means
+for two or more populations, samples, or sample types. The
+<strong>parametric</strong> tests like t-tests or ANOVA compare the
+variance <strong>between</strong> groups with the variance
+<strong>within</strong> groups, and use the relative sizes of these 2
+variances to estimate the probability that means are different.</p>
+<p>The parametric mean comparison tests require the variables to have
+normal distributions. We also often assume that all groups of
+observations have<br />
+equal variance in the variable being compared. If the variances in each
+group are not similar enough (<em>i.e</em>. the variable is
+<strong>heteroskedastic</strong>), we need to modify or change the
+statistical test we use.</p>
+<p><strong>Means comparisons</strong> based on <strong>N</strong>ull
+<strong>H</strong>ypothesis <strong>S</strong>tatistical
+<strong>T</strong>esting (NHST) compare the variance <em>between
+groups</em> with the variance <em>within groups</em>, and generate a
+statistic which, if large/unlikely enough (<em>i.e.</em> p =&lt; 0.05),
+allows rejection of the null hypothesis (H<sub>0</sub> = no difference
+between means in each/all groups).</p>
+<p><em>[Further down in this R Code Examples session, we'll look at
+'non-parametric' ways of comparing means, to be used when our
+variable(s) don't meet all of the requirements of conventional
+(parametric) statistical tests.]</em></p>
+<p>In this session we're going to use the 2017 Smith's Lake -- Charles
+Veryard Reserves dataset (see Figure 1) to compare means between groups
+for factors having:</p>
+<ol style="list-style-type: decimal">
+<li>only two groups (using only the soil data);</li>
+<li>more than two groups (using the whole dataset).</li>
+</ol>
+<div class="figure">
+<img src="meansR_files/figure-html/SLCVR-map-1.png" alt="Figure 1: Map showing locations of Charles Veryard and Smiths Lake Reserves, North Perth, Western Australia." width="576" />
+<p class="caption">
+Figure 1: Map showing locations of Charles Veryard and Smiths Lake
+Reserves, North Perth, Western Australia.
+</p>
+</div>
+<div
+id="create-a-factor-separating-the-two-reserves-into-groups-and-limit-the-data-to-only-soil"
+class="section level3">
+<h3>Create a factor separating the two Reserves into groups AND limit
+the data to only soil</h3>
+<p>We split the dataset at Northing = 6466530 m, which represents Bourke
+Street.</p>
+<pre class="r"><code>require(car)
+sv2017$Reserve &lt;- cut(sv2017$Northing,
+                      breaks = c(0,6466530,9999999),
+                      labels = c(&quot;Smiths&quot;,&quot;Veryard&quot;))
+sv17_soil &lt;- subset(sv2017, subset=sv2017$Type==&quot;Soil&quot;)
+cat(&quot;Number of soil samples in each reserve\n&quot;); summary(sv17_soil$Reserve)</code></pre>
+<pre><code>## Number of soil samples in each reserve</code></pre>
+<pre><code>##  Smiths Veryard 
+##      21      52</code></pre>
+</div>
+<div id="check-the-newly-created-factor-with-a-plot"
+class="section level3">
+<h3>Check the newly-created factor with a plot</h3>
+<pre class="r"><code>par(mfrow=c(1,1), mar=c(3.5,3.5,1.5,1.5), mgp=c(1.6,0.25,0),
+    font.lab=2, font.main=3, cex.main=1, tcl=0.3)
+plot(sv17_soil$Northing~sv17_soil$Easting,
+     pch = c(1,2)[sv17_soil$Reserve],
+     col = c(2,4)[sv17_soil$Reserve],
+     cex = c(1.25,1)[sv17_soil$Reserve],
+     lwd = 2, asp=1, xlab=&quot;Easting (UTM Zone 50, m)&quot;,
+     ylab=&quot;Northing (UTM Zone 50, m)&quot;, cex.axis=0.85, cex.lab=0.9,
+     main = &quot;Samples by reserve&quot;)
+abline(h = 6466530, lty=2, col=&quot;gray&quot;)
+legend(&quot;bottomleft&quot;, legend = c(&quot;Smiths Lake&quot;,&quot;Charles Veryard&quot;),
+       cex = 1, pch = c(1,2), col = c(2,4),
+       pt.lwd = 2, pt.cex = c(1.25, 1), title = &quot;Reserve&quot;,
+       bty = &quot;n&quot;, inset = 0.02)</code></pre>
+<div class="figure" style="text-align: center">
+<img src="meansR_files/figure-html/xyMap-1.png" alt="Figure 2: Location map of soil samples at Charles Veryard and Smiths Lake Reserves." width="40%" />
+<p class="caption">
+Figure 2: Location map of soil samples at Charles Veryard and Smiths
+Lake Reserves.
+</p>
+</div>
+<p>The plot in Figure 2 looks OK! You may have just made your first
+<strong>R</strong> map!</p>
+<hr style="height: 2px; background-color: #008060   ;" />
+<blockquote>
+<p>"...we have our work to do<br> Just think about the average..."</p>
+<p>--- <a href="https://www.rush.com" target="_blank">Rush</a>, from the
+song <em>2112 (The Temples of Syrinx)</em></p>
+</blockquote>
+<hr style="height: 2px; background-color: #008060;" />
+</div>
+</div>
+<div id="means-comparisons-for-exactly-two-groups"
+class="section level2">
+<h2>Means comparisons for exactly two groups</h2>
+<p>For variables which are normally distributed, we can use
+conventional, parametric statistics. The following example applies a
+t-test to compare mean values between Reserve. By default the R function
+<code>t.test()</code> uses the <strong>Welch t-test</strong>, which
+doesn't require the variance in each group to be equal (<em>i.e</em>.,
+the Welch t-test is OK for heteroskedastic variables). <br> Of course,
+we still need to use <strong>appropriately transformed
+variables</strong>!</p>
+<pre class="r"><code>require(car)
+powerTransform(sv17_soil$Na)</code></pre>
+<pre><code>## Estimated transformation parameter 
+## sv17_soil$Na 
+##    0.1266407</code></pre>
+<pre class="r"><code>sv17_soil$Na.pow &lt;- (sv17_soil$Na)^0.127
+t.test(sv17_soil$Na.pow ~ sv17_soil$Reserve)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  sv17_soil$Na.pow by sv17_soil$Reserve
+## t = -2.2869, df = 20.851, p-value = 0.03277
+## alternative hypothesis: true difference in means between group Smiths and group Veryard is not equal to 0
+## 95 percent confidence interval:
+##  -0.166413933 -0.007862766
+## sample estimates:
+##  mean in group Smiths mean in group Veryard 
+##              1.762519              1.849657</code></pre>
+<p>We can visualize means comparisons in a few different ways – see
+Figure 3. My favourite is the boxplot with means included as extra
+information - with a bit of additional coding we can include the 95%
+confidence intervals as well! (but this is not shown in this
+document).</p>
+<div id="visualising-differences-in-means---2-groups"
+class="section level3">
+<h3>Visualising differences in means - 2 groups</h3>
+<pre class="r"><code>par(mfrow=c(1,3), mar=c(3.5,3.5,1.5,1.5), mgp=c(1.7,0.3,0),
+    font.lab=2, font.main=3, cex.main=1, tcl=0.3,
+    cex.lab = 1.4, cex.axis = 1.4)
+boxplot(sv17_soil$Na.pow ~ sv17_soil$Reserve, 
+        notch=F, col=&quot;grey92&quot;,
+        xlab=&quot;Reserve&quot;, ylab=&quot;Na (power-transformed)&quot;)
+mtext(&quot;(a)&quot;, 3, -1.5, adj=0.03, font=2)
+require(RcmdrMisc)
+plotMeans(sv17_soil$Na.pow, sv17_soil$Reserve, error.bars=&quot;conf.int&quot;,
+        xlab=&quot;Reserve&quot;, ylab=&quot;Na (power-transformed)&quot;,
+        main = &quot;Don&#39;t include plot titles for reports!&quot;)
+mtext(&quot;(b)&quot;, 3, -1.5, adj=0.03, font=2)
+#
+# the third plot is a box plot with the means overplotted
+boxplot(sv17_soil$Na.pow ~ sv17_soil$Reserve, 
+        notch=F, col=&quot;thistle&quot;,
+        xlab=&quot;Reserve&quot;, ylab=&quot;Na (power-transformed)&quot;)
+# make a temporary object &#39;meanz&#39; containing the means
+meanz &lt;- tapply(sv17_soil$Na.pow, sv17_soil$Reserve, mean, na.rm=T)
+# plot means as points (boxplot boxes are centered on whole numbers)
+points(seq(1, nlevels(sv17_soil$Reserve)), meanz, 
+       col = 6, pch = 3, lwd = 2)
+legend(&quot;bottomright&quot;, &quot;Mean values&quot;, 
+       pch = 3, pt.lwd = 2, col = 6,
+       bty = &quot;n&quot;, inset = 0.03)
+mtext(&quot;(c)&quot;, 3, -1.5, adj=0.03, font=2)</code></pre>
+<div class="figure">
+<img src="meansR_files/figure-html/meancomp-plots-2-groups-1.png" alt="Figure 3: Graphical comparison of means between groups using: (a) a standard box plot; (b) a plot of means showing 95% CI; (c) a box plot also showing mean values in each group." width="864" />
+<p class="caption">
+Figure 3: Graphical comparison of means between groups using: (a) a
+standard box plot; (b) a plot of means showing 95% CI; (c) a box plot
+also showing mean values in each group.
+</p>
+</div>
+<pre class="r"><code>rm(meanz) # tidy up</code></pre>
+<p>[skip to Figure 5 for a 3-group comparison]</p>
+</div>
+<div
+id="homogeneity-of-variance-using-the-variance-ratio-test-or-bartletts-test"
+class="section level3">
+<h3>Homogeneity of variance using the variance ratio test or Bartlett's
+Test</h3>
+<p>We can actually check if the variances are equal in each group using
+Bartlett's Test (<code>bartlett.test()</code>), or for this example with
+<em>exactly two groups</em> we can use the <code>var.test()</code>
+function (do they both give the same conclusion?):</p>
+<pre class="r"><code>with(sv17_soil, bartlett.test(Na.pow ~ Reserve))
+with(sv17_soil, var.test(Na.pow ~ Reserve))</code></pre>
+<pre><code>## 
+##  Bartlett test of homogeneity of variances
+## 
+## data:  Na.pow by Reserve
+## Bartlett&#39;s K-squared = 1.6001, df = 1, p-value = 0.2059
+## 
+## 
+##  F test to compare two variances
+## 
+## data:  Na.pow by Reserve
+## F = 1.664, num df = 15, denom df = 51, p-value = 0.1789
+## alternative hypothesis: true ratio of variances is not equal to 1
+## 95 percent confidence interval:
+##  0.7911095 4.2363994
+## sample estimates:
+## ratio of variances 
+##           1.663991</code></pre>
+<p>Both the variance-ratio and Bartlett tests show that H<sub>0</sub>
+(that variances are equal) can <strong>not</strong> be rejected. We can
+visualise this with (for instance) a boxplot or density plot (Figure
+4):</p>
+<pre class="r"><code>require(car)
+par(mfrow=c(1,2), mar=c(3.5,3.5,1.5,1.5), mgp=c(1.6,0.5,0),
+    font.lab=2, font.main=3, cex.main=0.8, tcl=-0.2,
+    cex.lab = 1, cex.axis = 1)
+boxplot(sv17_soil$Na.pow ~ sv17_soil$Reserve, 
+        notch=FALSE, col=&quot;grey92&quot;,
+        xlab=&quot;Reserve&quot;, ylab=&quot;Na (power-transformed)&quot;)
+densityPlot(sv17_soil$Na.pow ~ sv17_soil$Reserve, 
+            xlab=&quot;Na (power transformed)&quot;, adjust=1.5, ylim=c(0,5))</code></pre>
+<div class="figure">
+<img src="meansR_files/figure-html/vis-variance-2group-1.png" alt="Figure 4: Graphical visulaization of variance (the 'spread' of the distribution) in each group using (left) a box plot and (right) a density plot." width="768" />
+<p class="caption">
+Figure 4: Graphical visulaization of variance (the 'spread' of the
+distribution) in each group using (left) a box plot and (right) a
+density plot.
+</p>
+</div>
+<pre class="r"><code>par(mfrow=c(1,1)) # reset multiple graphics panes</code></pre>
+<p>In each case it's apparent that the variance in Na in the Veryard
+soil is similar to that at Smith's Lake, illustrating the conclusion
+from the statistical tests.</p>
+</div>
+</div>
+<div id="effect-size-for-means-comparisons-cohens-d"
+class="section level2">
+<h2>Effect size for means comparisons: Cohens d</h2>
+<p>Statistical tests which compare means only estimate if there is a
+difference or not. We would also usually like to know how big the
+difference (or '<strong>effect</strong>') is! The Cohen's <em>d</em>
+statistic is a standardised measure of effect size available in the
+<code>effsize</code>h R package.</p>
+<pre class="r"><code>require(effsize)
+cohen.d(sv17_soil$Na.pow ~ sv17_soil$Reserve)</code></pre>
+<pre><code>## 
+## Cohen&#39;s d
+## 
+## d estimate: -0.7483083 (medium)
+## 95 percent confidence interval:
+##      lower      upper 
+## -1.3332988 -0.1633178</code></pre>
+<p>The calculated value of Cohen's <em>d</em> is 0.5 ≤ <em>d</em> &lt;
+0.8, which is medium. The 95% CI for the estimate of Cohen's <em>d</em>
+(<em>i.e</em>. between <code>lower</code> and <code>upper</code>) does
+not include zero, so we can probably rely on it.</p>
+<p><strong>More recently than Cohen, Sawilowsky (2009) proposed that for
+Cohen's d:</strong></p>
+<table width="50%">
+<tr>
+<td align="right">
+0.01 ≤
+</td>
+<td align="center">
+d
+</td>
+<td>
+&lt; 0.2
+</td>
+<td>
+very small
+</td>
+</tr>
+<td align="right">
+0.2 ≤
+</td>
+<td align="center">
+d
+</td>
+<td>
+&lt; 0.5
+</td>
+<td>
+small
+</td>
+</tr>
+<td align="right">
+0.5 ≤
+</td>
+<td align="center">
+d
+</td>
+<td>
+&lt; 0.8
+</td>
+<td>
+medium
+</td>
+</tr>
+<td align="right">
+0.8 ≤
+</td>
+<td align="center">
+d
+</td>
+<td>
+&lt; 1.2
+</td>
+<td>
+large
+</td>
+</tr>
+<td align="right">
+1.2 ≤
+</td>
+<td align="center">
+d
+</td>
+<td>
+&lt; 2.0
+</td>
+<td>
+very large
+</td>
+</tr>
+<td align="right">
+ 
+</td>
+<td align="center">
+d
+</td>
+<td>
+&gt; 2.0
+</td>
+<td>
+huge
+</td>
+</tr>
+</table>
+</div>
+<div id="means-comparisons-for-3-or-more-groups" class="section level2">
+<h2>Means comparisons for 3 or more groups</h2>
+<p>If we have a factor with 3 or more levels (<em>a.k.a</em>. groups, or
+categories), we can use analysis of variance (ANOVA) to compare means of
+a normally distributed variable. In this example we'll use the factor
+'Type' (= sample type) from the Smith's -- Veryard data (not just
+soil!). <br> We still need to use <strong>appropriately transformed
+variables</strong>!</p>
+<pre class="r"><code>require(car)
+powerTransform(sv2017$Al)
+sv2017$Al.pow &lt;- (sv2017$Al)^0.455
+anova_Al &lt;- aov(sv2017$Al.pow ~ sv2017$Type)
+print(anova_Al$call)
+summary(anova_Al)
+cat(&quot;\nMeans for transformed variable\n&quot;);
+meansAl &lt;- tapply(sv2017$Al.pow, sv2017$Type, mean, na.rm=TRUE);
+print(signif(meansAl,3)) # output means with appropriate significant digits
+cat(&quot;\nMeans for original (untransformed) variable\n&quot;);
+meansAl &lt;- tapply(sv2017$Al, sv2017$Type, mean, na.rm=TRUE);
+print(signif(meansAl,4)) # output means with appropriate significant digits
+rm(list=c(&quot;anova_Al&quot;,&quot;meansAl&quot;)) # tidy up</code></pre>
+<pre><code>## Estimated transformation parameter 
+## sv2017$Al 
+## 0.4552982 
+## aov(formula = sv2017$Al.pow ~ sv2017$Type)
+##             Df Sum Sq Mean Sq F value Pr(&gt;F)  
+## sv2017$Type  2  299.3  149.63   4.163 0.0189 *
+## Residuals   85 3055.5   35.95                 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 7 observations deleted due to missingness
+## 
+## Means for transformed variable
+##    Sediment        Soil Street dust 
+##        30.6        35.8        34.2 
+## 
+## Means for original (untransformed) variable
+##    Sediment        Soil Street dust 
+##        2083        2667        2380</code></pre>
+<p>In the output above, the p-value in the ANOVA table
+<code>Pr(&gt;F)</code> is less than 0.05 allowing us to reject the null
+hypothesis. As for a two-group comparison, we can visualize the
+differences in means in different ways (Figure 5).</p>
+<div id="visualising-differences-in-means---3-or-more-groups"
+class="section level3">
+<h3>Visualising differences in means - 3 or more groups</h3>
+<pre class="r"><code>par(mfrow=c(1,3), mar=c(3.5,3.5,1.5,1.5), mgp=c(1.7,0.3,0),
+    font.lab=2, font.main=3, cex.main=1, tcl=0.3,
+    cex.lab = 1.4, cex.axis = 1.4, lend = &quot;square&quot;, ljoin = &quot;mitre&quot;)
+boxplot(sv2017$Al.pow ~ sv2017$Type, notch=T, 
+        cex = 1.2, col=&quot;grey92&quot;, ylim = c(15,61),
+        xlab=&quot;Sample type&quot;, ylab=&quot;Al (power-transformed)&quot;)
+mtext(&quot;(a)&quot;, 3, -1.5, adj=0.97, font=2) # label each sub-plot
+require(RcmdrMisc)
+plotMeans(sv2017$Al.pow, sv2017$Type, error.bars=&quot;conf.int&quot;,
+        xlab=&quot;Sample type&quot;, ylab=&quot;Al (power-transformed)&quot;,
+        main = &quot;Don&#39;t include plot titles in reports!&quot;,
+        ylim = c(15,61))
+mtext(&quot;(b)&quot;, 3, -1.5, adj=0.97, font=2) # label each sub-plot
+boxplot(sv2017$Al.pow ~ sv2017$Type, notch=F, 
+        col=c(&quot;cadetblue&quot;,&quot;moccasin&quot;,&quot;thistle&quot;), 
+        cex = 1.2, ylim = c(15,61),
+        xlab=&quot;Reserve&quot;, ylab=&quot;Al (power-transformed)&quot;)
+mtext(&quot;(c)&quot;, 3, -1.5, adj=0.97, font=2) # label each sub-plot
+meanz &lt;- tapply(sv2017$Al.pow, sv2017$Type, mean, na.rm=T)
+points(seq(1, nlevels(sv2017$Type)), meanz, 
+       col = &quot;white&quot;, pch = 3, lwd = 4, cex = 1.3)
+points(seq(1, nlevels(sv2017$Type)), meanz, 
+       col = &quot;red3&quot;, pch = 3, lwd = 2, cex = 1.2)
+legend(&quot;bottomright&quot;, &quot;Mean values&quot;, 
+       pch = 3, pt.lwd = 2, col = &quot;red3&quot;, pt.cex = 1.2,
+       bty = &quot;n&quot;, inset = 0.03)</code></pre>
+<div class="figure">
+<img src="meansR_files/figure-html/meancomp-plots-3groups-1.png" alt="Figure 5: Graphical comparison of means between 3 or more groups, in three ways: (a) a notched box plot; (b) a plot of means with 95% CI error bars; (c) a box plot also showing mean values in each group." width="864" />
+<p class="caption">
+Figure 5: Graphical comparison of means between 3 or more groups, in
+three ways: (a) a notched box plot; (b) a plot of means with 95% CI
+error bars; (c) a box plot also showing mean values in each group.
+</p>
+</div>
+<pre class="r"><code>rm(meanz) # tidy up</code></pre>
+<p>Look back at Figure 4. Why is Figure 5 better?</p>
+</div>
+<div id="check-homogeneity-of-variances-3-or-more-groups"
+class="section level3">
+<h3>Check homogeneity of variances, 3 or more groups</h3>
+<p>ANOVA also requires variance for each group to be (approximately)
+equal. Since there are more than 2 groups, we need to use the Bartlett
+test.</p>
+<pre class="r"><code>bartlett.test(sv2017$Al.pow~sv2017$Type)</code></pre>
+<pre><code>## 
+##  Bartlett test of homogeneity of variances
+## 
+## data:  sv2017$Al.pow by sv2017$Type
+## Bartlett&#39;s K-squared = 12.85, df = 2, p-value = 0.001621</code></pre>
+<pre class="r"><code>require(car)
+par(mfrow=c(1,2), mar=c(3.5,3.5,1.5,1.5), mgp=c(1.6,0.5,0),
+    font.lab=2, font.main=3, cex.main=0.8, tcl=-0.2,
+    cex.lab = 1, cex.axis = 1)
+boxplot(sv2017$Al.pow ~ sv2017$Type, 
+        notch=FALSE, col=&quot;grey92&quot;,
+        xlab=&quot;Reserve&quot;, ylab=&quot;Al (power-transformed&quot;)
+densityPlot(sv2017$Al.pow ~ sv2017$Type, adjust=2, 
+            xlab=&quot;Al (power transformed)&quot;)</code></pre>
+<div class="figure">
+<img src="meansR_files/figure-html/vis-var-3groups-1.png" alt="Figure 6: Graphical visualization of variance (the 'spread' of the distribution) in 3 groups using (left) a box plot and (right) a density plot." width="768" />
+<p class="caption">
+Figure 6: Graphical visualization of variance (the 'spread' of the
+distribution) in 3 groups using (left) a box plot and (right) a density
+plot.
+</p>
+</div>
+<pre class="r"><code>par(mfrow=c(1,1)) # reset multiple graphics panes</code></pre>
+<p>In each case it's apparent that the variance in Al is Sediment &gt;
+Street dust &gt; soil (Figure 5). We can check the actual variance
+values using <code>tapply()</code>:</p>
+<pre class="r"><code>cat(&quot;--- Variances for each factor level ---\n&quot;)
+with(sv2017, tapply(Al.pow, Type, var, na.rm=TRUE))</code></pre>
+<pre><code>## --- Variances for each factor level ---
+##    Sediment        Soil Street dust 
+##    98.10216    26.80443    13.72370</code></pre>
+<hr style="height: 2px; background-color: #008060   ;" />
+<blockquote>
+<p>"The analysis of variance is not a mathematical theorem, but rather a
+convenient method of arranging the arithmetic."</p>
+<p>--- <a href="https://en.wikipedia.org/wiki/Ronald_Fisher"
+target="_blank">Ronald Fisher</a>, the developer of ANOVA</p>
+</blockquote>
+<hr style="height: 2px; background-color: #008060;" />
+</div>
+<div
+id="analysis-of-variance-with-unequal-variances-heteroskedastic-variable"
+class="section level3">
+<h3>Analysis of variance with unequal variances (heteroskedastic
+variable)</h3>
+<p>We can compare means using the Welch f-test
+(<code>oneway.test()</code>) if our variable has different variance for
+different factor levels.</p>
+<pre class="r"><code>with(sv2017, oneway.test(Al.pow ~ Type))</code></pre>
+<pre><code>## 
+##  One-way analysis of means (not assuming equal variances)
+## 
+## data:  Al.pow and Type
+## F = 1.9945, num df = 2.000, denom df = 13.702, p-value = 0.1737</code></pre>
+<p>The Welch correction for unequal variances means the p-value is now
+too high to reject the null hypothesis, so we find no difference between
+means.</p>
+</div>
+<div id="effect-sizes-for-3-or-more-groups" class="section level3">
+<h3>Effect sizes for 3 or more groups</h3>
+<p><strong>It's not possible to calculate Effect sizes for 3 or more
+groups directly. We would need to create subsets of our dataset which
+include only two groups</strong> (<em>e.g</em>., <strong>with only Soil
+and Sediment), and then run</strong> <code>cohen.d()</code> <strong>from
+the 'effsize' R package.</strong> Or we could do some custom
+coding...</p>
+</div>
+</div>
+<div id="pairwise-comparisons" class="section level2">
+<h2>Pairwise comparisons</h2>
+<p>If our analysis of variance allows rejection of H<sub>0</sub>, we
+still don't necessarily know <strong>which</strong> means are different.
+The test may return a p-value ≤ 0.05 even if only one mean is different
+from all the others. If the p-value ≤ 0.05, we can compute
+<strong>Pairwise Comparisons</strong>. The examples below show pairwise
+comparisons in an analysis of variance for Ba, in groups defined by the
+factor <code>Type</code>.</p>
+<p>The most straightforward way to conduct pairwise comparisons is with
+the <code>pairwise.t.test()</code> function -- this is what we
+<em>recommend.</em> We can generate the convenient '<em>compact letter
+display</em>' using the <strong>R</strong> packages
+<code>rcompanion</code> and <code>multcompView</code>. With the compact
+letter display, factor levels (categories) having the same letter are
+<strong>not</strong> significantly different (pairwise p ≥ 0.05).</p>
+<p>Note that pairwise comparisons always adjust p-values to greater
+values, to account for the increased likelihood of Type 1 Error (false
+positives) with multiple comparisons. There are several ways of making
+this correction, such as Holm's method.</p>
+<p>First, we know we can apply a <em>post-hoc</em> pairwise test, since
+the overall effect of <code>Type</code> on <code>Ba</code> is
+significant (p ≈ 0.002):</p>
+<pre class="r"><code>with(sv2017, shapiro.test(Ba.log))
+with(sv2017, bartlett.test(Ba.log ~ Type))
+anovaBa &lt;- with(sv2017, aov(Ba.log ~ Type))
+cat(&quot;==== Analysis of Variance ====\n&quot;);summary(anovaBa)</code></pre>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  Ba.log
+## W = 0.9885, p-value = 0.6358
+## 
+## 
+##  Bartlett test of homogeneity of variances
+## 
+## data:  Ba.log by Type
+## Bartlett&#39;s K-squared = 3.4694, df = 2, p-value = 0.1765
+## 
+## ==== Analysis of Variance ====
+##             Df Sum Sq Mean Sq F value  Pr(&gt;F)   
+## Type         2  0.538 0.26919    6.66 0.00206 **
+## Residuals   85  3.436 0.04042                   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 7 observations deleted due to missingness</code></pre>
+<p>How did we get <code>Ba.log</code>? (<em>You need to calculate it
+yourself with a line of</em> <strong>R</strong> <em>code</em>!). Also,
+what do the Shapiro-Wilk and Bartlett tests tell us about our choice of
+means comparison test?</p>
+<p>Next we generate the compact letters using the
+<code>fullPTable()</code> function from the <code>rcompanion</code>
+package and <code>multcompLetters()</code> from the
+<code>multcompView</code> package:</p>
+<pre class="r"><code>library(rcompanion)
+library(multcompView)
+(pwBa &lt;- with(sv2017, pairwise.t.test(Ba.log, Type)))
+cat(&quot;\n==== Compact letters ====\n&quot;) 
+pwBa_pv &lt;- fullPTable(pwBa$p.value)                 # from rcompanion
+multcompLetters(pwBa_pv)                            # from multcompView</code></pre>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  Ba.log and Type 
+## 
+##             Sediment Soil  
+## Soil        0.0031   -     
+## Street dust 0.0078   0.3634
+## 
+## P value adjustment method: holm 
+## 
+## ==== Compact letters ====
+##    Sediment        Soil Street dust 
+##         &quot;a&quot;         &quot;b&quot;         &quot;b&quot;</code></pre>
+<p>In the output above, the table of p-values show a significant
+difference (p &lt; 0.05) between Sediment and Soil, and Sediment and
+Street dust (<em>note</em> the use of Holm's p-value adjustment, which
+is the default method). We get the same interpretation from the compact
+letters; Sediment (<code>"a"</code>) is different from Soil and Street
+dust (both <code>"b"</code>). Since Soil and Street dust have the same
+letter (<code>"b"</code>), they are not significantly different, which
+matches the p-value (0.3634).</p>
+<div id="optional-pairwise-compact-letter-display"
+class="section level3">
+<h3>OPTIONAL: Pairwise compact letter display</h3>
+<p>This method using the <code>cld()</code> function is way harder to
+make sense of... it's probably more rigorous, but leads to the same
+conclusion. We need to load the <code>multcomp</code> package.</p>
+<pre class="r"><code>require(multcomp)
+pwise0 &lt;- glht(anovaBa, linfct = mcp(Type=&quot;Tukey&quot;)) # anovaBa from above
+cld(pwise0)</code></pre>
+<pre><code>##    Sediment        Soil Street dust 
+##         &quot;a&quot;         &quot;b&quot;         &quot;b&quot;</code></pre>
+<p>Groups assigned a different letter are significantly different at the
+specified probability level (p ≤ 0.05 by default). In this example, Ba
+concentration in sediment (<code>a</code>) is significantly different
+from both Soil and Street dust (both <code>b</code>, so not different
+from each other).</p>
+<p>We can get the confidence intervals and p-values for each pairwise
+comparison using the <code>TukeyHSD()</code> function (HSD='Honestly
+Significant Difference'):</p>
+</div>
+<div id="optional-pairwise-tukey-multiple-comparisons-of-means"
+class="section level3">
+<h3>OPTIONAL: Pairwise Tukey multiple comparisons of means</h3>
+<p>Also more complicated to understand and, like the code above, we need
+to have a normally-distributed, homoskedastic, variable. Usually we
+don't.</p>
+<pre class="r"><code>TukeyHSD(anovaBa)
+
+rm(list=c(&quot;anovaBa&quot;,&quot;pwise0&quot;))    # tidy up</code></pre>
+<pre><code>##   Tukey multiple comparisons of means
+##     95% family-wise confidence level
+## 
+## Fit: aov(formula = Ba.log ~ Type)
+## 
+## $Type
+##                            diff         lwr       upr     p adj
+## Soil-Sediment        0.20660696  0.06143156 0.3517824 0.0029746
+## Street dust-Sediment 0.27953479  0.05469616 0.5043734 0.0108295
+## Street dust-Soil     0.07292783 -0.11744448 0.2633002 0.6331075</code></pre>
+<p>The first table of output from <code>TukeyHSD()</code> (after
+<code>$Type</code>) shows the differences between mean values for each
+pairwise comparison (<code>diff</code>), and the lower
+(<code>lwr</code>) and upper (<code>upr</code>) limits of the 95%
+confidence interval for the difference in means. If the 95% CI includes
+zero (<em>e.g</em>. for the Street dust-Soil comparison above), there is
+no significant difference.</p>
+<p>This conclusion is supported by the last column of output, showing an
+adjusted p-value of 0.633 (<em>i.e</em>. &gt; 0.05) for the Street
+dust-Soil comparison. Also, as indicated by the 'compact letter display'
+from <code>cld()</code> above, any comparison including Sediment has p ≤
+0.05.</p>
+<hr style="height: 2px; background-color: #5560A4;" />
+<center>
+<img src="distributions-clique.png" width="500" height="240" />
+</center>
+</div>
+</div>
+<div id="non-parametric-comparisons" class="section level2">
+<h2>Non-Parametric Comparisons</h2>
+<div id="wilcoxon-test" class="section level3">
+<h3>1. Wilcoxon test</h3>
+<p>From previous sessions we know that most untransformed variables are
+not normally distributed. For comparison between exactly 2 groups we use
+the <strong>Wilcoxon test</strong> (via the <code>wilcox.test()</code>
+function). The Wilcoxon test is based on ranking of observations, so
+should be independent of transformation -- as in the example below:</p>
+<pre class="r"><code>wilcox.test(sv17_soil$Na ~ sv17_soil$Reserve)
+{cat(&quot;Means for original (untransformed) variable\n&quot;)
+meansNa &lt;- tapply(sv17_soil$Na, sv17_soil$Reserve, mean,
+                  na.rm=TRUE)
+print(signif(meansNa, 3))
+cat(&quot;\n--------------------------------------------\n&quot;)}
+wilcox.test(sv17_soil$Na.pow ~ sv17_soil$Reserve)
+{cat(&quot;Means for transformed variable\n&quot;)
+meansNa &lt;- tapply(sv17_soil$Na.pow, sv17_soil$Reserve, mean, na.rm=TRUE)
+print(signif(meansNa, 3))}
+rm(meansNa) # remove temporary object(s)</code></pre>
+<pre><code>## 
+##  Wilcoxon rank sum test with continuity correction
+## 
+## data:  sv17_soil$Na by sv17_soil$Reserve
+## W = 246, p-value = 0.01426
+## alternative hypothesis: true location shift is not equal to 0
+## 
+## Means for original (untransformed) variable
+##  Smiths Veryard 
+##     102     139 
+## 
+## --------------------------------------------
+## 
+##  Wilcoxon rank sum test with continuity correction
+## 
+## data:  sv17_soil$Na.pow by sv17_soil$Reserve
+## W = 246, p-value = 0.01426
+## alternative hypothesis: true location shift is not equal to 0
+## 
+## Means for transformed variable
+##  Smiths Veryard 
+##    1.76    1.85</code></pre>
+<div id="effect-size" class="section level4">
+<h4>Effect size</h4>
+<pre class="r"><code>require(effsize)
+cohen.d(sv17_soil$Na.pow ~ sv17_soil$Reserve)</code></pre>
+<pre><code>## 
+## Cohen&#39;s d
+## 
+## d estimate: -0.7483083 (medium)
+## 95 percent confidence interval:
+##      lower      upper 
+## -1.3332988 -0.1633178</code></pre>
+</div>
+</div>
+<div id="kruskal-wallis-test" class="section level3">
+<h3>2. Kruskal-Wallis test</h3>
+<p>We use the Kruskal-Wallis test (via the <code>kruskal.test()</code>
+function) for non-parametric comparisons between three or more groups
+defined by a factor.</p>
+<p>This example is testing differences in Fe between sample Types in the
+complete Smith's -- Veryard 2017 dataset.</p>
+<pre class="r"><code>kruskal.test(sv2017$Fe ~ sv2017$Type)
+{cat(&quot;Means for original (untransformed) variable\n&quot;)
+meansFe &lt;- tapply(sv2017$Fe, sv2017$Type, mean,
+                  na.rm=TRUE)
+print(signif(meansFe),4)}
+rm(meansFe)</code></pre>
+<pre><code>## 
+##  Kruskal-Wallis rank sum test
+## 
+## data:  sv2017$Fe by sv2017$Type
+## Kruskal-Wallis chi-squared = 8.222, df = 2, p-value = 0.01639
+## 
+## Means for original (untransformed) variable
+##    Sediment        Soil Street dust 
+##        5111        2695        3694</code></pre>
+<p>With a p-value of ≈ 0.016, H<sub>0</sub> can be rejected. We still
+have the problem of not knowing which means are significantly different
+from each other. The <code>PMCMRplus</code> <strong>R</strong> package
+allows multiple comparisons of means following statistically significant
+Kruskal-Wallis comparisons (there are several options; we will use the
+Conover's non-parametric all-pairs comparison test for Kruskal-type
+ranked data).</p>
+</div>
+<div id="pairwise-comparisons-following-a-kruskal-wallis-test"
+class="section level3">
+<h3>Pairwise comparisons following a Kruskal-Wallis test</h3>
+<pre class="r"><code>require(PMCMRplus)
+kwAllPairsConoverTest(Fe~Type, data=sv2017)</code></pre>
+<pre><code>## 
+##  Pairwise comparisons using Conover&#39;s all-pairs test</code></pre>
+<pre><code>## data: Fe by Type</code></pre>
+<pre><code>## 
+## P value adjustment method: single-step</code></pre>
+<pre><code>##             Sediment Soil 
+## Soil        0.927    -    
+## Street dust 0.064    0.010</code></pre>
+<p>The pairwise comparisons show that only Soil and Street dust have
+significantly different Fe concentration. <em>Note</em> the p-value
+adjustment -- not Holm's this time.</p>
+<p>We can also get a pairwise compact letter display based on the
+results of non-parametric tests. As before, we need the
+<strong>R</strong> packages <code>rcompanion</code> and
+<code>multcompView</code> to do this easily.</p>
+<pre class="r"><code>library(rcompanion)
+library(multcompView)
+pwFe_Type &lt;- with(sv2017, kwAllPairsConoverTest(Fe ~ Type)) # from PMCMRplus
+pwFe_Type_pv &lt;- fullPTable(pwFe_Type$p.value)               # from rcompanion
+multcompLetters(pwFe_Type_pv)                               # from multcompView</code></pre>
+<pre><code>##    Sediment        Soil Street dust 
+##        &quot;ab&quot;         &quot;a&quot;         &quot;b&quot;</code></pre>
+<p>The output from <code>kwAllPairsConoverTest()</code> shows that p ≤
+0.05 only for the Soil-Street dust comparison (<code>"ab"</code> matches
+<code>"a"</code> OR <code>"b"</code>). We can't reject H<sub>0</sub> for
+any other pairwise comparisons. [We would get slightly different results
+using the functions <code>kwAllPairsDunnTest()</code> or
+<code>kwAllPairsNemenyiTest()</code> - see below. In this example, the
+conclusions are the same for each type of pairwise test, but this isn't
+always the case.]</p>
+<pre class="r"><code>kwAllPairsDunnTest(Fe~Type, data=sv2017)
+kwAllPairsNemenyiTest(Fe~Type, data=sv2017)</code></pre>
+<pre><code>## 
+##  Pairwise comparisons using Dunn&#39;s all-pairs test</code></pre>
+<pre><code>## data: Fe by Type</code></pre>
+<pre><code>## 
+## P value adjustment method: holm</code></pre>
+<pre><code>## alternative hypothesis: two.sided</code></pre>
+<pre><code>##             Sediment Soil 
+## Soil        0.721    -    
+## Street dust 0.056    0.012</code></pre>
+<pre><code>## 
+##  Pairwise comparisons using Tukey-Kramer-Nemenyi all-pairs test with Tukey-Dist approximation</code></pre>
+<pre><code>## data: Fe by Type</code></pre>
+<pre><code>## 
+## P value adjustment method: single-step</code></pre>
+<pre><code>## alternative hypothesis: two.sided</code></pre>
+<pre><code>##             Sediment Soil 
+## Soil        0.932    -    
+## Street dust 0.072    0.012</code></pre>
+</div>
+</div>
+<div id="references-and-r-packages" class="section level2">
+<h2>References and R Packages</h2>
+<p>Cohen, J. (1988). <em>Statistical power analysis for the behavioral
+sciences (2nd ed.)</em>. New York:Academic Press.</p>
+<p>Sawilowsky, S.S. (2009). New Effect Size Rules of Thumb. <em>Journal
+of Modern Applied Statistical Methods</em>
+<strong>8</strong>:597-599.</p>
+<p><strong>Run the R code below to get citation information for the R
+packages used in</strong> <strong>this document</strong>.</p>
+<pre class="r"><code>citation(&quot;car&quot;, auto = TRUE)
+citation(&quot;RcmdrMisc&quot;, auto = TRUE)
+citation(&quot;effsize&quot;, auto = TRUE)
+citation(&quot;multcomp&quot;, auto = TRUE)
+citation(&quot;PMCMRplus&quot;, auto = TRUE)
+citation(&quot;rcompanion&quot;, auto = TRUE)
+citation(&quot;multcompView&quot;, auto = TRUE)</code></pre>
+</div>
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<hr />
+<p><a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank"><strong>CC-BY-SA</strong></a> • All content by <a href="https://github.com/Ratey-AtUWA" target="_blank">Ratey-AtUWA</a>. My <a href="https://www.uwa.edu.au/schools/agriculture-and-environment" target="_blank">employer</a> does not necessarily know about or endorse the content of this website.<br>
+<span style="font-size:9pt">Created with <span style="font-family: monospace; background-color: #e8e8e8;">rmarkdown</span> in <a href="https://www.rstudio.com/" target="_blank"><span class="fa fa-registered"></span> RStudio</a> using the <span style="font-family: monospace; background-color: #e8e8e8;">darkly</span> theme from <a href="https://bootswatch.com/" target="_blank"><span class="fa fa-swatchbook"></span> Bootswatch</a> via the <span style="font-family: monospace; background-color: #e8e8e8;">bslib</span> package, and <a href="https://fontawesome.com/v5/search?o=r&m=free" target="_blank"><span class="fa fa-font-awesome"></span> fontawesome v5 icons</a>.</span></p>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
