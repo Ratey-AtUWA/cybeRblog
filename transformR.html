@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Transforming variables</title>
+
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<link href="site_libs/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-5.1.3/bootstrap.bundle.min.js"></script>
+<script src="site_libs/bs3compat-0.4.0/transition.js"></script>
+<script src="site_libs/bs3compat-0.4.0/tabs.js"></script>
+<script src="site_libs/bs3compat-0.4.0/bs3compat.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">cyboRg</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li>
+  <a href="code.html">
+    <span class="fa fa-project-diagram"></span>
+     
+    Code
+  </a>
+</li>
+<li>
+  <a href="rants.html">
+    <span class="fa fa-bell"></span>
+     
+    Rants
+  </a>
+</li>
+<li>
+  <a href="about.html">
+    <span class="fa fa-address-card"></span>
+     
+    About
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="social.html">
+    <span class="fa fa-twitter"></span>
+     
+    Social
+  </a>
+</li>
+<li>
+  <a href="work.html">
+    <span class="fa fa-user-graduate"></span>
+     
+    UWA
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Transforming variables</h1>
+
+</div>
+
+
+<style type="text/css">
+  body{
+  font-size: 12pt;
+}
+</style>
+<p><img src="transformR_files/figure-html/page%201%20header%20hide%20code-1.png" width="100%" style="display: block; margin: auto 0 auto auto;" /></p>
+<div id="distributions-and-transformations-of-variables"
+class="section level1">
+<h1>Distributions and transformations of variables</h1>
+<div id="why-transform-andor-standardise" class="section level2">
+<h2>Why transform and/or standardise?</h2>
+<ul>
+<li>For graphical representation, to spread the variable(s) over a
+reasonable range so that trends, distributions <em>etc</em>. are easier
+to visualize</li>
+<li>Many classical statistical methods assume <em>normally distributed
+variables</em> (ANOVA, correlation, regression)</li>
+<li>To obtain <em>homoscedastic</em> variables (homogeneity of
+variance), another assumption of ANOVA and regression</li>
+<li>For multivariate analysis, variables may be measured on different
+scales, and standardisation gives each variable equal weight in the
+analysis (<em>e.g</em>., Principal Components Analysis – PCA)</li>
+</ul>
+<center>
+<img src="paranormal.jpg" width="300" height="300" />
+</center>
+<p>In case you need to read in the data again...</p>
+<pre class="r"><code>hubbard &lt;- read.csv(&quot;hubbard.csv&quot;, stringsAsFactors = TRUE)</code></pre>
+</div>
+<div id="visualizing-distributions" class="section level2">
+<h2>Visualizing distributions</h2>
+<p>We can use histograms, density plots, or Q-Q plots; probably
+histograms are easiest to interpret.</p>
+<div id="histograms-and-density-plots" class="section level3">
+<h3>Histograms and density plots</h3>
+<p>Histograms plot the frequency (<em>i.e</em>. number) of values of a
+variable which fall into a set of ranges (we use the <strong>R</strong>
+function <code>hist()</code> to draw histograms). The frequency values
+are represented as vertical bars, which have width equal to the range of
+each 'slice' of the overall range (the slices are usually evenly
+spaced). Instead of frequency, <em>density</em> can be plotted for each
+range slice using the argument <code>freq=FALSE</code> in the
+<code>hist()</code> function; density is essentially the relative
+frequency.</p>
+<p>Density plots are a smooth curve of relative frequency <em>vs</em>.
+variable value, and show a 'shape' for the distribution similar to that
+implied by the histogram. Examples of both the histogram (plotted as
+density rather than frequency) and an overplotted density curve are
+shown in Figure 1.</p>
+<pre class="r"><code>with(hubbard, hist(log10(Cd), breaks=15, freq=FALSE, col=&quot;#e0e0ff&quot;, main=&quot;&quot;))
+lines(density(na.omit(log10(hubbard$Cd))), col=&quot;#8080c0&quot;, lwd=3)</code></pre>
+<div class="figure">
+<img src="transformR_files/figure-html/hubb-Cd-hist-1.png" alt="Figure 1: Histogram of Cd (cadmium) concentrations in the Hubbard Brook Experimental Forest, with superimposed density plot. Cd concentrations are log~10~-transformed to address skewness." width="480" />
+<p class="caption">
+Figure 1: Histogram of Cd (cadmium) concentrations in the Hubbard Brook
+Experimental Forest, with superimposed density plot. Cd concentrations
+are log<sub>10</sub>-transformed to address skewness.
+</p>
+</div>
+<p>
+ 
+</p>
+<p>The histogram for Cd (cadmium) in the Hubbard Brook soil dataset
+shows a distribution that <strong>does not</strong> resemble a normal
+distribution.</p>
+<p><strong>NOTE</strong>: It's worth looking at <em>log-transformed</em>
+histograms since bimodal or multi-modal distributions may be easier to
+see. From the histograms we can see if (1) the variable is skewed (and
+therefore probably not normally distributed), or (2) if the distribution
+appears to be bimodal or multi-modal.</p>
+</div>
+<div id="q-q--plots" class="section level3">
+<h3>Q-Q- plots</h3>
+<p>A <strong>Q-Q-plot</strong> or normal quantile plot is a plot of all
+the values in a variable in ascending order, with the axes transformed
+in such a way that a perfectly normally distributed variable would plot
+on a straight line. Deviations of the actual points from the theoretical
+straight line show that where the distribution of the plotted variable
+differs from a normal distribution (as in the examples in Figure 2
+below),</p>
+<pre class="r"><code>par(mfrow=c(1,2)) # set up graphics parameters to show 2 plots side-by-side
+require(car) # the qqPlot() function in car is better than base-R qqplot()
+with(hubbard, qqPlot(Al))</code></pre>
+<pre><code>## [1] 81 94</code></pre>
+<pre class="r"><code>with(hubbard, qqPlot(log10(Al))) # not perfect but better than untransformed</code></pre>
+<div class="figure">
+<img src="transformR_files/figure-html/hubb-Al-qq-1.png" alt="Figure 2: Histogram of Cd concentrations in the Hubbard Brook Experimental Forest, with superimposed density plot. Cd concentrations are log~10~-transformed to address skewness." width="768" />
+<p class="caption">
+Figure 2: Histogram of Cd concentrations in the Hubbard Brook
+Experimental Forest, with superimposed density plot. Cd concentrations
+are log<sub>10</sub>-transformed to address skewness.
+</p>
+</div>
+<pre><code>## [1] 121  81</code></pre>
+<p>
+ 
+</p>
+<p>Perhaps you noticed output like <code>[1] 81 94</code> and
+<code>[1] 121  81</code> above? These are the row numbers (in the data
+frame) of observations with the most unusual values compared with a
+normal distribution. The same row numbers are also shown on the QQ-plots
+in Figure 2 next to the relevant points.</p>
+</div>
+</div>
+<div id="which-transformation" class="section level2">
+<h2>Which transformation?</h2>
+<table cellspacing="2" cellpadding="4" border="2" style="border-collapse: collapse; width: 100%; border-color: #3598DB;">
+<tbody>
+<tr>
+<td style="width: 48%; vertical-align: bottom;">
+ <strong>Nature of variable(s)</strong>
+</td>
+<td style="width: 26%; vertical-align: bottom;">
+ <strong>Transformation</strong>
+</td>
+<td style="width: 26%; vertical-align: bottom;">
+ <strong>R expression</strong>
+</td>
+</tr>
+<tr>
+<td style="vertical-align: top;">
+Measurements (lengths, weights, etc.)
+</td>
+<td style="vertical-align: top;">
+ natural log (log<sub>e</sub>)<br /> log base 10
+(log<sub>10</sub>)<br /> Power functions ,  e.g., x<sup>−½</sup>
+</td>
+<td style="vertical-align: top;">
+<code>log(x)</code><br /><code>log(x,10)</code> or
+<code>log10(x)</code><br /><code>x^-0.5</code>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="vertical-align: top; text-align: center;">
+Use algorithm for Box-Cox transformation to estimate the power function
+term most likely to<br> result in a normally distributed variable
+</td>
+<td style="vertical-align: top;">
+<code>powerTransform(x)</code>
+</td>
+</tr>
+<tr>
+<td style="vertical-align: top;">
+ Proportions (<em>e.g</em>. percentages)
+</td>
+<td style="vertical-align: top;">
+ Logit
+</td>
+<td style="vertical-align: top;">
+<code>log(x/(1-x))</code>
+</td>
+</tr>
+<tr>
+<td style="vertical-align: top;">
+ Counts (numbers of individuals)
+</td>
+<td style="vertical-align: top;">
+ square root
+</td>
+<td style="vertical-align: top;">
+<code>sqrt(x)</code>
+</td>
+</tr>
+<tr>
+<td style="vertical-align: top;">
+ To standardise data (mean = 0, standard deviation = 1)
+</td>
+<td>
+ —
+</td>
+<td style="vertical-align: top;">
+<code>scale(x)</code>
+</td>
+</tr>
+</tbody>
+</table>
+<p>(<code>x</code> is your variable name)</p>
+</div>
+<div id="power-transformation" class="section level2">
+<h2>Power transformation</h2>
+<p>Sometimes a log transformation will not give our variable(s) a normal
+distribution. If so, we can try a <em>power transformation</em>. To do
+this though, we need to know what power to raise our variable to! There
+is an algorithm called '<strong>Box-Cox</strong>' which can estimate the
+power term. It's the basis of the <code>powerTransform()</code> function
+in the <code>car</code> <strong>R</strong> package.</p>
+<pre class="r"><code>powerTransform(hubbard$OM.pct)</code></pre>
+<pre><code>## Estimated transformation parameter 
+## hubbard$OM.pct 
+##      0.0124845</code></pre>
+<pre class="r"><code>hist(hubbard$OM.pct, breaks=15, main = &quot;Untransformed OM (%)&quot;)
+hist(hubbard$OM.pct^0.0125, breaks=15, main = &quot;Power-transformed OM (%)&quot;)</code></pre>
+<div class="figure">
+<img src="transformR_files/figure-html/hubb-OM-hist-x2-1.png" alt="Figure 3: Histograms of untransformed OM (organic matter) concentrations (left) and power-transformed OM concentrations (right) in Hubbard Brook soil." width="864" />
+<p class="caption">
+Figure 3: Histograms of untransformed OM (organic matter) concentrations
+(left) and power-transformed OM concentrations (right) in Hubbard Brook
+soil.
+</p>
+</div>
+<p>
+ 
+</p>
+<pre class="r"><code>powerTransform(hubbard$Al)</code></pre>
+<pre><code>## Estimated transformation parameter 
+## hubbard$Al 
+## -0.1060933</code></pre>
+<pre class="r"><code>with(hubbard, hist(-1*(Al^-0.1061), main=&quot;&quot;))
+with(hubbard, qqPlot(-1*(Al^-0.1061), id=FALSE))</code></pre>
+<div class="figure">
+<img src="transformR_files/figure-html/hubb-Al-hist-qq-1.png" alt="Figure 4: Histogram of power-transformed Al concentrations (left) and QQ-plot of power-transformed Al concentrations (right) in Hubbard Brook soil." width="864" />
+<p class="caption">
+Figure 4: Histogram of power-transformed Al concentrations (left) and
+QQ-plot of power-transformed Al concentrations (right) in Hubbard Brook
+soil.
+</p>
+</div>
+<p>
+ 
+</p>
+<p><strong>NOTE</strong> that we use a different form of the power
+transformation equation, depending on whether the estimated power term
+is positive or negative If the power term is negative, we multiply the
+answer by -1, otherwise the order of observations is reversed! (lowest
+becomes highest and vice-versa)</p>
+<hr style="height: 2px; background-color: #660F00;" />
+<blockquote>
+<p>"<em>There is no such thing in life as normal</em>."</p>
+<p>--- <a href="https://www.lyrics.com/artist/Morrissey/107617"
+target="_blank">Morrissey</a>, from the song <em>The Youngest Was the
+Most Loved</em> (2006)</p>
+</blockquote>
+<hr style="height: 2px; background-color: #660F00;" />
+</div>
+<div id="tests-for-normality" class="section level2">
+<h2>Tests for normality</h2>
+<p><strong>Of course</strong>, these analyses of distributions are only
+visual. We should also run formal statistical tests for normality such
+as the Shapiro-Wilk test, available using the function
+<code>shapiro.test()</code>.</p>
+<p>We first <strong>load a new dataset</strong> (we think that the
+variables in these data illustrate transformations and normality testing
+a bit better).</p>
+<pre class="r"><code>sv2017 &lt;- read.csv(file=&quot;sv2017_original.csv&quot;, stringsAsFactors = TRUE)</code></pre>
+<p>The <code>sv2017</code> data are from Smith's Lake and Charles
+Veryard Reserves in North Perth, Western Australia, the field site focus
+of the class project in the UWA unit ENVT3361 in 2017 and 2018. We now
+make much use of these data to illustrate data analysis with statistics
+and graphics in <strong>R</strong>.</p>
+<div class="figure">
+<img src="transformR_files/figure-html/SLCVR-map-1.png" alt="Figure 5: (a) map showing locations of Charles Veryard and Smiths Lake Reserves, North Perth, Western Australia; (b) photograph of areas targeted for soil sampling." width="1017.6" />
+<p class="caption">
+Figure 5: (a) map showing locations of Charles Veryard and Smiths Lake
+Reserves, North Perth, Western Australia; (b) photograph of areas
+targeted for soil sampling.
+</p>
+</div>
+<p>
+ 
+</p>
+<p>We than compare untransformed and transformed versions of a variable
+(<code>Ca</code>) in this data frame (<code>sv2017</code>) using the
+<code>shapiro.test()</code> function:</p>
+<pre class="r"><code>shapiro.test(sv2017$Ca)</code></pre>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  sv2017$Ca
+## W = 0.56464, p-value = 9.559e-15</code></pre>
+<pre class="r"><code>shapiro.test(log10(sv2017$Ca))</code></pre>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  log10(sv2017$Ca)
+## W = 0.95849, p-value = 0.006584</code></pre>
+<pre class="r"><code>powerTransform(sv2017$Ca)</code></pre>
+<pre><code>## Estimated transformation parameter 
+## sv2017$Ca 
+## -0.194498</code></pre>
+<pre class="r"><code>shapiro.test(-1*(sv2017$Ca^-0.195))</code></pre>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  -1 * (sv2017$Ca^-0.195)
+## W = 0.97635, p-value = 0.1075</code></pre>
+<p><strong>⇨ Which transformation makes <code>sv2017$Ca</code> normally
+distributed?</strong></p>
+<table cellpadding="4" border="4" style="border-collapse: collapse; width: 100%; border-color: #FFD700;">
+<tr>
+<td style="text-align: center;">
+The Null hypothesis H<sub>0</sub> for the Shapiro-Wilk test is that
+<em>the variable's distribution is normal</em>,<br>so a variable with a
+normal distribution will have p &gt; 0.05, <strong>not p ≤ 0.05</strong>
+</td>
+</tr>
+</table>
+</div>
+<div id="many-transformations-efficiently-with-r-programming"
+class="section level2">
+<h2>Many transformations efficiently with R programming</h2>
+<p>The following code uses a programming loop (<code>for(...)</code>)
+and <code>if-else</code> structure<br />
+to semi-automate the process of checking distributions and transforming
+variables.</p>
+<p>This version creates new log- and power-transformed variables and
+tests all untransformed and transformed variables for normality, using
+the Shapiro-Wilk test.</p>
+<pre class="r"><code># load required packages
+require(car)
+# create temp object with names of variables to be transformed
+names.of.cols &lt;- names(sv2017)
+#
+# generate matrix of comma separated values
+# and calculate new variables
+#
+# define starting and ending columns
+c1 &lt;- 9
+cn &lt;- 36
+# make initial output data frame
+transf_results &lt;- data.frame(&quot;Variable&quot;=seq(c1,cn),
+                             &quot;W_orig&quot;=seq(c1,cn),
+                             &quot;p_orig&quot;=seq(c1,cn), &quot;W_log_tr&quot;=seq(c1,cn),
+                             &quot;p_log_tr&quot;=seq(c1,cn), &quot;W_pow_tr&quot;=seq(c1,cn),
+                             &quot;p_pow_tr&quot;=seq(c1,cn), &quot;Pow_term&quot;=seq(c1,cn))
+# start loop that assesses variable distributions and creates new variables
+for (i in c1:cn) {
+  pt1 &lt;- powerTransform(sv2017[, i])
+  sv2017[paste0(names.of.cols[i],&quot;.log&quot;)]&lt;-log10(sv2017[i])
+  # if ... else applies factor of -1 to
+  # power transforms with negative terms
+  # delete next 8 lines of you don&#39;t want new columns
+  if (as.vector(pt1$lambda) &gt; 0) {
+    sv2017[paste0(names.of.cols[i], &quot;.pow&quot;)] &lt;-
+      sv2017[i] ^ as.numeric(unlist(pt1$lambda))
+  } else {
+    sv2017[paste0(names.of.cols[i], &quot;.pow&quot;)] &lt;-
+      -1 * ((sv2017[i]) ^ as.numeric(unlist(pt1$lambda))) }
+  # generate and save test statistics
+  sw0 &lt;- shapiro.test(sv2017[, i])
+  sw1 &lt;- shapiro.test(log10(sv2017[, i]))
+  sw2 &lt;- shapiro.test((sv2017[, i]) ^ as.vector(pt1$lambda))
+  transf_results[i-(c1-1),] &lt;- c(names.of.cols[i], signif(sw0$statistic, 4),
+                        signif(sw0$p.value, 4), signif(sw1$statistic, 4),
+                        signif(sw1$p.value, 4), signif(sw2$statistic, 4),
+                        signif(sw2$p.value, 4), signif(as.vector(pt1$lambda), 4))
+}
+#
+# output to console (screen)
+cat(paste(&quot;Table. Shapiro-Wilk statistics (W) and p-values for untransformed&quot;,
+    &quot;(_orig) and transformed (_log, _pow) variables from soil and sediment&quot;,
+    &quot;analysis at Smith&#39;s Lake Reserve.\n\n)&quot;))
+print(transf_results, row.names = FALSE)
+
+##
+# export results to a csv file for Excel (if desired)
+write.csv(transf_results, file = &quot;transformations.csv&quot;, row.names = FALSE)
+# remove temporary objects
+# to keep R workspace tidy
+rm(list=c(&quot;names.of.cols&quot;,&quot;pt1&quot;,&quot;sw0&quot;,&quot;sw1&quot;,&quot;sw2&quot;,&quot;i&quot;))
+# end code</code></pre>
+<pre><code>## Table. Shapiro-Wilk statistics (W) and p-values for untransformed (_orig) and transformed (_log, _pow) variables from soil and sediment analysis at Smith&#39;s Lake Reserve.
+## 
+## ) Variable W_orig    p_orig W_log_tr  p_log_tr W_pow_tr  p_pow_tr  Pow_term
+##        pH 0.9766   0.08979   0.9474 0.0008693   0.9867    0.4612     2.002
+##        EC   0.76 1.274e-08   0.9823    0.5219   0.9824    0.5283  -0.01806
+##        Al 0.8511 6.021e-08   0.8958 3.289e-06   0.9365 0.0003185    0.4553
+##        As  0.143 2.892e-20   0.7882 6.415e-10   0.9269 9.749e-05   -0.4294
+##        Ba 0.8951 3.067e-06   0.9885    0.6358   0.9885    0.6373 -0.007109
+##        Ca 0.5646 9.559e-15   0.9585  0.006584   0.9763    0.1073   -0.1945
+##        Cd   0.63 1.528e-12   0.9727    0.1006   0.9788    0.2345   -0.1594
+##        Ce 0.8913 2.368e-06    0.985    0.4128    0.987    0.5425    0.1248
+##        Cr 0.8176 4.732e-09   0.9192  3.96e-05   0.9406 0.0005403     0.348
+##        Cu 0.5644 9.465e-15   0.9318 0.0001761   0.9867    0.5128   -0.5011
+##        Fe 0.2707 7.295e-19   0.8549 8.176e-08    0.948  0.001465   -0.4639
+##        Gd 0.6443 4.034e-13   0.9495   0.00207   0.9802    0.2102   -0.4718
+##         K 0.8554 8.542e-08   0.9911    0.8206   0.9915    0.8426   -0.0517
+##        La 0.7681 1.814e-10    0.969   0.03308   0.9889    0.6618   -0.4369
+##        Mg 0.6524 4.011e-13   0.9853    0.4248    0.986    0.4653   -0.0477
+##        Mn 0.9272 0.0001014   0.9602  0.008538   0.9936    0.9489    0.3702
+##        Mo 0.1319 2.222e-20   0.8012 1.514e-09   0.9471  0.001283   -0.3986
+##        Na 0.3949 2.606e-17   0.9437 0.0008182   0.9881    0.6041   -0.3711
+##        Nd 0.7408 6.027e-11   0.8226 1.038e-08   0.9182 4.772e-05    0.4521
+##        Ni 0.5497 5.354e-15   0.9732   0.06437   0.9764    0.1083  -0.07573
+##         P 0.9036 7.254e-06   0.9796    0.1789   0.9932    0.9326    0.2506
+##        Pb 0.6184 8.783e-14   0.9517  0.002464   0.9854    0.4297   -0.2961
+##         S 0.1364 2.473e-20   0.8212 6.144e-09    0.962    0.0112   -0.4024
+##        Sr 0.4609 2.194e-16   0.9523  0.002664   0.9822    0.2688   -0.2506
+##        Th 0.8023 2.339e-08   0.9431  0.002948   0.9695   0.08177   -0.6177
+##         V 0.5028 9.405e-16   0.9073 1.074e-05   0.9168 3.034e-05   -0.1409
+##         Y 0.5532 6.128e-15   0.9579  0.006028   0.9829    0.2984   -0.3309
+##        Zn 0.6155  7.75e-14   0.9828     0.295   0.9915    0.8421   -0.1493</code></pre>
+<ul>
+<li><code>W_orig</code> = the Shapiro-Wilk statistic for the
+untransformed variable</li>
+<li><code>p_orig</code> = probability that H<sub>0</sub> is true for the
+untransformed variable
+<ul>
+<li><em>Note that H<sub>0</sub> for Shapiro-Wilk is that the variable's
+distribution is normal</em>,<br>so a variable with a normal distribution
+will have p &gt; 0.05, <strong>not p ≤ 0.05</strong></li>
+</ul></li>
+<li><code>W_log_tr</code> = the Shapiro-Wilk statistic for the
+log<sub>10</sub>-transformed variable</li>
+<li><code>p_log_tr</code> = probability that H<sub>0</sub> is true for
+the log<sub>10</sub>-transformed variable</li>
+<li><code>W_pow_tr</code> = the Shapiro-Wilk statistic for the
+power-transformed variable</li>
+<li><code>p_pow_tr</code> = probability that H<sub>0</sub> is true for
+the power-transformed variable</li>
+<li><code>Pow_term</code> = the value for power transformation
+calculated by <code>powerTransform()</code></li>
+</ul>
+<p>Once you get this to work, you should verify that it worked!
+<em>e.g</em>. by:</p>
+<ol style="list-style-type: decimal">
+<li>plotting a variable against its transformed version or</li>
+<li>comparing histograms or QQ-plots for transformed and untransformed
+variable pairs.</li>
+</ol>
+<p><span style="color: #3f57b8;">[If you just want to check the
+distributions of variables (transformed or not) without generating new
+columns in your data frame, delete the lines of code from</span>
+<code>sv2017[paste0(names.of.cols[i],".log")]&lt;-log10(sv2017[i])</code>
+<span style="color: #3f57b8;">to</span>
+<code>-1 * ((sv2017[i]) ^ as.numeric(unlist(pt1$lambda))) }</code>
+<span style="color: #3f57b8;">inclusive.]</span></p>
+<hr style="height: 2px; background-color: #660F00;" />
+<p><img src="skewed.png" /></p>
+<p>
+ 
+</p>
+</div>
+</div>
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<hr />
+<p><a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank"><strong>CC-BY-SA</strong></a> • All content by <a href="https://github.com/Ratey-AtUWA" target="_blank">Ratey-AtUWA</a>. My <a href="https://www.uwa.edu.au/schools/agriculture-and-environment" target="_blank">employer</a> does not necessarily know about or endorse the content of this website.<br>
+<span style="font-size:9pt">Created with <span style="font-family: monospace; background-color: #e8e8e8;">rmarkdown</span> in <a href="https://www.rstudio.com/" target="_blank"><span class="fa fa-registered"></span> RStudio</a> using the <span style="font-family: monospace; background-color: #e8e8e8;">darkly</span> theme from <a href="https://bootswatch.com/" target="_blank"><span class="fa fa-swatchbook"></span> Bootswatch</a> via the <span style="font-family: monospace; background-color: #e8e8e8;">bslib</span> package, and <a href="https://fontawesome.com/v5/search?o=r&m=free" target="_blank"><span class="fa fa-font-awesome"></span> fontawesome v5 icons</a>.</span></p>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

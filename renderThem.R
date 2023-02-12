@@ -23,5 +23,6 @@ rmarkdown::render_site("kmlconv.Rmd")
 rmarkdown::render_site("WhatsR.Rmd")
 rmarkdown::render_site("Rbasics.Rmd")
 rmarkdown::render_site("Rgraphs.Rmd")
+rmarkdown::render_site("transformR.Rmd")
 
 rmarkdown::render_site("testpage.Rmd")
