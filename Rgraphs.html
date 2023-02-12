@@ -344,10 +344,31 @@ Cheshire, Connecticut, USA. </span></p>
 for illustration).</p>
 <pre class="r"><code>sv2017 &lt;- read.csv(file=&quot;sv2017_original.csv&quot;, stringsAsFactors = TRUE)
 sv2017$Group &lt;- as.factor(sv2017$Group)</code></pre>
-<p>We then make an <em>xy</em>-plot (Figure @ref(fig:sp-1)) using the
+<p>We then make an <em>xy</em>-plot (Figure 1) using the
 <code>scatterplot()</code> function from the <code>car</code> package,
 first setting graphics output parameters with <code>par()</code> and
 making a custom palette with <code>palette()</code>.</p>
+<pre class="r"><code>require(car)
+# adjust overall plot appearance using options within par()
+# mar sets plot margins, mgp sets distance of axis details from axis
+par(font.lab=2, mar=c(4,4,1,1), mgp=c(2.2,0.7,0.0))
+# create custom palette with nice colours :)
+palette(c(&quot;black&quot;,&quot;red3&quot;,&quot;blue3&quot;,&quot;gold3&quot;,&quot;sienna&quot;))
+# draw scatterplot with customised options
+# pch sets plot character (symbol); cex sets symbol/font sizes
+scatterplot(Ca~pH | Type, data=sv2017, log=&quot;y&quot;, smooth=FALSE,
+            legend = list(coords=&quot;topleft&quot;), col=c(5,3,1), 
+            pch=c(16,0,2), cex=1.5, cex.lab=1.5, cex.axis=1.2)</code></pre>
+<div class="figure">
+<img src="Rgraphs_files/figure-html/sp-1-1.png" alt="Figure 1: Scatterplot of Ca vs. pH from the sv2017 dataset, made using car::scatterplot() after setting graphics parameters and colour palette." width="480" />
+<p class="caption">
+Figure 1: Scatterplot of Ca vs. pH from the sv2017 dataset, made using
+car::scatterplot() after setting graphics parameters and colour palette.
+</p>
+</div>
+<p>
+ 
+</p>
 <table width="100%" border="1">
 <tr>
 <td>
@@ -379,47 +400,26 @@ sometimes be useful.
 <p>
  
 </p>
-<pre class="r"><code>require(car)
-# adjust overall plot appearance using options within par()
-# mar sets plot margins, mgp sets distance of axis details from axis
-par(font.lab=2, mar=c(4,4,1,1), mgp=c(2.2,0.7,0.0))
-# create custom palette with nice colours :)
-palette(c(&quot;black&quot;,&quot;red3&quot;,&quot;blue3&quot;,&quot;gold3&quot;,&quot;sienna&quot;))
-# draw scatterplot with customised options
-# pch sets plot character (symbol); cex sets symbol/font sizes
-scatterplot(Ca~pH | Type, data=sv2017, log=&quot;y&quot;, smooth=FALSE,
-            legend = list(coords=&quot;topleft&quot;), col=c(5,3,1), 
-            pch=c(16,0,2), cex=1.5, cex.lab=1.5, cex.axis=1.2)</code></pre>
-<div class="figure">
-<img src="Rgraphs_files/figure-html/sp-1-1.png" alt="Scatterplot of Ca vs. pH from the sv2017 dataset, made using car::scatterplot() after setting graphics parameters and colour palette." width="480" />
-<p class="caption">
-Scatterplot of Ca vs. pH from the sv2017 dataset, made using
-car::scatterplot() after setting graphics parameters and colour palette.
-</p>
-</div>
-<p>
- 
-</p>
 <p><strong>R</strong> has a set of 26 built-in plotting symbols which
 can be specified using the <code>pch =</code> argument in many plotting
 functions. For symbols 0-20 the colour is set using the argument
 <code>col =</code>. For symbols 21-25 <code>col =</code> sets the border
 colour, and the fill colour is set with <code>bg =</code>.</p>
 <div class="figure">
-<img src="Rgraphs_files/figure-html/pch-map-1.png" alt="Plot symbols in R accessible via the `pch=` argument in many plotting functions. For all symbols `col='navy'` and for pch 21-25 `bg='gold'`." width="960" />
+<img src="Rgraphs_files/figure-html/pch-map-1.png" alt="Figure 2: Plot symbols in R accessible via the `pch=` argument in many plotting functions. For all symbols `col='navy'` and for pch 21-25 `bg='gold'`." width="960" />
 <p class="caption">
-Plot symbols in R accessible via the <code>pch=</code> argument in many
-plotting functions. For all symbols <code>col='navy'</code> and for pch
-21-25 <code>bg='gold'</code>.
+Figure 2: Plot symbols in R accessible via the <code>pch=</code>
+argument in many plotting functions. For all symbols
+<code>col='navy'</code> and for pch 21-25 <code>bg='gold'</code>.
 </p>
 </div>
 <hr style="height: 1px; background-color: #5560A4;" />
 <div id="histogram-with-density-line" class="section level3">
 <h3>histogram with density line</h3>
-<p>We have seen a modified boxplot similar to that in Figure
-@ref(fig:histogram-density) before. Adding a density line to a histogram
-can help us identify <em>bimodal distributions</em>, or see more easily
-if the distribution is symmetrical or not.</p>
+<p>We have seen a modified histogram similar to Figure 3 before. Adding
+a density line to a histogram can help us identify <em>bimodal
+distributions</em>, or see more easily if the distribution is
+symmetrical or not.</p>
 <pre class="r"><code># load required package(s)
 require(RcmdrMisc)
 # plot histogram with custom scale and y-axis limits
@@ -428,17 +428,21 @@ Hist(log10(sv2017$EC), scale=&quot;density&quot;, breaks=15,
 # add density plot overlay onto histogram
 lines(density(log10(sv2017$EC), na.rm=TRUE), col=&quot;blue&quot;)</code></pre>
 <div class="figure">
-<img src="Rgraphs_files/figure-html/histogram-density-1.png" alt="Histogram of EC from the sv2017 data with density line plot added." width="576" />
+<img src="Rgraphs_files/figure-html/histogram-density-1.png" alt="Figure 3: Histogram of EC from the sv2017 data with density line plot added." width="576" />
 <p class="caption">
-Histogram of EC from the sv2017 data with density line plot added.
+Figure 3: Histogram of EC from the sv2017 data with density line plot
+added.
 </p>
 </div>
+<p>
+ 
+</p>
 <hr style="height: 1px; background-color: #5560A4;" />
 </div>
 <div id="boxplot-by-groups" class="section level3">
 <h3>Boxplot by groups</h3>
-<p>We also made a grouped box plot like the one in Figure
-@ref(fig:boxplot-by-groups) in a previous session.</p>
+<p>We also made a grouped box plot like the one in Figure 4 in a
+previous session.</p>
 <pre class="r"><code># set up overall plot parameters with par()
 par(mar=c(4,4,1,1), mgp=c(2.2,0.7,0),
     font.lab=2, lend=&quot;square&quot;, ljoin=&quot;mitre&quot;)
@@ -461,9 +465,9 @@ legend(&quot;bottomright&quot;,legend=c(&quot;Mean&quot;,&quot;ISQG-Low:\nCu 65 
        col=c(&quot;blue&quot;,&quot;red&quot;),lty=c(-1,2),lwd=c(-1,2), bty=&quot;n&quot;, 
        seg.len=2.5, inset=0.03, x.intersp = 0.5)</code></pre>
 <div class="figure">
-<img src="Rgraphs_files/figure-html/boxplot-by-groups-1.png" alt="Boxplot of Cu by Type, showing means, in the sv2017 data." width="672" />
+<img src="Rgraphs_files/figure-html/boxplot-by-groups-1.png" alt="Figure 4: Boxplot of Cu by Type, showing means, in the sv2017 data." width="672" />
 <p class="caption">
-Boxplot of Cu by Type, showing means, in the sv2017 data.
+Figure 4: Boxplot of Cu by Type, showing means, in the sv2017 data.
 </p>
 </div>
 <pre class="r"><code># delete the object containing the table of means
@@ -527,10 +531,10 @@ text(
   col = c(2, 5)
 )</code></pre>
 <div class="figure">
-<img src="Rgraphs_files/figure-html/water-scatterplot-1.png" alt="Plot of water sample locations in Smith's Lake in 2018 made using car::scatterplot()." width="576" />
+<img src="Rgraphs_files/figure-html/water-scatterplot-1.png" alt="Figure 5: Plot of water sample locations in Smith's Lake in 2018 made using car::scatterplot()." width="576" />
 <p class="caption">
-Plot of water sample locations in Smith's Lake in 2018 made using
-car::scatterplot().
+Figure 5: Plot of water sample locations in Smith's Lake in 2018 made
+using car::scatterplot().
 </p>
 </div>
 <hr style="height: 1px; background-color: #5560A4;" />
@@ -538,9 +542,8 @@ car::scatterplot().
 <div id="base-r-plot-of-water-sample-points-by-group"
 class="section level3">
 <h3>'base <strong>R</strong>' plot of water sample points by group</h3>
-<p>We can reproduce Figure @ref(fig:water-scatterplot) made using
-<code>car::scatterplot()</code> in base-<strong>R</strong> graphics as
-well:</p>
+<p>We can reproduce Figure 5 made using <code>car::scatterplot()</code>
+in base-<strong>R</strong> graphics as well:</p>
 <pre class="r"><code># set up overall plot parameters with par()
 # font.lab=2 makes axis titles bold
 # &#39;lend&#39; sets line end style, &#39;ljoin&#39; sets line join style
@@ -597,17 +600,17 @@ text(
   col = c(6, 3)
 )</code></pre>
 <div class="figure">
-<img src="Rgraphs_files/figure-html/baseR-water-plot-1.png" alt="Plot of water sample locations in Smith's Lake in 2018 made using base-R graphics." width="576" />
+<img src="Rgraphs_files/figure-html/baseR-water-plot-1.png" alt="Figure 6: Plot of water sample locations in Smith's Lake in 2018 made using base-R graphics." width="576" />
 <p class="caption">
-Plot of water sample locations in Smith's Lake in 2018 made using base-R
-graphics.
+Figure 6: Plot of water sample locations in Smith's Lake in 2018 made
+using base-R graphics.
 </p>
 </div>
-<p>The code to make Figure @ref(fig:baseR-water-plot) is somewhat more
-intricate than that for Figure @ref(fig:water-scatterplot), but
-base-<strong>R</strong> plotting can give us more control over plot
-appearance. (Note that we don't need to have each function argument on a
-separate line, as we have done in the previous code block.)</p>
+<p>The code to make Figure 6 is somewhat more intricate than that for
+Figure 5, but base-<strong>R</strong> plotting can give us more control
+over plot appearance. (Note that we don't need to have each function
+argument on a separate line, as we have done in the previous code
+block.)</p>
 <hr style="height: 1px; background-color: #5560A4;" />
 <blockquote>
 <p>"...when we look at the <strong>graphs of rising ocean
@@ -639,9 +642,9 @@ change graphics parameters like plot margins. After using
 settings in <code>par()</code>:</p>
 <pre class="r"><code>plot(sv18$Ca ~ sv18$pH, log=&quot;y&quot;)</code></pre>
 <div class="figure">
-<img src="Rgraphs_files/figure-html/Ca-pH-baseR-1.png" alt="Default plot of Ca vs. pH." width="576" />
+<img src="Rgraphs_files/figure-html/Ca-pH-baseR-1.png" alt="Figure 7: Default plot of Ca vs. pH." width="576" />
 <p class="caption">
-Default plot of Ca vs. pH.
+Figure 7: Default plot of Ca vs. pH.
 </p>
 </div>
 <p>
@@ -653,10 +656,10 @@ function and re-running the simple plot</p>
     cex.lab=1.5, tcl=0.2)
 plot(sv18$Ca ~ sv18$pH, log=&quot;y&quot;)</code></pre>
 <div class="figure">
-<img src="Rgraphs_files/figure-html/big-labels-1.png" alt="Plot of Ca vs. pH with plot margins, symbol sizes, and font size and style changed using par()." width="576" />
+<img src="Rgraphs_files/figure-html/big-labels-1.png" alt="Figure 8: Plot of Ca vs. pH with plot margins, symbol sizes, and font size and style changed using par()." width="576" />
 <p class="caption">
-Plot of Ca vs. pH with plot margins, symbol sizes, and font size and
-style changed using par().
+Figure 8: Plot of Ca vs. pH with plot margins, symbol sizes, and font
+size and style changed using par().
 </p>
 </div>
 <p>
@@ -673,10 +676,11 @@ with(sv18, plot(Mg ~ pH, log=&quot;y&quot;, pch=1, col = &quot;red3&quot;))
 with(sv18, plot(Na ~ pH, log=&quot;y&quot;, pch=2, col = &quot;purple&quot;))
 with(sv18, plot(Sr ~ pH, log=&quot;y&quot;, pch=3, col = &quot;blue2&quot;))</code></pre>
 <div class="figure">
-<img src="Rgraphs_files/figure-html/plot-2x2-1.png" alt="Plot of Ca, Mg, Na, and Sr vs. pH with multiple plots specified using par() and different sub-plot appearances set using arguments in plot()." width="576" />
+<img src="Rgraphs_files/figure-html/plot-2x2-1.png" alt="Figure 9: Plot of Ca, Mg, Na, and Sr vs. pH with multiple plots specified using par() and different sub-plot appearances set using arguments in plot()." width="576" />
 <p class="caption">
-Plot of Ca, Mg, Na, and Sr vs. pH with multiple plots specified using
-par() and different sub-plot appearances set using arguments in plot().
+Figure 9: Plot of Ca, Mg, Na, and Sr vs. pH with multiple plots
+specified using par() and different sub-plot appearances set using
+arguments in plot().
 </p>
 </div>
 </div>
@@ -689,9 +693,9 @@ custom <em>y</em>-axis label explains the plot! <br> (note use of
 <pre class="r"><code>plot.ecdf(sv18$pH, xlab=&quot;x = pH&quot;, 
           ylab=&quot;Proportion of samples with pH \u2264 x&quot;, main=&quot;&quot;) </code></pre>
 <div class="figure">
-<img src="Rgraphs_files/figure-html/ecdfPlot-pH-1.png" alt="Cumulative distribution of pH in the sv18 dataset." width="576" />
+<img src="Rgraphs_files/figure-html/ecdfPlot-pH-1.png" alt="Figure 10: Cumulative distribution of pH in the sv18 dataset." width="576" />
 <p class="caption">
-Cumulative distribution of pH in the sv18 dataset.
+Figure 10: Cumulative distribution of pH in the sv18 dataset.
 </p>
 </div>
 <p>
@@ -707,11 +711,11 @@ qqPlot(sv18$pH,
        xlab=&quot;Theoretical normal distribution quantiles&quot;,
        ylab=&quot;Soil pH&quot;)</code></pre>
 <div class="figure">
-<img src="Rgraphs_files/figure-html/qqplot-pH-1.png" alt="Normal quantile (QQ) plot of soil pH in the sv18 dataset. The values in the output block below are the row numbers for unusual observations, which also appear on the plot." width="576" />
+<img src="Rgraphs_files/figure-html/qqplot-pH-1.png" alt="Figure 11: Normal quantile (QQ) plot of soil pH in the sv18 dataset. The values in the output block below are the row numbers for unusual observations, which also appear on the plot." width="576" />
 <p class="caption">
-Normal quantile (QQ) plot of soil pH in the sv18 dataset. The values in
-the output block below are the row numbers for unusual observations,
-which also appear on the plot.
+Figure 11: Normal quantile (QQ) plot of soil pH in the sv18 dataset. The
+values in the output block below are the row numbers for unusual
+observations, which also appear on the plot.
 </p>
 </div>
 <pre><code>## [1] 59 58</code></pre>
@@ -738,10 +742,10 @@ abline(v=log10(300), lty=2, col=&quot;red&quot;)
 text(log10(300),12, labels = &quot;Zn guideline\n300 mg/kg&quot;, 
      pos=4, col=&quot;red&quot;)</code></pre>
 <div class="figure">
-<img src="Rgraphs_files/figure-html/hist-abline-1.png" alt="Histogram of Zn in the sv18 data, showing a reference concentration added using abline() and text()." width="672" />
+<img src="Rgraphs_files/figure-html/hist-abline-1.png" alt="Figure 12: Histogram of Zn in the sv18 data, showing a reference concentration added using abline() and text()." width="672" />
 <p class="caption">
-Histogram of Zn in the sv18 data, showing a reference concentration
-added using abline() and text().
+Figure 12: Histogram of Zn in the sv18 data, showing a reference
+concentration added using abline() and text().
 </p>
 </div>
 <p>
@@ -756,10 +760,10 @@ also seen these in a previous Workshop (the only way to get
      xlab=&quot;Sample Type&quot;, 
      ylab=expression(bold(paste(log[10],&quot;(Zn, mg/kg)&quot;))), main=&quot;&quot;)</code></pre>
 <div class="figure">
-<img src="Rgraphs_files/figure-html/plain-boxplot-1.png" alt="Boxplot of Zn by sample type in the sv18 data, with complex formatting in the y-axis label using an R expression()." width="672" />
+<img src="Rgraphs_files/figure-html/plain-boxplot-1.png" alt="Figure 13: Boxplot of Zn by sample type in the sv18 data, with complex formatting in the y-axis label using an R expression()." width="672" />
 <p class="caption">
-Boxplot of Zn by sample type in the sv18 data, with complex formatting
-in the y-axis label using an R expression().
+Figure 13: Boxplot of Zn by sample type in the sv18 data, with complex
+formatting in the y-axis label using an R expression().
 </p>
 </div>
 <p>
@@ -780,10 +784,10 @@ boxplot(log10(sv18$Zn) ~ sv18$Type,
     text(1,log10(300), labels=&quot;Zn limit 300 mg/kg&quot;, 
          cex=1.25, col=&quot;red&quot;, pos=3)</code></pre>
 <div class="figure">
-<img src="Rgraphs_files/figure-html/better-boxplot-1.png" alt="Modified boxplot of Zn by sample type in the sv18 data, with complex formatting in the y-axis label using an R expression()." width="672" />
+<img src="Rgraphs_files/figure-html/better-boxplot-1.png" alt="Figure 14: Modified boxplot of Zn by sample type in the sv18 data, with complex formatting in the y-axis label using an R expression()." width="672" />
 <p class="caption">
-Modified boxplot of Zn by sample type in the sv18 data, with complex
-formatting in the y-axis label using an R expression().
+Figure 14: Modified boxplot of Zn by sample type in the sv18 data, with
+complex formatting in the y-axis label using an R expression().
 </p>
 </div>
 </div>
@@ -796,9 +800,9 @@ vertically as we would expect in the real world.</p>
 plot(sv18$Fe ~ sv18$Depth_lower, pch=&quot;-&quot;)
 plot(sv18$Fe ~ sv18$Depth_upper, pch=&quot;+&quot;)</code></pre>
 <div class="figure">
-<img src="Rgraphs_files/figure-html/lower-upper-depth-1.png" alt="Plots of Fe vs. depth measurements in the sv18 data." width="672" />
+<img src="Rgraphs_files/figure-html/lower-upper-depth-1.png" alt="Figure 15: Plots of Fe vs. depth measurements in the sv18 data." width="672" />
 <p class="caption">
-Plots of Fe vs. depth measurements in the sv18 data.
+Figure 15: Plots of Fe vs. depth measurements in the sv18 data.
 </p>
 </div>
 <p>
@@ -809,7 +813,7 @@ depth</em>, but we can't use a formula (<em>i.e</em>. anything in
 use comma instead of <code>~</code> to allow us to put a calculation in:
 </p>
 <pre class="r"><code>plot(((sv18$Depth_upper+sv18$Depth_lower)/2), sv18$Fe)</code></pre>
-<p><img src="Rgraphs_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="Rgraphs_files/figure-html/plot-with-formula-1.png" width="672" /></p>
 <p>
  
 </p>
@@ -822,10 +826,10 @@ as the variable.</p>
 intuitive] vertical axis</p>
 <pre class="r"><code>plot(sv18$Fe, ((sv18$Depth_upper+sv18$Depth_lower)/2), ylim=c(0,100))</code></pre>
 <div class="figure">
-<img src="Rgraphs_files/figure-html/switch-axes-1.png" alt="Plot of Fe vs. depth with x- and y-axis positions switched (so really it's depth vs. Fe, but we have our reasons)." width="384" />
+<img src="Rgraphs_files/figure-html/switch-axes-1.png" alt="Figure 16: Plot of Fe vs. depth with x- and y-axis positions switched (so really it's depth vs. Fe, but we have our reasons)." width="384" />
 <p class="caption">
-Plot of Fe vs. depth with x- and y-axis positions switched (so really
-it's depth vs. Fe, but we have our reasons).
+Figure 16: Plot of Fe vs. depth with x- and y-axis positions switched
+(so really it's depth vs. Fe, but we have our reasons).
 </p>
 </div>
 <p>
@@ -836,10 +840,10 @@ it's depth vs. Fe, but we have our reasons).
 <code>(0,100)</code> for <code>(100,0)</code>.</p>
 <pre class="r"><code>plot(sv18$Fe, ((sv18$Depth_upper+sv18$Depth_lower)/2), ylim=c(100,0))</code></pre>
 <div class="figure">
-<img src="Rgraphs_files/figure-html/reverse-y-1.png" alt="Plot of Fe vs. depth with x- and y-axis positions switched and the vertical axis (depth) scale reversed." width="384" />
+<img src="Rgraphs_files/figure-html/reverse-y-1.png" alt="Figure 17: Plot of Fe vs. depth with x- and y-axis positions switched and the vertical axis (depth) scale reversed." width="384" />
 <p class="caption">
-Plot of Fe vs. depth with x- and y-axis positions switched and the
-vertical axis (depth) scale reversed.
+Figure 17: Plot of Fe vs. depth with x- and y-axis positions switched
+and the vertical axis (depth) scale reversed.
 </p>
 </div>
 <p>
@@ -855,10 +859,10 @@ vertical axis (depth) scale reversed.
 plot(sv18$Fe, ((sv18$Depth_upper+sv18$Depth_lower)/2), ylim=c(100,0), 
      xlab=&quot;Fe (mg/kg)&quot;, ylab=&quot;Mean depth (cm)&quot;)</code></pre>
 <div class="figure">
-<img src="Rgraphs_files/figure-html/best-par-and-labels-1.png" alt="Plot of Fe vs. depth with x- and y-axis positions switched, y axis scale reversed, and tidy axis labels." width="384" />
+<img src="Rgraphs_files/figure-html/best-par-and-labels-1.png" alt="Figure 18: Plot of Fe vs. depth with x- and y-axis positions switched, y axis scale reversed, and tidy axis labels." width="384" />
 <p class="caption">
-Plot of Fe vs. depth with x- and y-axis positions switched, y axis scale
-reversed, and tidy axis labels.
+Figure 18: Plot of Fe vs. depth with x- and y-axis positions switched, y
+axis scale reversed, and tidy axis labels.
 </p>
 </div>
 <p>
@@ -878,10 +882,11 @@ plot(sv18$Fe, ((sv18$Depth_upper+sv18$Depth_lower)/2),
 axis(3)
 mtext(side=3, line=2.5, font=2, text=&quot;Fe (mg/kg)&quot;)</code></pre>
 <div class="figure">
-<img src="Rgraphs_files/figure-html/x-axis-to-top-1.png" alt="Plot of Fe vs. depth with x- and y-axis positions switched, y axis scale reversed, tidy axis labels, and x-axis label and ticks at the top." width="384" />
+<img src="Rgraphs_files/figure-html/x-axis-to-top-1.png" alt="Figure 19: Plot of Fe vs. depth with x- and y-axis positions switched, y axis scale reversed, tidy axis labels, and x-axis label and ticks at the top." width="384" />
 <p class="caption">
-Plot of Fe vs. depth with x- and y-axis positions switched, y axis scale
-reversed, tidy axis labels, and x-axis label and ticks at the top.
+Figure 19: Plot of Fe vs. depth with x- and y-axis positions switched, y
+axis scale reversed, tidy axis labels, and x-axis label and ticks at the
+top.
 </p>
 </div>
 <p>
@@ -900,7 +905,12 @@ from the bottom axis = 1.
 </td>
 </tr>
 </table>
-<p><img src="Rgraphs_files/figure-html/axis-positions-1.png" width="288" /></p>
+<div class="figure">
+<img src="Rgraphs_files/figure-html/axis-positions-1.png" alt="Figure 20: Numbering system for plot axes in R." width="288" />
+<p class="caption">
+Figure 20: Numbering system for plot axes in R.
+</p>
+</div>
 </div>
 <div id="scatterplot-matrices" class="section level3">
 <h3>4. Scatterplot matrices</h3>
@@ -918,17 +928,17 @@ points can be included by changing the <code>smooth=</code> argument to
 <code>smooth=TRUE</code>.</p>
 <p>A very useful feature of scatter plot matrices is the display of each
 variable's <em>distribution along the diagonal</em> of the plot matrix.
-In the example in Figure @ref(fig:spm-ungrouped), we can see that all
-variables have a positively skewed distribution (which might be made
-more symmetrical by log-transformation).</p>
+In the example in Figure 21, we can see that all variables have a
+positively skewed distribution (which might be made more symmetrical by
+log-transformation).</p>
 <pre class="r"><code>require(car)
 scatterplotMatrix(~Al + Ca + Fe + Na, data=sv18, smooth=FALSE)</code></pre>
 <div class="figure">
-<img src="Rgraphs_files/figure-html/spm-ungrouped-1.png" alt="Scatter plot matrix of Al, Ca, Fe, and Na concentrations in sediment + soil + street dust samples from Smith's Lake and Charles Veryard Reserves, North Perth, WA, sampled in 2018." width="576" />
+<img src="Rgraphs_files/figure-html/spm-ungrouped-1.png" alt="Figure 21: Scatter plot matrix of Al, Ca, Fe, and Na concentrations in sediment + soil + street dust samples from Smith's Lake and Charles Veryard Reserves, North Perth, WA, sampled in 2018." width="576" />
 <p class="caption">
-Scatter plot matrix of Al, Ca, Fe, and Na concentrations in sediment +
-soil + street dust samples from Smith's Lake and Charles Veryard
-Reserves, North Perth, WA, sampled in 2018.
+Figure 21: Scatter plot matrix of Al, Ca, Fe, and Na concentrations in
+sediment + soil + street dust samples from Smith's Lake and Charles
+Veryard Reserves, North Perth, WA, sampled in 2018.
 </p>
 </div>
 <p>
@@ -944,11 +954,12 @@ consistent between groups, or if groups behave very differently.</p>
                   col=c(&quot;sienna&quot;, &quot;blue3&quot;, &quot;grey50&quot;), 
                   pch = c(15,1,3), cex=1.4)</code></pre>
 <div class="figure">
-<img src="Rgraphs_files/figure-html/spm-by-group-1.png" alt="Scatter plot matrix of Al, Ca, Fe, and Na concentrations in samples from Smith's Lake and Charles Veryard Reserves, North Perth, WA, sampled in 2018 and grouped by sample type (sediment, soil, or street dust)." width="576" />
+<img src="Rgraphs_files/figure-html/spm-by-group-1.png" alt="Figure 22: Scatter plot matrix of Al, Ca, Fe, and Na concentrations in samples from Smith's Lake and Charles Veryard Reserves, North Perth, WA, sampled in 2018 and grouped by sample type (sediment, soil, or street dust)." width="576" />
 <p class="caption">
-Scatter plot matrix of Al, Ca, Fe, and Na concentrations in samples from
-Smith's Lake and Charles Veryard Reserves, North Perth, WA, sampled in
-2018 and grouped by sample type (sediment, soil, or street dust).
+Figure 22: Scatter plot matrix of Al, Ca, Fe, and Na concentrations in
+samples from Smith's Lake and Charles Veryard Reserves, North Perth, WA,
+sampled in 2018 and grouped by sample type (sediment, soil, or street
+dust).
 </p>
 </div>
 <p>
@@ -963,12 +974,12 @@ usually is OK).</p>
                   col=c(&quot;sienna&quot;, &quot;blue3&quot;, &quot;grey50&quot;), 
                   pch = c(15,1,3), cex=1.4)</code></pre>
 <div class="figure">
-<img src="Rgraphs_files/figure-html/spm-by-group-log-1.png" alt="Scatter plot matrix of log-transformed Al, Ca, Fe, and Na concentrations in samples from Smith's Lake and Charles Veryard Reserves, North Perth, WA, sampled in 2018 and grouped by sample type (sediment, soil, or street dust)." width="576" />
+<img src="Rgraphs_files/figure-html/spm-by-group-log-1.png" alt="Figure 23: Scatter plot matrix of log-transformed Al, Ca, Fe, and Na concentrations in samples from Smith's Lake and Charles Veryard Reserves, North Perth, WA, sampled in 2018 and grouped by sample type (sediment, soil, or street dust)." width="576" />
 <p class="caption">
-Scatter plot matrix of log-transformed Al, Ca, Fe, and Na concentrations
-in samples from Smith's Lake and Charles Veryard Reserves, North Perth,
-WA, sampled in 2018 and grouped by sample type (sediment, soil, or
-street dust).
+Figure 23: Scatter plot matrix of log-transformed Al, Ca, Fe, and Na
+concentrations in samples from Smith's Lake and Charles Veryard
+Reserves, North Perth, WA, sampled in 2018 and grouped by sample type
+(sediment, soil, or street dust).
 </p>
 </div>
 <p>
@@ -978,7 +989,7 @@ street dust).
 <div id="simple-maps" class="section level3">
 <h3>5. Simple maps</h3>
 <p>Maps are [mostly] just scatterplots with a map background – we will
-spend a separate session on maps in R later</p>
+spend a separate session on maps in R later.</p>
 <p><img src="Rgraphs_files/figure-html/map-code-hidden-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <hr style="height: 1px; background-color: #5560A4;" />
 </div>
