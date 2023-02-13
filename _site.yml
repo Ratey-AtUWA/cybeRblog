@@ -9,6 +9,9 @@ navbar:
     - text: "Code"
       icon: fa-project-diagram
       href: code.html
+    - text: "Teaching"
+      icon: fa-chalkboard-teacher
+      href: teaching.html
     - text: "Rants"
       icon: fa-bell
       href: rants.html
