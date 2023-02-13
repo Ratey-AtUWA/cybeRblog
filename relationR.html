@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>exploring relationships: correlation and regression</title>
+
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<link href="site_libs/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-5.1.3/bootstrap.bundle.min.js"></script>
+<script src="site_libs/bs3compat-0.4.0/transition.js"></script>
+<script src="site_libs/bs3compat-0.4.0/tabs.js"></script>
+<script src="site_libs/bs3compat-0.4.0/bs3compat.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">cyboRg</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li>
+  <a href="code.html">
+    <span class="fa fa-project-diagram"></span>
+     
+    Code
+  </a>
+</li>
+<li>
+  <a href="teaching.html">
+    <span class="fa fa-chalkboard-teacher"></span>
+     
+    Teaching
+  </a>
+</li>
+<li>
+  <a href="rants.html">
+    <span class="fa fa-bell"></span>
+     
+    Rants
+  </a>
+</li>
+<li>
+  <a href="about.html">
+    <span class="fa fa-address-card"></span>
+     
+    About
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="social.html">
+    <span class="fa fa-twitter"></span>
+     
+    Social
+  </a>
+</li>
+<li>
+  <a href="work.html">
+    <span class="fa fa-user-graduate"></span>
+     
+    UWA
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">exploring relationships: correlation and
+regression</h1>
+
+</div>
+
+
+<style type="text/css">
+  body{
+  font-size: 12pt;
+}
+</style>
+<p><img src="relationR_files/figure-html/banner%20hide%20code-1.png" width="100%" style="display: block; margin: auto 0 auto auto;" /></p>
+<div id="correlation-regression-1" class="section level1">
+<h1>Correlation &amp; regression 1</h1>
+<div id="basic-correlation-analyses" class="section level2">
+<h2>Basic correlation analyses</h2>
+<p>Let's look at the relationship between Cd and Zn in the Smiths Lake
+and Charles Veryard Reserves data from 2017. <br> For Pearson's
+correlation we need variables with normal distributions, so first
+log<sub>10</sub>-transform Cd and Zn...</p>
+<pre class="r"><code>sv2017 &lt;- read.csv(&quot;sv2017_original.csv&quot;, stringsAsFactors = TRUE)
+sv2017$Cd.log &lt;- log10(sv2017$Cd)
+sv2017$Zn.log &lt;- log10(sv2017$Zn)</code></pre>
+<p>...and test if the distributions are normal. Remember that the null
+hypothesis for the Shapiro-Wilk test is that "<em>the distribution of
+the variable of </em> <em>interest is not different from a normal
+distribution</em>". So, if the P-value ≥ 0.05, we can't reject the null
+and therefore our variable is normally distributed.</p>
+<pre class="r"><code>shapiro.test(sv2017$Cd)
+shapiro.test(sv2017$Cd.log)
+shapiro.test(sv2017$Zn)
+shapiro.test(sv2017$Zn.log)</code></pre>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  sv2017$Cd
+## W = 0.63001, p-value = 1.528e-12
+## 
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  sv2017$Cd.log
+## W = 0.97272, p-value = 0.1006
+## 
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  sv2017$Zn
+## W = 0.6155, p-value = 7.75e-14
+## 
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  sv2017$Zn.log
+## W = 0.9828, p-value = 0.295</code></pre>
+<div id="pearsons-r-changes-with-transformation" class="section level3">
+<h3>Pearson's r changes with transformation</h3>
+<pre class="r"><code>cor.test(sv2017$Cd, sv2017$Zn, alternative=&quot;two.sided&quot;, 
+         method=&quot;pearson&quot;) # is Pearson valid?
+cor.test(sv2017$Cd.log, sv2017$Zn.log, alternative=&quot;two.sided&quot;, 
+         method=&quot;pearson&quot;) # is Pearson valid?</code></pre>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  sv2017$Cd and sv2017$Zn
+## t = 9.8415, df = 74, p-value = 4.357e-15
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.6353031 0.8363947
+## sample estimates:
+##       cor 
+## 0.7529165 
+## 
+## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  sv2017$Cd.log and sv2017$Zn.log
+## t = 7.696, df = 74, p-value = 4.859e-11
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.5193717 0.7756160
+## sample estimates:
+##       cor 
+## 0.6667536</code></pre>
+<p>For the Pearson correlation we get a <code>t</code> statistic and
+associated degrees of freedom (<code>df</code>), for which there is a
+<code>p-value</code>. The null hypothesis is that there is "<em>no
+relationship between the two variables</em>", which we can reject if p ≤
+0.05. We also get a 95% confidence interval for the correlation
+coefficient, and finally an estimate of Pearson's r
+(<code>cor</code>).</p>
+<p>A Spearman coefficient doesn't change with transformation, since it
+is calculated from the ranks (ordering) of each variable.</p>
+<pre class="r"><code>cor.test(sv2017$Cd, sv2017$Zn, alternative=&quot;two.sided&quot;, 
+         method=&quot;spearman&quot;) # can we use method=&quot;pearson&quot;?
+cor.test(sv2017$Cd.log, sv2017$Zn.log, alternative=&quot;two.sided&quot;, 
+         method=&quot;spearman&quot;) # can we use method=&quot;pearson&quot;?</code></pre>
+<pre><code>## 
+##  Spearman&#39;s rank correlation rho
+## 
+## data:  sv2017$Cd and sv2017$Zn
+## S = 25750, p-value = 2.494e-10
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##       rho 
+## 0.6479832 
+## 
+## 
+##  Spearman&#39;s rank correlation rho
+## 
+## data:  sv2017$Cd.log and sv2017$Zn.log
+## S = 25750, p-value = 2.494e-10
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##       rho 
+## 0.6479832</code></pre>
+<p>For the Spearman correlation we get an S statistic and associated
+p-value. The null hypothesis is that there is no relationship between
+the two variables, which we can reject if p ≤ 0.05. We also get an
+estimate of Spearman's rho (analogous to Pearson's r).</p>
+</div>
+</div>
+<div id="simple-scatterplot-by-groups" class="section level2">
+<h2>Simple scatterplot by groups</h2>
+<p>We're using base <strong>R</strong> to plot - you might like to try
+using <code>scatterplot()</code> from the car package.</p>
+<p>Before plotting, we first set our desired colour palette (optional)
+and graphics parameters (optional, but useful and recommended!). We end
+up with the plot in Figure 1:</p>
+<pre class="r"><code>palette(c(&quot;black&quot;,&quot;blue&quot;,&quot;red3&quot;,&quot;darkgreen&quot;,&quot;purple&quot;,
+          &quot;darkcyan&quot;,&quot;sienna3&quot;,&quot;grey50&quot;,&quot;white&quot;))
+par(mfrow=c(1,1), mar=c(3,3,1,1), mgp=c(1.5,0.3,0), oma=c(0,0,0,0), tcl=0.2,
+    cex=1.2, cex.lab=1.2, cex.axis=1., lend=&quot;square&quot;, ljoin=&quot;mitre&quot;, font.lab=2)
+
+# . . . then plot the data
+plot(sv2017$Cd~sv2017$Zn, col=c(6,7,1)[sv2017$Type], log=&quot;xy&quot;, 
+     pch=c(16,1,15)[sv2017$Type], lwd=c(1,2,1)[sv2017$Type], cex=1.25,
+     xlab=&quot;Zn (mg/kg)&quot;, ylab=&quot;Cd (mg/kg)&quot;)
+abline(lm(sv2017$Cd.log~sv2017$Zn.log)) # line of best fit
+legend(&quot;topleft&quot;, legend=c(levels(sv2017$Type),&quot;Best-fit line ignoring Type&quot;), 
+       cex=1, col=c(6,7,1,1), 
+       pch=c(16,1,15,NA), pt.lwd=c(1,2,1), lwd = c(NA,NA,NA,1), 
+       pt.cex=1.25, bty=&quot;n&quot;, inset=0.02,
+       title=expression(italic(&quot;Sample Type&quot;)))</code></pre>
+<div class="figure">
+<img src="relationR_files/figure-html/Cd-Zn-scatter-1.png" alt="Figure 1: Scatterplot showing the relationship between Cd and Zn, with observations identified by Type but showing the regression line for all data independent of grouping." width="576" />
+<p class="caption">
+Figure 1: Scatterplot showing the relationship between Cd and Zn, with
+observations identified by Type but showing the regression line for all
+data independent of grouping.
+</p>
+</div>
+<hr style="height: 2px; background-color: #660F00;" />
+<blockquote>
+<p>"The invalid assumption that correlation implies cause is probably
+among the two or three most serious and common errors of human
+reasoning."</p>
+<p>--- <a href="https://en.wikipedia.org/wiki/Stephen_Jay_Gould"
+target="_blank">Stephen Jay Gould</a></p>
+</blockquote>
+<hr style="height: 2px; background-color: #660F00;" />
+</div>
+</div>
+<div id="correlation-matrix---two-ways-of-doing-it"
+class="section level1">
+<h1>Correlation matrix - two ways of doing it</h1>
+<p>We'll generate Spearman correlation matrices in these examples, but
+it's easy to change the code to generate Pearson (or other) correlation
+matrices. <br> The p-values give the probability of the observed
+relationship if the null hypothesis (<em>i.e</em>. no relationship) is
+true.</p>
+<pre class="r"><code>require(Hmisc) # needed for rcorr() function
+corr_table &lt;- rcorr(as.matrix(sv2017[c(&quot;pH&quot;,&quot;Al&quot;,&quot;Ca&quot;,&quot;Fe&quot;,&quot;Cd&quot;,&quot;Pb&quot;,&quot;Zn&quot;)]), 
+                    type=&quot;spearman&quot;)
+print(corr_table)</code></pre>
+<pre><code>##      pH   Al   Ca   Fe   Cd   Pb   Zn
+## pH 1.00 0.31 0.68 0.29 0.23 0.13 0.12
+## Al 0.31 1.00 0.32 0.45 0.19 0.07 0.16
+## Ca 0.68 0.32 1.00 0.42 0.25 0.21 0.35
+## Fe 0.29 0.45 0.42 1.00 0.47 0.63 0.73
+## Cd 0.23 0.19 0.25 0.47 1.00 0.69 0.65
+## Pb 0.13 0.07 0.21 0.63 0.69 1.00 0.77
+## Zn 0.12 0.16 0.35 0.73 0.65 0.77 1.00
+## 
+## n
+##    pH Al Ca Fe Cd Pb Zn
+## pH 94 87 87 87 75 87 87
+## Al 87 88 88 88 76 88 88
+## Ca 87 88 88 88 76 88 88
+## Fe 87 88 88 88 76 88 88
+## Cd 75 76 76 76 76 76 76
+## Pb 87 88 88 88 76 88 88
+## Zn 87 88 88 88 76 88 88
+## 
+## P
+##    pH     Al     Ca     Fe     Cd     Pb     Zn    
+## pH        0.0033 0.0000 0.0068 0.0517 0.2385 0.2622
+## Al 0.0033        0.0028 0.0000 0.1028 0.5000 0.1282
+## Ca 0.0000 0.0028        0.0000 0.0312 0.0451 0.0008
+## Fe 0.0068 0.0000 0.0000        0.0000 0.0000 0.0000
+## Cd 0.0517 0.1028 0.0312 0.0000        0.0000 0.0000
+## Pb 0.2385 0.5000 0.0451 0.0000 0.0000        0.0000
+## Zn 0.2622 0.1282 0.0008 0.0000 0.0000 0.0000</code></pre>
+<p>The output has three sub-tables:</p>
+<ol style="list-style-type: decimal">
+<li>the correlation coefficients for each pair of variables (note
+symmetry)</li>
+<li>the number of pairs of observations for each relationship (some
+observations may be missing)</li>
+<li>the p values for each relationship (note symmetry)</li>
+</ol>
+<p>[Note that for Pearson correlations we instead use
+<code>type="pearson"</code> in the <code>rcorr</code> function.]</p>
+<p>Since a correlation coefficient is a standardised measure of
+association, we can treat it as an 'effect size'. <br> Cohen (1988)
+suggested the following categories:</p>
+<table width="40%" border="0">
+<tbody>
+<tr style="background-color: #e0e0e0;">
+<td align="center" colspan="3">
+<strong>Range in r</strong>
+</td>
+<td align="left">
+<strong>Effect size term</strong>
+</td>
+</tr>
+<tr>
+<td align="right">
+0 &lt;
+</td>
+<td align="center">
+|r|
+</td>
+<td align="left">
+≤ 0.1
+</td>
+<td align="left">
+negligible
+</td>
+</tr>
+<tr style="background-color: #e0e0e0;">
+<td align="right">
+0.1 &lt;
+</td>
+<td align="center">
+|r|
+</td>
+<td align="left">
+≤ 0.3
+</td>
+<td align="left">
+small
+</td>
+</tr>
+<tr>
+<td align="right">
+0.3 &lt;
+</td>
+<td align="center">
+|r|
+</td>
+<td align="left">
+≤ 0.5
+</td>
+<td align="left">
+medium
+</td>
+</tr>
+<tr style="background-color: #e0e0e0;">
+<td align="right">
+0.5 &lt;
+</td>
+<td align="center">
+|r|
+</td>
+<td align="left">
+≤ 1
+</td>
+<td align="left">
+large
+</td>
+</tr>
+</tbody>
+</table>
+<p><span style="font-size:10pt;">|r| means the absolute value of r
+(<em>i.e</em>. ignoring whether r is positive or negative)</span></p>
+<p>
+ 
+</p>
+<div
+id="correlation-matrix-with-p-values-corrected-for-multiple-comparisons"
+class="section level2">
+<h2>Correlation matrix with p-values corrected for multiple
+comparisons</h2>
+<p>We can do this using the <code>rcorr.adjust()</code> function in the
+<code>RcmdrMisc</code> package which calculates
+<strong>corrected</strong> P-values. As above,the p-values give the
+probability of the observed relationship if # the null hypothesis
+(<em>i.e</em>. no relationship) is true. Corrections are to reduce the
+risk of <strong>Type 1 Errors (false positives)</strong> which is
+greater when multiple comparisons are being made.</p>
+<p>We include <code>use="pairwise.complete"</code> in the
+<code>rcorr.adjust()</code> function parameters, otherwise the
+correlations are calculated on the number of observations for the
+variable with the most missing values (try changing it after reading
+<code>help("rcorr.adjust")</code>).</p>
+<pre class="r"><code>require(RcmdrMisc) # needed for rcorr.adjust() function
+rcorr.adjust(sv2017[c(&quot;pH&quot;,&quot;Al&quot;,&quot;Ca&quot;,&quot;Fe&quot;,&quot;Cd&quot;,&quot;Pb&quot;,&quot;Zn&quot;)], type=&quot;spearman&quot;, 
+             use=&quot;pairwise.complete&quot;)</code></pre>
+<pre><code>## 
+##  Spearman correlations:
+##        pH     Al     Ca     Fe     Cd     Pb     Zn
+## pH 1.0000 0.3112 0.6763 0.2884 0.2256 0.1277 0.1215
+## Al 0.3112 1.0000 0.3153 0.4470 0.1886 0.0728 0.1634
+## Ca 0.6763 0.3153 1.0000 0.4155 0.2474 0.2142 0.3498
+## Fe 0.2884 0.4470 0.4155 1.0000 0.4739 0.6267 0.7340
+## Cd 0.2256 0.1886 0.2474 0.4739 1.0000 0.6935 0.6480
+## Pb 0.1277 0.0728 0.2142 0.6267 0.6935 1.0000 0.7685
+## Zn 0.1215 0.1634 0.3498 0.7340 0.6480 0.7685 1.0000
+## 
+##  Number of observations: 
+##    pH Al Ca Fe Cd Pb Zn
+## pH 94 87 87 87 75 87 87
+## Al 87 88 88 88 76 88 88
+## Ca 87 88 88 88 76 88 88
+## Fe 87 88 88 88 76 88 88
+## Cd 75 76 76 76 76 76 76
+## Pb 87 88 88 88 76 88 88
+## Zn 87 88 88 88 76 88 88
+## 
+##  Pairwise two-sided p-values:
+##    pH     Al     Ca     Fe     Cd     Pb     Zn    
+## pH        0.0033 &lt;.0001 0.0068 0.0517 0.2385 0.2622
+## Al 0.0033        0.0028 &lt;.0001 0.1028 0.5000 0.1282
+## Ca &lt;.0001 0.0028        &lt;.0001 0.0312 0.0451 0.0008
+## Fe 0.0068 &lt;.0001 &lt;.0001        &lt;.0001 &lt;.0001 &lt;.0001
+## Cd 0.0517 0.1028 0.0312 &lt;.0001        &lt;.0001 &lt;.0001
+## Pb 0.2385 0.5000 0.0451 &lt;.0001 &lt;.0001        &lt;.0001
+## Zn 0.2622 0.1282 0.0008 &lt;.0001 &lt;.0001 &lt;.0001       
+## 
+##  Adjusted p-values (Holm&#39;s method)
+##    pH     Al     Ca     Fe     Cd     Pb     Zn    
+## pH        0.0334 &lt;.0001 0.0608 0.3158 0.7155 0.7155
+## Al 0.0334        0.0305 0.0002 0.5140 0.7155 0.5140
+## Ca &lt;.0001 0.0305        0.0007 0.2498 0.3158 0.0100
+## Fe 0.0608 0.0002 0.0007        0.0002 &lt;.0001 &lt;.0001
+## Cd 0.3158 0.5140 0.2498 0.0002        &lt;.0001 &lt;.0001
+## Pb 0.7155 0.7155 0.3158 &lt;.0001 &lt;.0001        &lt;.0001
+## Zn 0.7155 0.5140 0.0100 &lt;.0001 &lt;.0001 &lt;.0001</code></pre>
+<p>The output from <code>rcorr.adjust()</code> has a fourth
+sub-table:</p>
+<ol start="4" style="list-style-type: decimal">
+<li>the adjusted p-values for each pair of variables, which depend on
+the number of variables being compared</li>
+</ol>
+</div>
+<div id="scatter-plot-matrix-to-check-correlation-matrix"
+class="section level2">
+<h2>Scatter plot matrix to check correlation matrix</h2>
+<p>It's <strong>always</strong> a good idea to plot scatterplots for the
+relationships we are exploring. Scatter (<em>x-y</em>) plots can show
+if:</p>
+<ul>
+<li>a correlation coefficient is unrealistically high due to a small
+number of outliers, or because there are aligned groups of points</li>
+<li>a correlation coefficient is low, not because of a lack of
+relationship, but because relationships differ for different groups of
+points;</li>
+<li>there is a consistent relationship for all groups of
+observations.</li>
+</ul>
+<pre class="r"><code>require(car) # needed for scatterplotMatrix() function
+carPalette(palette())
+scatterplotMatrix(~pH+ log10(Al)+ log10(Ca)+ log10(Cd)+ 
+                    log10(Fe)+ log10(Pb)+ log10(Zn) | Type, 
+                  smooth=FALSE, ellipse=FALSE, by.groups=TRUE, 
+                  col=c(6,7,1), pch=c(16,1,15), cex.lab=1.5, data=sv2017,
+                  legend=list(coords=&quot;bottomleft&quot;))</code></pre>
+<div class="figure">
+<img src="relationR_files/figure-html/scatter-plot-matrix-1.png" alt="Figure 2: Scatter plot matrix for selected variables in the 2017 Smiths-Veryard sediment data, with observations and regression lines grouped by sample Type. Scatter plot matrices are a powerful exploratory data analysis tool." width="768" />
+<p class="caption">
+Figure 2: Scatter plot matrix for selected variables in the 2017
+Smiths-Veryard sediment data, with observations and regression lines
+grouped by sample Type. Scatter plot matrices are a powerful exploratory
+data analysis tool.
+</p>
+</div>
+<p>In Figure 2, Pb and Zn are positively related (Pearson's r = 0.77,
+p&lt;0.0001) independent of which group (Sediment, Soil, or Street dust)
+observations are from. Conversely, the relationship between pH and Cd is
+weak (r=0.23, adjusted p=0.32), but there appear to be closer
+relationships between observations from individual groups. Finally, the
+relationship between Al and Ca may be influenced by a single observation
+with low Al and high Ca. All issues like this should be considered when
+we explore our data more deeply.</p>
+</div>
+</div>
+<div id="linear-regression" class="section level1">
+<h1>Linear Regression</h1>
+<p>We will first make a <strong>simple linear regression</strong> model
+predicting chromium from iron.</p>
+<p>We first create log-transformed variable columns and inspect the
+scatterplot (Figure 3).</p>
+<pre class="r"><code>par(mfrow=c(1,1), mar=c(3,3,1,1), mgp=c(1.5,0.5,0), oma=c(0,0,0,0), tcl=0.2,
+    cex=1.2, cex.lab=1.2, cex.axis=1., lend=&quot;square&quot;, ljoin=&quot;mitre&quot;, font.lab=2)
+carPalette(palette())
+sv2017$Fe.log &lt;- log10(sv2017$Fe)
+sv2017$Cr.log &lt;- log10(sv2017$Cr)
+scatterplot(Cr ~ Fe | Type, data = sv2017, 
+            log = &quot;xy&quot;, smooth = FALSE, col = c(6,7,1),
+            xlab = &quot;Fe (mg/kg)&quot;, ylab = &quot;Cr (mg/kg)&quot;, 
+            legend = list(coords = &quot;bottomright&quot;))</code></pre>
+<div class="figure">
+<img src="relationR_files/figure-html/Cr-Fe-scatterplot-1.png" alt="Figure 3: Scatterplot showing relationship between Cr and Fe at Smiths Lake and Charles Veryard Reserves in 2017. Observations and regression lines are separated by sample Type." width="480" />
+<p class="caption">
+Figure 3: Scatterplot showing relationship between Cr and Fe at Smiths
+Lake and Charles Veryard Reserves in 2017. Observations and regression
+lines are separated by sample Type.
+</p>
+</div>
+<p>What do the ungrouped scatterplot and regression line look like?</p>
+<p>Next use the <code>lm()</code> function to create a linear model
+object (give it a sensible name), then summarise it:</p>
+<pre class="r"><code>lmCrFesimple &lt;- with(sv2017, lm(Cr.log ~ Fe.log))
+summary(lmCrFesimple)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = Cr.log ~ Fe.log)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.55661 -0.05466  0.02879  0.08074  0.29981 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -1.29069    0.26753  -4.825 6.02e-06 ***
+## Fe.log       0.61714    0.07795   7.917 7.78e-12 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.1428 on 86 degrees of freedom
+##   (7 observations deleted due to missingness)
+## Multiple R-squared:  0.4216, Adjusted R-squared:  0.4148 
+## F-statistic: 62.68 on 1 and 86 DF,  p-value: 7.781e-12</code></pre>
+<p>The output from a linear model summary in R is quite extensive:</p>
+<ol style="list-style-type: decimal">
+<li><code>Call</code>: gives the model we specified (for checking)</li>
+<li><code>Residuals</code>: some summary statistics for the difference
+of the model from the measured values -- these differences are called
+the <strong>residuals</strong></li>
+<li><code>Coefficients</code>: a table showing the parameters of the
+line of best fit, shown by the estimates. The <em>intercept</em> of the
+line is in the first row, and the <em>slope</em> labelled by the
+predictor variable. The other columns in the sub-table give the
+uncertainty in the parameters (Std.Error), and the null hypothesis
+p-value (<code>Pr(&gt;|t|)</code>) based on a t-statistic for each
+parameter (against H<sub>0</sub> that there is no effect of a predictor,
+<em>i.e</em>. the slope = 0)</li>
+<li><code>Signif. codes</code>: just explains the asterisks *** or ** or
+*</li>
+<li>The last block of text contains information on how well the model
+fits the data. We will focus on the R<sup>2</sup> (R-squared) value,
+which is equivalent to the proportion of variance in the dependent
+variable (<code>Cr.log</code> in this example) which is explained by the
+predictor (<code>Fe.log</code> in this example). We should also note the
+overall <strong>p-value</strong>, based on the variance ratio
+F-statistic, which tests H<sub>0</sub> = no effect of any
+predictor.</li>
+</ol>
+<div
+id="predicting-chromium-from-iron-using-a-regression-model-which-varies-by-groups"
+class="section level2">
+<h2>Predicting chromium from iron using a regression model which varies
+by groups</h2>
+<p>Note the syntax used to separate by factor categories:</p>
+<pre class="r"><code>lmCrFe_byType &lt;- with(sv2017, lm(Cr.log ~ Fe.log * Type))
+summary(lmCrFe_byType)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = Cr.log ~ Fe.log * Type)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.51934 -0.05220  0.00966  0.06412  0.36227 
+## 
+## Coefficients:
+##                        Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)            -1.01178    0.33679  -3.004  0.00353 ** 
+## Fe.log                  0.50026    0.09695   5.160 1.69e-06 ***
+## TypeSoil               -0.95452    0.51248  -1.863  0.06611 .  
+## TypeStreet dust        -3.05957    2.51208  -1.218  0.22674    
+## Fe.log:TypeSoil         0.32254    0.14910   2.163  0.03343 *  
+## Fe.log:TypeStreet dust  0.89402    0.70545   1.267  0.20864    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.1309 on 82 degrees of freedom
+##   (7 observations deleted due to missingness)
+## Multiple R-squared:  0.5367, Adjusted R-squared:  0.5084 
+## F-statistic:    19 on 5 and 82 DF,  p-value: 1.676e-12</code></pre>
+<p>This is similar output to simple linear regression in the previous
+example, but the <code>Coefficients:</code> table is much more
+complicated.</p>
+<p>The first two rows of the <code>Coefficients:</code> table under the
+headings give the intercept and slope for the 'base case', which by
+default is the first group in the factor separating the groups. In this
+example the first level of the factor 'Type' is 'sediment'
+(frustratingly, the output does not show this). <br> The next rows,
+starting with the factor name (<em>i.e</em>. <code>TypeSoil</code> and
+<code>TypeStreetDust</code>), show the <em>difference</em> between the
+<strong>intercepts</strong> for 'Soil' and 'Street dust' groups compared
+with the base case. <br> Similarly, the final rows, beginning with the
+predictor variable name (<code>Fe.log:TypeSoil</code> and
+<code>Fe.log:TypeStreet dust</code>), show the <em>difference</em>
+between the <strong>slopes</strong> for 'Soil' and 'Street dust' groups
+compared with the base case.</p>
+</div>
+<div id="compare-the-two-models" class="section level2">
+<h2>Compare the two models</h2>
+<p>Sometimes models can have greater R<sup>2</sup> but only because
+we've made them more complex by grouping our observations or by adding
+more predictors. <strong>We want the simplest model possible</strong>.
+We compare the models using an analysis of variance with the
+<code>anova()</code> function (where the null hypothesis is equal
+predictive ability). The models compared need to be
+<strong>nested</strong>, that is, one is a subset of the other.</p>
+<pre class="r"><code>anova(lmCrFesimple,lmCrFe_byType)</code></pre>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: Cr.log ~ Fe.log
+## Model 2: Cr.log ~ Fe.log * Type
+##   Res.Df    RSS Df Sum of Sq      F   Pr(&gt;F)   
+## 1     86 1.7539                                
+## 2     82 1.4049  4     0.349 5.0926 0.001026 **
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>The output here shows us on the basis of an F-test that we can reject
+H<sub>0</sub>, so the more complex model in this case really is better
+at prediction, since p ≤ 0.05.</p>
+</div>
+<div id="base-r-scatter-plots-representing-regression-models"
+class="section level2">
+<h2>'Base <strong>R</strong>' scatter plots representing regression
+models</h2>
+<pre class="r"><code>par(mfrow=c(1,2), mar=c(3,3,1,1), mgp=c(1.5,0.5,0), oma=c(0,0,0,0), tcl=0.2,
+    cex=1.2, cex.lab=1.2, cex.axis=1., lend=&quot;square&quot;, ljoin=&quot;mitre&quot;, font.lab=2)
+# simple scatterplot
+plot(sv2017$Cr~sv2017$Fe, log=&quot;xy&quot;)
+mtext(side=3, line=-1.2, text=&quot;(a)&quot;, adj=0.05, cex=1.4)
+abline(lmCrFesimple, col=8, lty=2)
+# grouped scatterplot
+plot(sv2017$Cr~sv2017$Fe, log=&quot;xy&quot;, col=c(1,2,3)[sv2017$Type], pch=c(0,2,16)[sv2017$Type])
+mtext(side=3, line=-1.2, text=&quot;(b)&quot;, adj=0.05, cex=1.4)
+# use for() {...} loop to add individual regression lines
+for (i in 1:NROW(levels(sv2017$Type))) {
+abline(lm(log10(sv2017$Cr)~log10(sv2017$Fe), 
+          subset=sv2017$Type==levels(sv2017$Type)[i]), col=i, lty=2)
+  }
+legend(&quot;bottomright&quot;, legend=levels(sv2017$Type), col=c(1,2,3), pch=c(0,2,16),
+       bty=&quot;n&quot;, inset=0.02)</code></pre>
+<div class="figure">
+<img src="relationR_files/figure-html/scatter-Cr-Fe-pred-obs-1.png" alt="Figure 4: Scatterplot of Cr vs. Fe in the 2017 Smith's-Veryard data, showing (a) overall relationship and (b) relationship with observations grouped by sample Type." width="768" />
+<p class="caption">
+Figure 4: Scatterplot of Cr vs. Fe in the 2017 Smith's-Veryard data,
+showing (a) overall relationship and (b) relationship with observations
+grouped by sample Type.
+</p>
+</div>
+<p>On the basis of Figure 4, it seems likely that a grouped regression
+model (different slopes and intercepts for each sample Type) would
+better describe the Cr-Fe relationship, as the deviations from the model
+(the <em>residuals</em>) would be smaller overall.</p>
+<hr style="height: 2px; background-color: #660F00;" />
+<blockquote>
+<p>"Begin challenging your own assumptions. Your assumptions are your
+windows on the world. Scrub them off every once in awhile, or the light
+won't come in."</p>
+<p>--- <a href="https://www.imdb.com/name/nm0000257/"
+target="_blank">Alan Alda</a></p>
+</blockquote>
+<hr style="height: 2px; background-color: #660F00;" />
+</div>
+<div id="diagnostic-plots-for-regression" class="section level2">
+<h2>Diagnostic plots for regression</h2>
+<div id="simple-linear-regression-cr-fe" class="section level3">
+<h3>Simple linear regression, Cr ~ Fe</h3>
+<pre class="r"><code>par(mfrow=c(2,2), mar=c(3,3,2,1))
+plot(lmCrFesimple)</code></pre>
+<div class="figure">
+<img src="relationR_files/figure-html/diagnostic-plots-simple-1.png" alt="Figure 5: Regression diagnostic plots for Cr predicted from Fe using a simple linear regression model without grouping" width="480" />
+<p class="caption">
+Figure 5: Regression diagnostic plots for Cr predicted from Fe using a
+simple linear regression model without grouping
+</p>
+</div>
+<pre class="r"><code>par(mfrow=c(1,1), mar=c(3,3,1,1))</code></pre>
+</div>
+<div id="grouped-linear-regression-cr-fe-type" class="section level3">
+<h3>Grouped linear regression, Cr ~ Fe * Type</h3>
+<pre class="r"><code>par(mfrow=c(2,2), mar=c(3,3,2,1))
+plot(lmCrFe_byType)</code></pre>
+<div class="figure">
+<img src="relationR_files/figure-html/diagnostic-plots-grouped-1.png" alt="Figure 6: Regression diagnostic plots for Cr predicted from Fe using a grouped linear regression model with different parameters for each sample Type" width="480" />
+<p class="caption">
+Figure 6: Regression diagnostic plots for Cr predicted from Fe using a
+grouped linear regression model with different parameters for each
+sample Type
+</p>
+</div>
+<pre class="r"><code>par(mfrow=c(1,1), mar=c(3,3,1,1)) # change back to 1 plot at a time</code></pre>
+<p>The diagnostic plots (Figures 5 and 6) are a visual test of some of
+the assumptions of linear regression models, which relate mainly to the
+residuals. <br> [An alternative from the <code>car</code> package is
+<code>influenceIndexPlot(yourModelName)</code>].</p>
+<p>The <strong>top left</strong> and <strong>bottom left</strong> plots
+in Figures 5 and 6 allow us to assess the assumption of
+<em>homoscedasticity</em>, that is, the residuals should be of similar
+absolute magnitude independent of the value of the dependent variable
+(actual or predicted). The top left plot also helps us to decide if the
+residuals are <em>independent</em>. In both the top left and bottom left
+plots, residuals should appear randomly distributed with a
+near-horizontal smoothed (<span style="color: #0000FF;">blue</span>)
+line.</p>
+<p>The <strong>top right</strong> plot in Figures 5 and 6 is a Q-Q plot
+which tests another assumption of regression; that the <em>residuals
+should be normally distributed</em>. The points should lie along (or
+close to) the theoretical (dotted) line.</p>
+<p>Finally the <strong>bottom left</strong> plot in Figures 5 and 6
+tests whether any observations have an unusual influence on the
+regression statistics (the assumption is that they <em>do not</em>).</p>
+<p>We can test all of these assumptions with formal statistical tests
+using the <code>car</code> and <code>lmtest</code> packages.</p>
+<p>The Breusch-Godfrey test is for residual autocorrelation;
+H<sub>0</sub> is that residuals are not autocorrelated (<em>i.e</em>.
+observations probably independent)</p>
+<pre class="r"><code>require(lmtest)
+bgtest(lmCrFe_byType) # autocorrelation (independence)</code></pre>
+<pre><code>## 
+##  Breusch-Godfrey test for serial correlation of order up to 1
+## 
+## data:  lmCrFe_byType
+## LM test = 2.2568, df = 1, p-value = 0.133</code></pre>
+<p>The Breusch-Pagan test is for heteroscedasticity; H<sub>0</sub> is
+that residuals are homoscedastic (<em>i.e</em>. variance independent of
+value of variable).</p>
+<pre class="r"><code>bptest(lmCrFe_byType) # homoscedasticity</code></pre>
+<pre><code>## 
+##  studentized Breusch-Pagan test
+## 
+## data:  lmCrFe_byType
+## BP = 12.407, df = 5, p-value = 0.02962</code></pre>
+<p>The Rainbow test is to test the assumption of linearity;
+H<sub>0</sub> is that the relationship is linear.</p>
+<pre class="r"><code>raintest(lmCrFe_byType) # linearity</code></pre>
+<pre><code>## 
+##  Rainbow test
+## 
+## data:  lmCrFe_byType
+## Rain = 0.68614, df1 = 44, df2 = 38, p-value = 0.8859</code></pre>
+<p>The <code>outlierTest()</code> function in the <code>car</code>
+package implements the Bonferroni outlier test; H<sub>0</sub> is that
+all residuals are from the same population (<em>i.e</em>. no outliers).
+H<sub>0</sub> is tested with the <strong>Bonferroni</strong> (NOT
+unadjusted) p-value. If no Bonferroni p-value is≤ 0.05, so we cannot
+reject H<sub>0</sub>, the function outputs the largest residual(s).</p>
+<pre class="r"><code>require(car)
+outlierTest(lmCrFe_byType) # influential observations (outliers)</code></pre>
+<pre><code>##     rstudent unadjusted p-value Bonferroni p
+## 66 -4.633419         1.3569e-05    0.0011941</code></pre>
+</div>
+<div id="more-things-to-try-correlation-regression-week-1"
+class="section level3">
+<h3><span style="color: #A020F0; background-color: #fbeeb8;">More things
+to try (Correlation &amp; regression Week 1)</span></h3>
+<p>Try <code>str(lm_object)</code> and/or <code>ls(lm_object)</code> to
+see what is stored in regression results. You might be able to use the
+contents of a <code>lm</code> object to:</p>
+<ol style="list-style-type: decimal">
+<li>plot calculated values (from the regression model) <em>vs</em>.
+measured values</li>
+<li>add a 1:1 relationship to the plot in 1. above</li>
+<li>find out if any regression residuals are unusual<br> ...and so
+on.</li>
+</ol>
+<center>
+<img src="cats-lightning-correlation.jpg" />
+</center>
+<hr style="height: 2px; background-color: #5560A4;" />
+</div>
+</div>
+</div>
+<div id="steps-in-running-a-multiple-regression-model"
+class="section level1">
+<h1>Steps in running a multiple regression model</h1>
+<p><strong>Multiple regression models</strong> predict the value of one
+variable (the <em>dependent variable</em>) from two or more
+<em>predictor variables</em> (or just 'predictors'). They can be very
+useful in environmental science, but there are several steps we need to
+take to make sure<br />
+that we have a valid model.</p>
+<p>In this example we're going to develop a regression model to
+<strong>predict copper (Cu) concentrations</strong> from several
+predictors. It makes sense to choose predictors that represent bulk soil
+properties that could <em>plausibly</em> control trace element
+concentrations. So, we choose variables like <strong>pH, EC, organic
+carbon, cation exchange </strong> <strong>capacity, and the major
+elements</strong> as predictors (<span
+style="color: #B04030;"><strong>but NOT other trace
+elements</strong></span>, as their concentrations are probably too low
+to control the concentration of anything else!)</p>
+<p>Since we don't have organic carbon or cation exchange capacity in
+this dataset, and there are many missing values for EC, our initial
+predictors will be <strong>Al, Ca, Fe, K, Mg, Na, pH, and S</strong>.
+Both the predictors and dependent variable need to be
+<strong>appropriately transformed</strong> before we start!</p>
+<p>Also, some of our initial predictors may be highly correlated
+(co-linear) with each other. In multiple regression, we don't want to
+include co-linear predictors, since then we'll have two (or more)
+predictors which effectively contain the same information – see
+below.</p>
+<div id="read-input-data" class="section level2">
+<h2>Read input data</h2>
+<pre class="r"><code>sv2017 &lt;- read.csv(&quot;sv2017_original.csv&quot;)
+print(sv2017[1:5,2:11], row.names = FALSE)</code></pre>
+<pre><code>##  Group Sample Type Easting Northing Longitude  Latitude   pH    EC   Al
+##      1      1 Soil  391064  6466753  115.8476 -31.92992 7.14 215.1 2112
+##      1      2 Soil  391074  6466745  115.8477 -31.92999 6.71 224.1 2136
+##      1      3 Soil  391148  6466744  115.8485 -31.93001 5.99 143.0 2145
+##      1      4 Soil  391134  6466729  115.8483 -31.93014 6.00 216.0 2375
+##      1      5 Soil  391211  6466740  115.8492 -31.93005 5.91  74.3 2345</code></pre>
+</div>
+<div id="assess-collinearity-between-initial-set-of-predictors"
+class="section level2">
+<h2>Assess collinearity between initial set of predictors</h2>
+<p>First we inspect the correlation matrix. It's useful to include the
+dependent variable as well, just to see which predictors are most
+closely correlated.</p>
+<p>(We try to generate a 'tidier' table by restricting numbers to 3
+significant digits, based on the smallest r value in each column. We
+don't need to use <code>rcorr()</code> or <code>rcorr.adjust()</code>,
+since we're not so interested in P-values for this purpose.)</p>
+<p>Note that all variables are <strong>appropriately
+transformed</strong>!<br> <em>You will need to do this
+yourself...</em></p>
+<pre class="r"><code>cor0 &lt;- 
+  cor(sv2017[,c(&quot;Al.pow&quot;,&quot;Ca.pow&quot;,&quot;Fe.pow&quot;,&quot;K.log&quot;,&quot;Mg.log&quot;,&quot;Na.pow&quot;,&quot;pH&quot;,&quot;S.pow&quot;,&quot;Cu.pow&quot;)],
+   use=&quot;pairwise.complete&quot;)
+print(cor0,digits=3)</code></pre>
+<pre><code>##        Al.pow    Ca.pow Fe.pow K.log Mg.log Na.pow     pH     S.pow Cu.pow
+## Al.pow 1.0000  0.337147  0.666 0.497  0.340  0.398  0.281  0.052639  0.200
+## Ca.pow 0.3371  1.000000  0.354 0.382  0.852  0.510  0.646 -0.000907  0.360
+## Fe.pow 0.6656  0.353504  1.000 0.579  0.388  0.286  0.162  0.318639  0.620
+## K.log  0.4974  0.381912  0.579 1.000  0.563  0.544  0.182  0.388158  0.351
+## Mg.log 0.3396  0.851684  0.388 0.563  1.000  0.730  0.450  0.290523  0.458
+## Na.pow 0.3982  0.510131  0.286 0.544  0.730  1.000  0.179  0.528523  0.273
+## pH     0.2813  0.645961  0.162 0.182  0.450  0.179  1.000 -0.274046  0.149
+## S.pow  0.0526 -0.000907  0.319 0.388  0.291  0.529 -0.274  1.000000  0.447
+## Cu.pow 0.1997  0.360100  0.620 0.351  0.458  0.273  0.149  0.446677  1.000</code></pre>
+<pre class="r"><code>rm(cor0)</code></pre>
+<p>The rule of thumb we use is that <strong>if predictor variables are
+correlated with Pearson's r ≥ 0.8 or r ≤ −0.8, then the collinearity is
+too large and one of the correlated predictors should be
+omitted</strong>. In the correlation table above this applies to the
+correlation between [transformed] Ca and Mg, with
+<strong>r=0.85</strong>. In this example we will run two versions of the
+model, one keeping both Ca and Mg, and one omitting Mg.</p>
+<p>In either case, whether we run the model with or without omitting
+predictors, it's a good idea to calculate <em>Variance Inflation
+Factors</em> on the predictor variables in the model (see below) which
+can tell us if collinearity is a problem.</p>
+</div>
+<div
+id="generate-multiple-regression-model-for-cu-co-linear-predictors-not-omitted"
+class="section level2">
+<h2>Generate multiple regression model for Cu (co-linear predictors NOT
+omitted)</h2>
+<p>We first delete any observations (rows) with missing
+(<code>NA</code>) values, otherwise when we reduce the number of
+predictors we may not have the same number of observations for all
+models, in which case we can't compare them.</p>
+<pre class="r"><code># make new data object containing relevant variables with no missing values
+sv2017_multreg &lt;- na.omit(sv2017[c(&quot;Cu.pow&quot;,&quot;pH&quot;,&quot;Al.pow&quot;,&quot;Ca.pow&quot;,&quot;Fe.pow&quot;,
+                                   &quot;K.log&quot;,&quot;Mg.log&quot;,&quot;Na.pow&quot;,&quot;S.pow&quot;)])
+# run model using correctly transformed variables
+lm_multi &lt;- lm(Cu.pow ~ pH + Al.pow + Ca.pow + Fe.pow + K.log + Mg.log + 
+               Na.pow + S.pow, data=sv2017_multreg)
+summary(lm_multi)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = Cu.pow ~ pH + Al.pow + Ca.pow + Fe.pow + K.log + 
+##     Mg.log + Na.pow + S.pow, data = sv2017_multreg)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.19359 -0.06366 -0.01116  0.06602  0.26154 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -0.168281   0.436815  -0.385   0.7011    
+## pH           0.018789   0.017599   1.068   0.2890    
+## Al.pow      -0.005742   0.002674  -2.147   0.0349 *  
+## Ca.pow      -0.254957   0.508472  -0.501   0.6175    
+## Fe.pow      19.021831   3.391486   5.609 2.98e-07 ***
+## K.log       -0.101394   0.061911  -1.638   0.1055    
+## Mg.log       0.205248   0.089255   2.300   0.0241 *  
+## Na.pow      -0.678065   0.503062  -1.348   0.1816    
+## S.pow        1.325708   0.504003   2.630   0.0103 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.09043 on 78 degrees of freedom
+## Multiple R-squared:  0.5705, Adjusted R-squared:  0.5264 
+## F-statistic: 12.95 on 8 and 78 DF,  p-value: 1.098e-11</code></pre>
+<p>Note that the null hypothesis probability <code>Pr(&gt;|t|)</code>
+for some predictors is ≤ 0.05, so we can't reject the null hypothesis –
+that this predictor has no effect on the dependent variable.</p>
+</div>
+<div
+id="calculate-variance-inflation-factors-vif-for-the-predictors-in-the-maximal-model"
+class="section level2">
+<h2>Calculate variance inflation factors (VIF) for the predictors in the
+'maximal' model</h2>
+<p>To calculate variance inflation factors we use the function
+<code>vif()</code> from the <code>car</code> package. The input for
+<code>vif()</code> is a <code>lm</code> object (in this case
+<code>lm_multi</code>).</p>
+<pre class="r"><code>require(car)
+{cat(&quot;Variance Inflation Factors\n&quot;)
+vif(lm_multi)}</code></pre>
+<pre><code>## Variance Inflation Factors
+##       pH   Al.pow   Ca.pow   Fe.pow    K.log   Mg.log   Na.pow    S.pow 
+## 1.968627 2.333083 6.410154 2.486039 2.014962 7.272626 3.442307 2.302179</code></pre>
+<p>A general rule of thumb is that if <strong>VIF &gt; 4</strong> we
+need to do some further investigation, while serious multi-collinearity
+exists <strong>requiring correction if VIF &gt; 10</strong> (Hebbali,
+2018). As we probably expected from the correlation coefficient (above),
+VIFs for both Ca and Mg are &gt;4 in this model, which may be OK, but we
+will try a model which omits Ca or Mg (we'll choose Mg)...</p>
+</div>
+<div
+id="generate-multiple-regression-model-for-cu-omitting-co-linear-predictors"
+class="section level2">
+<h2>Generate multiple regression model for Cu, omitting co-linear
+predictors</h2>
+<pre class="r"><code># make new data object containing relevant variables with no missing values
+sv2017_multreg &lt;- na.omit(sv2017[c(&quot;Cu.pow&quot;,&quot;pH&quot;,&quot;Al.pow&quot;,&quot;Ca.pow&quot;,&quot;Fe.pow&quot;,
+                                   &quot;K.log&quot;,&quot;Mg.log&quot;,&quot;Na.pow&quot;,&quot;S.pow&quot;)])
+# run model using correctly transformed variables (omitting co-linear predictors)
+lm_multi2 &lt;- lm(Cu.pow ~ pH + Al.pow + Ca.pow + Fe.pow + 
+                  K.log + Na.pow + S.pow, data=sv2017_multreg)
+summary(lm_multi2)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = Cu.pow ~ pH + Al.pow + Ca.pow + Fe.pow + K.log + 
+##     Na.pow + S.pow, data = sv2017_multreg)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.19308 -0.05483 -0.00613  0.05965  0.31834 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.627352   0.273779   2.291  0.02460 *  
+## pH           0.014878   0.017985   0.827  0.41058    
+## Al.pow      -0.006750   0.002709  -2.492  0.01481 *  
+## Ca.pow       0.628179   0.342172   1.836  0.07014 .  
+## Fe.pow      19.225647   3.481123   5.523 4.13e-07 ***
+## K.log       -0.059303   0.060728  -0.977  0.33178    
+## Na.pow      -0.188612   0.468023  -0.403  0.68804    
+## S.pow        1.434614   0.515210   2.785  0.00671 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.09286 on 79 degrees of freedom
+## Multiple R-squared:  0.5413, Adjusted R-squared:  0.5007 
+## F-statistic: 13.32 on 7 and 79 DF,  p-value: 3.18e-11</code></pre>
+<p>Note that again the null hypothesis probability
+<code>Pr(&gt;|t|)</code> for some predictors is &gt;0.05, so we can't
+reject the null hypothesis -- that this predictor has no effect on the
+dependent variable.</p>
+</div>
+<div
+id="calculate-variance-inflation-factors-vif-for-the-model-omitting-co-linear-predictors"
+class="section level2">
+<h2>Calculate variance inflation factors (VIF) for the model omitting
+co-linear predictors</h2>
+<pre class="r"><code>require(car)
+{cat(&quot;Variance Inflation Factors\n&quot;)
+vif(lm_multi2)}</code></pre>
+<pre><code>## Variance Inflation Factors
+##       pH   Al.pow   Ca.pow   Fe.pow    K.log   Na.pow    S.pow 
+## 1.950249 2.270458 2.753381 2.484341 1.838836 2.826085 2.281852</code></pre>
+<p><strong>With the co-linear variable(s) omitted (on the basis of
+|Pearson's r| &gt; 0.8), we now have no VIFs &gt; 4</strong>. So we can
+move on to stepwise refinement of our [new] 'maximal' model...<br>
+[<strong>BUT</strong> note that in this case, with no VIF &gt; 10, we
+could have simply skipped omitting Mg and moved on to the next step
+below.]</p>
+</div>
+<div
+id="stepwise-refinement-of-maximal-multiple-regression-model-omitting-co-linear-predictors"
+class="section level2">
+<h2>Stepwise refinement of maximal multiple regression model (omitting
+co-linear predictors)</h2>
+<p>We don't want to have too many predictors in our model -- just the
+predictors which explain significant proportions of the variance in our
+dependent variable. In addition, our data may be insufficient to
+generate a very complex model; one rule-of-thumb suggests 10-20
+observations are needed to calculate coefficients for each predictor.
+Reimann <em>et al</em>. (2008) recommend that the number of observations
+should be at least 5 times the number of predictors. So, we use a
+systematic stepwise procedure to test variations of the model, which
+omits unnecessary predictors.</p>
+<pre class="r"><code>lm_stepwise &lt;- step(lm_multi2, direction=&quot;both&quot;, trace=0)
+summary(lm_stepwise)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = Cu.pow ~ Al.pow + Ca.pow + Fe.pow + S.pow, data = sv2017_multreg)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.19595 -0.06213 -0.01212  0.06451  0.31295 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.624948   0.141354   4.421 2.99e-05 ***
+## Al.pow      -0.007697   0.002343  -3.285  0.00150 ** 
+## Ca.pow       0.644119   0.220434   2.922  0.00449 ** 
+## Fe.pow      18.990226   2.975412   6.382 9.82e-09 ***
+## S.pow        1.059291   0.366512   2.890  0.00493 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.09236 on 82 degrees of freedom
+## Multiple R-squared:  0.529,  Adjusted R-squared:  0.506 
+## F-statistic: 23.02 on 4 and 82 DF,  p-value: 8.931e-13</code></pre>
+<pre class="r"><code>require(car)
+{cat(&quot;==== Variance Inflation Factors ====\n&quot;)
+vif(lm_stepwise)}</code></pre>
+<pre><code>## ==== Variance Inflation Factors ====</code></pre>
+<pre><code>##   Al.pow   Ca.pow   Fe.pow    S.pow 
+## 1.716931 1.154967 1.834424 1.167152</code></pre>
+<p>In the optimised model, we find that the stepwise procedure has
+generated a new model with fewer predictor variables. You should notice
+that the p-values (<code>Pr(&gt;|t|)</code>) for intercept and
+predictors are all now ≤ 0.05, so we can reject the null hypothesis for
+all predictors (<em>i.e</em>. none of them have 'no effect' on Cu). Our
+VIFs are now all close to 1, meaning negligible collinearity between
+predictors.</p>
+<p>It's always a good idea to run diagnostic plots (see Figure 7 below)
+on a regression model (simple or multiple), to check for (i) any
+systematic trends in residuals, (ii) normally distributed residuals (or
+not), and (iii) any unusually influential observations.</p>
+</div>
+<div id="regression-diagnostic-plots" class="section level2">
+<h2>Regression diagnostic plots</h2>
+<pre class="r"><code>par(mfrow=c(2,2), mar=c(3.5,3.5,1.5,1.5), mgp=c(1.6,0.5,0), font.lab=2, font.main=3, 
+    cex.main=0.8, tcl=-0.2)
+plot(lm_stepwise)</code></pre>
+<div class="figure">
+<img src="relationR_files/figure-html/diagnostic-plots-1.png" alt="Figure 7: Diagnostic plots for the optimal multiple regression model following backward-forward stepwise refinement." width="576" />
+<p class="caption">
+Figure 7: Diagnostic plots for the optimal multiple regression model
+following backward-forward stepwise refinement.
+</p>
+</div>
+<pre class="r"><code>par(mfrow=c(1,1))</code></pre>
+<p>The optimal model is
+<code>Cu.pow ~ Al.pow + Ca.pow + Fe.pow + S.pow</code>, where suffixes
+<code>.pow</code> and <code>.log</code> represent power- and
+log<sub>10</sub>-transformed variables respectively. The point labelled
+<code>86</code> does look problematic...</p>
+<pre class="r"><code>require(lmtest)
+require(car)
+cat(&quot;------- Residual autocorrelation (independence assumption):&quot;)
+bgtest(lm_stepwise) # Breusch-Godfrey test for autocorrelation (independence)
+cat(&quot;\n------- Test of homoscedasticity assumption:&quot;)
+bptest(lm_stepwise) # Breusch-Pagan test for homoscedasticity
+cat(&quot;\n------- Test of linearity assumption:&quot;)
+raintest(lm_stepwise) # Rainbow test for linearity
+cat(&quot;\n------- Bonferroni Outlier test for influential observations:\n\n&quot;)
+outlierTest(lm_stepwise) # Bonferroni outlier test for influential observations</code></pre>
+<pre><code>## ------- Residual autocorrelation (independence assumption):
+##  Breusch-Godfrey test for serial correlation of order up to 1
+## 
+## data:  lm_stepwise
+## LM test = 2.8767, df = 1, p-value = 0.08987
+## 
+## 
+## ------- Test of homoscedasticity assumption:
+##  studentized Breusch-Pagan test
+## 
+## data:  lm_stepwise
+## BP = 27.533, df = 4, p-value = 1.551e-05
+## 
+## 
+## ------- Test of linearity assumption:
+##  Rainbow test
+## 
+## data:  lm_stepwise
+## Rain = 2.1033, df1 = 44, df2 = 38, p-value = 0.01057
+## 
+## 
+## ------- Bonferroni Outlier test for influential observations:
+## 
+##    rstudent unadjusted p-value Bonferroni p
+## 86 5.002624         3.2263e-06   0.00028069</code></pre>
+</div>
+<div id="multiple-regression-effect-plots" class="section level2">
+<h2>Multiple regression effect plots</h2>
+<pre class="r"><code>require(effects)
+plot(allEffects(lm_stepwise, confidence.level=0.95))</code></pre>
+<div class="figure">
+<img src="relationR_files/figure-html/effect-plots-1.png" alt="Figure 8: Effect plots for individual predictors in the optimal multiple regression model following backward-forward stepwise refinement. Light blue shaded areas on plots represent 95% confidence limits." width="576" />
+<p class="caption">
+Figure 8: Effect plots for individual predictors in the optimal multiple
+regression model following backward-forward stepwise refinement. Light
+blue shaded areas on plots represent 95% confidence limits.
+</p>
+</div>
+</div>
+<div id="scatterplot-of-observed-vs.-fitted-values"
+class="section level2">
+<h2>Scatterplot of observed <em>vs</em>. fitted values</h2>
+<p>An 'observed <em>vs</em>. fitted' plot (Figure 9) is a way around
+trying to plot a function with multiple predictors (<em>i.e</em>.
+multiple dimensions)! We can get the fitted values since these are
+stored in the <code>lm</code> object, in our case
+<code>lm_stepwise</code> in an item called
+<code>lm_stepwise$fitted.values</code>. We also make use of other
+information stored in the <code>lm</code> object, by calling
+<code>summary(lm_stepwise)$adj.r.squared</code>.</p>
+<pre class="r"><code>par(mar=c(4,4,1,1), mgp=c(2,0.5,0), font.lab=2, cex.lab=1.2, 
+    lend=&quot;square&quot;, ljoin=&quot;mitre&quot;)
+plot(sv2017_multreg$Cu.pow ~ lm_stepwise$fitted.values,
+     xlab=&quot;Cu.pow predicted from regression model&quot;,
+     ylab=&quot;Cu.pow measured values&quot;, pch=3, lwd=2, 
+     cex=0.8, col=&quot;blue3&quot;)
+abline(0,1, col=&quot;red&quot;, lty=2, lwd=2)
+legend(&quot;topleft&quot;, legend=c(&quot;Observations&quot;,&quot;1:1 line&quot;), col=c(&quot;blue3&quot;,&quot;red&quot;), 
+       text.col=c(&quot;blue3&quot;,&quot;red&quot;), pch=c(3,NA), lty=c(NA,2), pt.lwd=2, lwd=2, 
+       box.col=&quot;grey&quot;, box.lwd=2, inset=0.02, seg.len=2.7, y.intersp=1.2)
+mtext(side=3, line=-5.5, adj=0.05, col=&quot;blue3&quot;,
+      text=paste(&quot;Adjusted Rsq =&quot;,signif(summary(lm_stepwise)$adj.r.squared,3)))</code></pre>
+<div class="figure">
+<img src="relationR_files/figure-html/obs-vs-fitted-1.png" alt="Figure 9: Measured (observed) vs. predicted values in the optimal multiple regression model." width="576" />
+<p class="caption">
+Figure 9: Measured (observed) vs. predicted values in the optimal
+multiple regression model.
+</p>
+</div>
+</div>
+<div id="some-brief-interpretation" class="section level2">
+<h2>Some brief interpretation</h2>
+<ul>
+<li>The adjusted R-squared value of the final model is 0.506, meaning
+that 50.6% of the variance in Cu is explained by variance in the model's
+predictors. (The remaining 49.4% of variance must therefore be due to
+random variations, or 'unknown' variables not included in our
+model.)</li>
+<li>From the model coefficients and the effect plots we can see that Cu
+increases as Ca, Fe, and S increase, but Cu decreases as Al increases.
+This doesn't necessarily correspond with the individual relationships;
+Cu <strong>IS</strong> positively correlated with Ca, Fe, and S,
+<strong>but</strong> actually has no significant relationship with Al
+(you can check this!).</li>
+<li>Although we can't attribute a causal relationship to correlation or
+regression relationships, the observed effects in our model
+<strong>are</strong> consistent with real phenomena. For example, copper
+is positively related to iron (Fe) in soils at the continental scale;
+see Hamon <em>et al</em>. (2004) and Caritat and Rate (2017).</li>
+</ul>
+</div>
+</div>
+<div id="references" class="section level1">
+<h1>References</h1>
+<p>Caritat, P. and Rate, A. W. (2017). Detecting anomalous metal
+concentrations in the regolith using cross-compositional detrending.
+<em>Paper presented at the Goldschmidt Conference 2017</em>, Paris,
+France. <a
+href="https://whiteiron.org/uploads/conferences/27/abstracts/finalPDFs/2017002103-20170327183746.pdf"
+class="uri">https://whiteiron.org/uploads/conferences/27/abstracts/finalPDFs/2017002103-20170327183746.pdf</a></p>
+<p>Cohen, J. 1988. <em>Statistical Power Analysis for the Behavioral
+Sciences</em>, Second Edition. Erlbaum Associates, Hillsdale, NJ,
+USA.</p>
+<p>Hamon, R. E., McLaughlin, M. J., Gilkes, R. J., Rate, A. W.,
+Zarcinas, B., Robertson, A., Cozens, G., Radford, N. and Bettenay, L.
+(2004). Geochemical indices allow estimation of heavy metal background
+concentrations in soils. <em>Global Biogeochemical Cycles</em>,
+<strong>18</strong>(GB1014), <a
+href="http://dx.doi.org/10.1029/2003GB002063"
+class="uri">http://dx.doi.org/10.1029/2003GB002063</a>.</p>
+<p>Hebbali, A. (2018). Collinearity Diagnostics, Model Fit and Variable
+Contribution. Vignette for R Package 'olsrr'. Retrieved 2018.04.05, from
+<a
+href="https://cran.r-project.org/web/packages/olsrr/vignettes/regression_diagnostics.html"
+class="uri">https://cran.r-project.org/web/packages/olsrr/vignettes/regression_diagnostics.html</a>.</p>
+<p>Reimann, C., Filzmoser, P., Garrett, R.G., Dutter, R., (2008).
+<em>Statistical Data Analysis Explained: Applied Environmental
+Statistics with R</em>. John Wiley &amp; Sons, Chichester, England (see
+Chapter 16).</p>
+</div>
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<hr />
+<p><a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank"><strong>CC-BY-SA</strong></a> • All content by <a href="https://github.com/Ratey-AtUWA" target="_blank">Ratey-AtUWA</a>. My <a href="https://www.uwa.edu.au/schools/agriculture-and-environment" target="_blank">employer</a> does not necessarily know about or endorse the content of this website.<br>
+<span style="font-size:9pt">Created with <span style="font-family: monospace; background-color: #e8e8e8;">rmarkdown</span> in <a href="https://www.rstudio.com/" target="_blank"><span class="fa fa-registered"></span> RStudio</a> using the <span style="font-family: monospace; background-color: #e8e8e8;">darkly</span> theme from <a href="https://bootswatch.com/" target="_blank"><span class="fa fa-swatchbook"></span> Bootswatch</a> via the <span style="font-family: monospace; background-color: #e8e8e8;">bslib</span> package, and <a href="https://fontawesome.com/v5/search?o=r&m=free" target="_blank"><span class="fa fa-font-awesome"></span> fontawesome v5 icons</a>.</span></p>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

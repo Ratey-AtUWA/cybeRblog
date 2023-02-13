@@ -26,5 +26,6 @@ rmarkdown::render_site("Rbasics.Rmd")
 rmarkdown::render_site("Rgraphs.Rmd")
 rmarkdown::render_site("transformR.Rmd")
 rmarkdown::render_site("meansR.Rmd")
+rmarkdown::render_site("relationR.Rmd")
 
 rmarkdown::render_site("testpage.Rmd")
