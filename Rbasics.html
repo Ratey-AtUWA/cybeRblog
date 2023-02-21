@@ -265,6 +265,13 @@ $(document).ready(function () {
   </a>
 </li>
 <li>
+  <a href="images.html">
+    <span class="fa fa-images"></span>
+     
+    Images
+  </a>
+</li>
+<li>
   <a href="about.html">
     <span class="fa fa-address-card"></span>
      
@@ -348,22 +355,22 @@ The data used in this workshop were generated at this site.
 class="section level2">
 <h2>First proper check - summarise some of the data</h2>
 <pre class="r"><code>summary(hubbard[,1:10]) # just the first 10 columns</code></pre>
-<pre><code>##       PLOT       Rel.To.Brook    Transect   UTM_EASTING      UTM_NORTHING           PH         MOISTURE.pct        OM.pct      
-##  Min.   :  1.0   North:135    E278000:44   Min.   :276000   Min.   :4866300   Min.   :2.510   Min.   : 0.510   Min.   : 2.240  
-##  1st Qu.:126.8   South:125    E277000:43   1st Qu.:277000   1st Qu.:4867800   1st Qu.:4.168   1st Qu.: 3.068   1st Qu.: 9.188  
-##  Median :254.5                E280000:37   Median :279000   Median :4869000   Median :4.350   Median : 4.131   Median :11.162  
-##  Mean   :249.2                E276000:35   Mean   :278996   Mean   :4868769   Mean   :4.322   Mean   : 5.367   Mean   :12.009  
-##  3rd Qu.:392.2                E279000:34   3rd Qu.:281000   3rd Qu.:4869700   3rd Qu.:4.503   3rd Qu.: 6.324   3rd Qu.:13.582  
-##  Max.   :460.0                E282000:25   Max.   :283000   Max.   :4871100   Max.   :4.870   Max.   :26.262   Max.   :50.177  
-##                               (Other):42                                                                                       
-##        Cd               Cu        
-##  Min.   :0.0980   Min.   : 1.783  
-##  1st Qu.:0.3070   1st Qu.: 9.866  
-##  Median :0.6350   Median :13.004  
-##  Mean   :0.7426   Mean   :13.531  
-##  3rd Qu.:1.1310   3rd Qu.:16.553  
-##  Max.   :1.8890   Max.   :30.757  
-##  NA&#39;s   :167      NA&#39;s   :64</code></pre>
+<pre><code>##       PLOT       Rel.To.Brook    Transect   UTM_EASTING      UTM_NORTHING           PH       
+##  Min.   :  1.0   North:135    E278000:44   Min.   :276000   Min.   :4866300   Min.   :2.510  
+##  1st Qu.:126.8   South:125    E277000:43   1st Qu.:277000   1st Qu.:4867800   1st Qu.:4.168  
+##  Median :254.5                E280000:37   Median :279000   Median :4869000   Median :4.350  
+##  Mean   :249.2                E276000:35   Mean   :278996   Mean   :4868769   Mean   :4.322  
+##  3rd Qu.:392.2                E279000:34   3rd Qu.:281000   3rd Qu.:4869700   3rd Qu.:4.503  
+##  Max.   :460.0                E282000:25   Max.   :283000   Max.   :4871100   Max.   :4.870  
+##                               (Other):42                                                     
+##   MOISTURE.pct        OM.pct             Cd               Cu        
+##  Min.   : 0.510   Min.   : 2.240   Min.   :0.0980   Min.   : 1.783  
+##  1st Qu.: 3.068   1st Qu.: 9.188   1st Qu.:0.3070   1st Qu.: 9.866  
+##  Median : 4.131   Median :11.162   Median :0.6350   Median :13.004  
+##  Mean   : 5.367   Mean   :12.009   Mean   :0.7426   Mean   :13.531  
+##  3rd Qu.: 6.324   3rd Qu.:13.582   3rd Qu.:1.1310   3rd Qu.:16.553  
+##  Max.   :26.262   Max.   :50.177   Max.   :1.8890   Max.   :30.757  
+##                                    NA&#39;s   :167      NA&#39;s   :64</code></pre>
 <p>The <code>summary()</code> function creates a little table for each
 column - note that these little tables do not all look the same. Integer
 or numeric columns get a numeric summary with minimum, mean
@@ -768,8 +775,10 @@ with(hubbard, tapply(X = EXCH_Ni,
        INDEX=list(Transect,Rel.To.Brook), 
        FUN=mean, na.rm=TRUE))</code></pre>
 <pre><code>## One-way table of means
-##     E276000     E277000     E278000     E279000     E280000     E281000     E282000     E283000 
-## 0.002588815 0.002136418 0.002827809 0.002813563 0.002528296 0.002262386 0.002221885 0.002957922 
+##     E276000     E277000     E278000     E279000     E280000     E281000     E282000 
+## 0.002588815 0.002136418 0.002827809 0.002813563 0.002528296 0.002262386 0.002221885 
+##     E283000 
+## 0.002957922 
 ## 
 ## Two-way table of means
 ##               North       South
@@ -802,13 +811,18 @@ numSummary(hubbard$EXCH_Ni)
 cat(&quot;\nSummary statistics for EXCH_Ni grouped by Rel.To.Brook\n&quot;)
 numSummary(hubbard$EXCH_Ni, groups=hubbard$Rel.To.Brook)</code></pre>
 <pre><code>## Summary statistics for EXCH_Ni
-##         mean          sd         IQR         0%         25%         50%         75%       100%   n NA
-##  0.002536502 0.001382344 0.001126141 0.00070457 0.001829135 0.002246775 0.002955276 0.01784169 257  3
+##         mean          sd         IQR         0%         25%         50%         75%
+##  0.002536502 0.001382344 0.001126141 0.00070457 0.001829135 0.002246775 0.002955276
+##        100%   n NA
+##  0.01784169 257  3
 ## 
 ## Summary statistics for EXCH_Ni grouped by Rel.To.Brook
-##              mean          sd         IQR          0%         25%         50%         75%        100% data:n data:NA
-## North 0.002635924 0.001605190 0.001114533 0.001120626 0.001933342 0.002277016 0.003047875 0.017841689    132       3
-## South 0.002431513 0.001096042 0.001170948 0.000704570 0.001719421 0.002174767 0.002890369 0.008483806    125       0</code></pre>
+##              mean          sd         IQR          0%         25%         50%         75%
+## North 0.002635924 0.001605190 0.001114533 0.001120626 0.001933342 0.002277016 0.003047875
+## South 0.002431513 0.001096042 0.001170948 0.000704570 0.001719421 0.002174767 0.002890369
+##              100% data:n data:NA
+## North 0.017841689    132       3
+## South 0.008483806    125       0</code></pre>
 <p>For <code>numSummary()</code> tables, try the following:</p>
 <ul>
 <li>generating summary tables for more than one variable at a time</li>
