@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Spatial data analysis and visualization</title>
+
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<link href="site_libs/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-5.1.3/bootstrap.bundle.min.js"></script>
+<script src="site_libs/bs3compat-0.4.0/transition.js"></script>
+<script src="site_libs/bs3compat-0.4.0/tabs.js"></script>
+<script src="site_libs/bs3compat-0.4.0/bs3compat.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/tabwid-1.1.0/tabwid.css" rel="stylesheet" />
+<link href="site_libs/tabwid-1.1.0/scrool.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">cyboRg</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li>
+  <a href="code.html">
+    <span class="fa fa-project-diagram"></span>
+     
+    Code
+  </a>
+</li>
+<li>
+  <a href="teaching.html">
+    <span class="fa fa-chalkboard-teacher"></span>
+     
+    Teaching
+  </a>
+</li>
+<li>
+  <a href="rants.html">
+    <span class="fa fa-bell"></span>
+     
+    Rants
+  </a>
+</li>
+<li>
+  <a href="images.html">
+    <span class="fa fa-images"></span>
+     
+    Images
+  </a>
+</li>
+<li>
+  <a href="about.html">
+    <span class="fa fa-address-card"></span>
+     
+    About
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="social.html">
+    <span class="fa fa-twitter"></span>
+     
+    Social
+  </a>
+</li>
+<li>
+  <a href="work.html">
+    <span class="fa fa-user-graduate"></span>
+     
+    UWA
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Spatial data analysis and
+visualization</h1>
+
+</div>
+
+
+<style type="text/css">
+  body{
+  font-size: 12pt;
+}
+</style>
+<p><img src="geostats_files/figure-html/page-1-header-1.png" width="100%" style="display: block; margin: auto 0 auto auto;" /></p>
+<div id="geostatistics-and-data-mapping-in-r" class="section level1">
+<h1>Geostatistics and Data Mapping in <strong>R</strong></h1>
+<p>In this guide we use a range of R packages for different functions,
+shown in Table @ref(tab:tabulate-packages).</p>
+<template id="e97ce803-7d72-4517-bf24-7c8cb75fed79"><style>
+.tabwid table{
+  border-spacing:0px !important;
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  border-color: transparent;
+  caption-side: top;
+}
+.tabwid-caption-bottom table{
+  caption-side: bottom;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+.katex-display {
+    margin: 0 0 !important;
+}
+</style><div class="tabwid"><style>.cl-546b2536{}.cl-5463130a{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-5463131e{font-family:'Courier New';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-54631328{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-54663904{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-54664e08{width:1.2in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-54664e1c{width:4.5in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-54664e1d{width:2.5in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-54664e26{width:1.2in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-54664e27{width:4.5in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-54664e30{width:2.5in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-54664e3a{width:1.2in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-54664e44{width:4.5in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-54664e45{width:2.5in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-54664e4e{width:1.2in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-54664e4f{width:4.5in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-54664e58{width:2.5in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-545f3a00{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}</style><table class='cl-546b2536'><caption><span class="cl-545f3a00">R packages used for spatial data analysis and visualisation.</span></caption><thead><tr style="overflow-wrap:break-word;"><td class="cl-54664e08"><p class="cl-54663904"><span class="cl-5463130a">Package</span></p></td><td class="cl-54664e1c"><p class="cl-54663904"><span class="cl-5463130a">Purpose</span></p></td><td class="cl-54664e1d"><p class="cl-54663904"><span class="cl-5463130a">Reference</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-54664e26"><p class="cl-54663904"><span class="cl-5463131e">sf</span></p></td><td class="cl-54664e27"><p class="cl-54663904"><span class="cl-54631328">Spatial data handling, formatting, and storing spatial data</span></p></td><td class="cl-54664e30"><p class="cl-54663904"><span class="cl-54631328">Pebesma (2018)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-54664e3a"><p class="cl-54663904"><span class="cl-5463131e">gstat</span></p></td><td class="cl-54664e44"><p class="cl-54663904"><span class="cl-54631328">Geostatistics (variograms and variogram models, kriging)</span></p></td><td class="cl-54664e45"><p class="cl-54663904"><span class="cl-54631328">Pebesma (2004)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-54664e26"><p class="cl-54663904"><span class="cl-5463131e">sp</span></p></td><td class="cl-54664e27"><p class="cl-54663904"><span class="cl-54631328">Handling, formatting, and storing spatial data; some graphical functions</span></p></td><td class="cl-54664e30"><p class="cl-54663904"><span class="cl-54631328">Pebesma and Bivand (2005)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-54664e3a"><p class="cl-54663904"><span class="cl-5463131e">maps</span></p></td><td class="cl-54664e44"><p class="cl-54663904"><span class="cl-54631328">Simple map outlines</span></p></td><td class="cl-54664e45"><p class="cl-54663904"><span class="cl-54631328">Becker et al. (2021)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-54664e26"><p class="cl-54663904"><span class="cl-5463131e">spdep</span></p></td><td class="cl-54664e27"><p class="cl-54663904"><span class="cl-54631328">Spatial autocorrelation, LISA</span></p></td><td class="cl-54664e30"><p class="cl-54663904"><span class="cl-54631328">Pebesma and Bivand (2023)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-54664e3a"><p class="cl-54663904"><span class="cl-5463131e">lctools</span></p></td><td class="cl-54664e44"><p class="cl-54663904"><span class="cl-54631328">Spatial autocorrelation</span></p></td><td class="cl-54664e45"><p class="cl-54663904"><span class="cl-54631328">Kalogirou (2020)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-54664e26"><p class="cl-54663904"><span class="cl-5463131e">maptiles</span></p></td><td class="cl-54664e27"><p class="cl-54663904"><span class="cl-54631328">Retrieving and plotting tile-based map data</span></p></td><td class="cl-54664e30"><p class="cl-54663904"><span class="cl-54631328">Giraud (2021)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-54664e3a"><p class="cl-54663904"><span class="cl-5463131e">prettymapr</span></p></td><td class="cl-54664e44"><p class="cl-54663904"><span class="cl-54631328">Map annotations</span></p></td><td class="cl-54664e45"><p class="cl-54663904"><span class="cl-54631328">Dunnington (2022)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-54664e26"><p class="cl-54663904"><span class="cl-5463131e">fields</span></p></td><td class="cl-54664e27"><p class="cl-54663904"><span class="cl-54631328">Visualizing spatial data with irregular grids</span></p></td><td class="cl-54664e30"><p class="cl-54663904"><span class="cl-54631328">Nychka et al. (2021)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-54664e4e"><p class="cl-54663904"><span class="cl-5463131e">viridis</span></p></td><td class="cl-54664e4f"><p class="cl-54663904"><span class="cl-54631328">Colourblind-friendly colour palettes for maps</span></p></td><td class="cl-54664e58"><p class="cl-54663904"><span class="cl-54631328">Garnier et al. (2021)</span></p></td></tr></tbody></table></div></template>
+<div class="flextable-shadow-host" id="774a1a05-d050-4d9c-819a-8d2e84ef4378"></div>
+<script>
+var dest = document.getElementById("774a1a05-d050-4d9c-819a-8d2e84ef4378");
+var template = document.getElementById("e97ce803-7d72-4517-bf24-7c8cb75fed79");
+var caption = template.content.querySelector("caption");
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script>
+
+<p>
+ 
+</p>
+<pre class="r"><code>library(sf)
+library(spdep)
+library(gstat)
+library(lctools)
+library(sp)
+library(maps)
+library(maptiles)
+library(prettymapr)
+library(fields)
+library(viridis)</code></pre>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>This section will show you how to make simple maps with added data,
+how to analyse <strong>spatial autocorrelation</strong>, and make a
+<strong>geostatistical kriging model</strong> to interpolate point
+georeferenced data based on the autocorrelation structure.</p>
+<p>We will use a subset of the National Geochemical Survey of Australia
+(NGSA) data documented by Caritat and Cooper (2011) to illustrate the
+various concepts and procedures involved. We supply data in
+<code>.csv</code> files for importing into <strong>R</strong>.</p>
+</div>
+<div id="import-data-and-convert-to-spatial-object-format"
+class="section level2">
+<h2>Import data and convert to spatial object format</h2>
+<p>First we define some commonly-used coordinate reference systems which
+define the projection of our GPS data</p>
+<pre class="r"><code>LongLat &lt;- st_crs(4326) # uses Earth ellipsis specs from WGS84 datum
+UTM50S &lt;- st_crs(32750) # just for Zone 50, S hemisphere!</code></pre>
+<p>We may use these coordinate reference system objects later. For now
+we're going to work in Longitude-Latitude coordinates.</p>
+<p>We read our data using <code>read.csv()</code>, and convert the
+resulting data frames to <em>Simple Features</em> spatial data, using
+the <strong>R</strong> package <code>sf</code> (Pebesma, 2018). Simple
+Features is a formal standard (ISO 19125-1:2004) that describes how
+objects in the real world can be represented in computers - see <a
+href="https://r-spatial.github.io/sf/articles/sf1.html"
+class="uri">https://r-spatial.github.io/sf/articles/sf1.html</a>.</p>
+<pre class="r"><code>ngsaWA &lt;- read.csv(file=&quot;ngsaWA.csv&quot;, stringsAsFactors = TRUE)
+NGSAWA_border &lt;- read.csv(&quot;NGSAWA_border.csv&quot;)
+# make spatial data objects
+ngsaWAsf &lt;- st_as_sf(x = ngsaWA, coords = c(&quot;LONGITUDE&quot;,&quot;LATITUDE&quot;),
+                     crs = LongLat)
+ngsaWAbord_sf &lt;- st_as_sf(NGSAWA_border, coords = c(&quot;Long.est&quot;,&quot;Lat.est&quot;),
+                          crs = LongLat)</code></pre>
+<p><strong>Check</strong> the data using the <code>str()</code>,
+<code>summary()</code>, or <code>head()</code> functions!</p>
+<p>We also need a base map (Figure @ref(fig:base-WA-map)), and to obtain
+and plot an aesthetically pleasing map we use the <code>maptiles</code>
+R package (Giraud, 2021).</p>
+<div id="making-our-base-map-of-western-australia"
+class="section level3">
+<h3>Making our base map of Western Australia</h3>
+<p>There are several options and things to remember when making maps
+using <code>maptiles</code>:</p>
+<ul>
+<li><code>type</code> can also be one of <code>OpenStreetMap</code>,
+<code>OpenStreetMap.HOT</code>, <code>Esri.WorldStreetMap</code>,
+<code>Esri.WorldTopoMap</code>, <code>Esri.WorldImagery</code>,
+<code>Esri.WorldGrayCanvas</code>, <code>Stamen.Toner</code> (plus its
+variants), <code>Stamen.TonerLite</code>, <code>CartoDB.Positron</code>,
+<code>CartoDB.DarkMatter</code>, <code>CartoDB.Voyager</code> (all
+<code>CartoDB...</code> tiles have variants which work),
+<code>OpenTopoMap</code></li>
+<li>The <code>spTransform()</code> function from the R package
+<code>sp</code> allows conversion to various map projections (=
+coordinate reference systems, <strong>CRS</strong>).</li>
+</ul>
+</div>
+</div>
+<div id="preparing-to-make-maps" class="section level2">
+<h2>Preparing to make maps</h2>
+<p>We define the area we need for our map and save it in an object
+called 'extent'. 'extent' is a 'simple features' object which refers to
+a formal standard (ISO 19125-1:2004) that describes how objects in the
+real world can be represented in computers - see <a
+href="https://r-spatial.github.io/sf/articles/sf1.html"
+class="uri">https://r-spatial.github.io/sf/articles/sf1.html</a> (this
+is why we need the 'sf' or 'Simple Features' package by Pebesma
+(2018)).</p>
+<p>The easiest way to get bounding coordinates (in latitude, longitude)
+is by using Google Maps or Google Earth. Google Earth also allows the
+option to set the coordinate reference system to UTM. Otherwise we would
+need to convert our SpatialPoints object (see the
+<strong>Appendix</strong>). If our input coordinates are
+Longitude--Latitude, note that south latitudes (and west longitudes) are
+negative, and we want <strong>decimal degrees</strong> rather than
+degrees-minutes-seconds.</p>
+<p>For coordinates in the <code>sp</code> and <code>maptiles</code>
+packages, <span class="math inline">\(x\)</span> coordinates are
+Longitudes or Eastings, and <span class="math inline">\(y\)</span>
+coordinates are Latitudes or Northings.</p>
+<pre class="r"><code>WA_extent &lt;- st_as_sf(data.frame(Longitude = c(108, 129),
+                                 Latitude = c(-38, -13)),
+                      coords=c(&quot;Longitude&quot;,&quot;Latitude&quot;), crs=LongLat) 
+str(WA_extent)          ;     cat(&quot;-------------------\n&quot;)
+head(WA_extent)</code></pre>
+<pre><code>## Classes &#39;sf&#39; and &#39;data.frame&#39;:   2 obs. of  1 variable:
+##  $ geometry:sfc_POINT of length 2; first list element:  &#39;XY&#39; num  108 -38
+##  - attr(*, &quot;sf_column&quot;)= chr &quot;geometry&quot;
+##  - attr(*, &quot;agr&quot;)= Factor w/ 3 levels &quot;constant&quot;,&quot;aggregate&quot;,..: 
+##   ..- attr(*, &quot;names&quot;)= chr(0) 
+## -------------------
+## Simple feature collection with 2 features and 0 fields
+## Geometry type: POINT
+## Dimension:     XY
+## Bounding box:  xmin: 108 ymin: -38 xmax: 129 ymax: -13
+## Geodetic CRS:  WGS 84
+##          geometry
+## 1 POINT (108 -38)
+## 2 POINT (129 -13)</code></pre>
+<p>The output of <code>str(WA_extent)</code> shows that simple features
+objects have classes <code>sf</code> and <code>data.frame</code>, and
+<strong>always</strong> contain the special column <code>geometry</code>
+which stores the spatial coordinates. In addition, the output of
+<code>head(WA_extent)</code> identifies the coordinate limits of the
+<code>sf</code> object, and also the coordinate reference system (CRS)
+-- both useful checks.</p>
+<p><span style="color:red;"><strong>NOTE</strong>: The projection we
+specify here will be the one the map plots in!</span></p>
+</div>
+<div id="getting-and-plotting-the-map-tile-data" class="section level2">
+<h2>Getting and plotting the map tile data</h2>
+<p>We now need some functions from the <code>maptiles</code> package
+(Giraud 2021).</p>
+<pre class="r"><code>WAtiles &lt;- get_tiles(WA_extent, provider = &quot;OpenTopoMap&quot;, 
+                     crop = TRUE, zoom = 5) # make map object
+
+par(oma=c(3,3,1,1), mar=c(4,4,1.5,1.5), mgp=c(1.4,0.3,0), 
+    lend=2, ljoin=1, tcl=0.3)
+plot(WAtiles)
+axis(1)
+mtext(side=1, line=1.6, text=&quot;Longitude (\u00B0 E)&quot;,
+      font=2, cex=1.2)
+axis(2)
+mtext(side=2, line=1.6, text=&quot;Latitude (\u00B0 S)&quot;,
+      font=2, cex=1.2)
+box()</code></pre>
+<div class="figure" style="text-align: center">
+<img src="geostats_files/figure-html/base-WA-map-1.png" alt="Map of Western Australia (rectangular Long-Lat projection) used subsequently as the base map for spatial analyses. Generated using the maptiles R package, with OpenTopoMap tiles." width="75%" />
+<p class="caption">
+Map of Western Australia (rectangular Long-Lat projection) used
+subsequently as the base map for spatial analyses. Generated using the
+maptiles R package, with OpenTopoMap tiles.
+</p>
+</div>
+<div id="simple-line-based-base-map" class="section level3">
+<h3>Simple line-based base map</h3>
+<p>We can also make a very simple base map at country scales using the
+<code>maps</code> package (Figure @ref(fig:simple-wa-map)). The code
+makes use of the native <strong>R</strong> pipe operator
+<code>|&gt;</code> to sequence R functions without nesting. Map objects
+made using the <code>sf</code> package also work well with
+<code>ggplot2</code>.</p>
+<pre class="r"><code>wa_sf &lt;- map(regions = &quot;Australia&quot;, plot=F) |&gt; 
+  st_as_sf(coords = c(&quot;x&quot;,&quot;y&quot;), crs = LongLat) |&gt; 
+  st_crop(xmin=108,ymin=-38,xmax=129,ymax=-13)
+library(ggplot2)
+ggplot() +
+  geom_sf(data=wa_sf) +
+  labs(y=&quot;Latitude (\u00B0S)&quot;, x = &quot;Longitude (\u00B0E)&quot;) + 
+  theme_bw()</code></pre>
+<div class="figure" style="text-align: center">
+<img src="geostats_files/figure-html/simple-wa-map-1.png" alt="Map of Western Australia (rectangular Long-Lat projection) as a simple alternative base map for spatial analyses. Generated using the maps, sf, and ggplot2 R packages." width="40%" />
+<p class="caption">
+Map of Western Australia (rectangular Long-Lat projection) as a simple
+alternative base map for spatial analyses. Generated using the maps, sf,
+and ggplot2 R packages.
+</p>
+</div>
+<p>We won't proceed much further with this simple map approach, but the
+<code>ggmap</code> <strong>R</strong> package can be used to generate
+tile-based maps based on <code>ggplot2</code> plot syntax.</p>
+</div>
+<div id="plot-some-data-points-on-a-base-map" class="section level3">
+<h3>Plot some data points on a base map</h3>
+<p>A map can be thought of as a 2-dimensional scatter plot with a
+background of map features in raster (tiles) of vector format. This is
+useful since we can then simply use the coordinates in our data to plot
+additional information on our base map, given that the coordinate
+systems of the map and data are matched.</p>
+<p>The simplest example of doing this would be to plot the locations of
+samples in the NGSA data (Figure @ref(fig:ngsa-points-map)):</p>
+<pre class="r"><code>par(oma=c(3,3,1,1), mar=c(4,4,1.5,1.5), mgp=c(1.4,0.3,0), 
+    lend=2, ljoin=1, tcl=0.3)
+plot(WAtiles) ; box()
+axis(1, at=pretty(par(&quot;usr&quot;)[1:2]),
+     labels=paste0(pretty(par(&quot;usr&quot;)[1:2]),&quot;\u00B0E&quot;))
+mtext(side=1, line=1.6, text=&quot;Longitude&quot;, font=2, cex=1.2)
+axis(2, at=pretty(par(&quot;usr&quot;)[3:4]),
+     labels=paste0(-1*pretty(par(&quot;usr&quot;)[3:4]),&quot;\u00B0S&quot;))
+mtext(side=2, line=1.6, text=&quot;Latitude&quot;, font=2, cex=1.2)
+
+points(st_coordinates(ngsaWAsf)[,1:2], pch=3)
+legend(&quot;topleft&quot;, bty=&quot;n&quot;, legend=&quot;Sample locations for\nNGSA data in WA&quot;,
+       pch = 3)
+addnortharrow(pos=&quot;topright&quot;, border=1, lwd=1, text.col=1, padin=c(0.2,0.2))
+legend(&quot;bottom&quot;, bty=&quot;n&quot;, 
+       legend = c(&quot;Omitting scale bar, as scale on map varies by\nmore than 5%, so scale bar may be inaccurate\n \n &quot;),
+       y.intersp=0.9)</code></pre>
+<div class="figure" style="text-align: center">
+<img src="geostats_files/figure-html/ngsa-points-map-1.png" alt="Sample locations for the Western Australia subset of the NGSA data plotted over a maptiles raster background." width="50%" />
+<p class="caption">
+Sample locations for the Western Australia subset of the NGSA data
+plotted over a maptiles raster background.
+</p>
+</div>
+<p>We can also use <code>ggplot</code>/<code>ggmap</code> to plot the
+data using <code>geom_sf()</code>. In the example in Figure
+@ref(fig:ggmap-ngsa-points), we also add information on soil pH by
+including <code>aes(col=pH)</code> and
+<code>scale_colour_viridis_c()</code> in the code.</p>
+<pre class="r"><code>xlabs = seq(115,125, 5)
+ylabs = seq(-35, -15, 5)
+ggplot() +
+  geom_sf(data=wa_sf, fill=&quot;grey80&quot;) +
+  geom_sf(data=ngsaWAsf, aes(col=pH, size=2)) +
+  labs(y=&quot;Latitude&quot;, x = &quot;Longitude&quot;) + 
+  scale_colour_viridis_c(option=&quot;H&quot;, direction=-1) +
+  scale_x_continuous(breaks = xlabs, labels = paste0(xlabs,&#39;°E&#39;)) +
+  scale_y_continuous(breaks = ylabs, labels = paste0(-1*ylabs,&#39;°S&#39;)) +
+  theme_bw() +
+  theme(axis.text=element_text(size=14, color=&quot;black&quot;),
+        axis.title=element_text(size=16,face=&quot;bold&quot;),
+        legend.title=element_text(size=16),
+        legend.text=element_text(size=14),
+        legend.key.height=unit(2.4, units=&quot;cm&quot;)) + 
+  guides(col=guide_colourbar(title=&quot;Soil\npH&quot;), size=&quot;none&quot;)</code></pre>
+<div class="figure" style="text-align: center">
+<img src="geostats_files/figure-html/ggmap-ngsa-points-1.png" alt="Sample locations for the Western Australia subset of the NGSA data plotted usiing ggmap over a simple background." width="40%" />
+<p class="caption">
+Sample locations for the Western Australia subset of the NGSA data
+plotted usiing ggmap over a simple background.
+</p>
+</div>
+</div>
+<div id="plot-a-map-with-range-class-symbols" class="section level3">
+<h3>Plot a map with range-class symbols</h3>
+<p>First we make a simple features spatial data object:</p>
+<pre class="r"><code>As.AR_sf &lt;- st_as_sf(ngsaWA[,c(&quot;LONGITUDE&quot;,&quot;LATITUDE&quot;,&quot;As.AR&quot;)], 
+                     coords = c(&quot;LONGITUDE&quot;,&quot;LATITUDE&quot;),
+                     crs = LongLat)</code></pre>
+<p>Identifying each point as belonging to a range, <em>if</em> suitable
+ranges are chosen, is a convenient and relatively simple way to explore
+the spatial distribution of values of a variable. In this example we use
+the Tukey boxplot thresholds as these are specifically designed for
+exploratory data analysis and can easily identify potentially unusual
+values (outliers). Percentile classes can also be used, and there is a
+good discussion of the options in Chapter 5 of Reimann <em>et</em>
+<em>al</em>. (2008). In this example we log<sub>10</sub>-transform As
+concentration, as its untransformed distribution has a substantial
+positive skew.</p>
+<pre class="r"><code>par(oma=c(4,4,1.5,1.5), mgp=c(1.4,0.3,0), lend=2, ljoin=1, tcl=0.3)
+plot(WAtiles)
+axis(1)
+mtext(side=1, line=2, text=&quot;Longitude (\u00B0 E)&quot;,
+      font=2, cex=1.2)
+axis(2, mgp=c(2, 0.5, 0), cex.axis = 1.3)
+mtext(side=2, line=2, text=&quot;Latitude (\u00B0 S)&quot;,
+      font=2, cex=1.2)
+addnortharrow(pos=&quot;topleft&quot;, border=1, lwd=1, text.col=1,  
+              padin=c(0.2,0.2), scale=1.2)
+legend(&quot;bottomright&quot;, bty=&quot;n&quot;, 
+       legend = c(&quot;Omitting scale bar, as scale \non map varies by more than 5%, \nso scalebar may be inaccurate&quot;,&quot; &quot;),
+       y.intersp=0.9)
+# construct and plot range classes in Tukey boxplot thresholds
+As.AR_sf$As.log &lt;- log10(As.AR_sf$As.AR)
+As.AR_sf$tukey &lt;- cut(As.AR_sf$As.log, 
+    breaks = c(-999999,boxplot.stats(As.AR_sf$As.log)$stats,999999),
+    labels = c(&quot;-outliers&quot;,&quot;loWx-LQR&quot;,&quot;LQR-med&quot;,&quot;med-UQR&quot;,&quot;UQR-upWx&quot;,&quot;+outliers&quot;))
+polygon(NGSAWA_border$Long.est, NGSAWA_border$Lat.est, lty=3, lwd=2,
+        border=&quot;gray&quot;)
+points(st_coordinates(As.AR_sf), pch = 21,
+       cex=(c(.5,.65,.85,1,1.4,1.8)*2)[As.AR_sf$tukey], 
+       bg=seq(2,7)[As.AR_sf$tukey])
+     
+legend(&quot;bottomleft&quot;, legend = rev(c(&quot;-outliers&quot;,&quot;loWx-LQR&quot;,&quot;LQR-med&quot;,
+                                &quot;med-UQR&quot;,&quot;UQR-upWx&quot;,&quot;+outliers&quot;)), 
+       cex = 1.2, pch=21, pt.cex=rev(c(.5,.65,.85,1,1.4,1.8))*2, inset = 0.07, 
+       bty=&quot;n&quot;, y.intersp=1.2, pt.bg=seq(7,2,-1), x.intersp = 1.)
+text(par(&quot;usr&quot;)[1], par(&quot;usr&quot;)[3]+(0.38*(par(&quot;usr&quot;)[4]-par(&quot;usr&quot;)[3])), 
+     labels=expression(bold(&quot;TOS -2mm\nAs.AR ranges&quot;)), pos = 4, cex = 1)
+box()
+par(new=TRUE, fig=c(0,0.1,0.12,0.31), mar=c(0,0,0,0)+0.1,
+    col.lab=1, col.axis=1, mgp=c(.9,0.2,0), xaxt=&quot;n&quot;, yaxt=&quot;n&quot;, bty=&quot;n&quot;, ann=F) </code></pre>
+<div class="figure" style="text-align: center">
+<img src="geostats_files/figure-html/map-range-classes-1.png" alt="Map of arsenic (As) concentrations expressed as symbols for concentration ranges (UQR is 75th percentile, upWx is upper whisker, med is median, LQR is 25th percentile, loWx is lower whisker). Data are from from the WA subset of the NGSA data, -2mm tosoil fraction." width="80%" />
+<p class="caption">
+Map of arsenic (As) concentrations expressed as symbols for
+concentration ranges (UQR is 75th percentile, upWx is upper whisker, med
+is median, LQR is 25th percentile, loWx is lower whisker). Data are from
+from the WA subset of the NGSA data, -2mm tosoil fraction.
+</p>
+</div>
+</div>
+</div>
+<div id="spatial-autocorrelation" class="section level2">
+<h2>Spatial Autocorrelation</h2>
+<p>Whether samples are spatially related or not, in terms of a
+particular measured variable, is expressed by the <em>spatial
+autocorrelation</em> or <strong>Moran's I</strong> (Zhang <em>et
+al</em>., 2008). The Moran's I statistic is based on comparison of the
+values of a variable at one point with a specified number (or within a
+specified distance) of neighbouring points. A positive Moran I
+autocorrelation suggests that locations with similar values of the
+variable considered tend to cluster together. A Moran's I close to zero
+suggests no autocorrelation (values of the variable considered are
+randomly located), and a larger negative Moran's I suggests that similar
+values of the variable considered tend to be further apart than expected
+from a random spatial distribution. The Moran's I statistic is tested
+against the null hypothesis of no spatial autocorrelation, and will vary
+with the number of neighbouring points in the calculation, with more
+points giving weaker autocorrelations (Kalogirou, 2019).</p>
+<p>The basic Moran's I is a <em>global</em> autocorrelation, across the
+whole spatial dataset being analysed. The <em>Local</em> Moran's I can
+also be calculated, and shows the extent of significant spatial
+clustering of similar values (of the variable considered) around each
+observation.</p>
+<p>Spatial autocorrelation statistics, usually Moran's I, can be
+calculated using various GIS and statistical software, including several
+packages which add functionality to R (we use the <code>lctools</code>
+package).</p>
+<div id="calculate-global-morans-i" class="section level3">
+<h3>Calculate Global Moran's I</h3>
+<p>The subset of the National Geochemical Survey of Australia (NGSA)
+data we are using is in the object <code>ngsaWA</code>.</p>
+<p>We first create some objects which are subsets of the original data:
+(1) to remove missing observations, and (2) to make the list of
+parameters for the <code>moransI()</code> function more obvious. We put
+the results of the <code>moransI()</code> calculation into an object
+called <code>mI()</code>, and use the <code>t()</code> (transpose)
+function from base R to make some compact output.</p>
+<pre class="r"><code>ngsaWA_nbwt &lt;- knearneigh(x=ngsaWAsf, k=8) |&gt; knn2nb() |&gt; nb2listw()
+ngsaWAsf$As.log &lt;- log10(ngsaWAsf$As.AR)
+(mI &lt;- moran.test(ngsaWAsf$As.log, ngsaWA_nbwt)) # ; str(mI) # if needed</code></pre>
+<pre><code>## 
+##  Moran I test under randomisation
+## 
+## data:  ngsaWAsf$As.log  
+## weights: ngsaWA_nbwt    
+## 
+## Moran I statistic standard deviate = 17.055, p-value &lt; 2.2e-16
+## alternative hypothesis: greater
+## sample estimates:
+## Moran I statistic       Expectation          Variance 
+##      0.4604199496     -0.0032894737      0.0007392565</code></pre>
+<p>The value of global Moran's I tells us whether the variable of
+interest has spatial autocorrelation (<em>i.e</em>., is spatially
+structured). The p-value tests the null hypothesis that there is no
+spatial pattern in this variable.</p>
+</div>
+<div id="calculate-local-morans-i" class="section level3">
+<h3>Calculate local Moran's I</h3>
+<p>Again we subset the data into various objects for convenience,
+including <code>pos0</code> and <code>neg0</code> which allow plotting
+different symbols/colours for positive and negative values of Local
+Moran's I. The object <code>WAtiles</code> is a <code>maptiles</code>
+package <code>SpatRaster</code> object which we created earlier.</p>
+<p>It's easy to modify the code to calculate Local Moran's I for another
+variable, by editing the text string which is assigned to
+<code>var0</code>. For a list of variables in the original data subset
+we could run <code>names(ngsaWA)</code>.</p>
+<pre class="r"><code>var0 &lt;- &quot;As.log&quot;
+lmi_data &lt;- na.omit(ngsaWAsf[,var0])
+# lmi_data$As.log &lt;- log10(lmi_data$As.AR)
+lmi_wts &lt;- knearneigh(ngsaWAsf,k=4) |&gt; knn2nb() |&gt; nb2listw()
+
+lmi_As &lt;- localmoran(lmi_data$As.log, lmi_wts)
+lmiDF_As &lt;- cbind(st_coordinates(ngsaWAsf),as.data.frame(lmi_As), attributes(lmi_As)$quadr)
+colnames(lmiDF_As) &lt;- c(&quot;Longitude&quot;,&quot;Latitude&quot;,
+                        &quot;Ii&quot;, &quot;E.Ii&quot;, &quot;Var.Ii&quot;, &quot;Z.Ii&quot;, &quot;Pvalue&quot;, 
+                        &quot;mean&quot;, &quot;median&quot;, &quot;pysal&quot;)
+print(head(lmiDF_As[,3:10]), digits=3)</code></pre>
+<pre><code>##        Ii      E.Ii  Var.Ii   Z.Ii Pvalue      mean    median     pysal
+## 1  0.0478 -2.43e-05 0.00183  1.116 0.2646 High-High  Low-High High-High
+## 2  1.1874 -5.32e-03 0.39918  1.888 0.0591 High-High High-High High-High
+## 3  1.0937 -3.13e-03 0.23538  2.261 0.0238 High-High High-High High-High
+## 4 -0.2016 -3.50e-04 0.02641 -1.238 0.2156  High-Low  High-Low  High-Low
+## 5 -0.2630 -3.99e-04 0.03008 -1.514 0.1300  Low-High  Low-High  Low-High
+## 6  0.7082 -2.10e-02 1.55425  0.585 0.5586   Low-Low   Low-Low   Low-Low</code></pre>
+</div>
+<div id="plot-local-morans-i" class="section level3">
+<h3>Plot local Moran's I</h3>
+<p>We only want to display points having significant local Moran's I, so
+we subset the results data frame from above using the
+<code>which()</code> function. We subset these data further into
+positive and negative values of local Moran's I (using the
+<code>subset()</code> function), since the <code>symbols()</code>
+function cannot input negative values. Symbols are plotted with
+<code>sqrt()</code> values since human perception compares areas rather
+than diameters.</p>
+<pre class="r"><code>lmi_signif &lt;- lmiDF_As[which(lmiDF_As$Pvalue &lt;= 0.05),c(1:3,7,9)]
+
+par(oma=c(0,0,0,0), mar=c(4,4,1.5,1.5), mgp=c(1.4,0.3,0), 
+    lend=2, ljoin=1, tcl=0.3, tcl = 0.5, lwd = 1, font.lab=2)
+wa_outline &lt;- subset(st_coordinates(wa_sf)[,c(1:2)], 
+                     st_coordinates(wa_sf)[,4]==5) # subset omits islands
+plot(wa_outline, asp=1.05, pch=&quot;.&quot;, col=&quot;grey&quot;, xlim=c(110,129), ylim=c(-38,-13), 
+     xlab=&quot;Longitude (\u00b0E)&quot;, ylab=&quot;Latitude (\u00b0S)&quot;,xaxs=&quot;i&quot;)
+polygon(rbind(wa_outline,wa_outline[1,]), col=&quot;grey88&quot;, border = &quot;grey&quot;)
+points(st_coordinates(ngsaWAsf),pch=3,col=&quot;grey60&quot;,cex=0.6)
+neg_lmi &lt;- subset(lmi_signif, lmi_signif$Ii&lt;0)
+pos_lmi &lt;- subset(lmi_signif, lmi_signif$Ii&gt;=0)
+symbols(pos_lmi[,1:2], inches=F, circles=sqrt(pos_lmi$Ii*0.4), add=T, 
+        fg=&quot;blue3&quot;, bg=&quot;#0000FF40&quot;)
+symbols(neg_lmi[,1:2], inches=F, circles=sqrt(neg_lmi$Ii*-0.4), add=T, 
+        fg=&quot;tan&quot;, bg=&quot;#FFE00080&quot;)
+addnortharrow(pos=&quot;topright&quot;, border=1, lwd=1, text.col=1,  
+              padin=c(0.1,0.1), scale=0.5)
+textMI=paste0(&quot;Global Moran&#39;s I = &quot;,signif(mI$estimate[1],4))
+legend(&quot;topleft&quot;, cex=0.9, bg=&quot;grey88&quot;, box.col = &quot;grey&quot;, inset=0.02,
+       legend=c(&quot;Local Moran&#39;s I \u2265 0&quot;,&quot;Local Moran&#39;s I &lt; 0&quot;,
+                &quot;Sample locations&quot;), 
+       pch=c(21,21,3), col=c(&quot;blue3&quot;,&quot;tan&quot;,&quot;grey60&quot;), 
+       pt.bg=c(&quot;#0000FF40&quot;,&quot;#FFE00080&quot;,NA),
+       pt.cex=c(3,3,0.5), title = textMI)
+legend(&quot;bottomright&quot;, bty=&quot;n&quot;, inset = 0.01, 
+       legend = c(&quot;Not plotting scale bar as scale&quot;,
+                  &quot;on map varies by more than 5%,&quot;,
+                  &quot;so scalebar may be inaccurate&quot;),
+       y.intersp=0.9, cex = 0.8, text.col = &quot;grey60&quot;)
+box()</code></pre>
+<div class="figure" style="text-align: center">
+<img src="geostats_files/figure-html/map-local-moransI-1.png" alt="Map of Local Moran's I for arsenic (As) concentrations in the WA subset of the NGSA data, -2mm tosoil fraction. The Global Moran's I parameter is also shown above the legend." width="45%" />
+<p class="caption">
+Map of Local Moran's I for arsenic (As) concentrations in the WA subset
+of the NGSA data, -2mm tosoil fraction. The Global Moran's I parameter
+is also shown above the legend.
+</p>
+</div>
+<p>The map in Figure @ref(fig:map-local-moransI) shows numerous sample
+locations having positive Local Moran's I for the selected variable, and
+a significant global spatial autocorrelation (Moran's I ≅ 0.46, with a
+very low p-value).</p>
+<p>We can also use the information in our local Moran's I data frame to
+plot a map of <strong>l</strong>ocal <strong>i</strong>ndicators of
+<strong>s</strong>patial <strong>a</strong>ssociation (LISA; see Table
+@ref(tab:tabulate-lisa)).</p>
+<template id="3d605588-60cb-48d2-865e-7ffadf6fce69"><style>
+.tabwid table{
+  border-spacing:0px !important;
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  border-color: transparent;
+  caption-side: top;
+}
+.tabwid-caption-bottom table{
+  caption-side: bottom;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+.katex-display {
+    margin: 0 0 !important;
+}
+</style><div class="tabwid"><style>.cl-614d7baa{}.cl-6145482c{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-61454836{font-family:'Arial';font-size:6pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;position: relative;bottom:3pt;}.cl-61454840{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-61454841{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 255, 1.00);background-color:transparent;}.cl-6145484a{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(255, 0, 0, 1.00);background-color:transparent;}.cl-6145484b{font-family:'Arial';font-size:6pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;position: relative;bottom:3pt;}.cl-61485fa8{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-614870ce{width:2.4in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-614870d8{width:2.4in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-614870d9{width:2.4in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-614871dc{width:2.4in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-614871e6{width:2.4in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-614871e7{width:2.4in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-614871f0{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-614871f1{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-614871fa{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-614871fb{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-61487204{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6148720e{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-61487218{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-614103ac{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}</style><table class='cl-614d7baa'><caption><span class="cl-614103ac">Explanation of LISA (Local Indicators of Spatial Association) categories.</span></caption><thead><tr style="overflow-wrap:break-word;"><td class="cl-614870ce"><p class="cl-61485fa8"><span class="cl-6145482c">LISA quadrant</span></p></td><td class="cl-614870d8"><p class="cl-61485fa8"><span class="cl-6145482c">Variable value</span><span class="cl-61454836">a</span></p></td><td class="cl-614870d9"><p class="cl-61485fa8"><span class="cl-6145482c">Local Moran's I</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-614871dc"><p class="cl-61485fa8"><span class="cl-61454840">Low-Low</span></p></td><td class="cl-614871e6"><p class="cl-61485fa8"><span class="cl-61454841">&lt; median</span></p></td><td class="cl-614871e7"><p class="cl-61485fa8"><span class="cl-6145484a">positive</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-614871f0"><p class="cl-61485fa8"><span class="cl-61454840">High-Low</span></p></td><td class="cl-614871f1"><p class="cl-61485fa8"><span class="cl-6145484a">&gt; median</span></p></td><td class="cl-614871fa"><p class="cl-61485fa8"><span class="cl-61454841">negative</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-614871dc"><p class="cl-61485fa8"><span class="cl-61454840">Low-High</span></p></td><td class="cl-614871e6"><p class="cl-61485fa8"><span class="cl-61454841">&lt; median</span></p></td><td class="cl-614871e7"><p class="cl-61485fa8"><span class="cl-61454841">negative</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-614871fb"><p class="cl-61485fa8"><span class="cl-61454840">High-High</span></p></td><td class="cl-61487204"><p class="cl-61485fa8"><span class="cl-6145484a">&gt; median</span></p></td><td class="cl-6148720e"><p class="cl-61485fa8"><span class="cl-6145484a">positive</span></p></td></tr></tbody><tfoot><tr style="overflow-wrap:break-word;"><td  colspan="3"class="cl-61487218"><p class="cl-61485fa8"><span class="cl-6145484b">a</span><span class="cl-61454840">LISA quadrants can also be defined relative to the mean.</span></p></td></tr></tfoot></table></div></template>
+<div class="flextable-shadow-host" id="061574b8-5995-45c9-924e-88c414a5e4db"></div>
+<script>
+var dest = document.getElementById("061574b8-5995-45c9-924e-88c414a5e4db");
+var template = document.getElementById("3d605588-60cb-48d2-865e-7ffadf6fce69");
+var caption = template.content.querySelector("caption");
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script>
+
+<p>
+ 
+</p>
+<pre class="r"><code>lmi_signif &lt;- lmiDF_As[which(lmiDF_As$Pvalue &lt;= 0.05),]
+palette(c(&quot;black&quot;,RColorBrewer::brewer.pal(7,&quot;RdBu&quot;)))
+par(oma=c(0,0,0,0), mar=c(4,4,1.5,1.5), mgp=c(1.4,0.3,0), 
+    lend=1, ljoin=0, tcl=0.3, tcl = 0.5, lwd = 1, font.lab=2)
+wa_outline &lt;- subset(st_coordinates(wa_sf)[,c(1:2)], 
+                     st_coordinates(wa_sf)[,4]==5) # subset omits islands
+plot(wa_outline, asp=1.05, pch=&quot;.&quot;, col=&quot;grey&quot;, xlim=c(110,129), ylim=c(-38,-13), 
+     xlab=&quot;Longitude (\u00b0E)&quot;, ylab=&quot;Latitude (\u00b0S)&quot;,xaxs=&quot;i&quot;)
+polygon(rbind(wa_outline,wa_outline[1,]), col=&quot;grey88&quot;, border = &quot;grey&quot;)
+points(st_coordinates(ngsaWAsf),pch=3,col=&quot;grey60&quot;,cex=0.6)
+with(lmi_signif, 
+     points(Longitude, Latitude, lwd=2,
+            pch=c(25,22,25,22)[median], 
+            col=c(8,8,2,2)[median], 
+            bg=c(7,3,7,3)[median],
+            cex = c(1,1.2,1,1.2)[median])
+     )
+addnortharrow(pos=&quot;topright&quot;, border=1, lwd=1, text.col=1,  
+              padin=c(0.1,0.1), scale=0.5)
+legend(&quot;topleft&quot;, cex=0.9, bg=&quot;grey88&quot;, box.col = &quot;grey&quot;, inset=0.02,
+       legend=levels(lmi_signif$median), title=&quot;LISA Quadrants&quot;,
+       pch=c(25,22,25,22), col=c(8,8,2,2),
+       pt.bg=c(7,3,7,3), pt.cex = c(1,1.2,1,1.2))
+legend(&quot;bottomright&quot;, bty=&quot;n&quot;, inset = 0.01, 
+       legend = c(&quot;Not plotting scale bar as scale&quot;,
+                  &quot;on map varies by more than 5%,&quot;,
+                  &quot;so scalebar may be inaccurate&quot;),
+       y.intersp=0.9, cex = 0.8, text.col = &quot;grey60&quot;)
+box()</code></pre>
+<div class="figure" style="text-align: center">
+<img src="geostats_files/figure-html/map-lisa-1.png" alt="Map of Local Indicators of Spatial Association (LISA) relative to median for arsenic (As) concentrations in the WA subset of the NGSA data, -2mm tosoil fraction." width="45%" />
+<p class="caption">
+Map of Local Indicators of Spatial Association (LISA) relative to median
+for arsenic (As) concentrations in the WA subset of the NGSA data, -2mm
+tosoil fraction.
+</p>
+</div>
+<hr style="height: 2px; background-color: #5560A4;" />
+</div>
+</div>
+<div
+id="using-the-gstat-package-for-geostatistics-variograms-kriging-and-visualization"
+class="section level2">
+<h2>Using the gstat package for geostatistics: variograms, kriging, and
+visualization</h2>
+<div id="make-a-simple-features-spatial-data-object-from-a-data-frame"
+class="section level3">
+<h3>Make a 'Simple Features' spatial data object from a data frame</h3>
+<p>In this example (as for Moran's I) we log<sub>10</sub>-transform our
+variable as its distribution is highly positively skewed. (Using the
+untransformed variable would result in too many apparent upper
+outliers.)</p>
+<pre class="r"><code>As.AR_sf$As.log &lt;- log10(As.AR_sf$As.AR)
+summary(As.AR_sf)</code></pre>
+<pre><code>##      As.AR                 geometry       As.log               tukey   
+##  Min.   : 0.050   POINT        :305   Min.   :-1.30103   -outliers:23  
+##  1st Qu.: 0.800   epsg:4326    :  0   1st Qu.:-0.09691   loWx-LQR :56  
+##  Median : 1.600   +proj=long...:  0   Median : 0.20412   LQR-med  :74  
+##  Mean   : 2.869                       Mean   : 0.15464   med-UQR  :76  
+##  3rd Qu.: 3.300                       3rd Qu.: 0.51851   UQR-upWx :75  
+##  Max.   :50.200                       Max.   : 1.70070   +outliers: 1</code></pre>
+</div>
+<div id="plot-the-spatial-object-for-checking" class="section level3">
+<h3>Plot the spatial object for checking</h3>
+<p>To quickly check our data, zwe use the function <code>bubble()</code>
+from the <code>sp</code> package to make a <em>bubble map</em> of our
+variable, where the symbol <em>area</em> is proportional to the variable
+value (in this case, log<sub>10</sub> arsenic concentration).</p>
+<pre class="r"><code>As.AR_sp &lt;- as_Spatial(As.AR_sf)
+bubble(As.AR_sp, &quot;As.log&quot;, col=c(&quot;#ff000088&quot;, &quot;#0000ff88&quot;), main = &quot;&quot;, 
+       scales = list(draw = TRUE), xlab = &quot;Longitude&quot;, ylab = &quot;Latitude&quot;)</code></pre>
+<div class="figure" style="text-align: center">
+<img src="geostats_files/figure-html/inspect-geodata-object-1.png" alt="Visualization of spatial point data object for log10-transformed arsenic (As) concentrations in the WA subset of the NGSA data." width="40%" />
+<p class="caption">
+Visualization of spatial point data object for log10-transformed arsenic
+(As) concentrations in the WA subset of the NGSA data.
+</p>
+</div>
+<p>The map's symbol classes in Figure @ref(fig:map-range-classes) are
+separated by the standard Tukey box plot thresholds (minimum,
+lower-hinge, median, upper-hinge, maximum) -- the legend is roughly
+aligned with the relevant box plot. We see a wide range of As
+concentration, with greater As probably associated with iron-rich rocks
+in the Pilbara (northwest WA) and central Yilgarn (central south
+WA).</p>
+</div>
+<div id="variograms-and-kriging" class="section level3">
+<h3>Variograms and Kriging</h3>
+<p>The variogram, simplistically, is the relationship between the
+variance between sample points, and the distance separating those sample
+points. In many instances, it is desirable to predict a variable or
+measurement at locations where samples have not been taken, and this
+requires some assumption(s), usually a mathematical model, about how
+that variable varies with distance. This information is actually
+provided by the <strong>variogram</strong>. In many cases the form of
+the variogram relationship can be simulated adequately with a
+mathematical function. The variogram function can then be used to
+interpolate between points -- a process known as
+<strong>kriging</strong> (after the originator of the method and pioneer
+of geostatistics, Professor Danie Krige). Variograms and kriging are
+summarised expertly by Oliver and Webster (2014) and Reimann <em>et
+al</em>. (2008). Webster and Oliver (1993) argue that at least 100
+observations (and preferably more) are needed for kriging interpolation,
+based on variogram analysis to establish the relationship between sample
+points as a function of separation distance. The United States
+Environmental Protection Agency (USEPA, 2002) reports that, for
+variograms and kriging, stratified sampling can have a lower sample
+number requirement than a simple grid, but that kriging accuracy is
+similar for all sampling designs.</p>
+<p>Figure @ref(fig:variogram-params) shows some of the key concepts of
+variogram analysis. There is some semivariance that exists even for very
+closely-spaced samples, and this is called the <em>nugget</em>. This
+semivariance increases with increasing distance between samples to a
+limiting value called the <em>sill</em>. At some distance there is no
+increase in semivariance (which then approaches the variance of the
+complete dataset), and this distance is called the <em>range</em>, the
+value of which depends on the mathematical model used to describe the
+semivariance-distance relationship. The <em>practical range</em>, the
+distance at which samples are independent, is related to the model range
+by a factor dependent on the model equation.</p>
+<p>The <em>practical range</em>, <span
+class="math inline">\(r_{\varepsilon}\)</span>, is defined as the
+distance at which semivariance is 95% of the sill.</p>
+<ul>
+<li>For an <strong>exponential</strong> model, <span
+class="math inline">\(r_{\varepsilon}\)</span> = <span
+class="math inline">\(3 \times a\)</span></li>
+<li>For a <strong>Gaussian</strong> model, <span
+class="math inline">\(r_{\varepsilon}\)</span> = <span
+class="math inline">\(\sqrt{3} \times a\)</span></li>
+<li>For a <strong>spherical</strong> model, <span
+class="math inline">\(r_{\varepsilon}\)</span> <span
+class="math inline">\(\approx 0.8 \times a\)</span></li>
+</ul>
+<div class="figure" style="text-align: center">
+<img src="geostats_files/figure-html/variogram-params-1.png" alt="Some of the key concepts of variogram analysis (see text for definitions)." width="576" />
+<p class="caption">
+Some of the key concepts of variogram analysis (see text for
+definitions).
+</p>
+</div>
+</div>
+<div id="make-a-binned-simple-variogram-object" class="section level3">
+<h3>Make a binned simple variogram object</h3>
+<p>We calculate the semivariance within <em>bins</em> (distance
+intervals) which combine the mean square difference within a set of
+intervals of sample separation distances (Figure
+@ref(fig:make-variogram-object)). This allows both visualization of the
+trend in semivariance with distance, and fitting of a model variogram
+equation to the semivariance--distance relationship. The number of bins
+can be determined "automatically" by an algorithm, or can be specified
+by the user. We usually constrain the maximum separation distance
+(<code>max.dist</code>) to be less than the maximum spatial extent of
+the data -- Reimann <em>et al.</em> (2008) suggest that the maximum
+distance for the variogram should be ≈ 40% of the maximum dataset
+distance which for these data is 19.66 ° (see summary of geodata object
+above).</p>
+<pre class="r"><code>par(mar = c(3,3,1,1), mgp = c(1.7,0.3,0), font.lab=2, tcl=0.3)
+variog_As.AR &lt;- variogram(As.log~1, As.AR_sf) # , cressie = TRUE
+plot(variog_As.AR, xlab = &quot;Distance (km)&quot;, pch=19, col=&quot;blue2&quot;)</code></pre>
+<div class="figure" style="text-align: center">
+<img src="geostats_files/figure-html/make-variogram-object-1.png" alt="Plot of experimental binned variogram for arsenic (As) in the WA subset of the NGSA data, -2mm tosoil fraction." width="50%" />
+<p class="caption">
+Plot of experimental binned variogram for arsenic (As) in the WA subset
+of the NGSA data, -2mm tosoil fraction.
+</p>
+</div>
+</div>
+<div id="the-experimental-variogram-and-variogram-models"
+class="section level3">
+<h3>The experimental variogram and variogram models</h3>
+<p>From the experimental (or 'empirical') variogram, we can generate a
+variogram model by fitting a function to the binned
+semivariance-distance relationship. Common variogram model functions
+include exponential, spherical, and Gaussian, and there are numerous
+others (run <code>vgm()</code> for a list).</p>
+</div>
+<div id="fit-a-variogram-model-using-weighted-least-squares"
+class="section level3">
+<h3>Fit a variogram model using weighted least squares</h3>
+<p>We need to choose the type of model (<em>e.g</em>. exponential,
+spherical, <em>etc</em>.), and make decisions about whether to include a
+nugget. In Figure @ref(fig:plot-obs-model-variograms) we show a model
+with a fitted value for the nugget semivariance.</p>
+<p>The exponential model we use is defined by: <br /> <span
+class="math inline">\(\gamma = b + C_{0}\times(1-e^{-x/a})\)</span>,
+where:</p>
+<ul>
+<li><span class="math inline">\(\gamma\)</span> = semivariance</li>
+<li><span class="math inline">\(x\)</span> = distance (<em>as defined by
+the binned values</em>)</li>
+<li><span class="math inline">\(b\)</span> = nugget
+(<strong>Nug</strong> in gstat; also called <span
+class="math inline">\(\tau^{2}\)</span>)</li>
+<li><span class="math inline">\(C_{0}\)</span> = partial sill
+(<strong>psill</strong> in gstat; also called <span
+class="math inline">\(\sigma^{2}\)</span>)</li>
+<li><span class="math inline">\(a\)</span> = range (also called <span
+class="math inline">\(\phi\)</span>; <em>NOT</em> the 'practical
+range')</li>
+</ul>
+<pre class="r"><code>vmodel_As.AR &lt;- fit.variogram(variog_As.AR, 
+                              model = vgm(psill = NA, model = &quot;Exp&quot;, 
+                                          nugget = 0.1, 
+                                          cutoff = max(variog_As.AR$dist)))
+vmodel_As.AR</code></pre>
+<pre><code>##   model     psill   range
+## 1   Nug 0.1299945   0.000
+## 2   Exp 0.2480348 407.132</code></pre>
+<pre class="r"><code>with(variog_As.AR, plot(dist, gamma, ylim = c(0, max(gamma)), cex.lab=1.2, 
+                   lwd=2, xlab = &quot;Distance (km)&quot;, 
+                   ylab = expression(bold(paste(&quot;Semivariance (&quot;,gamma,&quot;)&quot;)))))
+# plot model
+x0 &lt;- variog_As.AR$dist
+y0 &lt;- vmodel_As.AR$psill[1] + 
+  vmodel_As.AR$psill[2]*(1 - exp(-1*x0/vmodel_As.AR$range[2]))</code></pre>
+<div class="figure" style="text-align: center">
+<img src="geostats_files/figure-html/plot-obs-model-variograms-1.png" alt="Plot of experimental binned variogram, and exponential variogram model, for arsenic (As) in the WA subset of the NGSA data, -2mm topsoil fraction." width="50%" />
+<p class="caption">
+Plot of experimental binned variogram, and exponential variogram model,
+for arsenic (As) in the WA subset of the NGSA data, -2mm topsoil
+fraction.
+</p>
+</div>
+</div>
+<div id="perform-kriging-interpolation" class="section level3">
+<h3>Perform kriging interpolation</h3>
+<p>Now that we have a variogram model, we can use it in the kriging
+interpolation process to make a map of predicted values of our variable,
+as shown later in Figure @ref(fig:krig-pred). To perform an
+interpolation, we need to provide a grid of locations that we want to
+predict values at. This is done using the <code>expand.grid()</code>
+function from base <strong>R</strong> -- we are using ≈ 0.2 degree
+increments, but these can be changed (<em>e.g</em>., larger increments
+for a coarser grid).</p>
+<p>So, the first step is to make the grid of locations at which to make
+our kriging predictions. Starting with a rectangular grid using the
+<code>expand.grid()</code> function from base <strong>R</strong>, we
+restrict this grid (after conversion to a <code>sp</code> spatial
+object) to only the points in the NGSA sampling area, using the
+<code>over()</code> function from <code>sp</code>.</p>
+<pre class="r"><code>ngsa_poly &lt;- st_polygon(list(as.matrix(NGSAWA_border[c(1:91,1), 1:2])))
+ngsaWA_poly &lt;- st_multipolygon(list(ngsa_poly)) |&gt; st_sfc()
+st_crs(ngsaWA_poly) &lt;- LongLat
+
+# irregpoly &lt;- Polygon(NGSAWA_border[,c(1,2)], hole=F)
+# irregPolys = Polygons(list(irregpoly),1)
+# gridMask = SpatialPolygons(list(irregPolys), 
+#                            proj4string = LongLat)
+# inOrOut &lt;- as.vector(over(WAgrid, gridMask))
+
+grid_big &lt;- st_make_grid(ngsaWA_poly,
+                         cellsize = c(0.2,0.2),
+                         offset = st_bbox(ngsaWA_poly)[c(&quot;xmin&quot;, &quot;ymin&quot;)],
+                         what = &quot;centers&quot;)
+
+# # use `st_intersection()` function from `sf` package to mask initial grid
+NGSAgrid &lt;- st_intersection(ngsaWA_poly, grid_big)
+
+# NGSAgrid &lt;- WAgrid[which(inOrOut&gt;0)]
+cat(&quot;Prediction grid:\n&quot;); summary(NGSAgrid)</code></pre>
+<pre><code>## Prediction grid:
+##         POINT     epsg:4326 +proj=long... 
+##          3500             0             0</code></pre>
+<p>We then use the <code>krige()</code> function from <code>gstat</code>
+to make predictions of our variable and its variance at the grid
+locations, based on our variogram model. (Note: if we do not specify a
+model, <code>krige()</code> will make predictions using <em>inverse
+distance interpolation</em>, which does not allow estimation of
+variance.)</p>
+<pre class="r"><code>kriged_As.AR &lt;- krige(formula = As.AR~1, locations = As.AR_sf, 
+                      newdata = NGSAgrid, model = vmodel_As.AR)
+summary(kriged_As.AR)
+cat(&quot;_____________________________________________________________________\n\n&quot;)
+idw_As.AR &lt;- krige(formula = As.AR~1, locations = As.AR_sf, 
+                      newdata = NGSAgrid)
+summary(idw_As.AR)</code></pre>
+<pre><code>## [using ordinary kriging]
+##    var1.pred          var1.var               geometry   
+##  Min.   : 0.3216   Min.   :0.1575   POINT        :3500  
+##  1st Qu.: 1.3984   1st Qu.:0.1720   epsg:4326    :   0  
+##  Median : 2.4445   Median :0.1763   +proj=long...:   0  
+##  Mean   : 3.2082   Mean   :0.1777                       
+##  3rd Qu.: 4.2627   3rd Qu.:0.1816                       
+##  Max.   :15.6309   Max.   :0.2311                       
+## _____________________________________________________________________
+## 
+## [inverse distance weighted interpolation]
+##    var1.pred           var1.var             geometry   
+##  Min.   : 0.05457   Min.   : NA    POINT        :3500  
+##  1st Qu.: 1.67089   1st Qu.: NA    epsg:4326    :   0  
+##  Median : 2.45290   Median : NA    +proj=long...:   0  
+##  Mean   : 3.07296   Mean   :NaN                        
+##  3rd Qu.: 3.90421   3rd Qu.: NA                        
+##  Max.   :41.96097   Max.   : NA                        
+##                     NA&#39;s   :3500</code></pre>
+</div>
+<div id="simple-plot-of-kriging-output" class="section level3">
+<h3>Simple plot of kriging output</h3>
+<p>We can then us the <code>spplot()</code> function from
+<code>sp</code> to visualise the kriging predictions and variance, but
+without a background map (Figure @ref(fig:spplot-kriging-output)).</p>
+<pre class="r"><code>plot(kriged_As.AR, colorkey=T, pch=15, # with kriging variances
+    names.attr = c(&quot;log10[As] kriging predictions&quot;,&quot;log10[As] kriging variance&quot;), 
+    scales = list(draw = TRUE), col.regions = viridis::mako(100),
+    xlab=&quot;Longitude&quot;, ylab=&quot;Latitude&quot;)</code></pre>
+<div class="figure" style="text-align: center">
+<img src="geostats_files/figure-html/spplot-kriging-output-1.png" alt="Plots of simple kriging predictions and variance for log-transformed arsenic (As) in the WA subset of the NGSA data, -2mm topsoil fraction." width="75%" />
+<p class="caption">
+Plots of simple kriging predictions and variance for log-transformed
+arsenic (As) in the WA subset of the NGSA data, -2mm topsoil fraction.
+</p>
+</div>
+<p>Compare Figure @ref(fig:spplot-kriging-output) with the output from
+inverse distance weighted (IDW) interpolation (Figure
+@ref(fig:spplot-idw-output)). The kriged prediction shows a 'smoother'
+spatial pattern, but note that the IDW interpolation can be smoothed
+differently by changing the weighting parameter.</p>
+<pre class="r"><code>plot(idw_As.AR[1], colorkey=T, pch=15, # with kriging variances
+      scales = list(draw = TRUE), col.regions = viridis::mako(100),
+      xlab=&quot;Longitude&quot;, ylab=&quot;Latitude&quot;)</code></pre>
+<div class="figure" style="text-align: center">
+<img src="geostats_files/figure-html/spplot-idw-output-1.png" alt="Plots of inverse distance weighted (IDW) interpolation predictions for log-transformed arsenic (As) in the WA subset of the NGSA data, -2mm topsoil fraction." width="40%" />
+<p class="caption">
+Plots of inverse distance weighted (IDW) interpolation predictions for
+log-transformed arsenic (As) in the WA subset of the NGSA data, -2mm
+topsoil fraction.
+</p>
+</div>
+</div>
+<div id="plot-a-map-with-overlay-of-the-kriging-predictions"
+class="section level3">
+<h3>Plot a map with overlay of the kriging predictions</h3>
+<p>We use the base map created before, and plot the kriging predictions
+over this (Figure @ref(fig:krig-pred)a). Since the locations for kriged
+predictions are no longer a rectangular grid (we trimmed off locations
+not in the NGSA sampling area), we need to use the
+<code>quilt.plot()</code> function from the <code>fields</code> package
+to plot from an irregular grid. We set the options for the colour-scale
+legend based on the options in the <code>image.plot()</code> function,
+also from <code>fields</code>.</p>
+<p>The <code>fields</code> package also contains the function
+<code>bubblePlot()</code>, which is also useful for mapping data from
+irregular grids with a smooth colour gradient, such as that used here
+from the <code>viridis</code> package.</p>
+<p>The second part of the code creates a map of the estimated variance
+at each point on our interpolation grid, so the code is very similar,
+except that we specify …<code>data[,2]</code> instead of
+…<code>data[,1]</code>.</p>
+<p><strong>Note</strong>: The output of the <code>krige()</code>
+function is an object of classes <code>sf</code> and
+<code>data.frame</code>, essentially a list which includes vectors
+<code>$var1.pred</code>, containing the interpolated predictions, and
+<code>$var1.var</code> which contains the estimated variance, at each
+interpolated point on the grid (saved in the <code>$geometry</code>
+column of the output object).</p>
+<pre class="r"><code>par(mfrow=c(1,2), oma=c(4,4,1.5,1.5), mgp=c(1.4,0.3,0), lend=2, ljoin=1, tcl=0.3)
+plot(WAtiles)
+axis(1, mgp=c(2, 0.5, 0), cex.axis = 1.3)
+mtext(side=1, line=2, text=&quot;Longitude (\u00B0 E)&quot;,
+      font=2, cex=1.6)
+axis(2, mgp=c(2, 0.5, 0), cex.axis = 1.3)
+mtext(side=2, line=2, text=&quot;Latitude (\u00B0 S)&quot;,
+      font=2, cex=1.6)
+addnortharrow(pos=&quot;topleft&quot;, border=1, lwd=1, text.col=1,  
+              padin=c(0.2,0.2), scale=1)
+axtx &lt;- c(0.01,0.02,0.05,0.1,0.2,0.5,1,2,5,10,20,50,100)
+quilt.plot(st_coordinates(NGSAgrid)[,1], 
+           st_coordinates(NGSAgrid)[,2], 
+           kriged_As.AR$var1.pred,
+           add = T, horizontal=T, col = viridis::viridis(64),
+           legend.lab = expression(bold(paste(log[10],&quot;(As.AR)&quot;))), 
+           legend.mar = 4, legend.cex = 1.2, legend.line = 1.5,
+           axis.args = list(at=log10(axtx), labels=axtx, mgp=c(1.5,0.2,0)))
+addnortharrow(pos=&quot;topleft&quot;, border=1, lwd=1, text.col=1,
+              padin=c(0.2,0.2), scale=1)
+box(); mtext(&quot;(a)&quot;,3,-2,font=2,cex=1.5)
+# start plot of kriging variance
+plot(WAtiles); axis(1, mgp=c(2, 0.5, 0), cex.axis = 1.3)
+mtext(side=1, line=2, text=&quot;Longitude (\u00B0 E)&quot;, font=2, cex=1.6)
+addnortharrow(pos=&quot;topleft&quot;, border=1, lwd=1, text.col=1,  
+              padin=c(0.2,0.2), scale=1)
+quilt.plot(st_coordinates(NGSAgrid)[,1], 
+           st_coordinates(NGSAgrid)[,2], 
+           kriged_As.AR$var1.var,
+           add = T, horizontal=T, col = viridis::viridis(64,alpha = 0.75),
+           legend.lab = expression(bold(paste(&quot;Variance in &quot;,log[10],&quot;(As.AR)&quot;))), 
+           legend.mar = 4, legend.cex = 1.2, legend.line = 1.5,
+           axis.args = list(mgp=c(1.5,0.2,0)))
+addnortharrow(pos=&quot;topleft&quot;, border=1, lwd=1, text.col=1,
+              padin=c(0.2,0.2), scale=1)
+points(st_coordinates(As.AR_sf), pch=3, col = &quot;white&quot;, cex = 0.7)
+box(); mtext(&quot;(b)&quot;,3,-2,font=2,cex=1.5)</code></pre>
+<div class="figure" style="text-align: center">
+<img src="geostats_files/figure-html/krig-pred-1.png" alt="Map showing kriging predictions for arsenic (As) in the WA subset of the NGSA data, -2mm topsoil fraction." width="1152" height="49%" />
+<p class="caption">
+Map showing kriging predictions for arsenic (As) in the WA subset of the
+NGSA data, -2mm topsoil fraction.
+</p>
+</div>
+<p>It's also useful to map the estimated variance at each point on our
+prediction grid, and we can see the output of such a map in Figure
+@ref(fig:krig-pred)b. You should notice that the low variance (darker
+colours) is close to the actual sample points, and greater variance
+(lighter colours) is in locations further from sample points. As we
+would expect, predictions are more precise the closer we are to
+locations having actual measurements!</p>
+<p>We can perform a similar set of procedures for a variable which does
+<strong>not</strong> show significant spatial autocorrelation (example
+in Figure @ref(fig:Hg-4-plots) on the last page). In this case, we have
+(i) an experimental variogram which has high intrisic variance
+(<em>i.e</em>., a high <em>nugget</em>) with low spatial variance
+(partial <em>sill</em>), and (ii) greater kriging variance relative to
+kriging predictions. <strong>Try it!</strong></p>
+</div>
+<div id="additional-issues-for-variograms-and-kriging"
+class="section level3">
+<h3>Additional Issues for Variograms and Kriging</h3>
+<ul>
+<li><p>the semivariance distance relationship may not be the same in all
+directions (<em>anisotropic</em>). In such cases we need a directional
+variogram -- in <code>gstat</code> this can be done with parameters in
+the <code>variog()</code> function (see also <a
+href="http://www.leg.ufpr.br/geoR/geoRdoc/geoRintro.html#exploratory"
+class="uri">http://www.leg.ufpr.br/geoR/geoRdoc/geoRintro.html#exploratory</a>).</p></li>
+<li><p>The mean value of our mapping variable may show a systematic
+variation across our sampling area, such as a linear trend. This is a
+lack of "stationarity", and such a trend should be incorporated into a
+variogram model to apply <em>universal</em> kriging (see <a
+href="http://www.leg.ufpr.br/geoR/geoRdoc/geoRintro.html#estimation"
+class="uri">http://www.leg.ufpr.br/geoR/geoRdoc/geoRintro.html#estimation</a>).</p></li>
+<li><p>In most natural systems, the variable of interest will not just
+change from place to place, but will also be dependent on on or more
+other variables. In these cases, we need to use more advanced
+interpolation methods such as <em>co-kriging</em> (see <a
+href="http://chris35wills.github.io/geostats/"
+class="uri">http://chris35wills.github.io/geostats/</a> for some good
+explanations).</p></li>
+</ul>
+<hr style="height: 2px; background-color: #5560A4;" />
+</div>
+</div>
+<div id="references-and-r-package-citations" class="section level2">
+<h2>References and R Package Citations</h2>
+<p>Caritat, P., Cooper, M., 2011. <em>National Geochemical Survey of
+Australia: The Geochemical Atlas of Australia</em>. GA Record 2011/20 (2
+Volumes). Geoscience Australia, Canberra, 557 pp.</p>
+<p>Dunnington, D. 2017. <em>prettymapr: Scale Bar, North Arrow, and
+Pretty Margins in R</em>. R package version 0.2.2. <a
+href="https://CRAN.R-project.org/package=prettymapr"
+class="uri">https://CRAN.R-project.org/package=prettymapr</a></p>
+<p>Garnier, Simon, Noam Ross, Robert Rudis, Antônio P. Camargo, Marco
+Sciaini, and Cédric Scherer (2021). <em>viridis - Colorblind-Friendly
+Color Maps for R</em>. R package version 0.6.2.</p>
+<p>Giraud T (2021). <em>maptiles: Download and Display Map Tiles</em>. R
+package version 0.3.0, <a
+href="https://CRAN.R-project.org/package=maptiles"
+class="uri">https://CRAN.R-project.org/package=maptiles</a>.</p>
+<p>Gräler B., Pebesma E., Heuvelink G., 2016. Spatio-Temporal
+Interpolation using <strong>gstat</strong>. <em>The R Journal</em>
+<strong>8</strong>(1), 204-218.</p>
+<p>Kalogirou, S., 2019. <em>Spatial Autocorrelation, Vignette for R
+package 'lctools'</em>, <a
+href="https://cran.r-project.org/web/packages/lctools/vignettes/SpatialAutocorrelation.pdf"
+class="uri">https://cran.r-project.org/web/packages/lctools/vignettes/SpatialAutocorrelation.pdf</a></p>
+<p>Kalogirou, S. 2020. <em>lctools: Local Correlation, Spatial
+Inequalities, Geographically Weighted Regression and Other Tools</em>. R
+package version 0.2-8. <a
+href="https://CRAN.R-project.org/package=lctools"
+class="uri">https://CRAN.R-project.org/package=lctools</a></p>
+<p>Nychka D., Furrer R., Paige J., Sain S. (2021). <em>fields: Tools for
+spatial data.</em> R package version 13.3, <a
+href="https://github.com/dnychka/fieldsRPackage"
+class="uri">https://github.com/dnychka/fieldsRPackage</a>.</p>
+<p>Oliver, M.A., Webster, R., 2014. A tutorial guide to geostatistics:
+Computing and modelling variograms and kriging. <em>Catena</em>,
+<strong>113</strong>: 56-69, <a
+href="https://doi.org/10.1016/j.catena.2013.09.006"
+class="uri">https://doi.org/10.1016/j.catena.2013.09.006</a>.</p>
+<p>Pebesma, E., 2018. Simple Features for R: Standardized Support for
+Spatial Vector Data. <em>The R Journal</em> <strong>10</strong> (1),
+439-446, <a href="https://doi.org/10.32614/RJ-2018-009"
+class="uri">https://doi.org/10.32614/RJ-2018-009</a>. (package
+<strong>sf</strong>)</p>
+<p>Pebesma, E.J., R.S. Bivand, 2005. Classes and methods for spatial
+data in R. <em>R News</em> <strong>5</strong> (2), <a
+href="https://cran.r-project.org/doc/Rnews/"
+class="uri">https://cran.r-project.org/doc/Rnews/</a>. (package
+<strong>sp</strong>)</p>
+<p>Pebesma E, Bivand R (2023). <em>Spatial Data Science With
+Applications in R</em>. Chapman &amp; Hall. <a
+href="https://r-spatial.org/book/"
+class="uri">https://r-spatial.org/book/</a>. (package
+<strong>spdep</strong>)</p>
+<p>Reimann, C., Filzmoser, P., Garrett, R.G., Dutter, R., 2008.
+<em>Statistical Data Analysis Explained: Applied Environmental
+Statistics with R</em>. John Wiley &amp; Sons, Chichester, England, 343
+pp.</p>
+<p>USEPA, 2002. <em>Guidance on Choosing a Sampling Design for
+Environmental Data Collection for Use in Developing a Quality Assurance
+Project Plan</em>. EPA QA/G-5S, United States Environmental Protection
+Agency, Washington, DC.</p>
+<p>Webster, R., Oliver, M.A., 1993. How large a sample is needed to
+estimate the regional variogram adequately? <em>Geostatistics Troia
+'92</em>. <strong>Vol. 1</strong>: 155-166.</p>
+<p>Zhang, C., Luo, L., Xu, W., Ledwith, V., 2008. Use of local Moran's I
+and GIS to identify pollution hotspots of Pb in urban soils of Galway,
+Ireland. <em>Science of the Total Environment</em>,
+<strong>398</strong>: 212-221, <a
+href="https://doi.org/10.1016/j.scitotenv.2008.03.011"
+class="uri">https://doi.org/10.1016/j.scitotenv.2008.03.011</a>.</p>
+<hr style="height: 2px; background-color: #5560A4;" />
+<div class="figure" style="text-align: center">
+<img src="geostats_files/figure-html/Hg-4-plots-1.png" alt="Geostatistics for Hg (mercury) in the WA subset of the NGSA data: (a) spatial autocorrelation, (b) experimental (binned) and model variograms, (c) kriging predictions, and (d) kriging uncertainties." width="768" />
+<p class="caption">
+Geostatistics for Hg (mercury) in the WA subset of the NGSA data: (a)
+spatial autocorrelation, (b) experimental (binned) and model variograms,
+(c) kriging predictions, and (d) kriging uncertainties.
+</p>
+</div>
+<hr style="height: 2px; background-color: #5560A4;" />
+</div>
+</div>
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<hr />
+<p><a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank"><strong>CC-BY-SA</strong></a> • All content by <a href="https://github.com/Ratey-AtUWA" target="_blank">Ratey-AtUWA</a>. My <a href="https://www.uwa.edu.au/schools/agriculture-and-environment" target="_blank">employer</a> does not necessarily know about or endorse the content of this website.<br>
+<span style="font-size:9pt">Created with <span style="font-family: monospace; background-color: #e8e8e8;">rmarkdown</span> in <a href="https://www.rstudio.com/" target="_blank"><span class="fa fa-registered"></span> RStudio</a> using the <span style="font-family: monospace; background-color: #e8e8e8;">darkly</span> theme from <a href="https://bootswatch.com/" target="_blank"><span class="fa fa-swatchbook"></span> Bootswatch</a> via the <span style="font-family: monospace; background-color: #e8e8e8;">bslib</span> package, and <a href="https://fontawesome.com/v5/search?o=r&m=free" target="_blank"><span class="fa fa-font-awesome"></span> fontawesome v5 icons</a>.</span></p>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
