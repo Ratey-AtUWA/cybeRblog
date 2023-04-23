@@ -223,6 +223,84 @@ $(document).ready(function () {
 
 <div class="container-fluid main-container">
 
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">cyboRg</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+
+    Home
+  </a>
+</li>
+<li>
+  <a href="code.html">
+    <span class="fa fa-project-diagram"></span>
+
+    Code
+  </a>
+</li>
+<li>
+  <a href="teaching.html">
+    <span class="fa fa-chalkboard-teacher"></span>
+
+    Teaching
+  </a>
+</li>
+<li>
+  <a href="rants.html">
+    <span class="fa fa-bell"></span>
+
+    Rants
+  </a>
+</li>
+<li>
+  <a href="images.html">
+    <span class="fa fa-images"></span>
+
+    Images
+  </a>
+</li>
+<li>
+  <a href="about.html">
+    <span class="fa fa-address-card"></span>
+
+    About
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="social.html">
+    <span class="fa fa-twitter"></span>
+
+    Social
+  </a>
+</li>
+<li>
+  <a href="work.html">
+    <span class="fa fa-user-graduate"></span>
+
+    UWA
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
 <div id="header">
 
 
@@ -243,10 +321,7 @@ visualization</h1>
 <h1>Geostatistics and Data Mapping in <strong>R</strong></h1>
 <p>In this guide we use a range of R packages for different functions,
 shown in Table 1.</p>
-<p>
- 
-</p>
-<template id="0eb1866c-7fcb-4e5b-a0cc-c43784e41615"><style>
+<template id="f8a9f1a6-3877-4099-8afa-215214a1bd4e"><style>
 .tabwid table{
   border-spacing:0px !important;
   border-collapse:collapse;
@@ -285,11 +360,11 @@ background-color: transparent;
 .katex-display {
     margin: 0 0 !important;
 }
-</style><div class="tabwid"><style>.cl-0f12a234{}.cl-0f093ece{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-0f093ed8{font-family:'Courier New';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-0f093ee2{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-0f0ce498{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-0f0cff1e{width:1.2in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0f0cff1f{width:4.5in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0f0cff28{width:2.5in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0f0cff29{width:1.2in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0f0cff32{width:4.5in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0f0cff33{width:2.5in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0f0cff3c{width:1.2in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0f0cff3d{width:4.5in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0f0cff3e{width:2.5in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0f0cff3f{width:1.2in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0f0cff46{width:4.5in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0f0cff47{width:2.5in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0f03822c{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}</style><table class='cl-0f12a234'><caption><span class="cl-0f03822c">Table 1: R packages used for spatial data analysis and visualisation.</span></caption><thead><tr style="overflow-wrap:break-word;"><td class="cl-0f0cff1e"><p class="cl-0f0ce498"><span class="cl-0f093ece">Package</span></p></td><td class="cl-0f0cff1f"><p class="cl-0f0ce498"><span class="cl-0f093ece">Purpose</span></p></td><td class="cl-0f0cff28"><p class="cl-0f0ce498"><span class="cl-0f093ece">Reference</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-0f0cff29"><p class="cl-0f0ce498"><span class="cl-0f093ed8">sf</span></p></td><td class="cl-0f0cff32"><p class="cl-0f0ce498"><span class="cl-0f093ee2">Spatial data handling, formatting, and storing spatial data</span></p></td><td class="cl-0f0cff33"><p class="cl-0f0ce498"><span class="cl-0f093ee2">Pebesma (2018)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0f0cff3c"><p class="cl-0f0ce498"><span class="cl-0f093ed8">gstat</span></p></td><td class="cl-0f0cff3d"><p class="cl-0f0ce498"><span class="cl-0f093ee2">Geostatistics (variograms and variogram models, kriging)</span></p></td><td class="cl-0f0cff3e"><p class="cl-0f0ce498"><span class="cl-0f093ee2">Pebesma (2004)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0f0cff29"><p class="cl-0f0ce498"><span class="cl-0f093ed8">sp</span></p></td><td class="cl-0f0cff32"><p class="cl-0f0ce498"><span class="cl-0f093ee2">Handling, formatting, and storing spatial data; some graphical functions</span></p></td><td class="cl-0f0cff33"><p class="cl-0f0ce498"><span class="cl-0f093ee2">Pebesma and Bivand (2005)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0f0cff3c"><p class="cl-0f0ce498"><span class="cl-0f093ed8">maps</span></p></td><td class="cl-0f0cff3d"><p class="cl-0f0ce498"><span class="cl-0f093ee2">Simple map outlines</span></p></td><td class="cl-0f0cff3e"><p class="cl-0f0ce498"><span class="cl-0f093ee2">Becker et al. (2021)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0f0cff29"><p class="cl-0f0ce498"><span class="cl-0f093ed8">spdep</span></p></td><td class="cl-0f0cff32"><p class="cl-0f0ce498"><span class="cl-0f093ee2">Spatial autocorrelation, LISA</span></p></td><td class="cl-0f0cff33"><p class="cl-0f0ce498"><span class="cl-0f093ee2">Pebesma and Bivand (2023)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0f0cff3c"><p class="cl-0f0ce498"><span class="cl-0f093ed8">lctools</span></p></td><td class="cl-0f0cff3d"><p class="cl-0f0ce498"><span class="cl-0f093ee2">Spatial autocorrelation</span></p></td><td class="cl-0f0cff3e"><p class="cl-0f0ce498"><span class="cl-0f093ee2">Kalogirou (2020)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0f0cff29"><p class="cl-0f0ce498"><span class="cl-0f093ed8">maptiles</span></p></td><td class="cl-0f0cff32"><p class="cl-0f0ce498"><span class="cl-0f093ee2">Retrieving and plotting tile-based map data</span></p></td><td class="cl-0f0cff33"><p class="cl-0f0ce498"><span class="cl-0f093ee2">Giraud (2021)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0f0cff3c"><p class="cl-0f0ce498"><span class="cl-0f093ed8">prettymapr</span></p></td><td class="cl-0f0cff3d"><p class="cl-0f0ce498"><span class="cl-0f093ee2">Map annotations</span></p></td><td class="cl-0f0cff3e"><p class="cl-0f0ce498"><span class="cl-0f093ee2">Dunnington (2022)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0f0cff29"><p class="cl-0f0ce498"><span class="cl-0f093ed8">fields</span></p></td><td class="cl-0f0cff32"><p class="cl-0f0ce498"><span class="cl-0f093ee2">Visualizing spatial data with irregular grids</span></p></td><td class="cl-0f0cff33"><p class="cl-0f0ce498"><span class="cl-0f093ee2">Nychka et al. (2021)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0f0cff3f"><p class="cl-0f0ce498"><span class="cl-0f093ed8">viridis</span></p></td><td class="cl-0f0cff46"><p class="cl-0f0ce498"><span class="cl-0f093ee2">Colourblind-friendly colour palettes for maps</span></p></td><td class="cl-0f0cff47"><p class="cl-0f0ce498"><span class="cl-0f093ee2">Garnier et al. (2021)</span></p></td></tr></tbody></table></div></template>
-<div class="flextable-shadow-host" id="5c332e9e-288b-4ac2-8b3f-e0ab52d556e7"></div>
+</style><div class="tabwid"><style>.cl-fbf71938{}.cl-fbebb750{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-fbebb782{font-family:'Courier New';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-fbebb796{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-fbf01318{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-fbf0346a{width:1.2in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-fbf03474{width:4.5in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-fbf0347e{width:2.5in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-fbf03488{width:1.2in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-fbf03489{width:4.5in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-fbf03492{width:2.5in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-fbf0349c{width:1.2in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-fbf0349d{width:4.5in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-fbf034a6{width:2.5in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-fbf034a7{width:1.2in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-fbf034b0{width:4.5in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-fbf034ba{width:2.5in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-fbe550ea{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}</style><table class='cl-fbf71938'><caption><span class="cl-fbe550ea">Table 1: R packages used for spatial data analysis and visualisation.</span></caption><thead><tr style="overflow-wrap:break-word;"><td class="cl-fbf0346a"><p class="cl-fbf01318"><span class="cl-fbebb750">Package</span></p></td><td class="cl-fbf03474"><p class="cl-fbf01318"><span class="cl-fbebb750">Purpose</span></p></td><td class="cl-fbf0347e"><p class="cl-fbf01318"><span class="cl-fbebb750">Reference</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-fbf03488"><p class="cl-fbf01318"><span class="cl-fbebb782">sf</span></p></td><td class="cl-fbf03489"><p class="cl-fbf01318"><span class="cl-fbebb796">Spatial data handling, formatting, and storing spatial data</span></p></td><td class="cl-fbf03492"><p class="cl-fbf01318"><span class="cl-fbebb796">Pebesma (2018)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-fbf0349c"><p class="cl-fbf01318"><span class="cl-fbebb782">gstat</span></p></td><td class="cl-fbf0349d"><p class="cl-fbf01318"><span class="cl-fbebb796">Geostatistics (variograms and variogram models, kriging)</span></p></td><td class="cl-fbf034a6"><p class="cl-fbf01318"><span class="cl-fbebb796">Pebesma (2004)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-fbf03488"><p class="cl-fbf01318"><span class="cl-fbebb782">sp</span></p></td><td class="cl-fbf03489"><p class="cl-fbf01318"><span class="cl-fbebb796">Handling, formatting, and storing spatial data; some graphical functions</span></p></td><td class="cl-fbf03492"><p class="cl-fbf01318"><span class="cl-fbebb796">Pebesma and Bivand (2005)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-fbf0349c"><p class="cl-fbf01318"><span class="cl-fbebb782">maps</span></p></td><td class="cl-fbf0349d"><p class="cl-fbf01318"><span class="cl-fbebb796">Simple map outlines</span></p></td><td class="cl-fbf034a6"><p class="cl-fbf01318"><span class="cl-fbebb796">Becker et al. (2021)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-fbf03488"><p class="cl-fbf01318"><span class="cl-fbebb782">spdep</span></p></td><td class="cl-fbf03489"><p class="cl-fbf01318"><span class="cl-fbebb796">Spatial autocorrelation, LISA</span></p></td><td class="cl-fbf03492"><p class="cl-fbf01318"><span class="cl-fbebb796">Pebesma and Bivand (2023)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-fbf0349c"><p class="cl-fbf01318"><span class="cl-fbebb782">lctools</span></p></td><td class="cl-fbf0349d"><p class="cl-fbf01318"><span class="cl-fbebb796">Spatial autocorrelation</span></p></td><td class="cl-fbf034a6"><p class="cl-fbf01318"><span class="cl-fbebb796">Kalogirou (2020)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-fbf03488"><p class="cl-fbf01318"><span class="cl-fbebb782">maptiles</span></p></td><td class="cl-fbf03489"><p class="cl-fbf01318"><span class="cl-fbebb796">Retrieving and plotting tile-based map data</span></p></td><td class="cl-fbf03492"><p class="cl-fbf01318"><span class="cl-fbebb796">Giraud (2021)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-fbf0349c"><p class="cl-fbf01318"><span class="cl-fbebb782">prettymapr</span></p></td><td class="cl-fbf0349d"><p class="cl-fbf01318"><span class="cl-fbebb796">Map annotations</span></p></td><td class="cl-fbf034a6"><p class="cl-fbf01318"><span class="cl-fbebb796">Dunnington (2022)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-fbf03488"><p class="cl-fbf01318"><span class="cl-fbebb782">fields</span></p></td><td class="cl-fbf03489"><p class="cl-fbf01318"><span class="cl-fbebb796">Visualizing spatial data with irregular grids</span></p></td><td class="cl-fbf03492"><p class="cl-fbf01318"><span class="cl-fbebb796">Nychka et al. (2021)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-fbf034a7"><p class="cl-fbf01318"><span class="cl-fbebb782">viridis</span></p></td><td class="cl-fbf034b0"><p class="cl-fbf01318"><span class="cl-fbebb796">Colourblind-friendly colour palettes for maps</span></p></td><td class="cl-fbf034ba"><p class="cl-fbf01318"><span class="cl-fbebb796">Garnier et al. (2021)</span></p></td></tr></tbody></table></div></template>
+<div class="flextable-shadow-host" id="a6ebabc2-3ede-453c-9a33-cfee620a4825"></div>
 <script>
-var dest = document.getElementById("5c332e9e-288b-4ac2-8b3f-e0ab52d556e7");
-var template = document.getElementById("0eb1866c-7fcb-4e5b-a0cc-c43784e41615");
+var dest = document.getElementById("a6ebabc2-3ede-453c-9a33-cfee620a4825");
+var template = document.getElementById("f8a9f1a6-3877-4099-8afa-215214a1bd4e");
 var caption = template.content.querySelector("caption");
 var fantome = dest.attachShadow({mode: 'open'});
 var templateContent = template.content;
@@ -336,8 +411,8 @@ Features is a formal standard (ISO 19125-1:2004) that describes how
 objects in the real world can be represented in computers - see <a
 href="https://r-spatial.github.io/sf/articles/sf1.html"
 class="uri">https://r-spatial.github.io/sf/articles/sf1.html</a>.</p>
-<pre class="r"><code>ngsaWA &lt;- read.csv(file=&quot;https://github.com/Ratey-AtUWA/spatial/raw/main/ngsaWA.csv&quot;, stringsAsFactors = TRUE)
-NGSAWA_border &lt;- read.csv(&quot;https://github.com/Ratey-AtUWA/spatial/raw/main/NGSAWA_border.csv&quot;)
+<pre class="r"><code>ngsaWA &lt;- read.csv(file=&quot;ngsaWA.csv&quot;, stringsAsFactors = TRUE)
+NGSAWA_border &lt;- read.csv(&quot;NGSAWA_border.csv&quot;)
 # make spatial data objects
 ngsaWAsf &lt;- st_as_sf(x = ngsaWA, coords = c(&quot;LONGITUDE&quot;,&quot;LATITUDE&quot;),
                      crs = LongLat)
@@ -371,19 +446,19 @@ coordinate reference systems, <strong>CRS</strong>).</li>
 <div id="preparing-to-make-maps" class="section level2">
 <h2>Preparing to make maps</h2>
 <p>We define the area we need for our map and save it in an object
-called 'extent'. 'extent' is a 'simple features' object which refers to
-a formal standard (ISO 19125-1:2004) that describes how objects in the
-real world can be represented in computers - see <a
+called <code>extent</code>. The object named <code>extent</code> is a
+'simple features' object which refers to a formal standard (ISO
+19125-1:2004) that describes how objects in the real world can be
+represented in computers - see <a
 href="https://r-spatial.github.io/sf/articles/sf1.html"
 class="uri">https://r-spatial.github.io/sf/articles/sf1.html</a> (this
-is why we need the 'sf' or 'Simple Features' package by Pebesma
-(2018)).</p>
+is why we need the <code>sf</code> or 'Simple Features' package by
+Pebesma (2018)).</p>
 <p>The easiest way to get bounding coordinates (in latitude, longitude)
 is by using Google Maps or Google Earth. Google Earth also allows the
 option to set the coordinate reference system to UTM. Otherwise we would
-need to convert our SpatialPoints object (see the
-<strong>Appendix</strong>). If our input coordinates are
-Longitude--Latitude, note that south latitudes (and west longitudes) are
+need to convert our <code>sf</code> object. If our input coordinates are
+Longitude–Latitude, note that south latitudes (and west longitudes) are
 negative, and we want <strong>decimal degrees</strong> rather than
 degrees-minutes-seconds.</p>
 <p>For coordinates in the <code>sf</code>, <code>sp</code> and
@@ -415,8 +490,8 @@ objects have classes <code>sf</code> and <code>data.frame</code>, and
 <strong>always</strong> contain the special column <code>geometry</code>
 which stores the spatial coordinates. In addition, the output of
 <code>head(WA_extent)</code> identifies the coordinate limits of the
-<code>sf</code> object, and also the coordinate reference system (CRS)
--- both useful checks.</p>
+<code>sf</code> object, and also the coordinate reference system (CRS) –
+both useful checks.</p>
 <p><span style="color:red;"><strong>NOTE</strong>: The projection we
 specify here will be the one the map plots in!</span></p>
 </div>
@@ -476,9 +551,9 @@ tile-based maps based on <code>ggplot2</code> plot syntax.</p>
 <div id="plot-some-data-points-on-a-base-map" class="section level3">
 <h3>Plot some data points on a base map</h3>
 <p>A map can be thought of as a 2-dimensional scatter plot with a
-background of map features in raster (tiles) of vector format. This is
-useful since we can then simply use the coordinates in our data to plot
-additional information on our base map, given that the coordinate
+background of map features in raster format (<em>i.e</em>. tiles). This
+is useful since we can then simply use the coordinates in our data to
+plot additional information on our base map, given that the coordinate
 systems of the map and data are matched.</p>
 <p>The simplest example of doing this would be to plot the locations of
 samples in the NGSA data (Figure 3):</p>
@@ -562,7 +637,8 @@ mtext(side=2, line=2, text=&quot;Latitude (\u00B0 S)&quot;,
 addnortharrow(pos=&quot;topleft&quot;, border=1, lwd=1, text.col=1,
               padin=c(0.2,0.2), scale=1.2)
 legend(&quot;bottomright&quot;, bty=&quot;n&quot;,
-       legend = c(&quot;Omitting scale bar, as scale \non map varies by more than 5%, \nso scalebar may be inaccurate&quot;,&quot; &quot;),
+       legend = c(&quot;Omitting scale bar, as scale&quot;,&quot;on map varies by more than 5%&quot;,
+                  &quot;so scalebar may be inaccurate&quot;),
        y.intersp=0.9)
 # construct and plot range classes in Tukey boxplot thresholds
 As.AR_sf$As.log &lt;- log10(As.AR_sf$As.AR)
@@ -595,7 +671,7 @@ from the WA subset of the NGSA data, -2mm tosoil fraction.
 </div>
 <p>The map's symbol classes in Figure 5 are
 separated by the standard Tukey box plot thresholds (minimum,
-lower-hinge, median, upper-hinge, maximum) -- the legend is roughly
+lower-hinge, median, upper-hinge, maximum) – the legend is roughly
 aligned with the relevant box plot. We see a wide range of As
 concentration, with greater As probably associated with iron-rich rocks
 in the Pilbara (northwest WA) and central Yilgarn (central south
@@ -762,9 +838,11 @@ very low p-value).</p>
 <p>We can also use the information stored in our local Moran's I data
 frame to plot a map of <strong>l</strong>ocal
 <strong>i</strong>ndicators of <strong>s</strong>patial
-<strong>a</strong>ssociation (LISA; see Table
-2).</p>
-<template id="bb74a688-a19a-4336-9d0e-e433bbe03a46"><style>
+<strong>a</strong>ssociation (LISA; see Table 2).</p>
+<p>
+ 
+</p>
+<template id="0e133e0f-63cd-4c33-9af4-3c6622d5a007"><style>
 .tabwid table{
   border-spacing:0px !important;
   border-collapse:collapse;
@@ -803,11 +881,11 @@ background-color: transparent;
 .katex-display {
     margin: 0 0 !important;
 }
-</style><div class="tabwid"><style>.cl-1662bc18{}.cl-165acbf2{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-165acbfc{font-family:'Arial';font-size:6pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;position: relative;bottom:3pt;}.cl-165acbfd{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-165acc06{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 255, 1.00);background-color:transparent;}.cl-165acc07{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(255, 0, 0, 1.00);background-color:transparent;}.cl-165acc10{font-family:'Arial';font-size:6pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;position: relative;bottom:3pt;}.cl-165df0d4{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-165e02cc{width:2.4in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-165e02d6{width:2.4in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-165e02d7{width:2.4in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-165e02d8{width:2.4in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-165e02e0{width:2.4in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-165e02e1{width:2.4in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-165e02ea{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-165e02f4{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-165e02fe{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-165e02ff{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-165e0300{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-165e0308{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-165e0309{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-16565e78{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}</style><table class='cl-1662bc18'><caption><span class="cl-16565e78">Table 2: Explanation of LISA (Local Indicators of Spatial Association) categories.</span></caption><thead><tr style="overflow-wrap:break-word;"><td class="cl-165e02cc"><p class="cl-165df0d4"><span class="cl-165acbf2">LISA quadrant</span></p></td><td class="cl-165e02d6"><p class="cl-165df0d4"><span class="cl-165acbf2">Variable value</span><span class="cl-165acbfc">a</span></p></td><td class="cl-165e02d7"><p class="cl-165df0d4"><span class="cl-165acbf2">Local Moran's I</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-165e02d8"><p class="cl-165df0d4"><span class="cl-165acbfd">Low-Low</span></p></td><td class="cl-165e02e0"><p class="cl-165df0d4"><span class="cl-165acc06">&lt; median</span></p></td><td class="cl-165e02e1"><p class="cl-165df0d4"><span class="cl-165acc07">positive</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-165e02ea"><p class="cl-165df0d4"><span class="cl-165acbfd">High-Low</span></p></td><td class="cl-165e02f4"><p class="cl-165df0d4"><span class="cl-165acc07">&gt; median</span></p></td><td class="cl-165e02fe"><p class="cl-165df0d4"><span class="cl-165acc06">negative</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-165e02d8"><p class="cl-165df0d4"><span class="cl-165acbfd">Low-High</span></p></td><td class="cl-165e02e0"><p class="cl-165df0d4"><span class="cl-165acc06">&lt; median</span></p></td><td class="cl-165e02e1"><p class="cl-165df0d4"><span class="cl-165acc06">negative</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-165e02ff"><p class="cl-165df0d4"><span class="cl-165acbfd">High-High</span></p></td><td class="cl-165e0300"><p class="cl-165df0d4"><span class="cl-165acc07">&gt; median</span></p></td><td class="cl-165e0308"><p class="cl-165df0d4"><span class="cl-165acc07">positive</span></p></td></tr></tbody><tfoot><tr style="overflow-wrap:break-word;"><td  colspan="3"class="cl-165e0309"><p class="cl-165df0d4"><span class="cl-165acc10">a</span><span class="cl-165acbfd">LISA quadrants can also be defined relative to the mean.</span></p></td></tr></tfoot></table></div></template>
-<div class="flextable-shadow-host" id="923e3c55-5f08-4378-a785-b3622abea36c"></div>
+</style><div class="tabwid"><style>.cl-03d6493a{}.cl-03cd6efa{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-03cd6f04{font-family:'Arial';font-size:6pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;position: relative;bottom:3pt;}.cl-03cd6f0e{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-03cd6f0f{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 255, 1.00);background-color:transparent;}.cl-03cd6f10{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(255, 0, 0, 1.00);background-color:transparent;}.cl-03cd6f18{font-family:'Arial';font-size:6pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;position: relative;bottom:3pt;}.cl-03d0dbee{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-03d0eef4{width:2.4in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03d0eefe{width:2.4in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03d0eeff{width:2.4in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03d0ef08{width:2.4in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03d0ef09{width:2.4in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03d0ef12{width:2.4in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03d0ef13{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03d0ef1c{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03d0ef1d{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03d0ef26{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03d0ef27{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03d0ef30{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03d0ef31{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03c8b13a{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}</style><table class='cl-03d6493a'><caption><span class="cl-03c8b13a">Table 2: Explanation of LISA (Local Indicators of Spatial Association) categories.</span></caption><thead><tr style="overflow-wrap:break-word;"><td class="cl-03d0eef4"><p class="cl-03d0dbee"><span class="cl-03cd6efa">LISA quadrant</span></p></td><td class="cl-03d0eefe"><p class="cl-03d0dbee"><span class="cl-03cd6efa">Variable value</span><span class="cl-03cd6f04">a</span></p></td><td class="cl-03d0eeff"><p class="cl-03d0dbee"><span class="cl-03cd6efa">Local Moran's I</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-03d0ef08"><p class="cl-03d0dbee"><span class="cl-03cd6f0e">Low-Low</span></p></td><td class="cl-03d0ef09"><p class="cl-03d0dbee"><span class="cl-03cd6f0f">&lt; median</span></p></td><td class="cl-03d0ef12"><p class="cl-03d0dbee"><span class="cl-03cd6f10">positive</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-03d0ef13"><p class="cl-03d0dbee"><span class="cl-03cd6f0e">High-Low</span></p></td><td class="cl-03d0ef1c"><p class="cl-03d0dbee"><span class="cl-03cd6f10">&gt; median</span></p></td><td class="cl-03d0ef1d"><p class="cl-03d0dbee"><span class="cl-03cd6f0f">negative</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-03d0ef08"><p class="cl-03d0dbee"><span class="cl-03cd6f0e">Low-High</span></p></td><td class="cl-03d0ef09"><p class="cl-03d0dbee"><span class="cl-03cd6f0f">&lt; median</span></p></td><td class="cl-03d0ef12"><p class="cl-03d0dbee"><span class="cl-03cd6f0f">negative</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-03d0ef26"><p class="cl-03d0dbee"><span class="cl-03cd6f0e">High-High</span></p></td><td class="cl-03d0ef27"><p class="cl-03d0dbee"><span class="cl-03cd6f10">&gt; median</span></p></td><td class="cl-03d0ef30"><p class="cl-03d0dbee"><span class="cl-03cd6f10">positive</span></p></td></tr></tbody><tfoot><tr style="overflow-wrap:break-word;"><td  colspan="3"class="cl-03d0ef31"><p class="cl-03d0dbee"><span class="cl-03cd6f18">a</span><span class="cl-03cd6f0e">LISA quadrants can also be defined relative to the mean.</span></p></td></tr></tfoot></table></div></template>
+<div class="flextable-shadow-host" id="e8338c4d-32be-405e-9255-d47dd778b6d1"></div>
 <script>
-var dest = document.getElementById("923e3c55-5f08-4378-a785-b3622abea36c");
-var template = document.getElementById("bb74a688-a19a-4336-9d0e-e433bbe03a46");
+var dest = document.getElementById("e8338c4d-32be-405e-9255-d47dd778b6d1");
+var template = document.getElementById("0e133e0f-63cd-4c33-9af4-3c6622d5a007");
 var caption = template.content.querySelector("caption");
 var fantome = dest.attachShadow({mode: 'open'});
 var templateContent = template.content;
@@ -847,14 +925,14 @@ legend(&quot;bottomright&quot;, bty=&quot;n&quot;, inset = 0.01,
        y.intersp=0.9, cex = 0.8, text.col = &quot;grey60&quot;)
 box()</code></pre>
 <div class="figure" style="text-align: center">
-<img src="geostats_files/figure-html/map-lisa-1.png" alt="Map of Local Indicators of Spatial Association (LISA) relative to median for arsenic (As) concentrations in the WA subset of the NGSA data, -2mm tosoil fraction." width="45%" />
+<img src="geostats_files/figure-html/map-lisa-1.png" alt="Map of Local Indicators of Spatial Association (LISA) relative to median for arsenic (As) concentrations in the WA subset of the NGSA data, –2 mm topsoil fraction." width="45%" />
 <p class="caption">
 Figure 7: Map of Local Indicators of Spatial Association (LISA) relative to median
-for arsenic (As) concentrations in the WA subset of the NGSA data, -2mm
-tosoil fraction.
+for arsenic (As) concentrations in the WA subset of the NGSA data, –2 mm
+topsoil fraction.
 </p>
 </div>
-<p>The LISA map (Figure 7) enables us to identify localized map regions where
+<p>The LISA map enables us to identify localized map regions where
 values of the chosen variable in or data are strongly positively or
 negatively associated with one another, that is, different spatial
 clusters. Usually locations having significant Low-High or High-Low
@@ -890,16 +968,20 @@ summary(As.AR_sf)</code></pre>
 from the <code>sp</code> package to make a <em>bubble map</em> (Figure
 8) of our variable, where the symbol
 <em>area</em> is proportional to the variable value (in this case,
-log<sub>10</sub> arsenic concentration).</p>
+log<sub>10</sub> arsenic concentration). We use the
+<code>as_Spatial()</code> function to convert our <code>sf</code> object
+to an <code>sp</code> object, so we can use
+<code>sp::bubble()</code>.</p>
 <pre class="r"><code>As.AR_sp &lt;- as_Spatial(As.AR_sf)
 bubble(As.AR_sp, &quot;As.log&quot;, col=c(&quot;#ff000088&quot;, &quot;#0000ff88&quot;), main = &quot;&quot;,
        scales = list(draw = TRUE), xlab = &quot;Longitude&quot;, ylab = &quot;Latitude&quot;)</code></pre>
 <div class="figure" style="text-align: center">
-<img src="geostats_files/figure-html/inspect-spatial-object-1.png" alt="Visualization of spatial point data object for log10-transformed arsenic (As) concentrations in the WA subset of the NGSA data. Negative log10-values are red, positive blue." width="40%" />
+<img src="geostats_files/figure-html/inspect-spatial-object-1.png" alt="Visualization of spatial point data object for log~10~-transformed arsenic (As) concentrations in the WA subset of the NGSA data. Negative log~10~-values are red, positive blue." width="40%" />
 <p class="caption">
-Figure 8: Visualization of spatial point data object for log10-transformed arsenic
-(As) concentrations in the WA subset of the NGSA data. Negative
-log10-values are red, positive blue.
+Figure 8: Visualization of spatial point data object for
+log<sub>10</sub>-transformed arsenic (As) concentrations in the WA
+subset of the NGSA data. Negative log<sub>10</sub>-values are red,
+positive blue.
 </p>
 </div>
 </div>
@@ -914,21 +996,24 @@ that variable varies with distance. This information is actually
 provided by the <strong>variogram</strong>. In many cases the form of
 the variogram relationship can be simulated adequately with a
 mathematical function. The variogram function can then be used to
-interpolate between points -- a process known as
-<strong>kriging</strong> (after the originator of the method and pioneer
-of geostatistics, Professor Danie Krige). Variograms and kriging are
-summarised expertly by Oliver and Webster (2014) and Reimann <em>et
-al</em>. (2008). Webster and Oliver (1993) argue that at least 100
-observations (and preferably more) are needed for kriging interpolation,
-based on variogram analysis to establish the relationship between sample
-points as a function of separation distance. The United States
-Environmental Protection Agency (USEPA, 2002) reports that, for
-variograms and kriging, stratified sampling can have a lower sample
-number requirement than a simple grid, but that kriging accuracy is
-similar for all sampling designs.</p>
+interpolate between points – a process known as <strong>kriging</strong>
+(after the originator of the method and pioneer of geostatistics,
+Professor Danie Krige). Variograms and kriging are summarised expertly
+by Oliver and Webster (2014) and Reimann <em>et al</em>. (2008). Webster
+and Oliver (1993) argue that at least 100 observations (and preferably
+more) are needed for kriging interpolation, based on variogram analysis
+to establish the relationship between sample points as a function of
+separation distance. The United States Environmental Protection Agency
+(USEPA, 2002) reports that, for variograms and kriging, stratified
+sampling can have a lower sample number requirement than a simple grid,
+but that kriging accuracy is similar for all sampling designs.</p>
 <p>Figure 9 shows some of the key concepts of
-variogram analysis. There is some semivariance that exists even for very
-closely-spaced samples, and this is called the <em>nugget</em>. This
+variogram analysis. In practice, the large number of points representing
+all possible distances between pairs of locations are 'binned' into
+distance ranges, and the mean square variance in each 'bin' is used as
+the estmated semivariance for each bin distance. There is some
+semivariance that exists even for samples which are very closely-spaced
+(tending to zero distance), and this is called the <em>nugget</em>. This
 semivariance increases with increasing distance between samples to a
 limiting value called the <em>sill</em>. At some distance there is no
 increase in semivariance (which then approaches the variance of the
@@ -960,15 +1045,16 @@ definitions).
 <h3>Make a binned simple variogram object</h3>
 <p>We calculate the semivariance within <em>bins</em> (distance
 intervals) which combine the mean square difference within a set of
-intervals of sample separation distances (Figure 10). This allows both
-visualization of thetrend in semivariance with distance, and fitting of a model
-variogram equation to the semivariance--distance relationship. The number of
-bins can be determined "automatically" by an algorithm, or can be specified
+intervals of sample separation distances (Figure
+10). This allows both visualization of the
+trend in semivariance with distance, and fitting of a model variogram
+equation to the semivariance–distance relationship. The number of bins
+can be determined "automatically" by an algorithm, or can be specified
 by the user. We usually constrain the maximum separation distance
 (<code>max.dist</code>) to be less than the maximum spatial extent of
-the data -- Reimann <em>et al.</em> (2008) suggest that the maximum
+the data – Reimann <em>et al.</em> (2008) suggest that the maximum
 distance for the variogram should be ≈ 40% of the maximum dataset
-distance, which for these data is 19.66 °.</p>
+distance, which for these data is 19.66 ° longitude or latitude.</p>
 <pre class="r"><code>par(mar = c(3,3,1,1), mgp = c(1.7,0.3,0), font.lab=2, tcl=0.3)
 variog_As.log &lt;- variogram(As.log~1, As.AR_sf) # , cressie = TRUE
 plot(variog_As.log, xlab = &quot;Distance (km)&quot;, pch=19, col=&quot;blue2&quot;)</code></pre>
@@ -984,7 +1070,7 @@ of the NGSA data, -2mm tosoil fraction.
 class="section level3">
 <h3>The experimental variogram and variogram models</h3>
 <p>From the experimental (or 'empirical') variogram, we can generate a
-variogram model by fitting a function to the binned
+<strong>variogram model</strong> by fitting a function to the binned
 semivariance-distance relationship. Common variogram model functions
 include exponential, spherical, and Gaussian, and there are numerous
 others (run <code>vgm()</code> for a list).</p>
@@ -1009,8 +1095,8 @@ values</em>)</li>
 squared))</li>
 <li><em>C<sub>0</sub></em> = partial sill (<strong>psill</strong> in
 gstat; also called <em>σ</em><sup>2</sup> (sigma squared))</li>
-<li><em>a</em> = range (also called <em>φ</em> (phi); <em>NOT</em> the
-'practical range')</li>
+<li><em>a</em> = range (also called <em>φ</em> (phi); <em>a</em> is NOT
+the 'practical range')</li>
 </ul>
 <pre class="r"><code>vmodel_As.log &lt;- fit.variogram(variog_As.log,
                               model = vgm(psill = NA, model = &quot;Exp&quot;,
@@ -1040,28 +1126,21 @@ fraction.
 <h3>Perform kriging interpolation</h3>
 <p>Now that we have a variogram model, we can use it in the kriging
 interpolation process to make a map of predicted values of our variable,
-as shown later in Figure @ref(fig:krig-pred). To perform an
+as shown later in Figure 12. To perform an
 interpolation, we need to provide a grid of locations that we want to
 predict values at. This is done using the <code>expand.grid()</code>
-function from base <strong>R</strong> -- we are using ≈ 0.2 degree
+function from base <strong>R</strong> – we are using ≈ 0.2 degree
 increments, but these can be changed (<em>e.g</em>., larger increments
 for a coarser grid).</p>
 <p>So, the first step is to make the grid of locations at which to make
 our kriging predictions. Starting with a rectangular grid using the
-<code>expand.grid()</code> function from base <strong>R</strong>, we
-restrict this grid (after conversion to a <code>sp</code> spatial
-object) to only the points in the NGSA sampling area, using the
-<code>over()</code> function from <code>sp</code>.</p>
+<code>st_make_grid()</code> function from the <code>sf</code> package,
+we restrict this grid to only the points in the NGSA sampling area,
+using the <code>st_intersection()</code> function from
+<code>sf</code>.</p>
 <pre class="r"><code>ngsa_poly &lt;- st_polygon(list(as.matrix(NGSAWA_border[c(1:91,1), 1:2])))
 ngsaWA_poly &lt;- st_multipolygon(list(ngsa_poly)) |&gt; st_sfc()
 st_crs(ngsaWA_poly) &lt;- LongLat
-
-# irregpoly &lt;- Polygon(NGSAWA_border[,c(1,2)], hole=F)
-# irregPolys = Polygons(list(irregpoly),1)
-# gridMask = SpatialPolygons(list(irregPolys),
-#                            proj4string = LongLat)
-# inOrOut &lt;- as.vector(over(WAgrid, gridMask))
-
 grid_big &lt;- st_make_grid(ngsaWA_poly,
                          cellsize = c(0.2,0.2),
                          offset = st_bbox(ngsaWA_poly)[c(&quot;xmin&quot;, &quot;ymin&quot;)],
@@ -1091,7 +1170,7 @@ summary(kriged_As.log)
 cat(&quot;_____________________________________________________________________\n\n&quot;)
 idpower &lt;- 2.5
 idw_As.log &lt;- idw(formula = As.log~1, locations = As.AR_sf,
-                      newdata = NGSAgrid, idp = idpower) # idp = 2 is the default
+                  newdata = NGSAgrid, idp = idpower) # idp = 2 is the default
 summary(idw_As.log)</code></pre>
 <pre><code>## [using ordinary kriging]
 ##    var1.pred           var1.var               geometry
@@ -1120,7 +1199,7 @@ summary(idw_As.log)</code></pre>
 without a background map (Figure 12).</p>
 <pre class="r"><code>plot(kriged_As.log, colorkey=T, pch=15, # with kriging variances
     names.attr = c(&quot;log10[As] kriging predictions&quot;,&quot;log10[As] kriging variance&quot;),
-    scales = list(draw = TRUE), col.regions = viridis::mako(100),
+    scales = list(draw = TRUE), col.regions = viridis::magma(100),
     xlab=&quot;Longitude&quot;, ylab=&quot;Latitude&quot;)</code></pre>
 <div class="figure" style="text-align: center">
 <img src="geostats_files/figure-html/spplot-kriging-output-1.png" alt="Plots of simple kriging predictions (left) and variance (right) for log-transformed arsenic (As) in the WA subset of the NGSA data, -2mm topsoil fraction." width="75%" />
@@ -1132,7 +1211,7 @@ topsoil fraction.
 </div>
 <p>Compare Figure 12 with the output from
 inverse distance weighted (IDW) interpolation (Figure
-13. The kriged prediction shows a 'smoother'
+13). The kriged prediction shows a 'smoother'
 spatial pattern, but note that the IDW interpolation can be smoothed
 differently by changing the weighting parameter.</p>
 <pre class="r"><code>plot(idw_As.log[1], colorkey=T, pch=15, # with kriging variances
@@ -1141,8 +1220,8 @@ differently by changing the weighting parameter.</p>
 <div class="figure" style="text-align: center">
 <img src="geostats_files/figure-html/spplot-idw-output-1.png" alt="Plots of inverse distance weighted (IDW) interpolation predictions for log-transformed arsenic (As) in the WA subset of the NGSA data, -2mm topsoil fraction." width="40%" />
 <p class="caption">
-Figure 13: Plots of inverse distance weighted (IDW) interpolation predictions
-for log-transformed arsenic (As) in the WA subset of the NGSA data, -2mm
+Figure 13: Plots of inverse distance weighted (IDW) interpolation predictions for
+log-transformed arsenic (As) in the WA subset of the NGSA data, -2mm
 topsoil fraction.
 </p>
 </div>
@@ -1238,7 +1317,7 @@ class="section level3">
 <ul>
 <li><p>the semivariance distance relationship may not be the same in all
 directions (<em>anisotropic</em>). In such cases we need a directional
-variogram -- in <code>gstat</code> this can be done with parameters in
+variogram – in <code>gstat</code> this can be done with parameters in
 the <code>variog()</code> function (see also <a
 href="http://www.leg.ufpr.br/geoR/geoRdoc/geoRintro.html#exploratory"
 class="uri">http://www.leg.ufpr.br/geoR/geoRdoc/geoRintro.html#exploratory</a>).</p></li>
@@ -1567,7 +1646,8 @@ $(document).ready(function () {
 
 
 <hr />
-
+<p><a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank"><strong>CC-BY-SA</strong></a> • All content by <a href="https://github.com/Ratey-AtUWA" target="_blank">Ratey-AtUWA</a>. My <a href="https://www.uwa.edu.au/schools/agriculture-and-environment" target="_blank">employer</a> does not necessarily know about or endorse the content of this website.<br>
+<span style="font-size:9pt">Created with <span style="font-family: monospace; background-color: #e8e8e8;">rmarkdown</span> in <a href="https://www.rstudio.com/" target="_blank"><span class="fa fa-registered"></span> RStudio</a> using the <span style="font-family: monospace; background-color: #e8e8e8;">darkly</span> theme from <a href="https://bootswatch.com/" target="_blank"><span class="fa fa-swatchbook"></span> Bootswatch</a> via the <span style="font-family: monospace; background-color: #e8e8e8;">bslib</span> package, and <a href="https://fontawesome.com/v5/search?o=r&m=free" target="_blank"><span class="fa fa-font-awesome"></span> fontawesome v5 icons</a>.</span></p>
 
 </div>
 
