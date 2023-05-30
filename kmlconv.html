@@ -316,7 +316,7 @@ Earth to data frames of utm and long-lat coordinates.</p>
 values for the <code>utmzone=</code> and <code>hemi=</code>
 parameters.</p></li>
 <li><p>The code uses the WGS84 ellipsoid for Longitude-Latitude
-coordinates, but this can be chmaged by editing the function code before
+coordinates, but this can be changed by editing the function code before
 running to include the edited <code>kmlconvert()</code> function in the
 <strong>R</strong> global environment.</p></li>
 </ul>
@@ -329,42 +329,75 @@ points</li>
 line, or polygon</li>
 </ul>
 <pre class="r"><code>kmlconvert &lt;- function(file = NULL, utmzone = 50, hemi = &quot;south&quot;) {
-  require(sp)
+  require(sf)
   require(maptools)
-  LongLat &lt;- CRS(&quot;+proj=longlat +ellps=WGS84 
-                 +datum=WGS84 +no_defs&quot;)
-  UTM &lt;- CRS(paste0(&quot;+proj=utm +zone=&quot;,utmzone,&quot; +&quot;,hemi))
+  LongLat &lt;- st_crs(4326)
+  UTM &lt;- st_crs(paste0(&quot;+proj=utm +zone=&quot;,utmzone,&quot; +&quot;,hemi))
 
-kml_0 &lt;- getKMLcoordinates(file, ignoreAltitude = T)
-if(is.matrix(kml_0[[1]])){
-    LL_0 &lt;- SpatialPoints(matrix(unlist(kml_0),
-                                 length(unlist(kml_0))/2,2), 
-                          proj4string = LongLat)
-    colnames(LL_0@coords) &lt;- c(&quot;Longitude&quot;, &quot;Latitude&quot;)
-    utm_0 &lt;- spTransform(LL_0, CRSobj = UTM)
-    colnames(utm_0@coords) &lt;- c(&quot;Easting&quot;, &quot;Northing&quot;)
-    rslt_0 &lt;- as.data.frame(cbind(utm_0@coords, LL_0@coords))
+  kml_0 &lt;- getKMLcoordinates(file, ignoreAltitude = T)
+  if(is.matrix(kml_0[[1]])){
+    coords_0 &lt;- as.data.frame(matrix(unlist(kml_0), length(unlist(kml_0))/2, 2))
+    colnames(coords_0) &lt;- c(&quot;x&quot;,&quot;y&quot;)
+    LL_0 &lt;- st_as_sf(coords_0, coords=c(&quot;x&quot;,&quot;y&quot;), crs = LongLat)
+    # colnames(LL_0@coords) &lt;- c(&quot;Longitude&quot;, &quot;Latitude&quot;)
+    utm_0 &lt;- st_transform(LL_0, crs = UTM)
+    # colnames(utm_0@coords) &lt;- c(&quot;Easting&quot;, &quot;Northing&quot;)
+    rslt_0 &lt;- as.data.frame(cbind(st_coordinates(LL_0), st_coordinates(utm_0)))
+    colnames(rslt_0) &lt;- c(&quot;Longitude&quot;, &quot;Latitude&quot;, &quot;Easting&quot;, &quot;Northing&quot;)
     cat(&quot;Path, line, or polygon\n&quot;)
     print(rslt_0, digits=8, row.names=F)
     write.table(rslt_0, file=&quot;clipboard&quot;, row.names = F, sep=&quot;\t&quot;)
     cat(&quot;\nOutput data also copied to clipboard\n&quot;)
   } else {
-    LL_0 &lt;- SpatialPoints(matrix(unlist(kml_0),
-                                 length(kml_0),2,
-                                 byrow = T), 
-                          proj4string = LongLat)
-    colnames(LL_0@coords) &lt;- c(&quot;Longitude&quot;, &quot;Latitude&quot;)
-    utm_0 &lt;- spTransform(LL_0, CRSobj = UTM)
-    colnames(utm_0@coords) &lt;- c(&quot;Easting&quot;, &quot;Northing&quot;)
-    rslt_0 &lt;- as.data.frame(cbind(utm_0@coords, LL_0@coords))
+    coords_0 &lt;- as.data.frame(matrix(unlist(kml_0), length(kml_0), 2, byrow=T))
+    colnames(coords_0) &lt;- c(&quot;x&quot;,&quot;y&quot;)
+    LL_0 &lt;- st_as_sf(coords_0, coords=c(&quot;x&quot;,&quot;y&quot;), crs = LongLat)
+    utm_0 &lt;- st_transform(LL_0, crs = UTM)
+    rslt_0 &lt;- as.data.frame(cbind(st_coordinates(LL_0), st_coordinates(utm_0)))
+    colnames(rslt_0) &lt;- c(&quot;Longitude&quot;, &quot;Latitude&quot;, &quot;Easting&quot;, &quot;Northing&quot;)
     cat(&quot;Individual points\n&quot;)
     print(rslt_0, digits=8, row.names=F)
     write.table(rslt_0, file=&quot;clipboard&quot;, row.names = F, sep=&quot;\t&quot;)
     cat(&quot;\nOutput data also copied to clipboard\n&quot;)
   }
-return(rslt_0)
-rm(list = ls(pattern = &quot;_0&quot;))
+  return(rslt_0)
+  rm(list = ls(pattern = &quot;_0&quot;))
 }</code></pre>
+<p>We can test the function on a kml file saved from Google Earth:</p>
+<pre class="r"><code>kml1 &lt;- &quot;https://github.com/Ratey-AtUWA/spatial/raw/main/botanic.kml&quot;
+cat(&quot;first 10 lines of input file:\n\n&quot;)
+readLines(kml1)[1:10] ; cat(&quot;    \u22EE\n\n&quot;,rep(&quot;-&quot;,60),&quot;\n&quot;,sep=&quot;&quot;)
+kmlconvert(kml1, 50, &quot;south&quot;)</code></pre>
+<pre><code>## first 10 lines of input file:
+## 
+##  [1] &quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot;?&gt;&quot;                                                                                                                                           
+##  [2] &quot;&lt;kml xmlns=\&quot;http://www.opengis.net/kml/2.2\&quot; xmlns:gx=\&quot;http://www.google.com/kml/ext/2.2\&quot; xmlns:kml=\&quot;http://www.opengis.net/kml/2.2\&quot; xmlns:atom=\&quot;http://www.w3.org/2005/Atom\&quot;&gt;&quot;
+##  [3] &quot;&lt;Document&gt;&quot;                                                                                                                                                                           
+##  [4] &quot;\t&lt;name&gt;botanic.kml&lt;/name&gt;&quot;                                                                                                                                                           
+##  [5] &quot;\t&lt;StyleMap id=\&quot;msn_open-diamond\&quot;&gt;&quot;                                                                                                                                                 
+##  [6] &quot;\t\t&lt;Pair&gt;&quot;                                                                                                                                                                           
+##  [7] &quot;\t\t\t&lt;key&gt;normal&lt;/key&gt;&quot;                                                                                                                                                              
+##  [8] &quot;\t\t\t&lt;styleUrl&gt;#sn_open-diamond&lt;/styleUrl&gt;&quot;                                                                                                                                          
+##  [9] &quot;\t\t&lt;/Pair&gt;&quot;                                                                                                                                                                          
+## [10] &quot;\t\t&lt;Pair&gt;&quot;                                                                                                                                                                           
+##     ⋮
+## 
+## ------------------------------------------------------------
+## Individual points
+##  Longitude   Latitude Easting Northing
+##  115.81952 -31.983884  388474  6460742
+##  115.81949 -31.983902  388472  6460740
+##  115.81961 -31.983966  388483  6460733
+##  115.81964 -31.983931  388486  6460737
+##  115.81959 -31.983894  388481  6460741
+## 
+## Output data also copied to clipboard
+##   Longitude  Latitude Easting Northing
+## 1  115.8195 -31.98388  388474  6460742
+## 2  115.8195 -31.98390  388472  6460740
+## 3  115.8196 -31.98397  388483  6460733
+## 4  115.8196 -31.98393  388486  6460737
+## 5  115.8196 -31.98389  388481  6460741</code></pre>
 
 <!DOCTYPE html>
 
