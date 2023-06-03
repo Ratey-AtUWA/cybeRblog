@@ -364,12 +364,12 @@ for this file and use the spatial information directly. The
 <li>Line 3: angle of rotation (is usually 0 or ignored)</li>
 <li>Line 4: negative length of a pixel in the y direction
 (vertical)</li>
-<li>Line 5: x coordinate at center of pixel in the top left corner of
+<li>Line 5: x coordinate at centre of pixel in the top left corner of
 the image</li>
-<li>Line 6: y coordinate at center of pixel in the top left corner of
+<li>Line 6: y coordinate at centre of pixel in the top left corner of
 the image</li>
 </ol>
-<p>So long as the filenames of the <code>.jpg</code> and
+<p>So long as the file names of the <code>.jpg</code> and
 <code>.jpw</code> files match, the raster extent and coordinates are
 obtained or calculated from the values in the <code>.jpw</code>
 file.</p>
@@ -380,10 +380,11 @@ class="section level1">
 <h1>Reading the raster spatial information in the georeferenced jpeg
 image</h1>
 <p>We use the <code>stars</code> package, which plays nicely with the
-<code>sf</code> package, to do most of the work. The
-<code>read_stars()</code> function will find and use the information in
-the <code>.jpw</code> file withour us specifying that file
-explicitly.</p>
+<code>sf</code> package, to do most of the work (the <code>sf</code>
+package was introduced on <a href="Rmaps.html">another page on maps in
+<strong>R</strong></a>. The <code>read_stars()</code> function will find
+and use the information in the <code>.jpw</code> file without us
+specifying that file explicitly.</p>
 <pre class="r"><code>(AF_nearmap &lt;- 
   read_stars(&quot;EPSG32750_Date20230226_Lat-31.918263_Lon115.944872_Mpp0.597.jpg&quot;))</code></pre>
 <pre><code>## stars object with 3 dimensions and 1 attribute
@@ -521,7 +522,9 @@ Figure 2: Map of sampling locations at Ashfield Flats Reserve from
 #        pt.bg=c(3,5,7,8), col=1, box.col=1, pt.lwd=2, pt.cex=c(1.2,1,1,1), 
 #        bg = &quot;#808070&quot;,inset=c(0.08,0.12), cex=1, y.intersp = 1)</code></pre>
 <p>The result is not as satisfying as adding points separately using
-<code>points()</code>.</p>
+<code>points()</code>. We could also add our data in a way that shows
+values of a variable, as described in the <a href="Rmaps.html">page on
+maps in <strong>R</strong></a>.</p>
 <div id="packages" class="section level2">
 <h2>Packages</h2>
 <p>Bivand R, Keitt T, Rowlingson B (2022). <em>rgdal: Bindings for the
