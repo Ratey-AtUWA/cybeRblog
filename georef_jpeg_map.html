@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Use geotagged jpeg images as map backgrounds</title>
+
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<link href="site_libs/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-5.1.3/bootstrap.bundle.min.js"></script>
+<script src="site_libs/bs3compat-0.4.0/transition.js"></script>
+<script src="site_libs/bs3compat-0.4.0/tabs.js"></script>
+<script src="site_libs/bs3compat-0.4.0/bs3compat.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">cyboRg</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li>
+  <a href="code.html">
+    <span class="fa fa-project-diagram"></span>
+     
+    Code
+  </a>
+</li>
+<li>
+  <a href="teaching.html">
+    <span class="fa fa-chalkboard-teacher"></span>
+     
+    Teaching
+  </a>
+</li>
+<li>
+  <a href="rants.html">
+    <span class="fa fa-bell"></span>
+     
+    Rants
+  </a>
+</li>
+<li>
+  <a href="images.html">
+    <span class="fa fa-images"></span>
+     
+    Images
+  </a>
+</li>
+<li>
+  <a href="about.html">
+    <span class="fa fa-address-card"></span>
+     
+    About
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="social.html">
+    <span class="fa fa-twitter"></span>
+     
+    Social
+  </a>
+</li>
+<li>
+  <a href="work.html">
+    <span class="fa fa-user-graduate"></span>
+     
+    UWA
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Use geotagged jpeg images as map
+backgrounds</h1>
+
+</div>
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Sometimes we can obtain the best map background images in the form of
+geotagged images, such as geoTIFF or jpegs. In this example we'll use a
+jpeg file downloaded from the excellent <a
+href="https://www.nearmap.com/au/en" target="_blank">NearMap</a> site
+(my university has a subscription). Specialist mapping websites may have
+better resolution, or have aerial photographs from the most appropriate
+time of year for our mapping exercise.</p>
+<p>First we load the packages that we need:</p>
+<pre class="r"><code>library(sf)
+library(raster) # slope parameters from raster::terrain() function
+library(rgdal)
+library(viridis)
+library(stars)
+library(prettymapr)</code></pre>
+<p>Let's just have a look at the image file using the
+<code>GDALinfo</code> function from the <code>rgdal</code> package:</p>
+<pre class="r"><code>GDALinfo(&quot;EPSG32750_Date20230226_Lat-31.918263_Lon115.944872_Mpp0.597.jpg&quot;) # just file info</code></pre>
+<pre><code>## rows        795 
+## columns     1267 
+## bands       3 
+## lower left origin.x        399868.4 
+## lower left origin.y        6467901 
+## res.x       0.597164 
+## res.y       0.597164 
+## ysign       -1 
+## oblique.x   0 
+## oblique.y   0 
+## driver      JPEG 
+## projection  NA 
+## file        EPSG32750_Date20230226_Lat-31.918263_Lon115.944872_Mpp0.597.jpg 
+## apparent band summary:
+##   GDType hasNoDataValue NoDataValue blockSize1 blockSize2
+## 1   Byte          FALSE           0          1       1267
+## 2   Byte          FALSE           0          1       1267
+## 3   Byte          FALSE           0          1       1267
+## apparent band statistics:
+##   Bmin Bmax Bmean Bsd
+## 1    0  255    NA  NA
+## 2    0  255    NA  NA
+## 3    0  255    NA  NA</code></pre>
+<p>We notice that the jpeg file itself doesn't have spatial information,
+even though we may have downloaded it as a georeferenced image. With
+jpeg images, georeferencing comes in the form of a companion ('sidecar')
+file, with the same name but having the <code>.jgw</code> extension. We
+can read this directly, but the functions we will use below will look
+for this file and use the spatial information directly. The
+<code>.jgw</code> file has 6 lines:</p>
+<ol style="list-style-type: decimal">
+<li>Line 1: length of a pixel in the x direction (horizontal)</li>
+<li>Line 2: angle of rotation (is usually 0 or ignored)</li>
+<li>Line 3: angle of rotation (is usually 0 or ignored)</li>
+<li>Line 4: negative length of a pixel in the y direction
+(vertical)</li>
+<li>Line 5: x coordinate at center of pixel in the top left corner of
+the image</li>
+<li>Line 6: y coordinate at center of pixel in the top left corner of
+the image</li>
+</ol>
+<p>So long as the filenames of the <code>.jpg</code> and
+<code>.jpw</code> files match, the raster extent and coordinates are
+obtained or calculated from the values in the <code>.jpw</code>
+file.</p>
+</div>
+<div
+id="reading-the-raster-spatial-information-in-the-georeferenced-jpeg-image"
+class="section level1">
+<h1>Reading the raster spatial information in the georeferenced jpeg
+image</h1>
+<p>We use the <code>stars</code> package, which plays nicely with the
+<code>sf</code> package, to do most of the work. The
+<code>read_stars()</code> function will find and use the information in
+the <code>.jpw</code> file withour us specifying that file
+explicitly.</p>
+<pre class="r"><code>(AF_nearmap &lt;- 
+  read_stars(&quot;EPSG32750_Date20230226_Lat-31.918263_Lon115.944872_Mpp0.597.jpg&quot;))</code></pre>
+<pre><code>## stars object with 3 dimensions and 1 attribute
+## attribute(s), summary of first 1e+05 cells:
+##                                    Min. 1st Qu. Median     Mean 3rd Qu. Max.
+## EPSG32750_Date20230226_Lat-31....     0      85    143 139.6958     200  255
+## dimension(s):
+##      from   to  offset     delta x/y
+## x       1 1267  399868  0.597164 [x]
+## y       1  795 6468376 -0.597164 [y]
+## band    1    3      NA        NA</code></pre>
+<p>We notice that, apart from the long and informative filename, the
+resulting <code>stars</code> object does not have a coordinate reference
+system included, so we need to add the appropriate one manually:</p>
+<pre class="r"><code>st_crs(AF_nearmap) &lt;- st_crs(32750)
+strtrim(st_crs(AF_nearmap),30)</code></pre>
+<pre><code>## [1] &quot;EPSG:32750&quot;                      &quot;PROJCRS[\&quot;WGS 84 / UTM zone 50S&quot;</code></pre>
+<p>The messy output above shows that we have what we expect: UTM Zone 50
+(south), based on the WGS84 geoid.</p>
+<p>From the summary of the <code>read_stars()</code> output above
+(<em>i.e</em>. <code>band    1    3</code>), we can see that the image
+has three bands of information, corresponding to the red, green and blue
+colour channels in the jpeg image.</p>
+<p>To plot as a combined colour image we need to merge these 3 channels
+into in single data layer of colour information – fortunately, there is
+a function for this – <code>st_rgb()</code>:</p>
+<pre class="r"><code>AF_rgb &lt;- st_rgb(AF_nearmap)
+print(AF_rgb)</code></pre>
+<pre><code>## stars object with 2 dimensions and 1 attribute
+## attribute(s), summary of first 1e+05 cells:
+##  EPSG32750_Date20230226_Lat-31.... 
+##  Length:100000                     
+##  Class :character                  
+##  Mode  :character                  
+## dimension(s):
+##   from   to  offset     delta                refsys x/y
+## x    1 1267  399868  0.597164 WGS 84 / UTM zone 50S [x]
+## y    1  795 6468376 -0.597164 WGS 84 / UTM zone 50S [y]</code></pre>
+<p>We need some data to plt, so let's read some</p>
+<pre class="r"><code>afs1922 &lt;- read.csv(&quot;afs1922edit.csv&quot;, stringsAsFactors = TRUE)
+afs1922$Year &lt;- as.factor(afs1922$Year)
+(afsREE &lt;- st_as_sf(x = afs1922[,c(&quot;Year&quot;,&quot;Easting&quot;, &quot;Northing&quot;,&quot;Al&quot;,&quot;Fe&quot;,&quot;REE&quot;)],
+         coords = c(&quot;Easting&quot;, &quot;Northing&quot;), crs = st_crs(32750)))</code></pre>
+<pre><code>## Simple feature collection with 262 features and 4 fields
+## Geometry type: POINT
+## Dimension:     XY
+## Bounding box:  xmin: 399908 ymin: 6467930 xmax: 400577 ymax: 6468346
+## Projected CRS: WGS 84 / UTM zone 50S
+## First 10 features:
+##    Year    Al     Fe    REE               geometry
+## 1  2019  8996  28836  25.74 POINT (399989 6468038)
+## 2  2019 37131  44687 184.71 POINT (399981 6468037)
+## 3  2019 28699  48561 161.33 POINT (399971 6468035)
+## 4  2019 33882  53061 161.90 POINT (399958 6468028)
+## 5  2019 31222  71546 166.20 POINT (399944 6468023)
+## 6  2019 34765  38441 142.29 POINT (399930 6468017)
+## 7  2019 27926  59783 129.82 POINT (399919 6468014)
+## 8  2019 29650  37017 117.57 POINT (399908 6468006)
+## 9  2019 17946 135488  71.19 POINT (399971 6468021)
+## 10 2019  4114   9255  10.46 POINT (399981 6468052)</code></pre>
+<p>Now we can plot a map with some data on it! We use the
+<code>image()</code> function to plot the stars raster; we could also
+use <code>plot()</code> if we specify the argument
+<code>reset = FALSE</code>.</p>
+<pre class="r"><code>palette(c(&quot;white&quot;,viridis::viridis(8), &quot;black&quot;,&quot;transparent&quot;))
+par(oma=c(3,3,1,1), mar=c(0,0,0,0), mgp=c(1.7,0.3,0), tcl=0.25,
+    lend=&quot;square&quot;, ljoin=&quot;mitre&quot;)
+image(AF_rgb, main=&quot;&quot;, axes=TRUE)
+axis(3,labels=F); axis(4, labels=F)#; grid(lty=3, col=1)
+mtext(&quot;Easting (UTM Zone 50S, m)&quot;,1,1.7,font=2,cex=1.2)
+points(st_coordinates(afsREE), pch=c(21:24)[afsREE$Year],
+       bg=c(3,5,7,8)[afsREE$Year], col=1, cex=c(1.2,1,1,1)[afsREE$Year], lwd=2)
+addnortharrow(pos=&quot;topright&quot;,padin = c(0.62,0.62), 
+              text.col = 10, border = 10, scale=1.4)
+addnortharrow(pos=&quot;topright&quot;,padin = c(0.6,0.6), 
+              text.col = 1, border = 1, scale=1.4)
+addscalebar(plotepsg=32750, pos=&quot;bottomleft&quot;,linecol = 11,label.col = 10,
+            padin = c(0.62,0.62),htin = 0.2, label.cex = 1.5, bar.cols=c(11,11),
+            widthhint = 0.15)
+addscalebar(plotepsg=32750, pos=&quot;bottomleft&quot;,linecol = 1,label.col = 1,
+            padin = c(0.6,0.6),htin = 0.2, label.cex = 1.5, widthhint = 0.15)
+legend(&quot;topleft&quot;, title=expression(bold(&quot;Ashfield Flats Reserve&quot;)),
+       legend=c(&quot;Map source: NearMap Feb 2023&quot;,
+                &quot;Projection: UTM Zone 50 S     &quot;,
+                &quot;EPSG: 32750&quot;,
+                &quot;Geoid: WGS84&quot;),
+       box.col = &quot;white&quot;,inset=c(0.03,0.04), cex=1, y.intersp = 1)
+legend(&quot;bottomright&quot;, title=expression(bold(&quot;Year&quot;)),
+       legend=levels(afsREE$Year), text.col = 1, pch=c(21,22,23,24), 
+       pt.bg=c(3,5,7,8), col=1, box.col=1, pt.lwd=2, pt.cex=c(1.2,1,1,1), 
+       bg = &quot;#808070&quot;,inset=c(0.08,0.12), cex=1, y.intersp = 1)</code></pre>
+<div class="figure" style="text-align: center">
+<img src="georef_jpeg_map_files/figure-html/afr-nearmap-1.png" alt="Figure 1: Map of sampling locations at Ashfield Flats Reserve from 2019-2022 plotted on a Nearmap spatial raster." width="960" />
+<p class="caption">
+Figure 1: Map of sampling locations at Ashfield Flats Reserve from
+2019-2022 plotted on a Nearmap spatial raster.
+</p>
+</div>
+<p>For comparison we can also use the <code>add.geom =</code> argument
+in the <code>image()</code> or <code>plot()</code> function as an
+alternative way to plot the points.</p>
+<pre class="r"><code>palette(c(&quot;white&quot;,viridis::viridis(12, direction=-1)[1:8], &quot;black&quot;,&quot;transparent&quot;))
+par(oma=c(3,3,1,1), mar=c(0,0,0,0), mgp=c(1.7,0.3,0), tcl=0.25,
+    lend=&quot;square&quot;, ljoin=&quot;mitre&quot;)
+image(AF_rgb, main=&quot;&quot;, axes=TRUE, add.geom=afsREE)
+axis(3,labels=F); axis(4, labels=F)#; grid(lty=3, col=1)
+mtext(&quot;Easting (UTM Zone 50S, m)&quot;,1,1.7,font=2,cex=1.2)
+# points(st_coordinates(afsREE), pch=c(21:24)[afsREE$Year],
+#        bg=c(3,5,7,8)[afsREE$Year], col=1, cex=c(1.2,1,1,1)[afsREE$Year], lwd=2)
+addnortharrow(pos=&quot;topright&quot;,padin = c(0.62,0.62), 
+              text.col = 10, border = 10, scale=1.4)
+addnortharrow(pos=&quot;topright&quot;,padin = c(0.6,0.6), 
+              text.col = 1, border = 1, scale=1.4)
+addscalebar(plotepsg=32750, pos=&quot;bottomleft&quot;,linecol = 11,label.col = 10,
+            padin = c(0.62,0.62),htin = 0.2, label.cex = 1.5, bar.cols=c(11,11),
+            widthhint = 0.15)
+addscalebar(plotepsg=32750, pos=&quot;bottomleft&quot;,linecol = 1,label.col = 1,
+            padin = c(0.6,0.6),htin = 0.2, label.cex = 1.5, widthhint = 0.15)
+legend(&quot;topleft&quot;, title=expression(bold(&quot;Ashfield Flats Reserve&quot;)),
+       legend=c(&quot;Map source: NearMap Feb 2023&quot;,
+                &quot;Projection: UTM Zone 50 S     &quot;,
+                &quot;EPSG: 32750&quot;,
+                &quot;Geoid: WGS84&quot;),
+       box.col = &quot;white&quot;,inset=c(0.03,0.04), cex=1, y.intersp = 1)</code></pre>
+<div class="figure" style="text-align: center">
+<img src="georef_jpeg_map_files/figure-html/afr-nearmap-addgeom-1.png" alt="Figure 2: Map of sampling locations at Ashfield Flats Reserve from 2019-2022 plotted on a Nearmap spatial raster using `plot.geom` as an argument to `image()`." width="960" />
+<p class="caption">
+Figure 2: Map of sampling locations at Ashfield Flats Reserve from
+2019-2022 plotted on a Nearmap spatial raster using
+<code>plot.geom</code> as an argument to <code>image()</code>.
+</p>
+</div>
+<pre class="r"><code># legend(&quot;bottomright&quot;, title=expression(bold(&quot;Year&quot;)),
+#        legend=levels(afsREE$Year), text.col = 1, pch=c(21,22,23,24), 
+#        pt.bg=c(3,5,7,8), col=1, box.col=1, pt.lwd=2, pt.cex=c(1.2,1,1,1), 
+#        bg = &quot;#808070&quot;,inset=c(0.08,0.12), cex=1, y.intersp = 1)</code></pre>
+<p>The result is not as satisfying as adding points separately using
+<code>points()</code>.</p>
+<div id="packages" class="section level2">
+<h2>Packages</h2>
+<p>Bivand R, Keitt T, Rowlingson B (2022). <em>rgdal: Bindings for the
+'Geospatial' Data Abstraction</em> <em>Library</em>. R package version
+1.6-2, <a href="https://CRAN.R-project.org/package=rgdal"
+target="_blank">https://CRAN.R-project.org/package=rgdal</a>.</p>
+<p>Dunnington D (2022). <em>prettymapr: Scale Bar, North Arrow, and
+Pretty Margins in R</em>. R package version 0.2.4, <a
+href="https://CRAN.R-project.org/package=prettymapr"
+target="_blank">https://CRAN.R-project.org/package=prettymapr</a>.</p>
+<p>Garnier S., Ross N., Rudis R., Camargo A.P., Sciaini M., and Scherer
+C. (2021). <em>Rvision - Colorblind-Friendly Color Maps for R</em>. R
+package version 0.6.2. <a href="https://sjmgarnier.github.io/viridis/"
+target="_blank">https://sjmgarnier.github.io/viridis/</a></p>
+<p>Hijmans R (2022). <em>raster: Geographic Data Analysis and
+Modeling</em>. R package version 3.6-11, <a
+href="https://CRAN.R-project.org/package=raster"
+target="_blank">https://CRAN.R-project.org/package=raster</a>.</p>
+<p>Pebesma, E., 2018. Simple Features for R: Standardized Support for
+Spatial Vector Data. <em>The R</em> <em>Journal</em> <strong>10</strong>
+(1), 439-446, <a href="https://doi.org/10.32614/RJ-2018-009"
+target="_blank">https://doi.org/10.32614/RJ-2018-009</a></p>
+<p>Pebesma E (2022). <em>stars: Spatiotemporal Arrays, Raster and Vector
+Data Cubes</em>. R package version 0.6-0, <a
+href="https://CRAN.R-project.org/package=stars"
+target="_blank">https://CRAN.R-project.org/package=stars</a>.</p>
+<p>library(prettymapr)</p>
+</div>
+</div>
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<hr />
+<p><a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank"><strong>CC-BY-SA</strong></a> • All content by <a href="https://github.com/Ratey-AtUWA" target="_blank">Ratey-AtUWA</a>. My <a href="https://www.uwa.edu.au/schools/agriculture-and-environment" target="_blank">employer</a> does not necessarily know about or endorse the content of this website.<br>
+<span style="font-size:9pt">Created with <span style="font-family: monospace; background-color: #e8e8e8;">rmarkdown</span> in <a href="https://www.rstudio.com/" target="_blank"><span class="fa fa-registered"></span> RStudio</a> using the <span style="font-family: monospace; background-color: #e8e8e8;">darkly</span> theme from <a href="https://bootswatch.com/" target="_blank"><span class="fa fa-swatchbook"></span> Bootswatch</a> via the <span style="font-family: monospace; background-color: #e8e8e8;">bslib</span> package, and <a href="https://fontawesome.com/v5/search?o=r&m=free" target="_blank"><span class="fa fa-font-awesome"></span> fontawesome v5 icons</a>.</span></p>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
