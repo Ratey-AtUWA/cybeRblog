@@ -20,6 +20,8 @@ old.gitignore.txt
 
 *.kml
 
+*.zip
+
 footer.html
 
 /rosm.cache/*
