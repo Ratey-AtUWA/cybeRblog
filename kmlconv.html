@@ -339,9 +339,7 @@ line, or polygon</li>
     coords_0 &lt;- as.data.frame(matrix(unlist(kml_0), length(unlist(kml_0))/2, 2))
     colnames(coords_0) &lt;- c(&quot;x&quot;,&quot;y&quot;)
     LL_0 &lt;- st_as_sf(coords_0, coords=c(&quot;x&quot;,&quot;y&quot;), crs = LongLat)
-    # colnames(LL_0@coords) &lt;- c(&quot;Longitude&quot;, &quot;Latitude&quot;)
     utm_0 &lt;- st_transform(LL_0, crs = UTM)
-    # colnames(utm_0@coords) &lt;- c(&quot;Easting&quot;, &quot;Northing&quot;)
     rslt_0 &lt;- as.data.frame(cbind(st_coordinates(LL_0), st_coordinates(utm_0)))
     colnames(rslt_0) &lt;- c(&quot;Longitude&quot;, &quot;Latitude&quot;, &quot;Easting&quot;, &quot;Northing&quot;)
     cat(&quot;Path, line, or polygon\n&quot;)
@@ -368,6 +366,14 @@ line, or polygon</li>
 cat(&quot;first 10 lines of input file:\n\n&quot;)
 readLines(kml1)[1:10] ; cat(&quot;    \u22EE\n\n&quot;,rep(&quot;-&quot;,60),&quot;\n&quot;,sep=&quot;&quot;)
 kmlconvert(kml1, 50, &quot;south&quot;)</code></pre>
+<pre><code>## Loading required package: maptools</code></pre>
+<pre><code>## Checking rgeos availability: FALSE
+## Please note that &#39;maptools&#39; will be retired during 2023,
+## plan transition at your earliest convenience;
+## some functionality will be moved to &#39;sp&#39;.
+##      Note: when rgeos is not available, polygon geometry     computations in maptools depend on gpclib,
+##      which has a restricted licence. It is disabled by default;
+##      to enable gpclib, type gpclibPermit()</code></pre>
 <pre><code>## first 10 lines of input file:
 ## 
 ##  [1] &quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot;?&gt;&quot;                                                                                                                                           
