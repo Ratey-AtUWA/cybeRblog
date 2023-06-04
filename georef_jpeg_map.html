@@ -312,15 +312,15 @@ backgrounds</h1>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
 <p>Sometimes we can obtain the best map background images in the form of
-geotagged images, such as geoTIFF or jpegs. In this example we'll use a
-jpeg file downloaded from the excellent <a
+georeferenced images, such as geoTIFF or jpeg. In this example we'll use
+a jpeg file downloaded from the excellent <a
 href="https://www.nearmap.com/au/en" target="_blank">NearMap</a> site
-(my university has a subscription). Specialist mapping websites may have
-better resolution, or have aerial photographs from the most appropriate
-time of year for our mapping exercise.</p>
+(my university has a subscription 😊). Specialist mapping websites may
+have better resolution, or have aerial photographs from the most
+appropriate time of year for our mapping exercise.</p>
 <p>First we load the packages that we need:</p>
 <pre class="r"><code>library(sf)
-library(raster) # slope parameters from raster::terrain() function
+library(raster)
 library(rgdal)
 library(viridis)
 library(stars)
@@ -359,15 +359,14 @@ can read this directly, but the functions we will use below will look
 for this file and use the spatial information directly. The
 <code>.jgw</code> file has 6 lines:</p>
 <ol style="list-style-type: decimal">
-<li>Line 1: length of a pixel in the x direction (horizontal)</li>
-<li>Line 2: angle of rotation (is usually 0 or ignored)</li>
-<li>Line 3: angle of rotation (is usually 0 or ignored)</li>
-<li>Line 4: negative length of a pixel in the y direction
-(vertical)</li>
-<li>Line 5: x coordinate at centre of pixel in the top left corner of
-the image</li>
-<li>Line 6: y coordinate at centre of pixel in the top left corner of
-the image</li>
+<li>length of a pixel in the x direction (horizontal)</li>
+<li>angle of rotation (is usually 0 or ignored)</li>
+<li>angle of rotation (is usually 0 or ignored)</li>
+<li>negative length of a pixel in the y direction (vertical)</li>
+<li>x coordinate at centre of pixel in the top left corner of the
+image</li>
+<li>y coordinate at centre of pixel in the top left corner of the
+image</li>
 </ol>
 <p>So long as the file names of the <code>.jpg</code> and
 <code>.jpw</code> files match, the raster extent and coordinates are
@@ -403,14 +402,17 @@ system included, so we need to add the appropriate one manually:</p>
 strtrim(st_crs(AF_nearmap),30)</code></pre>
 <pre><code>## [1] &quot;EPSG:32750&quot;                      &quot;PROJCRS[\&quot;WGS 84 / UTM zone 50S&quot;</code></pre>
 <p>The messy output above shows that we have what we expect: UTM Zone 50
-(south), based on the WGS84 geoid.</p>
+(south), based on the <a
+href="https://support.virtual-surveyor.com/en/support/solutions/articles/1000261351-what-is-wgs84-"
+target="_blank">WGS84 datum</a>.</p>
 <p>From the summary of the <code>read_stars()</code> output above
 (<em>i.e</em>. <code>band    1    3</code>), we can see that the image
 has three bands of information, corresponding to the red, green and blue
 colour channels in the jpeg image.</p>
 <p>To plot as a combined colour image we need to merge these 3 channels
-into in single data layer of colour information – fortunately, there is
-a function for this – <code>st_rgb()</code>:</p>
+into in single data layer of colour information; fortunately, there is a
+function for this in the <code>stars</code> package:
+<code>st_rgb()</code>:</p>
 <pre class="r"><code>AF_rgb &lt;- st_rgb(AF_nearmap)
 print(AF_rgb)</code></pre>
 <pre><code>## stars object with 2 dimensions and 1 attribute
@@ -423,8 +425,9 @@ print(AF_rgb)</code></pre>
 ##   from   to  offset     delta                refsys x/y
 ## x    1 1267  399868  0.597164 WGS 84 / UTM zone 50S [x]
 ## y    1  795 6468376 -0.597164 WGS 84 / UTM zone 50S [y]</code></pre>
-<p>We need some data to plt, so let's read some</p>
-<pre class="r"><code>afs1922 &lt;- read.csv(&quot;afs1922edit.csv&quot;, stringsAsFactors = TRUE)
+<p>We need some data to plot, so let's read some</p>
+<pre class="r"><code>git &lt;- &quot;https://github.com/Ratey-AtUWA/cybloRg/raw/main/&quot;
+afs1922 &lt;- read.csv(paste0(git,&quot;afs1922edit.csv&quot;), stringsAsFactors = TRUE)
 afs1922$Year &lt;- as.factor(afs1922$Year)
 (afsREE &lt;- st_as_sf(x = afs1922[,c(&quot;Year&quot;,&quot;Easting&quot;, &quot;Northing&quot;,&quot;Al&quot;,&quot;Fe&quot;,&quot;REE&quot;)],
          coords = c(&quot;Easting&quot;, &quot;Northing&quot;), crs = st_crs(32750)))</code></pre>
@@ -483,6 +486,9 @@ Figure 1: Map of sampling locations at Ashfield Flats Reserve from
 2019-2022 plotted on a Nearmap spatial raster.
 </p>
 </div>
+<p>
+ 
+</p>
 <p>For comparison we can also use the <code>add.geom =</code> argument
 in the <code>image()</code> or <code>plot()</code> function as an
 alternative way to plot the points.</p>
@@ -492,8 +498,6 @@ par(oma=c(3,3,1,1), mar=c(0,0,0,0), mgp=c(1.7,0.3,0), tcl=0.25,
 image(AF_rgb, main=&quot;&quot;, axes=TRUE, add.geom=afsREE)
 axis(3,labels=F); axis(4, labels=F)#; grid(lty=3, col=1)
 mtext(&quot;Easting (UTM Zone 50S, m)&quot;,1,1.7,font=2,cex=1.2)
-# points(st_coordinates(afsREE), pch=c(21:24)[afsREE$Year],
-#        bg=c(3,5,7,8)[afsREE$Year], col=1, cex=c(1.2,1,1,1)[afsREE$Year], lwd=2)
 addnortharrow(pos=&quot;topright&quot;,padin = c(0.62,0.62), 
               text.col = 10, border = 10, scale=1.4)
 addnortharrow(pos=&quot;topright&quot;,padin = c(0.6,0.6), 
@@ -517,10 +521,9 @@ Figure 2: Map of sampling locations at Ashfield Flats Reserve from
 <code>plot.geom</code> as an argument to <code>image()</code>.
 </p>
 </div>
-<pre class="r"><code># legend(&quot;bottomright&quot;, title=expression(bold(&quot;Year&quot;)),
-#        legend=levels(afsREE$Year), text.col = 1, pch=c(21,22,23,24), 
-#        pt.bg=c(3,5,7,8), col=1, box.col=1, pt.lwd=2, pt.cex=c(1.2,1,1,1), 
-#        bg = &quot;#808070&quot;,inset=c(0.08,0.12), cex=1, y.intersp = 1)</code></pre>
+<p>
+ 
+</p>
 <p>The result is not as satisfying as adding points separately using
 <code>points()</code>. We could also add our data in a way that shows
 values of a variable, as described in the <a href="Rmaps.html">page on
