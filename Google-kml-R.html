@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>From Google Earth to kml to R</title>
+
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<link href="site_libs/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-5.1.3/bootstrap.bundle.min.js"></script>
+<script src="site_libs/bs3compat-0.4.0/transition.js"></script>
+<script src="site_libs/bs3compat-0.4.0/tabs.js"></script>
+<script src="site_libs/bs3compat-0.4.0/bs3compat.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">cyboRg</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li>
+  <a href="code.html">
+    <span class="fa fa-project-diagram"></span>
+     
+    Code
+  </a>
+</li>
+<li>
+  <a href="teaching.html">
+    <span class="fa fa-chalkboard-teacher"></span>
+     
+    Teaching
+  </a>
+</li>
+<li>
+  <a href="rants.html">
+    <span class="fa fa-bell"></span>
+     
+    Rants
+  </a>
+</li>
+<li>
+  <a href="images.html">
+    <span class="fa fa-images"></span>
+     
+    Images
+  </a>
+</li>
+<li>
+  <a href="about.html">
+    <span class="fa fa-address-card"></span>
+     
+    About
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="social.html">
+    <span class="fa fa-twitter"></span>
+     
+    Social
+  </a>
+</li>
+<li>
+  <a href="work.html">
+    <span class="fa fa-user-graduate"></span>
+     
+    UWA
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">From Google Earth to kml to R</h1>
+
+</div>
+
+
+<style type="text/css">
+  body{
+  font-size: 12pt;
+}
+</style>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Sometimes it's useful to add manually digitised information to maps.
+For example, seasonal ponds are not always shown on map tiles from
+providers such as <a href="https://www.openstreetmap.org/"
+target="_blank">OpenStreetMap</a> or <a href="http://maps.stamen.com/"
+target="_blank">Stamen</a>. While this can be overcome by using a map
+background made from aerial photograph tiles, we can often present out
+map data more clearly using graphics-based map tiles which do not
+include every detail of the land surface.</p>
+<p>One way to quite easily get coordinates for map features is to use
+the drawing tools in the Google Earth app.</p>
+<div
+id="using-the-polygon-tool-in-google-earth-to-digitise-and-save-map-features"
+class="section level2">
+<h2>Using the polygon tool in Google Earth to digitise and save map
+features</h2>
+<p>In this context, <em>digitise</em> means nothing more than converting
+part of an image to numeric coordinates. The following set of
+instructions outlines a process we can use to save an irregular polygon
+shape from <a href="https://www.google.com/earth/versions/"
+target="_blank">Google Earth Pro</a> (a free download, so it's very
+accessible, or there is a <a href="https://earth.google.com/web/"
+target="_blank">web version</a>).</p>
+<ol style="list-style-type: decimal">
+<li><p>Open Google Earth, and find the feature you want to
+digitise.</p></li>
+<li><p>Click the polygon tool in the toolbar <br><img
+src="Google-kml-R_files/figure-html/Add_polygon.png"
+alt="Google Earth polygon tool" /></p></li>
+<li><p>Give the feature a name <br><img
+src="Google-kml-R_files/figure-html/New_polygon.png"
+alt="Polygon properties" /></p></li>
+<li><p>Choose and click on the starting point <br><img
+src="Google-kml-R_files/figure-html/choose_start.png"
+alt="Click on the starting point" /></p></li>
+<li><p>Click all the points you need to create your polygon <br><img
+src="Google-kml-R_files/figure-html/poly_steps.gif"
+alt="Stages of drawing polygon" /></p></li>
+<li><p>Click OK in the <code>New polygon</code> dialog <br><img
+src="Google-kml-R_files/figure-html/click_OK.png"
+alt="Click OK to save to Google Earth" /></p></li>
+<li><p>Your polygon will be visible in the ▾Places pane of the Google
+Earth app. Opposite-click and select <code>Save Place As...</code>
+<br><img src="Google-kml-R_files/figure-html/save_place_as.png"
+alt="Pop-up menu, Save Place As" /></p></li>
+<li><p>In the <code>Save file...</code> dialog, under
+<code>Save as type:</code>, select <code>Kml (*.kml)</code>, and save
+into your current R working directory.<br><img
+src="Google-kml-R_files/figure-html/save_as_kml.png"
+alt="Pop-up menu, Save Place As" /></p></li>
+</ol>
+<div id="creating-a-kml-file-in-the-web-version-of-google-earth"
+class="section level3">
+<h3>Creating a KML file in the web version of Google Earth:</h3>
+<ol style="list-style-type: decimal">
+<li>On your computer, open <a href="https://earth.google.com/web/"
+target="_blank">Google Earth</a>.</li>
+<li>On the left, click Projects.</li>
+<li>Click <strong>New project</strong>.</li>
+<li>Click <strong>Create KML File</strong> » <strong>Add to
+project</strong>.</li>
+<li>Select "Add placemark," "Draw line or shape," or "Fullscreen
+slide."</li>
+<li>A KML file is saved in your computer's browser storage.</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="converting-the-saved-.kml-files-for-use-in-r"
+class="section level1">
+<h1>Converting the saved <code>.kml</code> files for use in R</h1>
+<p>The <code>sf</code> package function <code>st_read()</code> can
+handle many types of input file, include Google Earth <code>.kml</code>
+files.</p>
+<pre class="r"><code>library(sf)
+Lake1_sf &lt;- st_read(&quot;https://github.com/Ratey-AtUWA/spatial/raw/main/Lake1.kml&quot;)</code></pre>
+<pre><code>## Reading layer `Lake1.kml&#39; from data source 
+##   `https://github.com/Ratey-AtUWA/spatial/raw/main/Lake1.kml&#39; using driver `KML&#39;
+## Simple feature collection with 1 feature and 2 fields
+## Geometry type: POLYGON
+## Dimension:     XYZ
+## Bounding box:  xmin: 115.9446 ymin: -31.91774 xmax: 115.9457 ymax: -31.91701
+## z_range:       zmin: 0 zmax: 0
+## Geodetic CRS:  WGS 84</code></pre>
+<pre class="r"><code>st_coordinates(Lake1_sf)[1:10,]    # just the first 10 rows</code></pre>
+<pre><code>##              X         Y Z L1 L2
+##  [1,] 115.9449 -31.91701 0  1  1
+##  [2,] 115.9448 -31.91701 0  1  1
+##  [3,] 115.9448 -31.91704 0  1  1
+##  [4,] 115.9448 -31.91705 0  1  1
+##  [5,] 115.9448 -31.91707 0  1  1
+##  [6,] 115.9448 -31.91711 0  1  1
+##  [7,] 115.9447 -31.91714 0  1  1
+##  [8,] 115.9448 -31.91718 0  1  1
+##  [9,] 115.9448 -31.91722 0  1  1
+## [10,] 115.9448 -31.91726 0  1  1</code></pre>
+<div id="using-the-saved-and-converted-.kml-data-on-a-map"
+class="section level2">
+<h2>Using the saved and converted <code>.kml</code> data on a map</h2>
+<p>The map at the end (Figure 1) uses the polygon coordinates saved in
+the steps above to draw a polygon object on a <code>maptiles</code> map
+background, after conversion using the <code>st_transform()</code>
+function from <code>sf</code>. The OpenStreetMap tiles used do not show
+the seasonal ponds visible on Google Earth, so adding manually digitised
+map features makes sense.</p>
+<pre class="r"><code>UTM50S &lt;- st_crs(32750)
+Lake1_sf &lt;- st_transform(Lake1_sf, crs = UTM50S)   # convert to UTM Zone 50S
+st_coordinates(Lake1_sf)[1:10,]                    # just the first 10 rows</code></pre>
+<pre><code>##              X       Y Z L1 L2
+##  [1,] 400244.0 6468278 0  1  1
+##  [2,] 400239.4 6468277 0  1  1
+##  [3,] 400234.4 6468274 0  1  1
+##  [4,] 400235.3 6468273 0  1  1
+##  [5,] 400235.9 6468270 0  1  1
+##  [6,] 400234.6 6468267 0  1  1
+##  [7,] 400233.7 6468263 0  1  1
+##  [8,] 400235.4 6468258 0  1  1
+##  [9,] 400235.4 6468254 0  1  1
+## [10,] 400234.9 6468250 0  1  1</code></pre>
+<pre class="r"><code>library(maptiles)
+extent &lt;- st_as_sf(x = data.frame(x = c(399860,400520), y = c(6467920,6468350)),
+                   coords = c(&quot;x&quot;,&quot;y&quot;), crs=UTM50S)
+aftiles &lt;- get_tiles(extent, provider=&quot;OpenStreetMap&quot;, crop=TRUE, zoom=17)
+par(oma=c(3,3,1,1), mgp=c(1.5,0.2,0), tcl = -0.2, 
+    lend = &quot;square&quot;, ljoin = &quot;mitre&quot;, lheight=0.85)
+plot_tiles(aftiles) 
+axis(1);axis(2);box(which=&quot;plot&quot;)
+mtext(&quot;Easting (UTM Zone 50, m)&quot;, 1, 1.6, font=2, cex=1.2)
+mtext(&quot;Northing (UTM Zone 50, m)&quot;, 2, 1.6, font=2, cex=1.2)
+plot(Lake1_sf[1], add=TRUE, border=&quot;steelblue&quot;, col=&quot;#B0C0FF80&quot;, lwd=2)
+text(mean(st_coordinates(Lake1_sf)[,1]),mean(st_coordinates(Lake1_sf)[,2]),
+     labels = &quot;Lake 1&quot;, col=&quot;steelblue&quot;, cex=1.25, font=2)</code></pre>
+<div class="figure">
+<img src="Google-kml-R_files/figure-html/plot-Lake-1.png" alt="Figure 1: Plot of 'Lake1' feature shown in Google Earth digitisation steps above." width="70%" />
+<p class="caption">
+Figure 1: Plot of 'Lake1' feature shown in Google Earth digitisation
+steps above.
+</p>
+</div>
+</div>
+</div>
+<div id="packages" class="section level1">
+<h1>Packages</h1>
+<p>Giraud T (2022). <em>maptiles: Download and Display Map Tiles</em>. R
+package version 0.4.0, <a
+href="https://CRAN.R-project.org/package=maptiles"
+target="_blank">https://CRAN.R-project.org/package=maptiles</a>.</p>
+<p>Pebesma, E., 2018. Simple Features for R: Standardized Support for
+Spatial Vector Data. <em>The R Journal</em> <strong>10</strong> (1),
+439-446, <a href="https://doi.org/10.32614/RJ-2018-009"
+target="_blank">doi:10.32614/RJ-2018-009</a></p>
+</div>
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<hr />
+<p><a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank"><strong>CC-BY-SA</strong></a> • All content by <a href="https://github.com/Ratey-AtUWA" target="_blank">Ratey-AtUWA</a>. My <a href="https://www.uwa.edu.au/schools/agriculture-and-environment" target="_blank">employer</a> does not necessarily know about or endorse the content of this website.<br>
+<span style="font-size:9pt">Created with <span style="font-family: monospace; background-color: #e8e8e8;">rmarkdown</span> in <a href="https://www.rstudio.com/" target="_blank"><span class="fa fa-registered"></span> RStudio</a> using the <span style="font-family: monospace; background-color: #e8e8e8;">darkly</span> theme from <a href="https://bootswatch.com/" target="_blank"><span class="fa fa-swatchbook"></span> Bootswatch</a> via the <span style="font-family: monospace; background-color: #e8e8e8;">bslib</span> package, and <a href="https://fontawesome.com/v5/search?o=r&m=free" target="_blank"><span class="fa fa-font-awesome"></span> fontawesome v5 icons</a>.</span></p>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
