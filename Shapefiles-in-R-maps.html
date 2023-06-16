@@ -375,10 +375,13 @@ library(prettymapr)</code></pre>
 <p>The <code>sf</code> package (Pebesma 2018) function
 <code>st_read()</code> can handle many types of input file, including
 ESRI shapefiles.</p>
-<pre class="r"><code>library(sf)
-assrisk &lt;- 
+<p>The <code>sf</code> object produced will reflect the type of
+information in the shapefile, such as points, lines, polygons,
+<em>etc</em>.</p>
+<pre class="r"><code>assrisk &lt;- 
   st_read(&quot;Acid_Sulfate_Risk_Swan_Coastal_Plain_DWER_055.shp&quot;)</code></pre>
-<pre><code>## Reading layer `Acid_Sulfate_Risk_Swan_Coastal_Plain_DWER_055&#39; from data source `C:\Users\00028958\OneDrive - The University of Western Australia\R Projects\cybloRg\Acid_Sulfate_Risk_Swan_Coastal_Plain_DWER_055.shp&#39; 
+<pre><code>## Reading layer `Acid_Sulfate_Risk_Swan_Coastal_Plain_DWER_055&#39; from data source 
+##   `C:\Users\00028958\OneDrive - The University of Western Australia\R Projects\cybloRg\Acid_Sulfate_Risk_Swan_Coastal_Plain_DWER_055.shp&#39; 
 ##   using driver `ESRI Shapefile&#39;
 ## Simple feature collection with 46 features and 9 fields
 ## Geometry type: MULTIPOLYGON
