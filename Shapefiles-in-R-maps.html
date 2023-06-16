@@ -337,28 +337,28 @@ class="section level1">
 <ol style="list-style-type: decimal">
 <li><p><strong>We search in the portal for what we want to find (this
 example is for an acid sulfate soil risk map)</strong> <br /> <img
-src="Shapefiles-in-R-maps_files/figure-html/dataWA-search.png" /></p></li>
+src="./Shapefiles-in-R-maps_files/figure-html/dataWA-search.png" /></p></li>
 <li><p><strong>The search results list will tell us if a shapefile is
 available (</strong><code>SHP</code><strong>)</strong> <br /> <img
-src="Shapefiles-in-R-maps_files/figure-html/choose-dataWA.png" /></p></li>
+src="./Shapefiles-in-R-maps_files/figure-html/choose-dataWA.png" /></p></li>
 <li><p><strong>Open the <u>Data Downloads</u> section and click on
 <code>⬇Download</code></strong> <br /> <img
-src="Shapefiles-in-R-maps_files/figure-html/download-dataWA.png" /></p></li>
+src="./Shapefiles-in-R-maps_files/figure-html/download-dataWA.png" /></p></li>
 <li><p><strong>This takes us to the relevant SLIP page – click on
 <code>⬇Download</code> again</strong> <br /> <img
-src="Shapefiles-in-R-maps_files/figure-html/SLIP-download.png" /></p></li>
+src="./Shapefiles-in-R-maps_files/figure-html/SLIP-download.png" /></p></li>
 <li><p><strong>Hover over the browser downloads and click on the folder
 icon</strong> <br /> <img
-src="Shapefiles-in-R-maps_files/figure-html/show-in-folder.png" /></p></li>
+src="./Shapefiles-in-R-maps_files/figure-html/show-in-folder.png" /></p></li>
 <li><p><strong>Opposite-click on the downloaded zip file and select
 'Extract all' (or equivalent)</strong> <br /> <img
-src="Shapefiles-in-R-maps_files/figure-html/extract-all.png" /></p></li>
+src="./Shapefiles-in-R-maps_files/figure-html/extract-all.png" /></p></li>
 <li><p><strong>Edit the destination folder to your R working
 directory</strong> <br /> <img
-src="Shapefiles-in-R-maps_files/figure-html/select-dest-extract.png" /></p></li>
+src="./Shapefiles-in-R-maps_files/figure-html/select-dest-extract.png" /></p></li>
 <li><p><strong><u>Note</u> that you will extract several files – you
 need them all.</strong> <br /> <img
-src="Shapefiles-in-R-maps_files/figure-html/shapefile-set.png" /></p></li>
+src="./Shapefiles-in-R-maps_files/figure-html/shapefile-set.png" /></p></li>
 </ol>
 <p>
  
@@ -378,8 +378,7 @@ ESRI shapefiles.</p>
 <pre class="r"><code>library(sf)
 assrisk &lt;- 
   st_read(&quot;Acid_Sulfate_Risk_Swan_Coastal_Plain_DWER_055.shp&quot;)</code></pre>
-<pre><code>## Reading layer `Acid_Sulfate_Risk_Swan_Coastal_Plain_DWER_055&#39; from data source 
-##   `C:\Users\00028958\OneDrive - The University of Western Australia\R Projects\cybloRg\Acid_Sulfate_Risk_Swan_Coastal_Plain_DWER_055.shp&#39; 
+<pre><code>## Reading layer `Acid_Sulfate_Risk_Swan_Coastal_Plain_DWER_055&#39; from data source `C:\Users\00028958\OneDrive - The University of Western Australia\R Projects\cybloRg\Acid_Sulfate_Risk_Swan_Coastal_Plain_DWER_055.shp&#39; 
 ##   using driver `ESRI Shapefile&#39;
 ## Simple feature collection with 46 features and 9 fields
 ## Geometry type: MULTIPOLYGON
