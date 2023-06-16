@@ -20,7 +20,7 @@ rmarkdown::render_site("hydrus_nod_inf.Rmd")
 rmarkdown::render_site("kmlconv.Rmd")
 rmarkdown::render_site("Google-kml-R.Rmd")
 rmarkdown::render_site("georef_jpeg_map.Rmd")
-
+rmarkdown::render_site("Shapefiles-in-R-maps.Rmd")
 rmarkdown::render_site("images.Rmd")
 
 # code for learning and teaching

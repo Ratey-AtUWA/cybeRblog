@@ -11,7 +11,7 @@
 
 
 
-<title>code</title>
+<title>Using GIS shapefiles in R</title>
 
 <script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -303,211 +303,178 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">code</h1>
+<h1 class="title toc-ignore">Using GIS shapefiles in R</h1>
 
 </div>
 
 
-<div id="a-growing-list-of-r-code-files-for-various-tasks"
-class="section level3">
-<h3>A growing list of <strong>R</strong> code files for various
-tasks</h3>
-<p>Code is only included in this list if it's well-formed enough to be
-worth sharing, and if the author decides it can go here. Most of the
-code is as nice html with code chunks, but some may be R source, or
-un-rendered R markdown.</p>
-<table style="width: 100%;">
-<tr>
-<td style="width: 48%; vertical-align: top; border: solid 3px #DDD; padding:3px; border-collapse: collapse;">
+<style type="text/css">
+  body{
+  font-size: 12pt;
+}
+</style>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>A lot of spatial information is most readily available in shapefile
+format, which was developed by ESRI for GIS software. The
+<code>sf</code> <strong>R</strong> package can convert shapefiles to its
+own object class using the versatile <code>st_read()</code>
+function.</p>
+<p>A good source of shapefile information relevant to classes at The
+University of Western Australia is the <a
+href="https://www.data.wa.gov.au/"
+target="_blank"><strong>dataWA</strong></a> portal at <a
+href="https://www.data.wa.gov.au/"
+target="_blank">https://www.data.wa.gov.au/</a>.</p>
 </div>
-<div id="mapping-and-spatial-analysis" class="section level2">
-<h2><span class="fa fa-atlas"></span> mapping and spatial analysis</h2>
-<ul>
-<li><span style="font-size: 12pt;"><a href="Rmaps.html"><span
-class="fa fa-globe-asia"></span> basic tile-based maps with data
-overlays in <strong>R</strong></a>
-<ul>
-<li>based on the <code>sf</code> package, and includes coordinate
-conversion</span></li>
-</ul></li>
-<li><span style="font-size: 12pt;"><a href="georef_jpeg_map.html"><span
-class="fa fa-globe-asia"></span> georeferenced jpeg images for map
-backgrounds in <strong>R</strong></a>
-<ul>
-<li>based on the <code>stars</code> package, using images from <a
-href="https://www.nearmap.com/au/en"
-target="_blank">NearMap</a></span></li>
-</ul></li>
-<li><span style="font-size: 12pt;"><a href="Google-kml-R.html"><span
-class="fa fa-globe-asia"></span> Save kml from Google Earth and use the
-saved coordinates in <strong>R</strong></a>
-<ul>
-<li>uses the <code>sf</code> package, which has the
-<code>st_read()</code> function which can convert kml to class
-<code>sf</code> objects in <strong>R</strong></span></li>
-</ul></li>
-<li><span style="font-size: 12pt;"><a
-href="Shapefiles-in-R-maps.html"><span class="fa fa-globe-asia"></span>
-Reading and uisng ESRI shapefiles in <strong>R</strong></a>
-<ul>
-<li>also uses <code>st_read()</code> from <code>sf</code> to convert
-shapefiles to <code>sf</code> objects </span></li>
-</ul></li>
-<li><span style="font-size: 12pt;"><a href="geostats.html"><span
-class="fa fa-globe-asia"></span> Geostatistics and spatial
-interpolation</a>
-<ul>
-<li>based on a few spatial packages including <code>sf</code>,
-<code>lctools</code>, and <code>gstat</code></span></li>
-</ul></li>
-</ul>
-</td>
-<td style="width: 4%;">
+<div id="downloading-shapefile-data-from-data.wa.gov.au"
+class="section level1">
+<h1>Downloading shapefile data from <code>data.wa.gov.au</code></h1>
+<p><em>To download some of the files, you may need to register for SLIP
+(Shared Location Information Platform).</em></p>
+<div id="stepwise-procedure" class="section level3">
+<h3>Stepwise procedure</h3>
+<ol style="list-style-type: decimal">
+<li><p><strong>We search in the portal for what we want to find (this
+example is for an acid sulfate soil risk map)</strong> <br /> <img
+src="Shapefiles-in-R-maps_files/figure-html/dataWA-search.png" /></p></li>
+<li><p><strong>The search results list will tell us if a shapefile is
+available (</strong><code>SHP</code><strong>)</strong> <br /> <img
+src="Shapefiles-in-R-maps_files/figure-html/choose-dataWA.png" /></p></li>
+<li><p><strong>Open the <u>Data Downloads</u> section and click on
+<code>⬇Download</code></strong> <br /> <img
+src="Shapefiles-in-R-maps_files/figure-html/download-dataWA.png" /></p></li>
+<li><p><strong>This takes us to the relevant SLIP page – click on
+<code>⬇Download</code> again</strong> <br /> <img
+src="Shapefiles-in-R-maps_files/figure-html/SLIP-download.png" /></p></li>
+<li><p><strong>Hover over the browser downloads and click on the folder
+icon</strong> <br /> <img
+src="Shapefiles-in-R-maps_files/figure-html/show-in-folder.png" /></p></li>
+<li><p><strong>Opposite-click on the downloaded zip file and select
+'Extract all' (or equivalent)</strong> <br /> <img
+src="Shapefiles-in-R-maps_files/figure-html/extract-all.png" /></p></li>
+<li><p><strong>Edit the destination folder to your R working
+directory</strong> <br /> <img
+src="Shapefiles-in-R-maps_files/figure-html/select-dest-extract.png" /></p></li>
+<li><p><strong><u>Note</u> that you will extract several files – you
+need them all.</strong> <br /> <img
+src="Shapefiles-in-R-maps_files/figure-html/shapefile-set.png" /></p></li>
+</ol>
+<p>
  
-</td>
-<td style="width: 48%; vertical-align: top; border: solid 3px #DDD; padding:3px; border-collapse: collapse;">
+</p>
 </div>
-<div id="exploratory-data-analysis" class="section level2">
-<h2><span class="fa fa-chart-bar"></span> exploratory data analysis</h2>
-<ul>
-<li>
-<span style="font-size: 12pt;"><a href="boxplot.html"><span
-class="fa fa-project-diagram"></span> How to boxplot</a></span>
-</li>
-<ul>
-<li>
-For exploratory data analysis I draw a lot of boxplots, . . . [for]
-mainly positively skewed variables . . .
-</li>
-</ul>
-<li>
-<span style="font-size: 12pt;"><a href="showpal.html"><span
-class="fa fa-project-diagram"></span> Function to show the colour
-palette</a></span>
-</li>
-<ul>
-<li>
-I tend to change palettes often for different plot of map types, so it's
-good to get a quick visual reminder . . .
-</li>
-</ul>
-</ul>
-</td>
-</tr>
-<tr>
-<td style="width: 48%;">
- 
-</td>
-<td style="width: 4%;">
- 
-</td>
-<td style="width: 48%;">
- 
-</td>
-</tr>
-<tr>
-<td style="width: 48%; vertical-align: top; border: solid 3px #DDD; padding:3px; border-collapse: collapse;">
 </div>
-<div id="soil-science" class="section level2">
-<h2><span class="fa fa-image"></span> soil science</h2>
-<ul>
-<li>
-<span style="font-size: 12pt;"><a href="profiles.html"><span
-class="fa fa-project-diagram"></span> different ways to plot soil depth
-profiles</a></span>
-</li>
-<ul>
-<li>
-plotting the change in a variable <em>vs</em>. depth is a common task in
-soil science. This code will plot depth profiles at continuous or
-discrete depths
-</li>
-</ul>
-<li>
-<span style="font-size: 12pt;"><a href="pulse.html"><span
-class="fa fa-project-diagram"></span> solute transport animation using
-gganimate</a> </span>
-</li>
-<ul>
-<li>
-a simple demonstration of solute dispersion during transport, and a way
-to learn <code>gganimate</code>
-</li>
-</ul>
-</ul>
-</td>
-<td style="width: 4%;">
- 
-</td>
-<td style="width: 48%; vertical-align: top; border: solid 3px #DDD; padding:3px; border-collapse: collapse;">
+<div id="converting-the-saved-shapefiles-for-use-in-r"
+class="section level1">
+<h1>Converting the saved shapefiles for use in R</h1>
+<p>First we load any packages we need:</p>
+<pre class="r"><code>library(sf)
+library(maptiles)
+library(prettymapr)</code></pre>
+<p>The <code>sf</code> package (Pebesma 2018) function
+<code>st_read()</code> can handle many types of input file, including
+ESRI shapefiles.</p>
+<pre class="r"><code>library(sf)
+assrisk &lt;- 
+  st_read(&quot;Acid_Sulfate_Risk_Swan_Coastal_Plain_DWER_055.shp&quot;)</code></pre>
+<pre><code>## Reading layer `Acid_Sulfate_Risk_Swan_Coastal_Plain_DWER_055&#39; from data source 
+##   `C:\Users\00028958\OneDrive - The University of Western Australia\R Projects\cybloRg\Acid_Sulfate_Risk_Swan_Coastal_Plain_DWER_055.shp&#39; 
+##   using driver `ESRI Shapefile&#39;
+## Simple feature collection with 46 features and 9 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: 114.9922 ymin: -33.74887 xmax: 116.0928 ymax: -31.24877
+## Geodetic CRS:  GDA94</code></pre>
+<p>We should note that we only need to specify the file with extension
+<code>.shp</code>, and <code>st_read</code> will find the other files
+for us if they are in the same directory.</p>
+<div id="plotting-the-converted-shapefile-directly"
+class="section level2">
+<h2>Plotting the converted shapefile directly</h2>
+<p>We can just use <code>plot()</code> to display the spatial
+information in the <code>sf</code> object created from the shapefile.
+Since there may be several data layers, use <code>[]</code> to plot them
+one at a time (you can check that layer 4 contains risk category
+information using <code>str(assrisk)</code>):</p>
+<pre class="r"><code>par(oma=c(0,0,1,8),xpd=T)
+plot(assrisk[4], pal=c(&quot;orchid&quot;,&quot;gold&quot;))  </code></pre>
+<div class="figure">
+<img src="Shapefiles-in-R-maps_files/figure-html/shapefile-plot-1.png" alt="Figure 1: Plot of layer 4 in Swan Coastal Plain Acid Sulfate Soil Risk Map (DWER 2020) converted from shapefile into `sf` object in R." width="1152" />
+<p class="caption">
+Figure 1: Plot of layer 4 in Swan Coastal Plain Acid Sulfate Soil Risk
+Map (DWER 2020) converted from shapefile into <code>sf</code> object in
+R.
+</p>
 </div>
-<div id="file-conversions" class="section level2">
-<h2><span class="fa fa-joomla"></span> file conversions</h2>
-<ul>
-<li>
-<span style="font-size: 12pt;"><a href="xrdml.html"><span
-class="fa fa-file-contract"></span> convert xrdml XRD output file(s) to
-<strong>R</strong> data frame or csv</a></span>
-</li>
-<ul>
-<li>
-converts a widely-used format for X-Ray Diffraction output
-</li>
-</ul>
-<li>
-<span style="font-size: 12pt;"><a href="hydrus_nod_inf.html"><span
-class="fa fa-project-diagram"></span> read Hydrus-1D Nod_Inf.out files,
-convert to <strong>R</strong> data frame</a>
-</li>
-<ul>
-<li>
-useful to make use of the plotting capabilities in <strong>R</strong>
-(Hydrus-1D in-built plots are not report- or publication-quality)
-</li>
-</ul>
-</ul>
-</td>
-</tr>
-<tr>
-<td style="width: 48%;">
+<p>
  
-</td>
-<td style="width: 4%;">
- 
-</td>
-<td style="width: 48%;">
- 
-</td>
-</tr>
-<tr>
-<td style="width: 48%; vertical-align: top; border: solid 3px #DDD; padding:3px; border-collapse: collapse;">
+</p>
+<p>We might notice here that the shapefile we downloaded covers the
+whole of the Swan Coastal Plain in Western Australia. Usually we'd like
+to overlay this data on a map of a smaller area. We make a
+<code>sf</code> object and use that to define a map extent for a
+<code>maptiles</code> map (Giraud 2022), and also to use
+<code>st_crop()</code> to crop the original shapefile extent to our
+desired area. The results are in Figure 2 below.</p>
+<pre class="r"><code>area &lt;- st_as_sf(data.frame(x=c(388000,389300), y=c(6460400,6461800)),
+                 coords = c(&quot;x&quot;,&quot;y&quot;), crs=st_crs(32750))
+# area_ass &lt;- st_transform(area, crs=st_crs(assrisk))
+ass_crop &lt;- st_crop(assrisk, st_as_sf(data.frame(x=c(115.8,115.83), y=c(-32,-31.96)),
+                 coords = c(&quot;x&quot;,&quot;y&quot;), crs=st_crs(4283)))
+ass_crop &lt;- st_transform(ass_crop, crs=st_crs(32750)) # convert to UTM Zone 50S
+map1 &lt;- get_tiles(area, zoom=15, provider = &quot;Stamen.TonerLite&quot;)
+par(oma=c(3,3,1,1),mgp=c(1.6,0.3,0))
+plot_tiles(map1)
+axis(1,mgp=c(1.6,0.3,0));axis(2,mgp=c(1.6,0.45,0))
+mtext(&quot;Easting (m)&quot;, 1, 1.6, cex=1.2,font=2)
+mtext(&quot;Northing (m)&quot;, 2, 1.6, cex=1.2,font=2)
+text(388370,6461200,labels=&quot;The\nUniversity\nof\nWestern\nAustralia&quot;, font=3)
+text(389000,6461250,labels=&quot;Matilda\nBay&quot;, font=3)
+plot(ass_crop[4], add=TRUE, pal=c(&quot;#FF808080&quot;,&quot;#FFE00040&quot;), 
+     border=c(&quot;orchid&quot;,&quot;gold3&quot;))
+addscalebar(plotepsg = 32750, pos = &quot;bottomright&quot;, label.cex = 1.2)
+addnortharrow()
+legend(&quot;topleft&quot;, legend=c(&quot;Low to Moderate ASS Risk&quot;,
+                           &quot;Moderate to High ASS Risk&quot;),
+       box.col=&quot;grey62&quot;, pch=22, pt.cex=3, pt.bg=c(&quot;#FFE00040&quot;,&quot;#FF808080&quot;),
+       col=c(&quot;gold3&quot;,&quot;orchid&quot;), cex = 1.2, inset=0.02, y.intersp = 1.2)
+legend(&quot;bottomleft&quot;,legend=&quot;Datum: WGS84; EPSG:32750 (UTM Zone 50S)&quot;,cex=0.8,
+       bg=&quot;white&quot;, box.col=&quot;grey64&quot;);box()</code></pre>
+<div class="figure">
+<img src="Shapefiles-in-R-maps_files/figure-html/overlay-map-1.png" alt="Figure 2: Map of the University of Western Australia precinct with overlay of the Swan Coastal Plain Acid Sulfate Soil Risk Map (DWER 2020). Overlay shows risk of ASS occurring in upper 3m if disturbed (*e.g*. by land development). Background map tiles are TonerLite (Stamen Design, 2012) *via* `maptiles`." width="864" />
+<p class="caption">
+Figure 2: Map of the University of Western Australia precinct with
+overlay of the Swan Coastal Plain Acid Sulfate Soil Risk Map (DWER
+2020). Overlay shows risk of ASS occurring in upper 3m if disturbed
+(<em>e.g</em>. by land development). Background map tiles are TonerLite
+(Stamen Design, 2012) <em>via</em> <code>maptiles</code>.
+</p>
 </div>
-<div id="environmental-biology" class="section level2">
-<h2><span class="fa fa-dna"></span> environmental biology</h2>
-<ul>
-<li>
-<span style="font-size: 12pt;"><a href="vegan.html"><span
-class="fa fa-project-diagram"></span> using vegan for environmental DNA
-data analysis</a>
-</li>
-</span>
-<ul>
-<li>
-trying to emulate the procedures we have been teaching using
-<em>Primer</em> software
-</li>
-</ul>
-</ul>
-</td>
-<td style="width: 4%;">
+<p>
  
-</td>
-<td style="width: 48%; vertical-align: top; border: solid 3px #DDD; padding:3px; border-collapse: collapse;">
-<span class="fa fa-flushed"></span>
-</td>
-</tr>
-</tbody>
-</table>
+</p>
+</div>
+</div>
+<div id="packages-and-references" class="section level1">
+<h1>Packages and References</h1>
+<p>Department of Water and Environmental Regulation (DWER) (2020).
+<em>Acid Sulfate Soil Risk Map, Swan Coastal Plain</em>. Government of
+Western Australia, Perth. <a
+href="https://catalogue.data.wa.gov.au/dataset/acid-sulphate-soil-risk-map-swan-coastal-plain-dwer-055"
+target="_blank">https://catalogue.data.wa.gov.au/dataset/acid-sulphate-soil-risk-map-swan-coastal-plain-dwer-055</a>.</p>
+<p>Giraud T (2022). <em>maptiles: Download and Display Map Tiles</em>. R
+package version 0.4.0, <a
+href="https://CRAN.R-project.org/package=maptiles"
+target="_blank">https://CRAN.R-project.org/package=maptiles</a>.</p>
+<p>Pebesma, E., 2018. Simple Features for R: Standardized Support for
+Spatial Vector Data. <em>The R Journal</em> <strong>10</strong> (1),
+439-446, <a href="https://doi.org/10.32614/RJ-2018-009"
+target="_blank">doi:10.32614/RJ-2018-009</a>.</p>
+<p>Stamen Design (2023) <em>Stamen Blog &gt; Just The Streets,
+Ma'am.</em> <a
+href="https://stamen.com/just-the-streets-maam-f423fd694674/"
+target="_blank">https://stamen.com/just-the-streets-maam-f423fd694674/</a>.</p>
 </div>
 
 <!DOCTYPE html>
