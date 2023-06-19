@@ -224,7 +224,7 @@ $(document).ready(function () {
 
 
 
-<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
@@ -250,12 +250,46 @@ $(document).ready(function () {
     Code
   </a>
 </li>
-<li>
-  <a href="teaching.html">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-chalkboard-teacher"></span>
      
     Teaching
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="teaching.html">All in one place</a>
+    </li>
+    <li>
+      <a href="WhatsR.html">Very basic R</a>
+    </li>
+    <li>
+      <a href="Rbasics.html">Intro to R</a>
+    </li>
+    <li>
+      <a href="Rgraphs.html">Intro to R graphics</a>
+    </li>
+    <li>
+      <a href="transformR.html">Variable distributions</a>
+    </li>
+    <li>
+      <a href="meansR.html">Comparing means</a>
+    </li>
+    <li>
+      <a href="relationR.html">Relationships</a>
+    </li>
+    <li>
+      <a href="Rmaps.html">Basic maps in R</a>
+    </li>
+    <li>
+      <a href="geostats.html">Geostatistics</a>
+    </li>
+    <li>
+      <a href="vegan.html">Multivariate eDNA</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="rants.html">
@@ -343,6 +377,7 @@ is.data.frame(hubbard) # check that it worked</code></pre>
 href="https://hubbardbrook.org/experimental-watersheds-research-sites/"
 target="_blank">Hubbard Brook Experimental Forest</a> near Woodstock in
 New Hampshire, USA (Figure @ref(fig:hubbard-pix)).</p>
+<pre><code>## Linking to GEOS 3.9.3, GDAL 3.5.2, PROJ 8.2.1; sf_use_s2() is TRUE</code></pre>
 <div class="figure">
 <img src="Rbasics_files/figure-html/hubbard-pix-1.png" alt="Location of the Hubbard Brook Experimental Forest in New Hampshire, USA. The data used in this workshop were generated at this site." width="1344" />
 <p class="caption">
@@ -775,10 +810,8 @@ with(hubbard, tapply(X = EXCH_Ni,
        INDEX=list(Transect,Rel.To.Brook), 
        FUN=mean, na.rm=TRUE))</code></pre>
 <pre><code>## One-way table of means
-##     E276000     E277000     E278000     E279000     E280000     E281000     E282000 
-## 0.002588815 0.002136418 0.002827809 0.002813563 0.002528296 0.002262386 0.002221885 
-##     E283000 
-## 0.002957922 
+##     E276000     E277000     E278000     E279000     E280000     E281000     E282000     E283000 
+## 0.002588815 0.002136418 0.002827809 0.002813563 0.002528296 0.002262386 0.002221885 0.002957922 
 ## 
 ## Two-way table of means
 ##               North       South
@@ -811,18 +844,16 @@ numSummary(hubbard$EXCH_Ni)
 cat(&quot;\nSummary statistics for EXCH_Ni grouped by Rel.To.Brook\n&quot;)
 numSummary(hubbard$EXCH_Ni, groups=hubbard$Rel.To.Brook)</code></pre>
 <pre><code>## Summary statistics for EXCH_Ni
-##         mean          sd         IQR         0%         25%         50%         75%
-##  0.002536502 0.001382344 0.001126141 0.00070457 0.001829135 0.002246775 0.002955276
-##        100%   n NA
-##  0.01784169 257  3
+##         mean          sd         IQR         0%         25%         50%         75%       100%   n NA
+##  0.002536502 0.001382344 0.001126141 0.00070457 0.001829135 0.002246775 0.002955276 0.01784169 257  3
 ## 
 ## Summary statistics for EXCH_Ni grouped by Rel.To.Brook
-##              mean          sd         IQR          0%         25%         50%         75%
-## North 0.002635924 0.001605190 0.001114533 0.001120626 0.001933342 0.002277016 0.003047875
-## South 0.002431513 0.001096042 0.001170948 0.000704570 0.001719421 0.002174767 0.002890369
-##              100% data:n data:NA
-## North 0.017841689    132       3
-## South 0.008483806    125       0</code></pre>
+##              mean          sd         IQR          0%         25%         50%         75%        100% data:n
+## North 0.002635924 0.001605190 0.001114533 0.001120626 0.001933342 0.002277016 0.003047875 0.017841689    132
+## South 0.002431513 0.001096042 0.001170948 0.000704570 0.001719421 0.002174767 0.002890369 0.008483806    125
+##       data:NA
+## North       3
+## South       0</code></pre>
 <p>For <code>numSummary()</code> tables, try the following:</p>
 <ul>
 <li>generating summary tables for more than one variable at a time</li>
@@ -1111,7 +1142,7 @@ $(document).ready(function () {
 
 <hr />
 <p><a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank"><strong>CC-BY-SA</strong></a> • All content by <a href="https://github.com/Ratey-AtUWA" target="_blank">Ratey-AtUWA</a>. My <a href="https://www.uwa.edu.au/schools/agriculture-and-environment" target="_blank">employer</a> does not necessarily know about or endorse the content of this website.<br>
-<span style="font-size:9pt">Created with <span style="font-family: monospace; background-color: #e8e8e8;">rmarkdown</span> in <a href="https://www.rstudio.com/" target="_blank"><span class="fa fa-registered"></span> RStudio</a> using the <span style="font-family: monospace; background-color: #e8e8e8;">darkly</span> theme from <a href="https://bootswatch.com/" target="_blank"><span class="fa fa-swatchbook"></span> Bootswatch</a> via the <span style="font-family: monospace; background-color: #e8e8e8;">bslib</span> package, and <a href="https://fontawesome.com/v5/search?o=r&m=free" target="_blank"><span class="fa fa-font-awesome"></span> fontawesome v5 icons</a>.</span></p>
+<span style="font-size:9pt">Created with <span style="font-family: monospace; background-color: #e8e8e8;">rmarkdown</span> in <a href="https://www.rstudio.com/" target="_blank"><span class="fa fa-registered"></span> RStudio</a> using the <span style="font-family: monospace; background-color: #e8e8e8;">cyborg</span> theme from <a href="https://bootswatch.com/" target="_blank"><span class="fa fa-swatchbook"></span> Bootswatch</a> via the <span style="font-family: monospace; background-color: #e8e8e8;">bslib</span> package, and <a href="https://fontawesome.com/v5/search?o=r&m=free" target="_blank"><span class="fa fa-font-awesome"></span> fontawesome v5 icons</a>.</span></p>
 
 </div>
 
