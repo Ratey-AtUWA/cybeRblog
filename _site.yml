@@ -2,6 +2,7 @@ name: "cyboRg"
 output_dir: "."
 navbar:
   title: "cyboRg"
+  type: inverse
   left:
     - text: "Home"
       icon: fa-home
@@ -31,7 +32,7 @@ navbar:
 output:
   html_document:
     theme:
-      bootswatch: darkly
+      bootswatch: cyborg
     highlight: default
     md_extensions: -smart
     self_contained: no
