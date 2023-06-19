@@ -12,7 +12,27 @@ navbar:
       href: code.html
     - text: "Teaching"
       icon: fa-chalkboard-teacher
-      href: teaching.html
+      menu:
+        - text: "All in one place"
+          href: teaching.html
+        - text: "Very basic R"
+          href: WhatsR.html
+        - text: "Intro to R"
+          href: Rbasics.html
+        - text: "Intro to R graphics"
+          href: Rgraphs.html
+        - text: "Variable distributions"
+          href: transformR.html
+        - text: "Comparing means"
+          href: meansR.html
+        - text: "Relationships"
+          href: relationR.html
+        - text: "Basic maps in R"
+          href: Rmaps.html
+        - text: "Geostatistics"
+          href: geostats.html
+        - text: "Multivariate eDNA"
+          href: vegan.html
     - text: "Rants"
       icon: fa-bell
       href: rants.html
