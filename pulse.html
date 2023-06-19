@@ -224,7 +224,7 @@ $(document).ready(function () {
 
 
 
-<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
@@ -250,12 +250,46 @@ $(document).ready(function () {
     Code
   </a>
 </li>
-<li>
-  <a href="teaching.html">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-chalkboard-teacher"></span>
      
     Teaching
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="teaching.html">All in one place</a>
+    </li>
+    <li>
+      <a href="WhatsR.html">Very basic R</a>
+    </li>
+    <li>
+      <a href="Rbasics.html">Intro to R</a>
+    </li>
+    <li>
+      <a href="Rgraphs.html">Intro to R graphics</a>
+    </li>
+    <li>
+      <a href="transformR.html">Variable distributions</a>
+    </li>
+    <li>
+      <a href="meansR.html">Comparing means</a>
+    </li>
+    <li>
+      <a href="relationR.html">Relationships</a>
+    </li>
+    <li>
+      <a href="Rmaps.html">Basic maps in R</a>
+    </li>
+    <li>
+      <a href="geostats.html">Geostatistics</a>
+    </li>
+    <li>
+      <a href="vegan.html">Multivariate eDNA</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="rants.html">
@@ -357,18 +391,18 @@ for(i in 0:(nd-1)) {
 }
 str(pulse)</code></pre>
 <pre><code>## &#39;data.frame&#39;:    500 obs. of  12 variables:
-##  $ x0     : num  0.215 0.213 0.491 0.815 0.429 ...
-##  $ time_0 : num  0.716 1.567 1.738 1.03 1.13 ...
-##  $ time_1 : num  10.3 11.6 10.8 11.9 10.7 ...
-##  $ time_2 : num  20.7 20 19 20.1 17.2 ...
-##  $ time_3 : num  26.4 30 32.3 30.6 28.2 ...
-##  $ time_4 : num  40.4 40.1 39.9 37.1 41.6 ...
-##  $ time_5 : num  42.7 49.6 51.3 50.9 51.1 ...
-##  $ time_6 : num  55.8 60.8 53.1 59.6 59.4 ...
-##  $ time_7 : num  71.3 71.6 64.6 63.3 70.2 ...
-##  $ time_8 : num  73.8 75.2 71.3 76.9 68.2 ...
-##  $ time_9 : num  82.1 81 86.6 87.2 91.3 ...
-##  $ time_10: num  95.4 104.9 93.7 103.1 107.9 ...</code></pre>
+##  $ x0     : num  0.3065 0.6569 0.2727 0.0087 0.7582 ...
+##  $ time_0 : num  0.841 0.557 1.526 1.09 0.843 ...
+##  $ time_1 : num  12.3 10.6 10.1 10.9 11.7 ...
+##  $ time_2 : num  19 21 21.7 21.2 22.8 ...
+##  $ time_3 : num  27 29.9 26.2 27.2 29 ...
+##  $ time_4 : num  35.9 37.4 38.3 40.1 35.8 ...
+##  $ time_5 : num  48.9 44.3 49.9 47.5 47.6 ...
+##  $ time_6 : num  56.6 54.8 57 57.5 56.4 ...
+##  $ time_7 : num  63.7 71 66.7 69 72.7 ...
+##  $ time_8 : num  82.5 73.5 77.6 73.8 82.2 ...
+##  $ time_9 : num  90.2 90.2 98.4 82.6 88.3 ...
+##  $ time_10: num  97.2 103.6 100.5 99.3 102.6 ...</code></pre>
 <p>The data we have created has time steps as separate columns. We
 actually want a single column factor column with the time steps as
 levels. For this we use the <span
@@ -380,9 +414,9 @@ package, which does this seamlessly if we get the options correct:</p>
                      variable.name = &quot;Timestep&quot;, value.name = &quot;Particles&quot;)
 str(pulseFact)</code></pre>
 <pre><code>## &#39;data.frame&#39;:    5500 obs. of  3 variables:
-##  $ x0       : num  0.215 0.213 0.491 0.815 0.429 ...
+##  $ x0       : num  0.3065 0.6569 0.2727 0.0087 0.7582 ...
 ##  $ Timestep : Factor w/ 11 levels &quot;time_0&quot;,&quot;time_1&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
-##  $ Particles: num  0.716 1.567 1.738 1.03 1.13 ...</code></pre>
+##  $ Particles: num  0.841 0.557 1.526 1.09 0.843 ...</code></pre>
 <div id="make-the-animation" class="section level1">
 <h1>Make the animation</h1>
 <p>The animation is based on a standard ggplot:</p>
@@ -676,7 +710,7 @@ $(document).ready(function () {
 
 <hr />
 <p><a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank"><strong>CC-BY-SA</strong></a> • All content by <a href="https://github.com/Ratey-AtUWA" target="_blank">Ratey-AtUWA</a>. My <a href="https://www.uwa.edu.au/schools/agriculture-and-environment" target="_blank">employer</a> does not necessarily know about or endorse the content of this website.<br>
-<span style="font-size:9pt">Created with <span style="font-family: monospace; background-color: #e8e8e8;">rmarkdown</span> in <a href="https://www.rstudio.com/" target="_blank"><span class="fa fa-registered"></span> RStudio</a> using the <span style="font-family: monospace; background-color: #e8e8e8;">darkly</span> theme from <a href="https://bootswatch.com/" target="_blank"><span class="fa fa-swatchbook"></span> Bootswatch</a> via the <span style="font-family: monospace; background-color: #e8e8e8;">bslib</span> package, and <a href="https://fontawesome.com/v5/search?o=r&m=free" target="_blank"><span class="fa fa-font-awesome"></span> fontawesome v5 icons</a>.</span></p>
+<span style="font-size:9pt">Created with <span style="font-family: monospace; background-color: #e8e8e8;">rmarkdown</span> in <a href="https://www.rstudio.com/" target="_blank"><span class="fa fa-registered"></span> RStudio</a> using the <span style="font-family: monospace; background-color: #e8e8e8;">cyborg</span> theme from <a href="https://bootswatch.com/" target="_blank"><span class="fa fa-swatchbook"></span> Bootswatch</a> via the <span style="font-family: monospace; background-color: #e8e8e8;">bslib</span> package, and <a href="https://fontawesome.com/v5/search?o=r&m=free" target="_blank"><span class="fa fa-font-awesome"></span> fontawesome v5 icons</a>.</span></p>
 
 </div>
 
