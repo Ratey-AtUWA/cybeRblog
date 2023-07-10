@@ -14,24 +14,34 @@ navbar:
       icon: fa-chalkboard-teacher
       menu:
         - text: "All in one place"
+          icon: fa-arrow-circle-right
           href: teaching.html
         - text: "Very basic R"
+          icon: fa-arrow-circle-right
           href: WhatsR.html
         - text: "Intro to R"
+          icon: fa-arrow-circle-right
           href: Rbasics.html
         - text: "Intro to R graphics"
+          icon: fa-arrow-circle-right
           href: Rgraphs.html
         - text: "Variable distributions"
+          icon: fa-arrow-circle-right
           href: transformR.html
         - text: "Comparing means"
+          icon: fa-arrow-circle-right
           href: meansR.html
         - text: "Relationships"
+          icon: fa-arrow-circle-right
           href: relationR.html
         - text: "Basic maps in R"
+          icon: fa-arrow-circle-right
           href: Rmaps.html
         - text: "Geostatistics"
+          icon: fa-arrow-circle-right
           href: geostats.html
         - text: "Multivariate eDNA"
+          icon: fa-arrow-circle-right
           href: vegan.html
     - text: "Rants"
       icon: fa-bell
