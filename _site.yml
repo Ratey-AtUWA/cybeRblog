@@ -43,6 +43,9 @@ navbar:
         - text: "Multivariate eDNA"
           icon: fa-arrow-circle-right
           href: vegan.html
+        - text: "Compositional data analysis Intro"
+          icon: fa-arrow-circle-right
+          href: compositional_Pt0-Intro.html
     - text: "Rants"
       icon: fa-bell
       href: rants.html
