@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Introduction to Compositional Data Analysis</title>
+
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<link href="site_libs/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-5.1.3/bootstrap.bundle.min.js"></script>
+<script src="site_libs/bs3compat-0.4.0/transition.js"></script>
+<script src="site_libs/bs3compat-0.4.0/tabs.js"></script>
+<script src="site_libs/bs3compat-0.4.0/bs3compat.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/tabwid-1.1.0/tabwid.css" rel="stylesheet" />
+<link href="site_libs/tabwid-1.1.0/scrool.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">cyboRg</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li>
+  <a href="code.html">
+    <span class="fa fa-project-diagram"></span>
+     
+    Code
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-chalkboard-teacher"></span>
+     
+    Teaching
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="teaching.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        All in one place
+      </a>
+    </li>
+    <li>
+      <a href="WhatsR.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Very basic R
+      </a>
+    </li>
+    <li>
+      <a href="Rbasics.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Intro to R
+      </a>
+    </li>
+    <li>
+      <a href="Rgraphs.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Intro to R graphics
+      </a>
+    </li>
+    <li>
+      <a href="transformR.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Variable distributions
+      </a>
+    </li>
+    <li>
+      <a href="meansR.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Comparing means
+      </a>
+    </li>
+    <li>
+      <a href="relationR.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Relationships
+      </a>
+    </li>
+    <li>
+      <a href="Rmaps.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Basic maps in R
+      </a>
+    </li>
+    <li>
+      <a href="geostats.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Geostatistics
+      </a>
+    </li>
+    <li>
+      <a href="vegan.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Multivariate eDNA
+      </a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="rants.html">
+    <span class="fa fa-bell"></span>
+     
+    Rants
+  </a>
+</li>
+<li>
+  <a href="images.html">
+    <span class="fa fa-images"></span>
+     
+    Images
+  </a>
+</li>
+<li>
+  <a href="about.html">
+    <span class="fa fa-address-card"></span>
+     
+    About
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="social.html">
+    <span class="fa fa-twitter"></span>
+     
+    Social
+  </a>
+</li>
+<li>
+  <a href="work.html">
+    <span class="fa fa-user-graduate"></span>
+     
+    UWA
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Introduction to Compositional Data
+Analysis</h1>
+
+</div>
+
+
+<style type="text/css">
+  body{
+  font-size: 12pt;
+}
+</style>
+<div id="preamble" class="section level1">
+<h1>Preamble</h1>
+<p>Compositional data, defined as any measurements which are proportions
+of some whole, are common in many disciplines, including (Table 1):</p>
+<template id="1d8651f9-2adb-4e1b-9f04-6d86242d0093"><style>
+.tabwid table{
+  border-spacing:0px !important;
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  border-color: transparent;
+  caption-side: top;
+}
+.tabwid-caption-bottom table{
+  caption-side: bottom;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+.katex-display {
+    margin: 0 0 !important;
+}
+</style><div class="tabwid"><style>.cl-b89a26fc{}.cl-b89165ee{font-family:'Arial';font-size:9pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-b8916602{font-family:'Arial';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-b894c554{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-b894d8dc{width:2in;background-color:rgba(208, 224, 255, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b894d8e6{width:5in;background-color:rgba(208, 224, 255, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b894d8f0{width:2in;height:0.2in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b894d8fa{width:5in;height:0.2in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b894d904{width:2in;height:0.2in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b894d90e{width:5in;height:0.2in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b894d90f{width:2in;height:0.2in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b894d918{width:5in;height:0.2in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b88d82c6{font-family:'Arial';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}</style><table class='cl-b89a26fc'><caption><span class="cl-b88d82c6">Table 1: Examples of compositional data by discipline.</span></caption><thead><tr style="overflow-wrap:break-word;"><td class="cl-b894d8dc"><p class="cl-b894c554"><span class="cl-b89165ee">Discipline</span></p></td><td class="cl-b894d8e6"><p class="cl-b894c554"><span class="cl-b89165ee">Examples</span></p></td></tr></thead><tbody><tr><td class="cl-b894d8f0"><p class="cl-b894c554"><span class="cl-b8916602">Environmental science</span></p></td><td class="cl-b894d8fa"><p class="cl-b894c554"><span class="cl-b8916602">Sediment or soil texture - proportions of mineral grains in particle size range fractions</span></p></td></tr><tr><td class="cl-b894d904"><p class="cl-b894c554"><span class="cl-b8916602">Geography</span></p></td><td class="cl-b894d90e"><p class="cl-b894c554"><span class="cl-b8916602">Proportions of land area subject to different land uses</span></p></td></tr><tr><td class="cl-b894d8f0"><p class="cl-b894c554"><span class="cl-b8916602">Geology and geochemistry</span></p></td><td class="cl-b894d8fa"><p class="cl-b894c554"><span class="cl-b8916602">Elemental composition of rocks</span></p></td></tr><tr><td class="cl-b894d904"><p class="cl-b894c554"><span class="cl-b8916602">Biology</span></p></td><td class="cl-b894d90e"><p class="cl-b894c554"><span class="cl-b8916602">Plant species abundance as a proportion of ground cover</span></p></td></tr><tr><td class="cl-b894d90f"><p class="cl-b894c554"><span class="cl-b8916602">Politics</span></p></td><td class="cl-b894d918"><p class="cl-b894c554"><span class="cl-b8916602">Percentage of voters supporting each candidate</span></p></td></tr></tbody></table></div></template>
+<div class="flextable-shadow-host" id="ce1fbc0f-75e3-4cfd-bf28-f9c9c0b7fbed"></div>
+<script>
+var dest = document.getElementById("ce1fbc0f-75e3-4cfd-bf28-f9c9c0b7fbed");
+var template = document.getElementById("1d8651f9-2adb-4e1b-9f04-6d86242d0093");
+var caption = template.content.querySelector("caption");
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script>
+
+<p>
+ 
+</p>
+<p>Compositional data have mathematical properties which result in
+misleading conclusions from traditional statistical analyses.
+Compositional variables (including concentrations of substances in water
+[or air, or rock, or soil, and so on] or proportions of land surface
+coverage) are technically part of a fixed-sum closed set. For example,
+with data on percent land use over an urban area, all percentages add up
+to 100%! As Greenacre (2018) points out, we often deal with
+<em>subcompositions</em> rather than compositions, because we do not (or
+can not) measure all possible components of a sample. For example, in
+environmental science, when we measure the substances present in water,
+we don't usually measure the concentration of water itself. Or in
+politics, we report the proportions of voters who voted for each
+candidate, but not often the proportion of citizens who didn't vote.</p>
+<p>The issue of subcompositions is not necessarily a problem. For
+instance, in the political example above, the ratio of voters supporting
+the two leading candidates will be the same whether we consider the
+total eligible electors, or only the people who actually voted. As we
+will see below, a key strategy for analysing compositional data is the
+use of some sort of <em>ratio</em>.</p>
+<p>If uncorrected, analysis of data having fixed-sum closure can lead to
+very misleading conclusions, especially when <em>relationships</em>
+between variables are being investigated, as in correlation analyses or
+<em>multivariate methods</em> such as principal component analysis.
+Closed data require specialised transformations to remove closure, such
+as calculation of <strong>centered or additive log ratios</strong>
+(Reimann et al. 2008). The centered log-ratio is defined by:</p>
+<p><span class="math inline">\(x_{CLR} =
+log(\dfrac{x}{geomean(x_{1},...,x_{n})})\)</span>, where</p>
+<ul>
+<li><span class="math inline">\(x\)</span> is the value being
+transformed (concentration, proportion);</li>
+<li><span class="math inline">\(x_{CLR}\)</span> is the centered
+log-ratio transformed value;</li>
+<li><span class="math inline">\(geomean\)</span> means the geometric
+mean of;</li>
+<li><span class="math inline">\(x_{1}...x_{n}\)</span> are all the <span
+class="math inline">\(n\)</span> values contributing to the
+(sub)composition, including the one (<span
+class="math inline">\(x\)</span>) being transformed;</li>
+<li>all the components (parts) of the composition need to be in
+<em>identical units</em> (<em>e.g</em>. percent, mg/L, incidence per
+10,000, <em>etc</em>.).</li>
+</ul>
+<p>For example, in a soil texture analysis where the proportions of
+grain size categories gravel (G), sand (S), silt (Z), and clay (C) all
+add up to 100%, the CLR-transformed sand content is:</p>
+<p><span class="math inline">\(S_{CLR} =
+log(\dfrac{S}{geomean(G,S,Z,C)})\)</span></p>
+<p>The example in Figure 1 shows the relationship between phosphorus (P)
+and iron (Fe) in soil/sediment materials in an acid sulfate environment.
+Without correcting for compositional closure, the P <em>vs</em>. Fe plot
+implies that P increases as Fe increases. Correcting for compositional
+closure, however, suggests the opposite, with P negatively related to
+Fe! In this case, if we had used conventional transformations, we might
+have come to a very wrong conclusion about the sediment properties
+affecting phosphorus.</p>
+<div class="figure" style="text-align: center">
+<img src="compositional_Pt0-Intro_files/figure-html/closed%20open%20example%20P-Fe-1.png" alt="Figure 1: Comparison of relationships between P and Fe for (a) compositionally closed concentrations showing a positive relationship and (b) concentration variables corrected for compositional closure using centred log ratios showing a negative relationship. Data from Xu et al. (2018)." width="60%" />
+<p class="caption">
+Figure 1: Comparison of relationships between P and Fe for (a)
+compositionally closed concentrations showing a positive relationship
+and (b) concentration variables corrected for compositional closure
+using centred log ratios showing a negative relationship. Data from Xu
+et al. (2018).
+</p>
+</div>
+<p>
+ 
+</p>
+<table>
+<tr>
+<td style="background-color:#F0DAA9;">
+In this UWA Micro-Credential course, you will learn specialised methods
+which allow you to analyse compositional data so that results can be
+interpreted with confidence. Students will also gain skills in use of
+<strong>R</strong> for relevant multivariate data analyses.
+</td>
+</tr>
+</table>
+<p>
+ 
+</p>
+<p>First we load the packages we need, and set a preferred colour
+palette.</p>
+<pre class="r"><code>library(stringr)     # manipulate character strings
+library(RcmdrMisc)   # statistical functions
+library(MASS)        # statistical functions
+# library(rgr)       # does not work with recent R versions, no longer used
+library(car)         # statistical functions focused on regression
+library(cluster)     # cluster analysis
+library(factoextra)  # multivariate visualisation
+library(ggplot2)     # more visualisation
+library(reshape2)    # data wrangling
+library(ggpubr)      # arrangement of graphics from factoextra ± ggplot2
+
+palette(c(&quot;black&quot;, &quot;#003087&quot;, &quot;#DAAA00&quot;, &quot;#8F92C4&quot;, &quot;#E5CF7E&quot;, 
+          &quot;#001D51&quot;, &quot;#B7A99F&quot;, &quot;#A51890&quot;, &quot;#C5003E&quot;, &quot;#FDC596&quot;, 
+          &quot;#AD5D1E&quot;, &quot;gray40&quot;, &quot;gray85&quot;, &quot;#FFFFFF&quot;, &quot;transparent&quot;))</code></pre>
+<div id="load-the-cities-data" class="section level2">
+<h2>Load the cities data</h2>
+<p><strong>Data are from</strong>: Fig. 11 <em>in</em> Hu, J., Wang, Y.,
+Taubenböck, H., Zhu, X.X., 2021. Land consumption in cities: A
+comparative study across the globe. <em>Cities</em>,
+<strong>113</strong>: 103163, <a
+href="https://doi.org/10.1016/j.cities.2021.103163"
+class="uri">https://doi.org/10.1016/j.cities.2021.103163</a>. (digitised
+from figure using <a href="https://automeris.io/WebPlotDigitizer/"
+class="uri">https://automeris.io/WebPlotDigitizer/</a>)</p>
+<p>After reading the data we make a column containing abbreviated codes
+for the land-use type factor, using the <code>gsub()</code> function to
+substitute character strings.</p>
+<pre class="r"><code>cities &lt;- 
+  read.csv(paste0(&quot;https://raw.githubusercontent.com/Ratey-AtUWA/&quot;,
+                  &quot;compositional_data/main/cities_Hu_etal_2021.csv&quot;), 
+           stringsAsFactors = TRUE)
+ft &lt;- flextable(cities)
+ft &lt;- add_header_row(ft, values = c(&quot;&quot;,&quot;Land use categories&quot;,&quot;City categories&quot;),
+                     colwidths = c(1,4,3))
+ft &lt;- set_caption(ft, caption = &quot;Table 2: Cities land use data used in this document, showing cities 
+      categorized by land-use Type, Global socioeconomic zone, and geographic Region.&quot;)
+ft &lt;- theme_zebra(ft,odd_header = &quot;#D0E0FF&quot;, even_header = &quot;#D0E0FF&quot;)
+ft &lt;- align(ft,align = &quot;center&quot;, part = &quot;header&quot;)
+ft &lt;- height_all(ft, height=0.39, unit = &quot;cm&quot;); ft &lt;- hrule(ft, rule = &quot;exact&quot;)
+ft &lt;- width(ft, j=1:8, width=c(2.7,1.5,1.5,1.8,1.5,3,2,3), unit = &quot;cm&quot;)
+ft &lt;- border_outer(ft, border = BorderDk, part = &quot;all&quot;)
+ft %&gt;% border_inner_v(border=BorderLt, part=&quot;header&quot;)</code></pre>
+<template id="e3a2d0e2-2f0a-4e8c-982f-f6c4ec87271c"><style>
+.tabwid table{
+  border-spacing:0px !important;
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  border-color: transparent;
+  caption-side: top;
+}
+.tabwid-caption-bottom table{
+  caption-side: bottom;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+.katex-display {
+    margin: 0 0 !important;
+}
+</style><div class="tabwid"><style>.cl-b96a8112{}.cl-b95efcde{font-family:'Arial';font-size:9pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-b95efcf2{font-family:'Arial';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-b962fe1a{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-b962fe2e{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-b962fe2f{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-b963183c{width:1.063in;background-color:rgba(208, 224, 255, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 1pt solid rgba(255, 255, 255, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b963183d{width:0.591in;background-color:rgba(208, 224, 255, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 1pt solid rgba(255, 255, 255, 1.00);border-right: 1pt solid rgba(255, 255, 255, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b9631846{width:0.709in;background-color:rgba(208, 224, 255, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 1pt solid rgba(255, 255, 255, 1.00);border-right: 1pt solid rgba(255, 255, 255, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b9631847{width:1.181in;background-color:rgba(208, 224, 255, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 1pt solid rgba(255, 255, 255, 1.00);border-right: 1pt solid rgba(255, 255, 255, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b9631850{width:0.787in;background-color:rgba(208, 224, 255, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 1pt solid rgba(255, 255, 255, 1.00);border-right: 1pt solid rgba(255, 255, 255, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b963185a{width:1.181in;background-color:rgba(208, 224, 255, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 1pt solid rgba(255, 255, 255, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b963185b{width:1.063in;background-color:rgba(208, 224, 255, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 1pt solid rgba(255, 255, 255, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b9631864{width:0.591in;background-color:rgba(208, 224, 255, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(255, 255, 255, 1.00);border-right: 1pt solid rgba(255, 255, 255, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b9631865{width:0.709in;background-color:rgba(208, 224, 255, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(255, 255, 255, 1.00);border-right: 1pt solid rgba(255, 255, 255, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b963186e{width:1.181in;background-color:rgba(208, 224, 255, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(255, 255, 255, 1.00);border-right: 1pt solid rgba(255, 255, 255, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b963186f{width:0.787in;background-color:rgba(208, 224, 255, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(255, 255, 255, 1.00);border-right: 1pt solid rgba(255, 255, 255, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b9631878{width:1.181in;background-color:rgba(208, 224, 255, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(255, 255, 255, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b9631879{width:1.063in;height:0.154in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b9631882{width:0.591in;height:0.154in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b9631883{width:0.709in;height:0.154in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b963188c{width:1.181in;height:0.154in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b9631896{width:0.787in;height:0.154in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b9631897{width:1.181in;height:0.154in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b96318a0{width:1.063in;height:0.154in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b96318a1{width:0.591in;height:0.154in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b96318aa{width:0.709in;height:0.154in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b96318ab{width:1.181in;height:0.154in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b96318ac{width:0.787in;height:0.154in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b96318b4{width:1.181in;height:0.154in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b96318b5{width:1.063in;height:0.154in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b96318be{width:0.591in;height:0.154in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b96318bf{width:0.709in;height:0.154in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b96318c8{width:1.181in;height:0.154in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b96318c9{width:0.787in;height:0.154in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b96318d2{width:1.181in;height:0.154in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b951e3c8{font-family:'Arial';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}</style><table class='cl-b96a8112'><caption><span class="cl-b951e3c8">Table 2: Cities land use data used in this document, showing cities </span><br><span class="cl-b951e3c8">      categorized by land-use Type, Global socioeconomic zone, and geographic Region.</span></caption><thead><tr style="overflow-wrap:break-word;"><td class="cl-b963183c"><p class="cl-b962fe1a"><span class="cl-b95efcde"></span></p></td><td  colspan="4"class="cl-b963183d"><p class="cl-b962fe1a"><span class="cl-b95efcde">Land use categories</span></p></td><td  colspan="3"class="cl-b9631847"><p class="cl-b962fe1a"><span class="cl-b95efcde">City categories</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b963185b"><p class="cl-b962fe1a"><span class="cl-b95efcde">City</span></p></td><td class="cl-b9631864"><p class="cl-b962fe1a"><span class="cl-b95efcde">Compact</span></p></td><td class="cl-b9631864"><p class="cl-b962fe1a"><span class="cl-b95efcde">Open</span></p></td><td class="cl-b9631865"><p class="cl-b962fe1a"><span class="cl-b95efcde">Lightweight</span></p></td><td class="cl-b9631864"><p class="cl-b962fe1a"><span class="cl-b95efcde">Industry</span></p></td><td class="cl-b963186e"><p class="cl-b962fe1a"><span class="cl-b95efcde">Type</span></p></td><td class="cl-b963186f"><p class="cl-b962fe1a"><span class="cl-b95efcde">Global</span></p></td><td class="cl-b9631878"><p class="cl-b962fe1a"><span class="cl-b95efcde">Region</span></p></td></tr></thead><tbody><tr><td class="cl-b9631879"><p class="cl-b962fe2e"><span class="cl-b95efcf2">New York</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">610.41</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">1,041.08</span></p></td><td class="cl-b9631883"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">317.63</span></p></td><td class="cl-b963188c"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Compact-Open</span></p></td><td class="cl-b9631896"><p class="cl-b962fe2e"><span class="cl-b95efcf2">North</span></p></td><td class="cl-b9631897"><p class="cl-b962fe2e"><span class="cl-b95efcf2">North America</span></p></td></tr><tr><td class="cl-b96318a0"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Sao Paulo</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">1,122.36</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">619.80</span></p></td><td class="cl-b96318aa"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">218.86</span></p></td><td class="cl-b96318ab"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Compact-Open</span></p></td><td class="cl-b96318ac"><p class="cl-b962fe2e"><span class="cl-b95efcf2">South</span></p></td><td class="cl-b96318b4"><p class="cl-b962fe2e"><span class="cl-b95efcf2">South America</span></p></td></tr><tr><td class="cl-b9631879"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Shanghai</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">165.96</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">832.96</span></p></td><td class="cl-b9631883"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">947.26</span></p></td><td class="cl-b963188c"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Industrial</span></p></td><td class="cl-b9631896"><p class="cl-b962fe2e"><span class="cl-b95efcf2">South</span></p></td><td class="cl-b9631897"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Eastern Asia</span></p></td></tr><tr><td class="cl-b96318a0"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Beijing</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">542.90</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">1,038.96</span></p></td><td class="cl-b96318aa"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">288.76</span></p></td><td class="cl-b96318ab"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Compact-Open</span></p></td><td class="cl-b96318ac"><p class="cl-b962fe2e"><span class="cl-b95efcf2">South</span></p></td><td class="cl-b96318b4"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Eastern Asia</span></p></td></tr><tr><td class="cl-b9631879"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Jakarta</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">1,195.50</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">12.31</span></p></td><td class="cl-b9631883"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">519.77</span></p></td><td class="cl-b963188c"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Compact</span></p></td><td class="cl-b9631896"><p class="cl-b962fe2e"><span class="cl-b95efcf2">South</span></p></td><td class="cl-b9631897"><p class="cl-b962fe2e"><span class="cl-b95efcf2">South Asia</span></p></td></tr><tr><td class="cl-b96318a0"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Guangzhou</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">736.99</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">203.64</span></p></td><td class="cl-b96318aa"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">766.71</span></p></td><td class="cl-b96318ab"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Compact</span></p></td><td class="cl-b96318ac"><p class="cl-b962fe2e"><span class="cl-b95efcf2">South</span></p></td><td class="cl-b96318b4"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Eastern Asia</span></p></td></tr><tr><td class="cl-b9631879"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Melbourne</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">939.52</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">265.05</span></p></td><td class="cl-b9631883"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">382.67</span></p></td><td class="cl-b963188c"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Compact</span></p></td><td class="cl-b9631896"><p class="cl-b962fe2e"><span class="cl-b95efcf2">North</span></p></td><td class="cl-b9631897"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Australia</span></p></td></tr><tr><td class="cl-b96318a0"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Paris</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">180.03</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">1,121.70</span></p></td><td class="cl-b96318aa"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">147.88</span></p></td><td class="cl-b96318ab"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Open</span></p></td><td class="cl-b96318ac"><p class="cl-b962fe2e"><span class="cl-b95efcf2">North</span></p></td><td class="cl-b96318b4"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Europe</span></p></td></tr><tr><td class="cl-b9631879"><p class="cl-b962fe2e"><span class="cl-b95efcf2">London</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">11.25</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">1,031.39</span></p></td><td class="cl-b9631883"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">128.99</span></p></td><td class="cl-b963188c"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Open</span></p></td><td class="cl-b9631896"><p class="cl-b962fe2e"><span class="cl-b95efcf2">North</span></p></td><td class="cl-b9631897"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Europe</span></p></td></tr><tr><td class="cl-b96318a0"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Moscow</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">28.13</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">894.69</span></p></td><td class="cl-b96318aa"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">124.67</span></p></td><td class="cl-b96318ab"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Open</span></p></td><td class="cl-b96318ac"><p class="cl-b962fe2e"><span class="cl-b95efcf2">North</span></p></td><td class="cl-b96318b4"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Europe</span></p></td></tr><tr><td class="cl-b9631879"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Cairo</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">559.77</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">131.49</span></p></td><td class="cl-b9631883"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">357.58</span></p></td><td class="cl-b963188c"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Compact</span></p></td><td class="cl-b9631896"><p class="cl-b962fe2e"><span class="cl-b95efcf2">South</span></p></td><td class="cl-b9631897"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Africa</span></p></td></tr><tr><td class="cl-b96318a0"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Sydney</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">371.31</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">399.30</span></p></td><td class="cl-b96318aa"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">135.20</span></p></td><td class="cl-b96318ab"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Compact-Open</span></p></td><td class="cl-b96318ac"><p class="cl-b962fe2e"><span class="cl-b95efcf2">North</span></p></td><td class="cl-b96318b4"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Australia</span></p></td></tr><tr><td class="cl-b9631879"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Nanjing</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">39.38</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">366.90</span></p></td><td class="cl-b9631883"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">484.69</span></p></td><td class="cl-b963188c"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Industrial</span></p></td><td class="cl-b9631896"><p class="cl-b962fe2e"><span class="cl-b95efcf2">South</span></p></td><td class="cl-b9631897"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Eastern Asia</span></p></td></tr><tr><td class="cl-b96318a0"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Istanbul</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">486.64</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">245.11</span></p></td><td class="cl-b96318aa"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">145.72</span></p></td><td class="cl-b96318ab"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Compact-Open</span></p></td><td class="cl-b96318ac"><p class="cl-b962fe2e"><span class="cl-b95efcf2">South</span></p></td><td class="cl-b96318b4"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Western Asia</span></p></td></tr><tr><td class="cl-b9631879"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Milan</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">222.22</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">268.26</span></p></td><td class="cl-b9631883"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">337.07</span></p></td><td class="cl-b963188c"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Industrial</span></p></td><td class="cl-b9631896"><p class="cl-b962fe2e"><span class="cl-b95efcf2">North</span></p></td><td class="cl-b9631897"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Europe</span></p></td></tr><tr><td class="cl-b96318a0"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Washington DC</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">160.34</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">511.50</span></p></td><td class="cl-b96318aa"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">147.61</span></p></td><td class="cl-b96318ab"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Open</span></p></td><td class="cl-b96318ac"><p class="cl-b962fe2e"><span class="cl-b95efcf2">North</span></p></td><td class="cl-b96318b4"><p class="cl-b962fe2e"><span class="cl-b95efcf2">North America</span></p></td></tr><tr><td class="cl-b9631879"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Qingdao</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">120.96</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">320.94</span></p></td><td class="cl-b9631883"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">262.85</span></p></td><td class="cl-b963188c"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Industrial</span></p></td><td class="cl-b9631896"><p class="cl-b962fe2e"><span class="cl-b95efcf2">South</span></p></td><td class="cl-b9631897"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Eastern Asia</span></p></td></tr><tr><td class="cl-b96318a0"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Wuhan</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">14.06</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">311.25</span></p></td><td class="cl-b96318aa"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">360.54</span></p></td><td class="cl-b96318ab"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Industrial</span></p></td><td class="cl-b96318ac"><p class="cl-b962fe2e"><span class="cl-b95efcf2">South</span></p></td><td class="cl-b96318b4"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Eastern Asia</span></p></td></tr><tr><td class="cl-b9631879"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Berlin</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">36.57</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">526.78</span></p></td><td class="cl-b9631883"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">64.49</span></p></td><td class="cl-b963188c"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Open</span></p></td><td class="cl-b9631896"><p class="cl-b962fe2e"><span class="cl-b95efcf2">North</span></p></td><td class="cl-b9631897"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Europe</span></p></td></tr><tr><td class="cl-b96318a0"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Santiago de Chile</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">444.44</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">68.70</span></p></td><td class="cl-b96318aa"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">91.75</span></p></td><td class="cl-b96318ab"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Compact</span></p></td><td class="cl-b96318ac"><p class="cl-b962fe2e"><span class="cl-b95efcf2">South</span></p></td><td class="cl-b96318b4"><p class="cl-b962fe2e"><span class="cl-b95efcf2">South America</span></p></td></tr><tr><td class="cl-b9631879"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Cape Town</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">126.58</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">292.65</span></p></td><td class="cl-b9631883"><p class="cl-b962fe2f"><span class="cl-b95efcf2">23.75</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">149.78</span></p></td><td class="cl-b963188c"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Open-Lightweight</span></p></td><td class="cl-b9631896"><p class="cl-b962fe2e"><span class="cl-b95efcf2">South</span></p></td><td class="cl-b9631897"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Africa</span></p></td></tr><tr><td class="cl-b96318a0"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Mumbai</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">81.58</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">292.32</span></p></td><td class="cl-b96318aa"><p class="cl-b962fe2f"><span class="cl-b95efcf2">36.70</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">151.13</span></p></td><td class="cl-b96318ab"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Open-Lightweight</span></p></td><td class="cl-b96318ac"><p class="cl-b962fe2e"><span class="cl-b95efcf2">South</span></p></td><td class="cl-b96318b4"><p class="cl-b962fe2e"><span class="cl-b95efcf2">South Asia</span></p></td></tr><tr><td class="cl-b9631879"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Madrid</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">67.51</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">366.29</span></p></td><td class="cl-b9631883"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">110.37</span></p></td><td class="cl-b963188c"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Open</span></p></td><td class="cl-b9631896"><p class="cl-b962fe2e"><span class="cl-b95efcf2">North</span></p></td><td class="cl-b9631897"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Europe</span></p></td></tr><tr><td class="cl-b96318a0"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Vancouver</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">334.74</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">35.91</span></p></td><td class="cl-b96318aa"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">165.42</span></p></td><td class="cl-b96318ab"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Compact</span></p></td><td class="cl-b96318ac"><p class="cl-b962fe2e"><span class="cl-b95efcf2">North</span></p></td><td class="cl-b96318b4"><p class="cl-b962fe2e"><span class="cl-b95efcf2">North America</span></p></td></tr><tr><td class="cl-b9631879"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Tehran</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">272.86</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">49.22</span></p></td><td class="cl-b9631883"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">189.71</span></p></td><td class="cl-b963188c"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Compact</span></p></td><td class="cl-b9631896"><p class="cl-b962fe2e"><span class="cl-b95efcf2">South</span></p></td><td class="cl-b9631897"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Western Asia</span></p></td></tr><tr><td class="cl-b96318a0"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Changsha</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">115.33</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">163.03</span></p></td><td class="cl-b96318aa"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">198.35</span></p></td><td class="cl-b96318ab"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Industrial</span></p></td><td class="cl-b96318ac"><p class="cl-b962fe2e"><span class="cl-b95efcf2">South</span></p></td><td class="cl-b96318b4"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Eastern Asia</span></p></td></tr><tr><td class="cl-b9631879"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Rome</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">95.64</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">341.40</span></p></td><td class="cl-b9631883"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">41.01</span></p></td><td class="cl-b963188c"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Open</span></p></td><td class="cl-b9631896"><p class="cl-b962fe2e"><span class="cl-b95efcf2">North</span></p></td><td class="cl-b9631897"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Europe</span></p></td></tr><tr><td class="cl-b96318a0"><p class="cl-b962fe2e"><span class="cl-b95efcf2">San Francisco</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">272.86</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">18.46</span></p></td><td class="cl-b96318aa"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">169.20</span></p></td><td class="cl-b96318ab"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Compact</span></p></td><td class="cl-b96318ac"><p class="cl-b962fe2e"><span class="cl-b95efcf2">North</span></p></td><td class="cl-b96318b4"><p class="cl-b962fe2e"><span class="cl-b95efcf2">North America</span></p></td></tr><tr><td class="cl-b9631879"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Rio de Janeiro</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">334.74</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">56.96</span></p></td><td class="cl-b9631883"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">64.76</span></p></td><td class="cl-b963188c"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Compact</span></p></td><td class="cl-b9631896"><p class="cl-b962fe2e"><span class="cl-b95efcf2">South</span></p></td><td class="cl-b9631897"><p class="cl-b962fe2e"><span class="cl-b95efcf2">South America</span></p></td></tr><tr><td class="cl-b96318a0"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Islamabad</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">202.53</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">82.30</span></p></td><td class="cl-b96318aa"><p class="cl-b962fe2f"><span class="cl-b95efcf2">50.20</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">36.43</span></p></td><td class="cl-b96318ab"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Open-Lightweight</span></p></td><td class="cl-b96318ac"><p class="cl-b962fe2e"><span class="cl-b95efcf2">South</span></p></td><td class="cl-b96318b4"><p class="cl-b962fe2e"><span class="cl-b95efcf2">South Asia</span></p></td></tr><tr><td class="cl-b9631879"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Amsterdam</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">14.06</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">97.51</span></p></td><td class="cl-b9631883"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">246.39</span></p></td><td class="cl-b963188c"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Industrial</span></p></td><td class="cl-b9631896"><p class="cl-b962fe2e"><span class="cl-b95efcf2">North</span></p></td><td class="cl-b9631897"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Europe</span></p></td></tr><tr><td class="cl-b96318a0"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Nairobi</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">67.51</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">202.75</span></p></td><td class="cl-b96318aa"><p class="cl-b962fe2f"><span class="cl-b95efcf2">20.24</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">58.02</span></p></td><td class="cl-b96318ab"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Open-Lightweight</span></p></td><td class="cl-b96318ac"><p class="cl-b962fe2e"><span class="cl-b95efcf2">South</span></p></td><td class="cl-b96318b4"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Africa</span></p></td></tr><tr><td class="cl-b9631879"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Lisbon</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">168.78</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">107.96</span></p></td><td class="cl-b9631883"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">59.63</span></p></td><td class="cl-b963188c"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Compact-Open</span></p></td><td class="cl-b9631896"><p class="cl-b962fe2e"><span class="cl-b95efcf2">North</span></p></td><td class="cl-b9631897"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Europe</span></p></td></tr><tr><td class="cl-b96318a0"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Munich</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">14.06</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">214.09</span></p></td><td class="cl-b96318aa"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">70.43</span></p></td><td class="cl-b96318ab"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Open</span></p></td><td class="cl-b96318ac"><p class="cl-b962fe2e"><span class="cl-b95efcf2">North</span></p></td><td class="cl-b96318b4"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Europe</span></p></td></tr><tr><td class="cl-b9631879"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Dongying</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">28.13</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">164.41</span></p></td><td class="cl-b9631883"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">57.47</span></p></td><td class="cl-b963188c"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Open</span></p></td><td class="cl-b9631896"><p class="cl-b962fe2e"><span class="cl-b95efcf2">South</span></p></td><td class="cl-b9631897"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Eastern Asia</span></p></td></tr><tr><td class="cl-b96318a0"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Cologne</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">179.57</span></p></td><td class="cl-b96318aa"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">51.54</span></p></td><td class="cl-b96318ab"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Open</span></p></td><td class="cl-b96318ac"><p class="cl-b962fe2e"><span class="cl-b95efcf2">North</span></p></td><td class="cl-b96318b4"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Europe</span></p></td></tr><tr><td class="cl-b9631879"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Kyoto</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">168.78</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">5.95</span></p></td><td class="cl-b9631883"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">49.65</span></p></td><td class="cl-b963188c"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Compact</span></p></td><td class="cl-b9631896"><p class="cl-b962fe2e"><span class="cl-b95efcf2">North</span></p></td><td class="cl-b9631897"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Eastern Asia</span></p></td></tr><tr><td class="cl-b96318a0"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Shenzhen</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">36.57</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">97.67</span></p></td><td class="cl-b96318aa"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b96318a1"><p class="cl-b962fe2f"><span class="cl-b95efcf2">73.94</span></p></td><td class="cl-b96318ab"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Industrial</span></p></td><td class="cl-b96318ac"><p class="cl-b962fe2e"><span class="cl-b95efcf2">South</span></p></td><td class="cl-b96318b4"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Eastern Asia</span></p></td></tr><tr><td class="cl-b9631879"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Zurich</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">14.06</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">155.80</span></p></td><td class="cl-b9631883"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b9631882"><p class="cl-b962fe2f"><span class="cl-b95efcf2">26.17</span></p></td><td class="cl-b963188c"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Open</span></p></td><td class="cl-b9631896"><p class="cl-b962fe2e"><span class="cl-b95efcf2">North</span></p></td><td class="cl-b9631897"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Europe</span></p></td></tr><tr><td class="cl-b96318b5"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Hong Kong</span></p></td><td class="cl-b96318be"><p class="cl-b962fe2f"><span class="cl-b95efcf2">67.51</span></p></td><td class="cl-b96318be"><p class="cl-b962fe2f"><span class="cl-b95efcf2">58.64</span></p></td><td class="cl-b96318bf"><p class="cl-b962fe2f"><span class="cl-b95efcf2">0.01</span></p></td><td class="cl-b96318be"><p class="cl-b962fe2f"><span class="cl-b95efcf2">18.61</span></p></td><td class="cl-b96318c8"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Compact-Open</span></p></td><td class="cl-b96318c9"><p class="cl-b962fe2e"><span class="cl-b95efcf2">South</span></p></td><td class="cl-b96318d2"><p class="cl-b962fe2e"><span class="cl-b95efcf2">Eastern Asia</span></p></td></tr></tbody></table></div></template>
+<div class="flextable-shadow-host" id="6fc5cedf-3acc-4caa-a448-8b95876a8b97"></div>
+<script>
+var dest = document.getElementById("6fc5cedf-3acc-4caa-a448-8b95876a8b97");
+var template = document.getElementById("e3a2d0e2-2f0a-4e8c-982f-f6c4ec87271c");
+var caption = template.content.querySelector("caption");
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script>
+
+<p>
+ 
+</p>
+<p>The original data categorised the cities by <strong>Type</strong>,
+based on the land use categories occupying the greatest proportion(s) of
+urban area. We have added two other categories, <strong>Global</strong>
+identifying each city as being in the socioeconomic "global south" or
+"global north" zones, and also assigning each city to a geographic
+<strong>Region</strong>, a category having eight levels. All categories
+are stored as factors in the R data frame.</p>
+</div>
+<div id="make-clr-transformed-dataset" class="section level2">
+<h2>Make CLR-transformed dataset</h2>
+<pre class="r"><code>cities_clr &lt;- cities
+cities_clr[,2:5] &lt;- t(apply(cities[,2:5], MARGIN = 1,
+                           FUN = function(x){log(x) - mean(log(x))}))
+head(cities_clr[,1:8])</code></pre>
+<pre><code>##                City  Compact      Open Lightweight Industry         Type Global        Region
+## New York   New York 2.784665  3.318548   -8.234636 2.131422 Compact-Open  North North America
+## Sao Paulo Sao Paulo 3.464227  2.870435   -8.164132 1.829470 Compact-Open  South South America
+## Shanghai   Shanghai 1.590463  3.203702   -8.126454 3.332290   Industrial  South  Eastern Asia
+## Beijing     Beijing 2.721094  3.370144   -8.181002 2.089764 Compact-Open  South  Eastern Asia
+## Jakarta     Jakarta 4.275083 -0.300825   -7.416407 3.442149      Compact  South    South Asia
+## Guangzhou Guangzhou 3.113608  1.827387   -8.094137 3.153142      Compact  South  Eastern Asia</code></pre>
+</div>
+<div id="compare-correlation-matrices" class="section level2">
+<h2>Compare correlation matrices</h2>
+<div class="figure" style="text-align: center">
+<img src="compositional_Pt0-Intro_files/figure-html/correlation%20matrix%20comnparison-1.png" alt="Figure 2: Correlation matrices for (a) closed, and (b) open (CLR-transformed) variables (code is not shown)." width="70%" />
+<p class="caption">
+Figure 2: Correlation matrices for (a) closed, and (b) open
+(CLR-transformed) variables (code is not shown).
+</p>
+</div>
+<p>
+ 
+</p>
+<p>By comparing Figure 2(a) and Figure 2(b), we can already see that
+addressing closure with the centered-logratio (CLR) transformation
+changes the interpretation of relationships between the variables.</p>
+<table>
+<tr>
+<td style="background-color: #F0DAA9;">
+<p><strong>Some other things to try</strong></p>
+<ul>
+<li>comparing the distributions of untransformed and CLR-transformed
+pairs of variables using histograms or density plots</li>
+<li>comparing scatter plots of untransformed and CLR-transformed pairs
+of variables (maybe using the <code>scatterplotMatrix(</code>) function
+in the <code>car</code> package).</li>
+</ul>
+</td>
+</tr>
+</table>
+<p>
+ 
+</p>
+</div>
+<div id="references-and-r-packages" class="section level2">
+<h2>References and R Packages</h2>
+<p>Fox, J. (2022). <em>RcmdrMisc: R Commander Miscellaneous
+Functions</em>. R package version 2.7-2. <a
+href="https://CRAN.R-project.org/package=RcmdrMisc"
+target="_blank">https://CRAN.R-project.org/package=RcmdrMisc</a></p>
+<p>John Fox and Sanford Weisberg (2019). <em>An {R} Companion to Applied
+Regression</em> (<strong>car</strong>), Third Edition. Thousand Oaks CA:
+Sage. URL: <a
+href="https://socialsciences.mcmaster.ca/jfox/Books/Companion/"
+target="_blank">https://socialsciences.mcmaster.ca/jfox/Books/Companion/</a></p>
+<p>Greenacre, M. (2018). <em>Compositional Data Analysis in
+Practice</em>. CRC Press LLC, Boca Raton, FL, USA.</p>
+<p>Hu, J., Wang, Y., Taubenböck, H., Zhu, X.X. (2021). Land consumption
+in cities: A comparative study across the globe. <em>Cities</em>,
+<strong>113</strong>: 103163, <a
+href="https://doi.org/10.1016/j.cities.2021.103163"
+target="_blank">doi:10.1016/j.cities.2021.103163</a>.</p>
+<p>Kassambara, A. and Mundt, F. (2020). <em>factoextra: Extract and
+Visualize the Results of Multivariate Data Analyses</em>. R package
+version 1.0.7. <a href="https://CRAN.R-project.org/package=factoextra"
+target="_blank">https://CRAN.R-project.org/package=factoextra</a></p>
+<p>Maechler, M., Rousseeuw, P., Struyf, A., Hubert, M., Hornik,
+K.(2021). <em>cluster: Cluster Analysis Basics and Extensions</em>. R
+package version 2.1.2. <a
+href="https://CRAN.R-project.org/package=cluster"
+target="_blank">https://CRAN.R-project.org/package=cluster</a></p>
+<p>Reimann, C., Filzmoser, P., Garrett, R. G., &amp; Dutter, R. (2008).
+<em>Statistical Data Analysis Explained: Applied Environmental
+Statistics with R</em> (First ed.). John Wiley &amp; Sons, Chichester,
+UK.</p>
+<p>Venables, W. N. &amp; Ripley, B. D. (2002) <em>Modern Applied
+Statistics with S</em> (<strong>MASS</strong>). Fourth Edition.
+Springer, New York. ISBN 0-387-95457-0. <a
+href="http://www.stats.ox.ac.uk/pub/MASS4/"
+target="_blank">http://www.stats.ox.ac.uk/pub/MASS4/</a></p>
+<p>Wickham, H. (2019). <em>stringr: Simple, Consistent Wrappers for
+Common String Operations</em>. R package version 1.4.0. <a
+href="https://CRAN.R-project.org/package=stringr"
+target="_blank">https://CRAN.R-project.org/package=stringr</a></p>
+<p>Xu, N., Rate, A. W., &amp; Morgan, B. (2018). From source to sink:
+Rare-earth elements trace the legacy of sulfuric dredge spoils on
+estuarine sediments. <em>Science of The Total Environment</em>,
+<strong>637-638</strong>, 1537-1549, <a
+href="https://doi.org/10.1016/j.scitotenv.2018.04.398"
+target="_blank">doi:10.1016/j.scitotenv.2018.04.398</a>.</p>
+</div>
+</div>
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<hr />
+<p><a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank"><strong>CC-BY-SA</strong></a> • All content by <a href="https://github.com/Ratey-AtUWA" target="_blank">Ratey-AtUWA</a>. My <a href="https://www.uwa.edu.au/schools/agriculture-and-environment" target="_blank">employer</a> does not necessarily know about or endorse the content of this website.<br>
+<span style="font-size:9pt">Created with <span style="font-family: monospace; background-color: #e8e8e8;">rmarkdown</span> in <a href="https://www.rstudio.com/" target="_blank"><span class="fa fa-registered"></span> RStudio</a> using the <span style="font-family: monospace; background-color: #e8e8e8;">cyborg</span> theme from <a href="https://bootswatch.com/" target="_blank"><span class="fa fa-swatchbook"></span> Bootswatch</a> via the <span style="font-family: monospace; background-color: #e8e8e8;">bslib</span> package, and <a href="https://fontawesome.com/v5/search?o=r&m=free" target="_blank"><span class="fa fa-font-awesome"></span> fontawesome v5 icons</a>.</span></p>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
