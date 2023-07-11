@@ -46,6 +46,9 @@ navbar:
         - text: "Compositional data analysis Intro"
           icon: fa-arrow-circle-right
           href: compositional_Pt0-Intro.html
+        - text: "PCA for compositional data analysis"
+          icon: fa-arrow-circle-right
+          href: compositional_Pt1-PCA.html
     - text: "Rants"
       icon: fa-bell
       href: rants.html

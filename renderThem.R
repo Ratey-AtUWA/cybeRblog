@@ -33,4 +33,7 @@ rmarkdown::render_site("meansR.Rmd")
 rmarkdown::render_site("relationR.Rmd")
 rmarkdown::render_site("geostats.Rmd")
 
+rmarkdown::render_site("compositional_Pt0-Intro.rmd")
+rmarkdown::render_site("compositional_Pt1-PCA.rmd")
+
 rmarkdown::render_site("testpage.Rmd")
