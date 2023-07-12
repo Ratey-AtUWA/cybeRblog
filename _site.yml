@@ -9,7 +9,28 @@ navbar:
       href: index.html
     - text: "Code"
       icon: fa-project-diagram
-      href: code.html
+      menu:
+        - text: "All the code in one place"
+          icon: fa-arrow-circle-right
+          href: code.html
+        - text: "Maps and geostatistics"
+          icon: fa-arrow-circle-right
+          href: mapscode.html
+        - text: "Exploratory Data Analysis"
+          icon: fa-arrow-circle-right
+          href: EDAcode.html
+        - text: "Compositional Data Analysis"
+          icon: fa-arrow-circle-right
+          href: CoDAcode.html
+        - text: "Soil science"
+          icon: fa-arrow-circle-right
+          href: soilcode.html
+        - text: "File conversions"
+          icon: fa-arrow-circle-right
+          href: filecode.html
+        - text: "Environmental Biology"
+          icon: fa-arrow-circle-right
+          href: biolcode.html
     - text: "Teaching"
       icon: fa-chalkboard-teacher
       menu:

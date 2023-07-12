@@ -33,6 +33,13 @@ rmarkdown::render_site("meansR.Rmd")
 rmarkdown::render_site("relationR.Rmd")
 rmarkdown::render_site("geostats.Rmd")
 
+rmarkdown::render_site("mapscode.rmd")
+rmarkdown::render_site("EDAcode.rmd")
+rmarkdown::render_site("CoDAcode.Rmd")
+rmarkdown::render_site("soilcode.Rmd")
+rmarkdown::render_site("filecode.Rmd")
+rmarkdown::render_site("biolcode.Rmd")
+
 rmarkdown::render_site("compositional_Pt0-Intro.rmd")
 rmarkdown::render_site("compositional_Pt1-PCA.rmd")
 
