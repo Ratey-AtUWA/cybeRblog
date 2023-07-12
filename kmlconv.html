@@ -243,12 +243,65 @@ $(document).ready(function () {
     Home
   </a>
 </li>
-<li>
-  <a href="code.html">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-project-diagram"></span>
      
     Code
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="code.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        All the code in one place
+      </a>
+    </li>
+    <li>
+      <a href="mapscode.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Maps and geostatistics
+      </a>
+    </li>
+    <li>
+      <a href="EDAcode.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Exploratory Data Analysis
+      </a>
+    </li>
+    <li>
+      <a href="CoDAcode.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Compositional Data Analysis
+      </a>
+    </li>
+    <li>
+      <a href="soilcode.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Soil science
+      </a>
+    </li>
+    <li>
+      <a href="filecode.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        File conversions
+      </a>
+    </li>
+    <li>
+      <a href="biolcode.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Environmental Biology
+      </a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -260,34 +313,88 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="teaching.html">All in one place</a>
+      <a href="teaching.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        All in one place
+      </a>
     </li>
     <li>
-      <a href="WhatsR.html">Very basic R</a>
+      <a href="WhatsR.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Very basic R
+      </a>
     </li>
     <li>
-      <a href="Rbasics.html">Intro to R</a>
+      <a href="Rbasics.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Intro to R
+      </a>
     </li>
     <li>
-      <a href="Rgraphs.html">Intro to R graphics</a>
+      <a href="Rgraphs.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Intro to R graphics
+      </a>
     </li>
     <li>
-      <a href="transformR.html">Variable distributions</a>
+      <a href="transformR.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Variable distributions
+      </a>
     </li>
     <li>
-      <a href="meansR.html">Comparing means</a>
+      <a href="meansR.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Comparing means
+      </a>
     </li>
     <li>
-      <a href="relationR.html">Relationships</a>
+      <a href="relationR.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Relationships
+      </a>
     </li>
     <li>
-      <a href="Rmaps.html">Basic maps in R</a>
+      <a href="Rmaps.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Basic maps in R
+      </a>
     </li>
     <li>
-      <a href="geostats.html">Geostatistics</a>
+      <a href="geostats.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Geostatistics
+      </a>
     </li>
     <li>
-      <a href="vegan.html">Multivariate eDNA</a>
+      <a href="vegan.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Multivariate eDNA
+      </a>
+    </li>
+    <li>
+      <a href="compositional_Pt0-Intro.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Compositional data analysis Intro
+      </a>
+    </li>
+    <li>
+      <a href="compositional_Pt1-PCA.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        PCA for compositional data analysis
+      </a>
     </li>
   </ul>
 </li>
@@ -400,10 +507,7 @@ line, or polygon</li>
 cat(&quot;first 10 lines of input file:\n\n&quot;)
 readLines(kml1)[1:10] ; cat(&quot;    \u22EE\n\n&quot;,rep(&quot;-&quot;,60),&quot;\n&quot;,sep=&quot;&quot;)
 kmlconvert(kml1, 50, &quot;south&quot;)</code></pre>
-<pre><code>## Loading required package: sf</code></pre>
-<pre><code>## Linking to GEOS 3.9.3, GDAL 3.5.2, PROJ 8.2.1; sf_use_s2() is TRUE</code></pre>
 <pre><code>## Loading required package: maptools</code></pre>
-<pre><code>## Loading required package: sp</code></pre>
 <pre><code>## Checking rgeos availability: FALSE
 ## Please note that &#39;maptools&#39; will be retired during 2023,
 ## plan transition at your earliest convenience;
