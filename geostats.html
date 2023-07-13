@@ -245,12 +245,65 @@ $(document).ready(function () {
     Home
   </a>
 </li>
-<li>
-  <a href="code.html">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-project-diagram"></span>
      
     Code
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="code.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        All the code in one place
+      </a>
+    </li>
+    <li>
+      <a href="mapscode.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Maps and geostatistics
+      </a>
+    </li>
+    <li>
+      <a href="EDAcode.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Exploratory Data Analysis
+      </a>
+    </li>
+    <li>
+      <a href="CoDAcode.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Compositional Data Analysis
+      </a>
+    </li>
+    <li>
+      <a href="soilcode.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Soil science
+      </a>
+    </li>
+    <li>
+      <a href="filecode.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        File conversions
+      </a>
+    </li>
+    <li>
+      <a href="biolcode.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Environmental Biology
+      </a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -262,34 +315,88 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="teaching.html">All in one place</a>
+      <a href="teaching.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        All in one place
+      </a>
     </li>
     <li>
-      <a href="WhatsR.html">Very basic R</a>
+      <a href="WhatsR.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Very basic R
+      </a>
     </li>
     <li>
-      <a href="Rbasics.html">Intro to R</a>
+      <a href="Rbasics.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Intro to R
+      </a>
     </li>
     <li>
-      <a href="Rgraphs.html">Intro to R graphics</a>
+      <a href="Rgraphs.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Intro to R graphics
+      </a>
     </li>
     <li>
-      <a href="transformR.html">Variable distributions</a>
+      <a href="transformR.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Variable distributions
+      </a>
     </li>
     <li>
-      <a href="meansR.html">Comparing means</a>
+      <a href="meansR.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Comparing means
+      </a>
     </li>
     <li>
-      <a href="relationR.html">Relationships</a>
+      <a href="relationR.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Relationships
+      </a>
     </li>
     <li>
-      <a href="Rmaps.html">Basic maps in R</a>
+      <a href="Rmaps.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Basic maps in R
+      </a>
     </li>
     <li>
-      <a href="geostats.html">Geostatistics</a>
+      <a href="geostats.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Geostatistics
+      </a>
     </li>
     <li>
-      <a href="vegan.html">Multivariate eDNA</a>
+      <a href="vegan.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Multivariate eDNA
+      </a>
+    </li>
+    <li>
+      <a href="compositional_Pt0-Intro.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Compositional data analysis Intro
+      </a>
+    </li>
+    <li>
+      <a href="compositional_Pt1-PCA.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        PCA for compositional data analysis
+      </a>
     </li>
   </ul>
 </li>
@@ -355,7 +462,7 @@ visualization</h1>
 <h1>Geostatistics and Data Mapping in <strong>R</strong></h1>
 <p>In this guide we use a range of R packages for different functions,
 shown in Table 1.</p>
-<template id="fb923d0b-aab7-4b81-b754-a95f12ca3cc2"><style>
+<template id="ad549b98-685a-4583-90fb-29156686ac30"><style>
 .tabwid table{
   border-spacing:0px !important;
   border-collapse:collapse;
@@ -394,11 +501,11 @@ background-color: transparent;
 .katex-display {
     margin: 0 0 !important;
 }
-</style><div class="tabwid"><style>.cl-415c87fe{}.cl-4153a328{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-4153a332{font-family:'Courier New';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-4153a333{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-415747e4{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-4157608a{width:1.2in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-41576094{width:4.5in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4157609e{width:2.5in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4157609f{width:1.2in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-415760a0{width:4.5in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-415760a8{width:2.5in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-415760a9{width:1.2in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-415760b2{width:4.5in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-415760b3{width:2.5in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-415760bc{width:1.2in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-415760bd{width:4.5in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-415760c6{width:2.5in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-414e61f6{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}</style><table class='cl-415c87fe'><caption><span class="cl-414e61f6">Table 1: R packages used for spatial data analysis and visualisation.</span></caption><thead><tr style="overflow-wrap:break-word;"><td class="cl-4157608a"><p class="cl-415747e4"><span class="cl-4153a328">Package</span></p></td><td class="cl-41576094"><p class="cl-415747e4"><span class="cl-4153a328">Purpose</span></p></td><td class="cl-4157609e"><p class="cl-415747e4"><span class="cl-4153a328">Reference</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-4157609f"><p class="cl-415747e4"><span class="cl-4153a332">sf</span></p></td><td class="cl-415760a0"><p class="cl-415747e4"><span class="cl-4153a333">Spatial data handling, formatting, and storing spatial data</span></p></td><td class="cl-415760a8"><p class="cl-415747e4"><span class="cl-4153a333">Pebesma (2018)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-415760a9"><p class="cl-415747e4"><span class="cl-4153a332">gstat</span></p></td><td class="cl-415760b2"><p class="cl-415747e4"><span class="cl-4153a333">Geostatistics (variograms and variogram models, kriging)</span></p></td><td class="cl-415760b3"><p class="cl-415747e4"><span class="cl-4153a333">Pebesma (2004)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4157609f"><p class="cl-415747e4"><span class="cl-4153a332">sp</span></p></td><td class="cl-415760a0"><p class="cl-415747e4"><span class="cl-4153a333">Handling, formatting, and storing spatial data; some graphical functions</span></p></td><td class="cl-415760a8"><p class="cl-415747e4"><span class="cl-4153a333">Pebesma and Bivand (2005)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-415760a9"><p class="cl-415747e4"><span class="cl-4153a332">maps</span></p></td><td class="cl-415760b2"><p class="cl-415747e4"><span class="cl-4153a333">Simple map outlines</span></p></td><td class="cl-415760b3"><p class="cl-415747e4"><span class="cl-4153a333">Becker et al. (2021)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4157609f"><p class="cl-415747e4"><span class="cl-4153a332">spdep</span></p></td><td class="cl-415760a0"><p class="cl-415747e4"><span class="cl-4153a333">Spatial autocorrelation, LISA</span></p></td><td class="cl-415760a8"><p class="cl-415747e4"><span class="cl-4153a333">Pebesma and Bivand (2023)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-415760a9"><p class="cl-415747e4"><span class="cl-4153a332">lctools</span></p></td><td class="cl-415760b2"><p class="cl-415747e4"><span class="cl-4153a333">Spatial autocorrelation</span></p></td><td class="cl-415760b3"><p class="cl-415747e4"><span class="cl-4153a333">Kalogirou (2020)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4157609f"><p class="cl-415747e4"><span class="cl-4153a332">maptiles</span></p></td><td class="cl-415760a0"><p class="cl-415747e4"><span class="cl-4153a333">Retrieving and plotting tile-based map data</span></p></td><td class="cl-415760a8"><p class="cl-415747e4"><span class="cl-4153a333">Giraud (2021)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-415760a9"><p class="cl-415747e4"><span class="cl-4153a332">prettymapr</span></p></td><td class="cl-415760b2"><p class="cl-415747e4"><span class="cl-4153a333">Map annotations</span></p></td><td class="cl-415760b3"><p class="cl-415747e4"><span class="cl-4153a333">Dunnington (2022)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4157609f"><p class="cl-415747e4"><span class="cl-4153a332">fields</span></p></td><td class="cl-415760a0"><p class="cl-415747e4"><span class="cl-4153a333">Visualizing spatial data with irregular grids</span></p></td><td class="cl-415760a8"><p class="cl-415747e4"><span class="cl-4153a333">Nychka et al. (2021)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-415760bc"><p class="cl-415747e4"><span class="cl-4153a332">viridis</span></p></td><td class="cl-415760bd"><p class="cl-415747e4"><span class="cl-4153a333">Colourblind-friendly colour palettes for maps</span></p></td><td class="cl-415760c6"><p class="cl-415747e4"><span class="cl-4153a333">Garnier et al. (2021)</span></p></td></tr></tbody></table></div></template>
-<div class="flextable-shadow-host" id="58300721-e506-45dc-8342-b9328fca1acd"></div>
+</style><div class="tabwid"><style>.cl-475937b8{}.cl-474971de{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-474971f2{font-family:'Courier New';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-474971fc{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-474f93a2{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-474fb6b6{width:1.2in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-474fb6c0{width:4.5in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-474fb6ca{width:2.5in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-474fb6cb{width:1.2in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-474fb6d4{width:4.5in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-474fb6de{width:2.5in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-474fb6e8{width:1.2in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-474fb706{width:4.5in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-474fb707{width:2.5in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-474fb71a{width:1.2in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-474fb71b{width:4.5in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-474fb724{width:2.5in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4740d51a{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}</style><table class='cl-475937b8'><caption><span class="cl-4740d51a">Table 1: R packages used for spatial data analysis and visualisation.</span></caption><thead><tr style="overflow-wrap:break-word;"><td class="cl-474fb6b6"><p class="cl-474f93a2"><span class="cl-474971de">Package</span></p></td><td class="cl-474fb6c0"><p class="cl-474f93a2"><span class="cl-474971de">Purpose</span></p></td><td class="cl-474fb6ca"><p class="cl-474f93a2"><span class="cl-474971de">Reference</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-474fb6cb"><p class="cl-474f93a2"><span class="cl-474971f2">sf</span></p></td><td class="cl-474fb6d4"><p class="cl-474f93a2"><span class="cl-474971fc">Spatial data handling, formatting, and storing spatial data</span></p></td><td class="cl-474fb6de"><p class="cl-474f93a2"><span class="cl-474971fc">Pebesma (2018)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-474fb6e8"><p class="cl-474f93a2"><span class="cl-474971f2">gstat</span></p></td><td class="cl-474fb706"><p class="cl-474f93a2"><span class="cl-474971fc">Geostatistics (variograms and variogram models, kriging)</span></p></td><td class="cl-474fb707"><p class="cl-474f93a2"><span class="cl-474971fc">Pebesma (2004)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-474fb6cb"><p class="cl-474f93a2"><span class="cl-474971f2">sp</span></p></td><td class="cl-474fb6d4"><p class="cl-474f93a2"><span class="cl-474971fc">Handling, formatting, and storing spatial data; some graphical functions</span></p></td><td class="cl-474fb6de"><p class="cl-474f93a2"><span class="cl-474971fc">Pebesma and Bivand (2005)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-474fb6e8"><p class="cl-474f93a2"><span class="cl-474971f2">maps</span></p></td><td class="cl-474fb706"><p class="cl-474f93a2"><span class="cl-474971fc">Simple map outlines</span></p></td><td class="cl-474fb707"><p class="cl-474f93a2"><span class="cl-474971fc">Becker et al. (2021)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-474fb6cb"><p class="cl-474f93a2"><span class="cl-474971f2">spdep</span></p></td><td class="cl-474fb6d4"><p class="cl-474f93a2"><span class="cl-474971fc">Spatial autocorrelation, LISA</span></p></td><td class="cl-474fb6de"><p class="cl-474f93a2"><span class="cl-474971fc">Pebesma and Bivand (2023)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-474fb6e8"><p class="cl-474f93a2"><span class="cl-474971f2">lctools</span></p></td><td class="cl-474fb706"><p class="cl-474f93a2"><span class="cl-474971fc">Spatial autocorrelation</span></p></td><td class="cl-474fb707"><p class="cl-474f93a2"><span class="cl-474971fc">Kalogirou (2020)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-474fb6cb"><p class="cl-474f93a2"><span class="cl-474971f2">maptiles</span></p></td><td class="cl-474fb6d4"><p class="cl-474f93a2"><span class="cl-474971fc">Retrieving and plotting tile-based map data</span></p></td><td class="cl-474fb6de"><p class="cl-474f93a2"><span class="cl-474971fc">Giraud (2021)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-474fb6e8"><p class="cl-474f93a2"><span class="cl-474971f2">prettymapr</span></p></td><td class="cl-474fb706"><p class="cl-474f93a2"><span class="cl-474971fc">Map annotations</span></p></td><td class="cl-474fb707"><p class="cl-474f93a2"><span class="cl-474971fc">Dunnington (2022)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-474fb6cb"><p class="cl-474f93a2"><span class="cl-474971f2">fields</span></p></td><td class="cl-474fb6d4"><p class="cl-474f93a2"><span class="cl-474971fc">Visualizing spatial data with irregular grids</span></p></td><td class="cl-474fb6de"><p class="cl-474f93a2"><span class="cl-474971fc">Nychka et al. (2021)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-474fb71a"><p class="cl-474f93a2"><span class="cl-474971f2">viridis</span></p></td><td class="cl-474fb71b"><p class="cl-474f93a2"><span class="cl-474971fc">Colourblind-friendly colour palettes for maps</span></p></td><td class="cl-474fb724"><p class="cl-474f93a2"><span class="cl-474971fc">Garnier et al. (2021)</span></p></td></tr></tbody></table></div></template>
+<div class="flextable-shadow-host" id="4d0dc11f-be46-4949-aaa6-1f97d8cf8b5b"></div>
 <script>
-var dest = document.getElementById("58300721-e506-45dc-8342-b9328fca1acd");
-var template = document.getElementById("fb923d0b-aab7-4b81-b754-a95f12ca3cc2");
+var dest = document.getElementById("4d0dc11f-be46-4949-aaa6-1f97d8cf8b5b");
+var template = document.getElementById("ad549b98-685a-4583-90fb-29156686ac30");
 var caption = template.content.querySelector("caption");
 var fantome = dest.attachShadow({mode: 'open'});
 var templateContent = template.content;
@@ -898,7 +1005,7 @@ frame to plot a map of <strong>l</strong>ocal
 <p>
  
 </p>
-<template id="5405d061-9d81-4cbe-886a-23446998d31f"><style>
+<template id="83e46b08-9ba0-40e0-a412-efc75608e490"><style>
 .tabwid table{
   border-spacing:0px !important;
   border-collapse:collapse;
@@ -937,11 +1044,11 @@ background-color: transparent;
 .katex-display {
     margin: 0 0 !important;
 }
-</style><div class="tabwid"><style>.cl-48a43cd2{}.cl-489b043c{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-489b0450{font-family:'Arial';font-size:6pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;position: relative;bottom:3pt;}.cl-489b0451{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-489b045a{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 255, 1.00);background-color:transparent;}.cl-489b045b{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(255, 0, 0, 1.00);background-color:transparent;}.cl-489b0464{font-family:'Arial';font-size:6pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;position: relative;bottom:3pt;}.cl-489ef09c{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-489f0794{width:2.4in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-489f079e{width:2.4in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-489f07a8{width:2.4in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-489f07b2{width:2.4in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-489f07b3{width:2.4in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-489f07bc{width:2.4in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-489f07bd{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-489f07c6{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-489f07c7{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-489f07d0{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-489f07da{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-489f07db{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-489f07dc{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-48826d82{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}</style><table class='cl-48a43cd2'><caption><span class="cl-48826d82">Table 2: Explanation of LISA (Local Indicators of Spatial Association) categories.</span></caption><thead><tr style="overflow-wrap:break-word;"><td class="cl-489f0794"><p class="cl-489ef09c"><span class="cl-489b043c">LISA quadrant</span></p></td><td class="cl-489f079e"><p class="cl-489ef09c"><span class="cl-489b043c">Variable value</span><span class="cl-489b0450">a</span></p></td><td class="cl-489f07a8"><p class="cl-489ef09c"><span class="cl-489b043c">Local Moran's I</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-489f07b2"><p class="cl-489ef09c"><span class="cl-489b0451">Low-Low</span></p></td><td class="cl-489f07b3"><p class="cl-489ef09c"><span class="cl-489b045a">&lt; median</span></p></td><td class="cl-489f07bc"><p class="cl-489ef09c"><span class="cl-489b045b">positive</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-489f07bd"><p class="cl-489ef09c"><span class="cl-489b0451">High-Low</span></p></td><td class="cl-489f07c6"><p class="cl-489ef09c"><span class="cl-489b045b">&gt; median</span></p></td><td class="cl-489f07c7"><p class="cl-489ef09c"><span class="cl-489b045a">negative</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-489f07b2"><p class="cl-489ef09c"><span class="cl-489b0451">Low-High</span></p></td><td class="cl-489f07b3"><p class="cl-489ef09c"><span class="cl-489b045a">&lt; median</span></p></td><td class="cl-489f07bc"><p class="cl-489ef09c"><span class="cl-489b045a">negative</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-489f07d0"><p class="cl-489ef09c"><span class="cl-489b0451">High-High</span></p></td><td class="cl-489f07da"><p class="cl-489ef09c"><span class="cl-489b045b">&gt; median</span></p></td><td class="cl-489f07db"><p class="cl-489ef09c"><span class="cl-489b045b">positive</span></p></td></tr></tbody><tfoot><tr style="overflow-wrap:break-word;"><td  colspan="3"class="cl-489f07dc"><p class="cl-489ef09c"><span class="cl-489b0464">a</span><span class="cl-489b0451">LISA quadrants can also be defined relative to the mean.</span></p></td></tr></tfoot></table></div></template>
-<div class="flextable-shadow-host" id="42427a70-a013-499c-8987-fddc0f060951"></div>
+</style><div class="tabwid"><style>.cl-5168ecbc{}.cl-51609a3a{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-51609a44{font-family:'Arial';font-size:6pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;position: relative;bottom:3pt;}.cl-51609a4e{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-51609a58{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 255, 1.00);background-color:transparent;}.cl-51609a59{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(255, 0, 0, 1.00);background-color:transparent;}.cl-51609a62{font-family:'Arial';font-size:6pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;position: relative;bottom:3pt;}.cl-5163cd90{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-5163df56{width:2.4in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5163df60{width:2.4in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5163df6a{width:2.4in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 1pt solid rgba(181, 195, 223, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5163df6b{width:2.4in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5163df6c{width:2.4in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5163df74{width:2.4in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5163df75{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5163df7e{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5163df7f{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5163df88{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(181, 195, 223, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5163df89{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5163df92{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(181, 195, 223, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(181, 195, 223, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5163df9c{width:2.4in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-515c1c08{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}</style><table class='cl-5168ecbc'><caption><span class="cl-515c1c08">Table 2: Explanation of LISA (Local Indicators of Spatial Association) categories.</span></caption><thead><tr style="overflow-wrap:break-word;"><td class="cl-5163df56"><p class="cl-5163cd90"><span class="cl-51609a3a">LISA quadrant</span></p></td><td class="cl-5163df60"><p class="cl-5163cd90"><span class="cl-51609a3a">Variable value</span><span class="cl-51609a44">a</span></p></td><td class="cl-5163df6a"><p class="cl-5163cd90"><span class="cl-51609a3a">Local Moran's I</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-5163df6b"><p class="cl-5163cd90"><span class="cl-51609a4e">Low-Low</span></p></td><td class="cl-5163df6c"><p class="cl-5163cd90"><span class="cl-51609a58">&lt; median</span></p></td><td class="cl-5163df74"><p class="cl-5163cd90"><span class="cl-51609a59">positive</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5163df75"><p class="cl-5163cd90"><span class="cl-51609a4e">High-Low</span></p></td><td class="cl-5163df7e"><p class="cl-5163cd90"><span class="cl-51609a59">&gt; median</span></p></td><td class="cl-5163df7f"><p class="cl-5163cd90"><span class="cl-51609a58">negative</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5163df6b"><p class="cl-5163cd90"><span class="cl-51609a4e">Low-High</span></p></td><td class="cl-5163df6c"><p class="cl-5163cd90"><span class="cl-51609a58">&lt; median</span></p></td><td class="cl-5163df74"><p class="cl-5163cd90"><span class="cl-51609a58">negative</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5163df88"><p class="cl-5163cd90"><span class="cl-51609a4e">High-High</span></p></td><td class="cl-5163df89"><p class="cl-5163cd90"><span class="cl-51609a59">&gt; median</span></p></td><td class="cl-5163df92"><p class="cl-5163cd90"><span class="cl-51609a59">positive</span></p></td></tr></tbody><tfoot><tr style="overflow-wrap:break-word;"><td  colspan="3"class="cl-5163df9c"><p class="cl-5163cd90"><span class="cl-51609a62">a</span><span class="cl-51609a4e">LISA quadrants can also be defined relative to the mean.</span></p></td></tr></tfoot></table></div></template>
+<div class="flextable-shadow-host" id="d2a0879d-5c59-48eb-a429-7c3e17b3e485"></div>
 <script>
-var dest = document.getElementById("42427a70-a013-499c-8987-fddc0f060951");
-var template = document.getElementById("5405d061-9d81-4cbe-886a-23446998d31f");
+var dest = document.getElementById("d2a0879d-5c59-48eb-a429-7c3e17b3e485");
+var template = document.getElementById("83e46b08-9ba0-40e0-a412-efc75608e490");
 var caption = template.content.querySelector("caption");
 var fantome = dest.attachShadow({mode: 'open'});
 var templateContent = template.content;
