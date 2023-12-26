@@ -72,7 +72,13 @@ navbar:
           href: compositional_Pt1-PCA.html
     - text: "Rants"
       icon: fa-bell
-      href: rants.html
+      menu:
+        - text: "All the rants in one place"
+          icon: fa-comment-dots
+          href: rants.html
+        - text: "profundus metallum"
+          icon: fa-comment-dots
+          href: profmetal.html
     - text: "Images"
       icon: fa-images
       href: images.html
