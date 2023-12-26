@@ -23,6 +23,9 @@ rmarkdown::render_site("georef_jpeg_map.Rmd")
 rmarkdown::render_site("Shapefiles-in-R-maps.Rmd")
 rmarkdown::render_site("images.Rmd")
 
+# rants
+rmarkdown::render_site("profmetal.Rmd")
+
 # code for learning and teaching
 rmarkdown::render_site("teaching.Rmd")
 rmarkdown::render_site("WhatsR.Rmd")

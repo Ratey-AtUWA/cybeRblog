@@ -398,12 +398,30 @@ $(document).ready(function () {
     </li>
   </ul>
 </li>
-<li>
-  <a href="rants.html">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-bell"></span>
      
     Rants
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="rants.html">
+        <span class="fa fa-comment-dots"></span>
+         
+        All the rants in one place
+      </a>
+    </li>
+    <li>
+      <a href="profmetal.html">
+        <span class="fa fa-comment-dots"></span>
+         
+        profundus metallum
+      </a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="images.html">
@@ -468,6 +486,7 @@ style="font-family: monospace; background-color: #e8e8e8;">ggplot2</span>
 object to an animated gif file.</p>
 <pre class="r"><code>library(gganimate)</code></pre>
 <pre><code>## Loading required package: ggplot2</code></pre>
+<pre><code>## Learn more about the underlying theory at https://ggplot2-book.org/</code></pre>
 <pre class="r"><code>library(reshape2)
 library(gifski)</code></pre>
 <pre class="r"><code>npts &lt;- 500 # number of points to represent solute pulse
@@ -498,18 +517,18 @@ for(i in 0:(nd-1)) {
 }
 str(pulse)</code></pre>
 <pre><code>## &#39;data.frame&#39;:    500 obs. of  12 variables:
-##  $ x0     : num  0.3065 0.6569 0.2727 0.0087 0.7582 ...
-##  $ time_0 : num  0.841 0.557 1.526 1.09 0.843 ...
-##  $ time_1 : num  12.3 10.6 10.1 10.9 11.7 ...
-##  $ time_2 : num  19 21 21.7 21.2 22.8 ...
-##  $ time_3 : num  27 29.9 26.2 27.2 29 ...
-##  $ time_4 : num  35.9 37.4 38.3 40.1 35.8 ...
-##  $ time_5 : num  48.9 44.3 49.9 47.5 47.6 ...
-##  $ time_6 : num  56.6 54.8 57 57.5 56.4 ...
-##  $ time_7 : num  63.7 71 66.7 69 72.7 ...
-##  $ time_8 : num  82.5 73.5 77.6 73.8 82.2 ...
-##  $ time_9 : num  90.2 90.2 98.4 82.6 88.3 ...
-##  $ time_10: num  97.2 103.6 100.5 99.3 102.6 ...</code></pre>
+##  $ x0     : num  0.702 0.644 0.277 0.618 0.191 ...
+##  $ time_0 : num  1.471 1.205 1.121 0.891 1.049 ...
+##  $ time_1 : num  9.95 11.85 10.74 9.62 11.5 ...
+##  $ time_2 : num  21.9 21.6 22.8 21.5 18.5 ...
+##  $ time_3 : num  32.7 27.7 29.9 29.3 31.6 ...
+##  $ time_4 : num  38.6 40.6 40.1 42.1 40.6 ...
+##  $ time_5 : num  45.5 49.7 52 44.1 47.6 ...
+##  $ time_6 : num  58.4 52.7 59.2 59.9 56.3 ...
+##  $ time_7 : num  70.3 61.6 65 71 64 ...
+##  $ time_8 : num  74.9 72.6 70.5 79 72.2 ...
+##  $ time_9 : num  79.9 83.3 84.9 88.7 83.1 ...
+##  $ time_10: num  97.9 92.3 98.7 103.1 86.2 ...</code></pre>
 <p>The data we have created has time steps as separate columns. We
 actually want a single column factor column with the time steps as
 levels. For this we use the <span
@@ -521,9 +540,9 @@ package, which does this seamlessly if we get the options correct:</p>
                      variable.name = &quot;Timestep&quot;, value.name = &quot;Particles&quot;)
 str(pulseFact)</code></pre>
 <pre><code>## &#39;data.frame&#39;:    5500 obs. of  3 variables:
-##  $ x0       : num  0.3065 0.6569 0.2727 0.0087 0.7582 ...
+##  $ x0       : num  0.702 0.644 0.277 0.618 0.191 ...
 ##  $ Timestep : Factor w/ 11 levels &quot;time_0&quot;,&quot;time_1&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
-##  $ Particles: num  0.841 0.557 1.526 1.09 0.843 ...</code></pre>
+##  $ Particles: num  1.471 1.205 1.121 0.891 1.049 ...</code></pre>
 <div id="make-the-animation" class="section level1">
 <h1>Make the animation</h1>
 <p>The animation is based on a standard ggplot:</p>
@@ -583,10 +602,11 @@ package:</p>
 options(gganimate.dev_args = list(width = 400, height = 600))
 anim_save(&quot;pulseAnim.gif&quot;, animate(pulseAnim, renderer = gifski_renderer(), 
                                   duration = 12))</code></pre>
-<div class="figure">
-<img src="images/pulseAnim.gif" alt="" />
-<p class="caption">Figure 3. Animation of simulated solute transport
-made with the gganimate R package.</p>
+<div class="float">
+<img src="images/pulseAnim.gif"
+alt="Figure 3. Animation of simulated solute transport made with the gganimate R package." />
+<div class="figcaption">Figure 3. Animation of simulated solute
+transport made with the gganimate R package.</div>
 </div>
 </div>
 
