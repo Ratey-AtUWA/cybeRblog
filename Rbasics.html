@@ -398,12 +398,30 @@ $(document).ready(function () {
     </li>
   </ul>
 </li>
-<li>
-  <a href="rants.html">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-bell"></span>
      
     Rants
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="rants.html">
+        <span class="fa fa-comment-dots"></span>
+         
+        All the rants in one place
+      </a>
+    </li>
+    <li>
+      <a href="profmetal.html">
+        <span class="fa fa-comment-dots"></span>
+         
+        profundus metallum
+      </a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="images.html">
@@ -954,9 +972,12 @@ numSummary(hubbard$EXCH_Ni, groups=hubbard$Rel.To.Brook)</code></pre>
 ##  0.002536502 0.001382344 0.001126141 0.00070457 0.001829135 0.002246775 0.002955276 0.01784169 257  3
 ## 
 ## Summary statistics for EXCH_Ni grouped by Rel.To.Brook
-##              mean          sd         IQR          0%         25%         50%         75%        100% data:n data:NA
-## North 0.002635924 0.001605190 0.001114533 0.001120626 0.001933342 0.002277016 0.003047875 0.017841689    132       3
-## South 0.002431513 0.001096042 0.001170948 0.000704570 0.001719421 0.002174767 0.002890369 0.008483806    125       0</code></pre>
+##              mean          sd         IQR          0%         25%         50%         75%        100% data:n
+## North 0.002635924 0.001605190 0.001114533 0.001120626 0.001933342 0.002277016 0.003047875 0.017841689    132
+## South 0.002431513 0.001096042 0.001170948 0.000704570 0.001719421 0.002174767 0.002890369 0.008483806    125
+##       data:NA
+## North       3
+## South       0</code></pre>
 <p>For <code>numSummary()</code> tables, try the following:</p>
 <ul>
 <li>generating summary tables for more than one variable at a time</li>

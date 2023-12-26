@@ -398,12 +398,30 @@ $(document).ready(function () {
     </li>
   </ul>
 </li>
-<li>
-  <a href="rants.html">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-bell"></span>
      
     Rants
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="rants.html">
+        <span class="fa fa-comment-dots"></span>
+         
+        All the rants in one place
+      </a>
+    </li>
+    <li>
+      <a href="profmetal.html">
+        <span class="fa fa-comment-dots"></span>
+         
+        profundus metallum
+      </a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="images.html">
@@ -515,6 +533,11 @@ kmlconvert(kml1, 50, &quot;south&quot;)</code></pre>
 ##      Note: when rgeos is not available, polygon geometry     computations in maptools depend on gpclib,
 ##      which has a restricted licence. It is disabled by default;
 ##      to enable gpclib, type gpclibPermit()</code></pre>
+<pre><code>## 
+## Attaching package: &#39;maptools&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:sp&#39;:
+## 
+##     elide, sp2Mondrian</code></pre>
 <pre><code>## first 10 lines of input file:
 ## 
 ##  [1] &quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot;?&gt;&quot;                                                                                                                                           
