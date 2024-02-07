@@ -473,8 +473,8 @@ $(document).ready(function () {
 }
 </style>
 <p><img src="WhatsR_files/figure-html/page%201%20header%20hide%20code-1.png" width="100%" style="display: block; margin: auto 0 auto auto;" /></p>
-<div id="what-is-r" class="section level1">
-<h1>What is R?</h1>
+<div id="what-is-r" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> What is R?</h1>
 <p><strong>R</strong> is called a "<strong>statistical computing
 environment</strong>". This means two things:</p>
 <ol style="list-style-type: decimal">
@@ -505,15 +505,15 @@ using R markdown).</p>
 <blockquote>
 <p>"...R has developed into a powerful and much used open source tool
 ... for advanced statistical data analysis..."</p>
-<p>--- <a
+<p>— <a
 href="https://onesearch.library.uwa.edu.au/permalink/61UWA_INST/1vk1d8f/alma99584168302101"
 target="_blank">Reimann <em>et al</em>. (2008) – <em>Statistical Data
 Analysis Explained: Applied Environmental Statistics with R</em></a>,
 p.3.</p>
 </blockquote>
 <hr style="height: 2px; background-color: #660F00;" />
-<div id="r-and-rstudio" class="section level2">
-<h2>R and RStudio</h2>
+<div id="r-and-rstudio" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> R and RStudio</h2>
 <p>To make our job of using <strong>R</strong> easier, we'll be using
 the <strong>RStudio</strong> program. RStudio is an IDE or 'integrated
 development environment' which puts everything we need for R coding in
@@ -522,17 +522,17 @@ and some menu-driven functions) to make coding easier. In this document,
 when we say '<strong>R</strong>', we really mean 'R in the RStudio
 environment'.</p>
 <div class="figure" style="text-align: center">
-<img src="WhatsR_files/figure-html/fig-RStudio-1.png" alt="The RStudio window with a very brief explanation of some different sub-panes." width="691.2" />
+<img src="WhatsR_files/figure-html/fig-RStudio-1.png" alt="Figure 1: The RStudio window with a very brief explanation of some different sub-panes." width="691.2" />
 <p class="caption">
-The RStudio window with a very brief explanation of some different
-sub-panes.
+Figure 1: The RStudio window with a very brief explanation of some
+different sub-panes.
 </p>
 </div>
 </div>
 <div id="three-things-we-really-need-to-know-about-using-r"
-class="section level2">
-<h2>Three things we really need to know about using
-<strong>R</strong></h2>
+class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Three things we
+really need to know about using <strong>R</strong></h2>
 <ol style="list-style-type: decimal">
 <li><p><strong>How data are stored</strong>. <strong>R</strong> can
 handle many different types of data, such as numbers, text, categories,
@@ -543,7 +543,16 @@ ways.</p></li>
 <strong>R</strong> to do something for us, we need to give it
 instructions. We do this in other software too, commonly by using a
 mouse or other pointing device to click and select options from a menu.
-For example, in Excel we can sort a table of data by:</p>
+For example, in <strong>R</strong> we can sort a table of data by
+writing the instructions in <strong>R</strong> code:</p></li>
+</ol>
+<pre class="r"><code>data_sorted &lt;- data[order(data$column1, data$column2),] </code></pre>
+<p>You don't have to remember this (yet). The code here is also to
+illustrate that, in this document, <strong>R</strong> code will be shown
+in blocks like the one above having a
+<code>shaded background and fixed-space font</code>.</p>
+<p>In Excel, we can do the same thing, but we would use a sequence of
+point-and-click operations, such as that shown below:</p>
 <ol style="list-style-type: lower-alpha">
 <li>using the mouse to select the cells we want to sort;</li>
 <li>clicking on the Data menu;</li>
@@ -552,28 +561,24 @@ For example, in Excel we can sort a table of data by:</p>
 appears;</li>
 <li>clicking 'OK'.</li>
 </ol>
-<p>In <strong>R</strong>, we can do the same thing, but we would write
-the instructions in <strong>R</strong> code, such as that shown
-below:</p>
-<p>You don't have to remember this (yet). The code here is also to
-illustrate that, in this document, <strong>R</strong> code will be shown
-in blocks like the one below having a
-<code>shaded background and fixed-space font</code>.</p></li>
-</ol>
-<pre class="r"><code>data_sorted &lt;- data[order(data$column1, data$column2),] </code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>(We did say three things.) <strong>R</strong> is
 <strong>very</strong> literal, and needs precise instructions to do
 everything. A small error in our code will mean we get wrong, or no,
 results. For example, all <strong>R</strong> code is case-sensitive.
 Also, if we don't tell R where to look for things, it won't try anywhere
-else just in case we might have intended another location!</li>
+else just in case we might have intended another location!<br /> <a
+href="https://statsandr.com/blog/top-10-errors-in-r/" target="_blank">Go
+here for a great page on common errors in <strong>R</strong> and how to
+fix them</a></li>
 </ol>
 </div>
-<div id="types-of-data-we-commonly-use-in-r" class="section level2">
-<h2>Types of data we commonly use in <strong>R</strong></h2>
-<div id="single-numbers" class="section level3">
-<h3>Single numbers</h3>
+<div id="types-of-data-we-commonly-use-in-r" class="section level2"
+number="1.3">
+<h2><span class="header-section-number">1.3</span> Types of data we
+commonly use in <strong>R</strong></h2>
+<div id="single-numbers" class="section level3" number="1.3.1">
+<h3><span class="header-section-number">1.3.1</span> Single numbers</h3>
 <p><strong>R</strong> can work with single numbers, much like a complex
 calculator.</p>
 <p>To "run" <strong>R</strong> code, we can type it into the RStudio
@@ -585,9 +590,9 @@ entered.</p>
 <pre class="r"><code>sqrt(731)</code></pre>
 <pre><code>## [1] 27.03701</code></pre>
 <div class="figure" style="text-align: center">
-<img src="WhatsR_files/figure-html/fig-1-1.png" alt="Understanding simple R functions and output." width="591.36" />
+<img src="WhatsR_files/figure-html/fig-1-1.png" alt="Figure 2: Understanding simple R functions and output." width="591.36" />
 <p class="caption">
-Understanding simple R functions and output.
+Figure 2: Understanding simple R functions and output.
 </p>
 </div>
 <p>We don't usually use R like this, but it's handy to know that we have
@@ -597,21 +602,21 @@ a calculator handy if we need in in the <strong>R</strong> Console!</p>
 <td>
 <p><strong>R functions</strong></p>
 <p>This is also the place to introduce Functions in <strong>R</strong>.
-We just used a function -- to calculate a square root:
+We just used a function – to calculate a square root:
 <code>sqrt(731)</code>.</p>
 <p>An R function is identified by a <strong>name</strong> such as
 <code>sqrt</code>, <code>t.test</code> or <code>plot</code>, followed by
 <strong>arguments</strong> in parentheses <code>( )</code> (the
-parentheses can be empty, for example <code>help.start()</code> -- try
+parentheses can be empty, for example <code>help.start()</code> – try
 it!). We used the argument <code>731</code> in the <code>sqrt()</code>
-function -- some functions require several arguments, as you will see.
+function – some functions require several arguments, as you will see.
 Some arguments have default 'built-in' values.</p>
 <p>There are huge numbers of built-in functions in <strong>R</strong>
 which we can use after first installing <strong>R</strong>, "straight
 out of the box" (we call this "<strong>base R</strong>"). For instance,
-see the
-<a href="https://cran.r-project.org/doc/contrib/Baggott-refcard-v2.pdf" target="_blank">R
-reference card v2 by Matt Baggott</a>.</p>
+see the <a
+href="https://cran.r-project.org/doc/contrib/Baggott-refcard-v2.pdf"
+target="_blank">R reference card v2 by Matt Baggott</a>.</p>
 <p>If we can't find the functions we need, they may be available in
 <strong>R packages</strong> which are additional libraries of functions
 that we can install from within the <strong>R</strong> environment. A
@@ -627,9 +632,12 @@ show you examples of these as you progress through this course.
 </td>
 </tr>
 <table>
+<p>
+ 
+</p>
 </div>
-<div id="vectors" class="section level3">
-<h3>Vectors</h3>
+<div id="vectors" class="section level3" number="1.3.2">
+<h3><span class="header-section-number">1.3.2</span> Vectors</h3>
 <p>A vector is a one-dimensional set of numbers, similar to a column or
 row of values in a spreadsheet. We use the simple function
 <code>c()</code> to <strong>c</strong>ombine, or put together, a set of
@@ -669,8 +677,8 @@ time.</p>
 <pre class="r"><code># make a vector with a sequence of numbers from 2 to 80 in steps of 2
 b &lt;- seq(2,80,2)
 b</code></pre>
-<pre><code>##  [1]  2  4  6  8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74
-## [38] 76 78 80</code></pre>
+<pre><code>##  [1]  2  4  6  8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70
+## [36] 72 74 76 78 80</code></pre>
 <p>Notice that if we have a long vector, the number in square brackets
 at the beginning of each line tells us which item the line starts
 with.</p>
@@ -679,8 +687,8 @@ d &lt;- rep(12,20)
 d</code></pre>
 <pre><code>##  [1] 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12 12</code></pre>
 </div>
-<div id="matrices" class="section level3">
-<h3>Matrices</h3>
+<div id="matrices" class="section level3" number="1.3.3">
+<h3><span class="header-section-number">1.3.3</span> Matrices</h3>
 <p>A matrix is a two-dimensional set of data with rows and columns. All
 of the entries must be the same type (<em>e.g</em>. integer, numeric,
 character). We can make a matrix using a vector (<em>e.g</em>.
@@ -724,8 +732,8 @@ selection &lt;- m[,8]
 selection</code></pre>
 <pre><code>## [1] 16 32 48 64 80</code></pre>
 </div>
-<div id="data-frames" class="section level3">
-<h3>Data frames</h3>
+<div id="data-frames" class="section level3" number="1.3.4">
+<h3><span class="header-section-number">1.3.4</span> Data frames</h3>
 <p>Data frames are one of the most common ways to store data in
 <strong>R</strong>. They are two-dimensional like matrices, with rows
 and columns, but the columns can contain different types of data such as
@@ -766,7 +774,7 @@ information) with two <code>levels</code> or categories,
 <p><strong>Data frames</strong> are a very common way of storing our
 data in the <strong>R</strong> environment. The rows of our data frame
 represent our <strong>observations</strong> or 'samples'. The columns of
-a data frame are the <strong>variables</strong> -- information about the
+a data frame are the <strong>variables</strong> – information about the
 samples which may be identifying information (character or categorical
 information), or measurements (usually numeric information such as
 counts or concentrations).</p>
@@ -779,25 +787,29 @@ df$Value</code></pre>
 <pre class="r"><code>df[,3]</code></pre>
 <pre><code>## [1] 2.34 4.56 3.45 5.67 6.54</code></pre>
 </div>
-<div id="other-types-of-object-in-r" class="section level3">
-<h3>Other types of object in R</h3>
+<div id="other-types-of-object-in-r" class="section level3"
+number="1.3.5">
+<h3><span class="header-section-number">1.3.5</span> Other types of
+object in R</h3>
 <p>There are <em>many</em> other object types in <strong>R</strong>!
 Many of these are specialised to handle specific types of data, such as
 time series, spatial data, or raster images. One of the more common
 <strong>R</strong> objects is the <strong>list</strong>, which is a
-collection of different object types -- often if we save the output of a
+collection of different object types – often if we save the output of a
 function, it will be as an object of class <code>list</code>.</p>
 </div>
 </div>
-<div id="working-with-files" class="section level2">
-<h2>Working with files</h2>
-<div id="telling-rstudio-where-to-find-our-files"
-class="section level3">
-<h3>Telling RStudio where to find our files</h3>
+<div id="working-with-files" class="section level2" number="1.4">
+<h2><span class="header-section-number">1.4</span> Working with
+files</h2>
+<div id="telling-rstudio-where-to-find-our-files" class="section level3"
+number="1.4.1">
+<h3><span class="header-section-number">1.4.1</span> Telling RStudio
+where to find our files</h3>
 <p>We've just seen how we can create data in R by typing it in, and some
 of our examples in class will do this, but the most common way of
-getting our data into <strong>R</strong> is to <strong>read (input) from
-a file</strong>.</p>
+getting our data into <strong>R</strong> is to <strong>read (or "input")
+from a file</strong>.</p>
 <p>Before we read any files, though, we need to tell <strong>R</strong>
 where to find the files we've saved, downloaded, or created. There are 2
 ways to do this in RStudio:</p>
@@ -810,13 +822,40 @@ button.</p></li>
 <li><p>With the RStudio <span
 style="background-color:#d0d0d0;">Files</span> pane already showing the
 files you are working with, click <span
-style="background-color:#d0d0d0;">More</span>, then <span
+style="background-color:#d0d0d0;">⚙More</span>, then <span
 style="background-color:#d0d0d0;">Set As Working
 Directory</span>.</p></li>
 </ol>
 </div>
-<div id="opening-a-file" class="section level3">
-<h3>Opening a file</h3>
+<div id="opening-and-saving-a-code-file" class="section level3"
+number="1.4.2">
+<h3><span class="header-section-number">1.4.2</span> Opening (and
+saving) a code file</h3>
+<p>If we write some code that works, it's good to save it so we can use
+it again or adapt it for a similar task. In classes, we will provide you
+with code files (having the extension <code>.R</code>) to help you learn
+what <strong>R</strong> code does.</p>
+<p>To open a code file we have a few options:</p>
+<ol style="list-style-type: decimal">
+<li>just type <code>ctrl-O</code>, and choose the file from the 'Open
+file' window that appears</li>
+<li>click on the open file <img src="images/openfile32.png" width="24"
+height="24" /> icon, and choose the file from the 'Open file' window
+that appears</li>
+<li>click on the file shown in the <code>Files</code> pane (lower right,
+see Figure 1) in the RStudio screen.</li>
+</ol>
+<p>You can type code into a new file made by the keystroke combination
+<code>ctrl-shift-N</code> (for other new file types, use the RStudio
+menu <code>File/New file</code>).</p>
+<p>Files can be saved by typing <code>ctrl-S</code> (you will be
+prompted for a new file name the first time you save a new file), or
+clicking the file-save <img src="images/save-file-disk-32.png"
+width="24" height="24" /> icon.</p>
+</div>
+<div id="opening-a-data-file" class="section level3" number="1.4.3">
+<h3><span class="header-section-number">1.4.3</span> Opening a data
+file</h3>
 <p>In classes, we will mainly supply data as CSV (<u>C</u>omma
 <u>S</u>eparated <u>V</u>alue, or .csv) files. These are a simple and
 widely-used way to store tabular data such as found in an
@@ -844,7 +883,7 @@ df</code></pre>
 the whole path. We can also read directly from an internet address:</p>
 <pre class="r"><code>df &lt;- read.csv(file = &quot;C:/Users/neo/LocalData/R Projects/Learning R/df.csv&quot;,
                stringsAsFactors = T)
-df &lt;- read.csv(&quot;https://raw.githubusercontent.com/Ratey-AtUWA/learningR/main/df.csv&quot;,
+df &lt;- read.csv(&quot;https://raw.githubusercontent.com/Ratey-AtUWA/learn-R/main/df.csv&quot;,
                stringsAsFactors = T)</code></pre>
 <p>You might notice that we didn't include <code>file = </code> in the
 second example above. We can do this because <code>file = </code> is the
@@ -854,8 +893,9 @@ function.</p>
 <img src="images/helpStress.png" width="326" height="300" />
 </center>
 </div>
-<div id="built-in-r-help" class="section level3">
-<h3>Built-in R Help</h3>
+<div id="built-in-r-help" class="section level3" number="1.4.4">
+<h3><span class="header-section-number">1.4.4</span> Built-in R
+Help</h3>
 <p>How do we find out the order of options in a function? Well,
 <strong>R</strong> and RStudio have excellent <strong>Help</strong>
 utilities. For example, if we run the code <code>help("read.csv")</code>
