@@ -25,3 +25,5 @@ old.gitignore.txt
 footer.html
 
 /rosm.cache/*
+
+/images/gif-png*
