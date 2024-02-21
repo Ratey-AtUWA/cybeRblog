@@ -64,6 +64,9 @@ navbar:
         - text: "Multivariate eDNA"
           icon: fa-arrow-circle-right
           href: vegan.html
+        - text: "Time series"
+          icon: fa-arrow-circle-right
+          href: timeseries.html
         - text: "Compositional data analysis Intro"
           icon: fa-arrow-circle-right
           href: compositional_Pt0-Intro.html
