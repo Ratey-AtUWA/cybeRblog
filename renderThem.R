@@ -35,6 +35,7 @@ rmarkdown::render_site("transformR.Rmd")
 rmarkdown::render_site("meansR.Rmd")
 rmarkdown::render_site("relationR.Rmd")
 rmarkdown::render_site("geostats.Rmd")
+rmarkdown::render_site("timeseries.Rmd")
 
 rmarkdown::render_site("mapscode.rmd")
 rmarkdown::render_site("EDAcode.rmd")
