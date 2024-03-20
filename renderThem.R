@@ -22,6 +22,7 @@ rmarkdown::render_site("Google-kml-R.Rmd")
 rmarkdown::render_site("georef_jpeg_map.Rmd")
 rmarkdown::render_site("Shapefiles-in-R-maps.Rmd")
 rmarkdown::render_site("images.Rmd")
+rmarkdown::render_site("batch-image-resize.Rmd")
 
 # rants
 rmarkdown::render_site("profmetal.Rmd")
