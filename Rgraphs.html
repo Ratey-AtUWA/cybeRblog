@@ -383,6 +383,13 @@ $(document).ready(function () {
       </a>
     </li>
     <li>
+      <a href="timeseries.html">
+        <span class="fa fa-arrow-circle-right"></span>
+         
+        Time series
+      </a>
+    </li>
+    <li>
       <a href="compositional_Pt0-Intro.html">
         <span class="fa fa-arrow-circle-right"></span>
          
@@ -398,12 +405,30 @@ $(document).ready(function () {
     </li>
   </ul>
 </li>
-<li>
-  <a href="rants.html">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-bell"></span>
      
     Rants
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="rants.html">
+        <span class="fa fa-comment-dots"></span>
+         
+        All the rants in one place
+      </a>
+    </li>
+    <li>
+      <a href="profmetal.html">
+        <span class="fa fa-comment-dots"></span>
+         
+        profundus metallum
+      </a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="images.html">
@@ -1144,10 +1169,65 @@ Reserves, North Perth, WA, sampled in 2018 and grouped by sample type
 <div id="simple-maps" class="section level3">
 <h3>5. Simple maps</h3>
 <p>Maps are [mostly] just scatterplots with a map background – we will
-spend a <a href="Rmaps.html">separate session on maps in R</a>
-later.</p>
-<p><img src="Rgraphs_files/figure-html/map-code-hidden-1.png" width="80%" style="display: block; margin: auto;" /></p>
+spend a separate session on maps in R later.</p>
+<center>
+<img src="images/rottnest.png" />
+</center>
 <hr style="height: 1px; background-color: #5560A4;" />
+</div>
+<div id="pretty-palettes" class="section level3">
+<h3>Pretty palettes</h3>
+<p>(See the code at the end)</p>
+<p><img src="images/pretty-palettes.png" align="center" /></p>
+<h2>
+References and R Packages
+</h2>
+<p>Fox J (2022). <em>RcmdrMisc: R Commander Miscellaneous
+Functions</em>. R package version 2.7-2, <a
+href="https://CRAN.R-project.org/package=RcmdrMisc"
+target="_blank">https://CRAN.R-project.org/package=RcmdrMisc</a>.</p>
+<p>Fox J, Weisberg S (2019). <em>An {R} Companion to Applied Regression,
+Third Edition</em>. Thousand Oaks CA: Sage. <a
+href="https://socialsciences.mcmaster.ca/jfox/Books/Companion/"
+target="_blank">https://socialsciences.mcmaster.ca/jfox/Books/Companion/</a>
+(<strong>car</strong> package).</p>
+<p>Garnier S, Ross N, Rudis R, Camargo AP, Sciaini M, Scherer C (2021).
+<em>Rvision - Colorblind-Friendly Color Maps for R</em>. R package
+version 0.6.2. <a href="https://sjmgarnier.github.io/viridis/"
+target="_blank">https://sjmgarnier.github.io/viridis/</a>
+(<strong>viridis</strong> package).</p>
+<p>Pedersen T, Crameri F (2023). <em>scico: Colour Palettes Based on the
+Scientific Colour-Maps</em>. R package version 1.4.0, <a
+href="https://CRAN.R-project.org/package=scico"
+target="_blank">https://CRAN.R-project.org/package=scico</a>.</p>
+<p>
+ 
+</p>
+<pre class="r"><code># first load and run code to make UWAcolgrad() function
+# for help download the file itself and look inside!
+source(&quot;https://github.com/Ratey-AtUWA/Learn-R/raw/main/UWAcolgrad.R&quot;)
+np &lt;- 32
+par(mar=rep(0.5,4), xpd=TRUE)
+plot(0:1, 0:1, ann=F, axes = F, type=&quot;n&quot;, ylim=c(-0.1,1))
+points(seq(0,1,l=np),rep(1,np),pch=22,bg=viridis(np),cex=4)
+text(0.5,0.98,labels=paste0(&quot;viridis::viridis(&quot;,np,&quot;)&quot;),pos=1, cex=1.4, family=&quot;mono&quot;)
+points(seq(0,1,l=np),rep(0.85,np),pch=22,bg=plasma(np),cex=4)
+text(0.5,0.83,labels=paste0(&quot;viridis::plasma(&quot;,np,&quot;)&quot;),pos=1, cex=1.4, family=&quot;mono&quot;)
+points(seq(0,1,l=np),rep(0.7,np),pch=22,bg=cividis(np),cex=4)
+text(0.5,0.68,labels=paste0(&quot;viridis::cividis(&quot;,np,&quot;)&quot;),pos=1, cex=1.4, family=&quot;mono&quot;)
+points(seq(0,1,l=np),rep(0.55,np),pch=22,bg=scico(np, palette = &quot;hawaii&quot;),cex=4)
+text(0.5,0.53,labels=paste0(&quot;scico(&quot;,np,&quot;, palette=&#39;hawaii&#39;)&quot;),pos=1, cex=1.4, family=&quot;mono&quot;)
+points(seq(0,1,l=np),rep(0.4,np),pch=22,bg=scico(np, palette = &quot;lajolla&quot;),cex=4)
+text(0.5,0.38,labels=paste0(&quot;scico(&quot;,np,&quot;, palette=&#39;lajolla&#39;)&quot;),pos=1, cex=1.4, family=&quot;mono&quot;)
+points(seq(0,1,l=np),rep(0.25,np),pch=22,bg=scico(np, palette = &quot;batlow&quot;),cex=4)
+text(0.5,0.23,labels=paste0(&quot;scico(&quot;,np,&quot;, palette=&#39;batlow&#39;)&quot;),pos=1, cex=1.4, family=&quot;mono&quot;)
+points(seq(0,1,l=np),rep(0.1,np),pch=22,bg=UWAcolgrad(np),cex=4)
+text(0.5,0.08,labels=paste0(&quot;UWAcolgrad(&quot;,np,&quot;)&quot;),pos=1, cex=1.4, family=&quot;mono&quot;)
+points(seq(0,1,l=np),rep(-0.05,np),pch=22,bg=UWAcolgrad(np, saturated = TRUE),cex=4)
+text(0.5,-0.07,labels=paste0(&quot;UWAcolgrad(&quot;,np,&quot;, saturated=TRUE)&quot;),pos=1, cex=1.4, family=&quot;mono&quot;)</code></pre>
+<p>
+ 
+</p>
 </div>
 </div>
 </div>
@@ -1379,7 +1459,7 @@ $(document).ready(function () {
 
 <hr />
 <p><a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank"><strong>CC-BY-SA</strong></a> • All content by <a href="https://github.com/Ratey-AtUWA" target="_blank">Ratey-AtUWA</a>. My <a href="https://www.uwa.edu.au/schools/agriculture-and-environment" target="_blank">employer</a> does not necessarily know about or endorse the content of this website.<br>
-<span style="font-size:9pt">Created with <span style="font-family: monospace; background-color: #e8e8e8;">rmarkdown</span> in <a href="https://www.rstudio.com/" target="_blank"><span class="fa fa-registered"></span> RStudio</a> using the <span style="font-family: monospace; background-color: #e8e8e8;">cyborg</span> theme from <a href="https://bootswatch.com/" target="_blank"><span class="fa fa-swatchbook"></span> Bootswatch</a> via the <span style="font-family: monospace; background-color: #e8e8e8;">bslib</span> package, and <a href="https://fontawesome.com/v5/search?o=r&m=free" target="_blank"><span class="fa fa-font-awesome"></span> fontawesome v5 icons</a>.</span></p>
+<span style="font-size:9pt">Created with <span style="font-family: monospace;">rmarkdown</span> in <a href="https://www.rstudio.com/" target="_blank"><span class="fa fa-registered"></span> RStudio</a> using the <span style="font-family: monospace;">cyborg</span> theme from <a href="https://bootswatch.com/" target="_blank"><span class="fa fa-swatchbook"></span> Bootswatch</a> via the <span style="font-family: monospace;">bslib</span> package, and <a href="https://fontawesome.com/v5/search?o=r&m=free" target="_blank"><span class="fa fa-font-awesome"></span> fontawesome v5 icons</a>.</span></p>
 
 </div>
 
