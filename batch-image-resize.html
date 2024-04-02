@@ -11,7 +11,7 @@
 
 
 
-<title>code</title>
+<title>Batch resizing images</title>
 
 <script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -469,258 +469,91 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">code</h1>
+<h1 class="title toc-ignore">Batch resizing images</h1>
 
 </div>
 
 
-<div id="a-growing-list-of-r-code-files-for-various-tasks"
-class="section level3">
-<h3>A growing list of <strong>R</strong> code files for various
-tasks</h3>
-<p>Code is only included in this list if it's well-formed enough to be
-worth sharing, and if the author decides it can go here. Most of the
-code is as nice html with code chunks, but some may be R source, or
-un-rendered R markdown.</p>
-<table style="width: 100%;">
-<tr>
-<td style="width: 48%; vertical-align: top; border: solid 3px #DDD; padding:3px; border-collapse: collapse;">
-</div>
-<div id="mapping-and-spatial-analysis" class="section level2">
-<h2><span class="fa fa-atlas"></span> <a href="mapscode.html">mapping
-and spatial analysis</a></h2>
+<div id="using-the-imager-package-to-resize-multiple-images-in-a-batch"
+class="section level2">
+<h2>Using the <code>imager</code> package to resize multiple images in a
+batch</h2>
+<p>This was done for a set of field trip photos to be posted to my
+university's online class system. They were taken with a DSLR that
+produced 24 megapixel images (6000 × 4000), with file sizes about 6
+megabytes. Rather than upload many large images, the following code was
+used to make smaller (1200 × 800) copies of each image which were
+written to new files to be uploaded.</p>
+<p>First we load the <code>imager</code> package:</p>
+<pre class="r"><code>library(imager)</code></pre>
+<p>We then store the directory the images are stored in as a string, and
+create a vector of filenames in that directory:</p>
+<pre class="r"><code>idir &lt;- &quot;C:/Users/00028958/OneDrive - The University of Western Australia/My Documents/aaTeaching/ENVT3361 EnvAssess/Field ENVT3361/AFR-photos-2024/&quot;
+(flist &lt;- list.files(idir))</code></pre>
+<pre><code>##  [1] &quot;DSC_0873.JPG&quot; &quot;DSC_0874.JPG&quot; &quot;DSC_0875.JPG&quot; &quot;DSC_0876.JPG&quot; &quot;DSC_0877.JPG&quot; &quot;DSC_0878.JPG&quot;
+##  [7] &quot;DSC_0879.JPG&quot; &quot;DSC_0880.JPG&quot; &quot;DSC_0881.JPG&quot; &quot;DSC_0884.JPG&quot; &quot;DSC_0887.JPG&quot; &quot;DSC_0888.JPG&quot;
+## [13] &quot;DSC_0889.JPG&quot; &quot;DSC_0890.JPG&quot; &quot;DSC_0891.JPG&quot; &quot;DSC_0892.JPG&quot; &quot;DSC_0893.JPG&quot; &quot;DSC_0894.JPG&quot;
+## [19] &quot;DSC_0895.JPG&quot; &quot;DSC_0896.JPG&quot; &quot;DSC_0897.JPG&quot; &quot;DSC_0898.JPG&quot; &quot;DSC_0899.JPG&quot; &quot;DSC_0900.JPG&quot;
+## [25] &quot;DSC_0901.JPG&quot; &quot;DSC_0902.JPG&quot; &quot;DSC_0903.JPG&quot; &quot;DSC_0904.JPG&quot; &quot;DSC_0905.JPG&quot; &quot;DSC_0906.JPG&quot;
+## [31] &quot;DSC_0907.JPG&quot; &quot;DSC_0908.JPG&quot; &quot;DSC_0909.JPG&quot; &quot;DSC_0910.JPG&quot; &quot;DSC_0911.JPG&quot; &quot;DSC_0912.JPG&quot;
+## [37] &quot;DSC_0913.JPG&quot; &quot;DSC_0914.JPG&quot; &quot;DSC_0915.JPG&quot; &quot;DSC_0916.JPG&quot; &quot;DSC_0917.JPG&quot; &quot;DSC_0918.JPG&quot;
+## [43] &quot;DSC_0919.JPG&quot; &quot;DSC_0920.JPG&quot; &quot;DSC_0921.JPG&quot; &quot;DSC_0922.JPG&quot; &quot;DSC_0923.JPG&quot; &quot;DSC_0924.JPG&quot;
+## [49] &quot;DSC_0925.JPG&quot; &quot;DSC_0926.JPG&quot; &quot;DSC_0927.JPG&quot; &quot;DSC_0928.JPG&quot; &quot;DSC_0929.JPG&quot; &quot;DSC_0930.JPG&quot;
+## [55] &quot;DSC_0931.JPG&quot; &quot;DSC_0932.JPG&quot; &quot;DSC_0933.JPG&quot; &quot;DSC_0934.JPG&quot; &quot;DSC_0935.JPG&quot; &quot;DSC_0936.JPG&quot;
+## [61] &quot;DSC_0937.JPG&quot; &quot;DSC_0938.JPG&quot; &quot;DSC_0939.JPG&quot; &quot;DSC_0940.JPG&quot; &quot;DSC_0941.JPG&quot; &quot;DSC_0942.JPG&quot;
+## [67] &quot;DSC_0943.JPG&quot; &quot;DSC_0944.JPG&quot; &quot;DSC_0945.JPG&quot; &quot;DSC_0946.JPG&quot; &quot;DSC_0947.JPG&quot; &quot;DSC_0948.JPG&quot;
+## [73] &quot;DSC_0949.JPG&quot; &quot;DSC_0950.JPG&quot; &quot;DSC_0951.JPG&quot; &quot;DSC_0952.JPG&quot; &quot;DSC_0953.JPG&quot; &quot;DSC_0954.JPG&quot;
+## [79] &quot;DSC_0955.JPG&quot; &quot;DSC_0956.JPG&quot; &quot;DSC_0957.JPG&quot; &quot;DSC_0958.JPG&quot; &quot;DSC_0959.JPG&quot; &quot;DSC_0960.JPG&quot;
+## [85] &quot;DSC_0961.JPG&quot; &quot;DSC_0962.JPG&quot; &quot;DSC_0963.JPG&quot; &quot;DSC_0964.JPG&quot; &quot;DSC_0965.JPG&quot; &quot;DSC_0966.JPG&quot;
+## [91] &quot;DSC_0967.JPG&quot; &quot;DSC_0968.JPG&quot;</code></pre>
+<p>We then use a simple loop to sequentially</p>
 <ul>
-<li><span style="font-size: 12pt;"><a href="Rmaps.html"><span
-class="fa fa-globe-asia"></span> basic tile-based maps with data
-overlays in <strong>R</strong></a>
-<ul>
-<li>based on the <code>sf</code> package, and includes coordinate
-conversion</span></li>
-</ul></li>
-<li><span style="font-size: 12pt;"><a href="georef_jpeg_map.html"><span
-class="fa fa-globe-asia"></span> georeferenced jpeg images for map
-backgrounds in <strong>R</strong></a>
-<ul>
-<li>based on the <code>stars</code> package, using images from <a
-href="https://www.nearmap.com/au/en"
-target="_blank">NearMap</a></span></li>
-</ul></li>
-<li><span style="font-size: 12pt;"><a href="Google-kml-R.html"><span
-class="fa fa-globe-asia"></span> Save kml from Google Earth and use the
-saved coordinates in <strong>R</strong></a>
-<ul>
-<li>uses the <code>sf</code> package, which has the
-<code>st_read()</code> function which can convert kml to class
-<code>sf</code> objects in <strong>R</strong></span></li>
-</ul></li>
-<li><span style="font-size: 12pt;"><a
-href="Shapefiles-in-R-maps.html"><span class="fa fa-globe-asia"></span>
-Reading and uisng ESRI shapefiles in <strong>R</strong></a>
-<ul>
-<li>also uses <code>st_read()</code> from <code>sf</code> to convert
-shapefiles to <code>sf</code> objects </span></li>
-</ul></li>
-<li><span style="font-size: 12pt;"><a href="geostats.html"><span
-class="fa fa-globe-asia"></span> Geostatistics and spatial
-interpolation</a>
-<ul>
-<li>based on a few spatial packages including <code>sf</code>,
-<code>lctools</code>, and <code>gstat</code></span></li>
-</ul></li>
+<li>load each large image using <code>imager::load.image()</code></li>
+<li>reduce the size of each loaded image to 20% of the original using
+<code>imager::imresize()</code> with the argument
+<code>scale=0.2</code></li>
+<li>write a new file to a new directory, using
+<code>imager::save.image()</code>, adding the string <code>_s</code> to
+the original file name (<em>i.e</em>. '_s' for
+'small').<br /><strong>Note</strong> that we specify <code>.jpg</code>
+as the file extension which prompts the <code>save.image()</code>
+function to save as a JPEG file; this is done as the extension seems to
+be case-sensitive.</li>
 </ul>
-</td>
-<td style="width: 4%;">
- 
-</td>
-<td style="width: 48%; vertical-align: top; border: solid 3px #DDD; padding:3px; border-collapse: collapse;">
-</div>
-<div id="exploratory-data-analysis" class="section level2">
-<h2><span class="fa fa-chart-bar"></span> <a
-href="EDAcode.html">exploratory data analysis</a></h2>
-<ul>
-<li>
-<span style="font-size: 12pt;"><a href="boxplot.html"><span
-class="fa fa-project-diagram"></span> How to boxplot</a></span>
-</li>
-<ul>
-<li>
-For exploratory data analysis I draw a lot of boxplots, . . . [for]
-mainly positively skewed variables . . .
-</li>
-</ul>
-<li>
-<span style="font-size: 12pt;"><a href="showpal.html"><span
-class="fa fa-project-diagram"></span> Function to show the colour
-palette</a></span>
-</li>
-<ul>
-<li>
-I tend to change palettes often for different plot of map types, so it's
-good to get a quick visual reminder . . .
-</li>
-</ul>
-</ul>
-</td>
-</tr>
-<tr>
-<td style="width: 48%;">
- 
-</td>
-<td style="width: 4%;">
- 
-</td>
-<td style="width: 48%;">
- 
-</td>
-</tr>
-<tr>
-<td style="width: 48%; vertical-align: top; border: solid 3px #DDD; padding:3px; border-collapse: collapse;">
-</div>
-<div id="soil-science" class="section level2">
-<h2><span class="fa fa-image"></span> <a href="soilcode.html">soil
-science</a></h2>
-<ul>
-<li>
-<span style="font-size: 12pt;"><a href="profiles.html"><span
-class="fa fa-project-diagram"></span> different ways to plot soil depth
-profiles</a></span>
-</li>
-<ul>
-<li>
-plotting the change in a variable <em>vs</em>. depth is a common task in
-soil science. This code will plot depth profiles at continuous or
-discrete depths
-</li>
-</ul>
-<li>
-<span style="font-size: 12pt;"><a href="pulse.html"><span
-class="fa fa-project-diagram"></span> solute transport animation using
-gganimate</a> </span>
-</li>
-<ul>
-<li>
-a simple demonstration of solute dispersion during transport, and a way
-to learn <code>gganimate</code>
-</li>
-</ul>
-</ul>
-</td>
-<td style="width: 4%;">
- 
-</td>
-<td style="width: 48%; vertical-align: top; border: solid 3px #DDD; padding:3px; border-collapse: collapse;">
-</div>
-<div id="file-conversions" class="section level2">
-<h2><span class="fa fa-joomla"></span> <a href="filecode.html">file
-conversions</a></h2>
-<ul>
-<li>
-<span style="font-size: 12pt;"><a href="xrdml.html"><span
-class="fa fa-file-contract"></span> convert xrdml XRD output file(s) to
-<strong>R</strong> data frame or csv</a></span>
-</li>
-<ul>
-<li>
-converts a widely-used format for X-Ray Diffraction output
-</li>
-</ul>
-<li>
-<span style="font-size: 12pt;"><a href="hydrus_nod_inf.html"><span
-class="fa fa-project-diagram"></span> read Hydrus-1D Nod_Inf.out files,
-convert to <strong>R</strong> data frame</a>
-</li>
-<ul>
-<li>
-useful to make use of the plotting capabilities in <strong>R</strong>
-(Hydrus-1D in-built plots are not report- or publication-quality)
-</li>
-</ul>
-<li>
-<span style="font-size: 12pt;"><a href="batch-image-resize.html"><span
-class="fa fa-images"></span> Using the <code>imager</code> package to
-resize multiple images in a batch</a>
-</li>
-<ul>
-<li>
-not really a file conversion, but useful nevertheless!
-</li>
-</ul>
-</ul>
-</td>
-</tr>
-<tr>
-<td style="width: 48%;">
- 
-</td>
-<td style="width: 4%;">
- 
-</td>
-<td style="width: 48%;">
- 
-</td>
-</tr>
-<tr>
-<td style="width: 48%; vertical-align: top; border: solid 3px #DDD; padding:3px; border-collapse: collapse;">
-</div>
-<div id="environmental-biology" class="section level2">
-<h2><span class="fa fa-dna"></span> <a
-href="biolcode.html">environmental biology</a></h2>
-<ul>
-<li>
-<span style="font-size: 12pt;"><a href="vegan.html"><span
-class="fa fa-project-diagram"></span> using vegan for environmental DNA
-data analysis</a>
-</li>
-</span>
-<ul>
-<li>
-trying to emulate the procedures we have been teaching using
-<em>Primer</em> software
-</li>
-</ul>
-</ul>
-</td>
-<td style="width: 4%;">
- 
-</td>
-<td style="width: 48%; vertical-align: top; border: solid 3px #DDD; padding:3px; border-collapse: collapse;">
-</div>
-<div id="compositional-data-analysis" class="section level2">
-<h2><span class="fa fa-swatchbook"></span> <a
-href="CoDAcode.html">compositional data analysis</a></h2>
-<ul>
-<li>
-<span style="font-size: 12pt;"><a
-href="compositional_Pt0-Intro.html"><i class="fas fa-caret-square-right"></i>
-introduction to compositional data analysis</a>
-</li>
-</span>
-<ul>
-<li>
-the basic ideas of analysing data with fixed-sum closure
-</li>
-</ul>
-</ul>
-<ul>
-<li>
-<span style="font-size: 12pt;"><a
-href="compositional_Pt1-PCA.html"><i class="fas fa-caret-square-right"></i>
-principal components analysis for compositional data</a>
-</li>
-</span>
-<ul>
-<li>
-the basic ideas of analysing data with fixed-sum closure
-</li>
-</ul>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<p><a href="https://embrace-autism.com/" target="_blank"><img
-src="images/tiny-rainbowInf.gif" align="right"
-alt="autism infinity rainbow symbol" width="43" height="21" /></a></p>
+<p>This process may take some time! – but it's better than resizing each
+file manually.</p>
+<pre class="r"><code>dir.create(paste0(idir,&quot;resized/&quot;))
+for(i in 1:length(flist)){
+  pic &lt;- load.image(paste0(idir,flist[i]))
+  pic &lt;- imresize(pic, scale=0.2)
+  save.image(pic,
+             file = paste0(idir,&quot;resized/&quot;,substr(flist[i],0,8),&quot;_s&quot;,&quot;.jpg&quot;))
+}</code></pre>
+<p>Finally we can see that the new files have been written to the new
+subdirectory:</p>
+<pre class="r"><code>list.files(paste0(idir,&quot;resized/&quot;))</code></pre>
+<pre><code>##  [1] &quot;DSC_0873_s.jpg&quot; &quot;DSC_0874_s.jpg&quot; &quot;DSC_0875_s.jpg&quot; &quot;DSC_0876_s.jpg&quot; &quot;DSC_0877_s.jpg&quot;
+##  [6] &quot;DSC_0878_s.jpg&quot; &quot;DSC_0879_s.jpg&quot; &quot;DSC_0880_s.jpg&quot; &quot;DSC_0881_s.jpg&quot; &quot;DSC_0884_s.jpg&quot;
+## [11] &quot;DSC_0887_s.jpg&quot; &quot;DSC_0888_s.jpg&quot; &quot;DSC_0889_s.jpg&quot; &quot;DSC_0890_s.jpg&quot; &quot;DSC_0891_s.jpg&quot;
+## [16] &quot;DSC_0892_s.jpg&quot; &quot;DSC_0893_s.jpg&quot; &quot;DSC_0894_s.jpg&quot; &quot;DSC_0895_s.jpg&quot; &quot;DSC_0896_s.jpg&quot;
+## [21] &quot;DSC_0897_s.jpg&quot; &quot;DSC_0898_s.jpg&quot; &quot;DSC_0899_s.jpg&quot; &quot;DSC_0900_s.jpg&quot; &quot;DSC_0901_s.jpg&quot;
+## [26] &quot;DSC_0902_s.jpg&quot; &quot;DSC_0903_s.jpg&quot; &quot;DSC_0904_s.jpg&quot; &quot;DSC_0905_s.jpg&quot; &quot;DSC_0906_s.jpg&quot;
+## [31] &quot;DSC_0907_s.jpg&quot; &quot;DSC_0908_s.jpg&quot; &quot;DSC_0909_s.jpg&quot; &quot;DSC_0910_s.jpg&quot; &quot;DSC_0911_s.jpg&quot;
+## [36] &quot;DSC_0912_s.jpg&quot; &quot;DSC_0913_s.jpg&quot; &quot;DSC_0914_s.jpg&quot; &quot;DSC_0915_s.jpg&quot; &quot;DSC_0916_s.jpg&quot;
+## [41] &quot;DSC_0917_s.jpg&quot; &quot;DSC_0918_s.jpg&quot; &quot;DSC_0919_s.jpg&quot; &quot;DSC_0920_s.jpg&quot; &quot;DSC_0921_s.jpg&quot;
+## [46] &quot;DSC_0922_s.jpg&quot; &quot;DSC_0923_s.jpg&quot; &quot;DSC_0924_s.jpg&quot; &quot;DSC_0925_s.jpg&quot; &quot;DSC_0926_s.jpg&quot;
+## [51] &quot;DSC_0927_s.jpg&quot; &quot;DSC_0928_s.jpg&quot; &quot;DSC_0929_s.jpg&quot; &quot;DSC_0930_s.jpg&quot; &quot;DSC_0931_s.jpg&quot;
+## [56] &quot;DSC_0932_s.jpg&quot; &quot;DSC_0933_s.jpg&quot; &quot;DSC_0934_s.jpg&quot; &quot;DSC_0935_s.jpg&quot; &quot;DSC_0936_s.jpg&quot;
+## [61] &quot;DSC_0937_s.jpg&quot; &quot;DSC_0938_s.jpg&quot; &quot;DSC_0939_s.jpg&quot; &quot;DSC_0940_s.jpg&quot; &quot;DSC_0941_s.jpg&quot;
+## [66] &quot;DSC_0942_s.jpg&quot; &quot;DSC_0943_s.jpg&quot; &quot;DSC_0944_s.jpg&quot; &quot;DSC_0945_s.jpg&quot; &quot;DSC_0946_s.jpg&quot;
+## [71] &quot;DSC_0947_s.jpg&quot; &quot;DSC_0948_s.jpg&quot; &quot;DSC_0949_s.jpg&quot; &quot;DSC_0950_s.jpg&quot; &quot;DSC_0951_s.jpg&quot;
+## [76] &quot;DSC_0952_s.jpg&quot; &quot;DSC_0953_s.jpg&quot; &quot;DSC_0954_s.jpg&quot; &quot;DSC_0955_s.jpg&quot; &quot;DSC_0956_s.jpg&quot;
+## [81] &quot;DSC_0957_s.jpg&quot; &quot;DSC_0958_s.jpg&quot; &quot;DSC_0959_s.jpg&quot; &quot;DSC_0960_s.jpg&quot; &quot;DSC_0961_s.jpg&quot;
+## [86] &quot;DSC_0962_s.jpg&quot; &quot;DSC_0963_s.jpg&quot; &quot;DSC_0964_s.jpg&quot; &quot;DSC_0965_s.jpg&quot; &quot;DSC_0966_s.jpg&quot;
+## [91] &quot;DSC_0967_s.jpg&quot; &quot;DSC_0968_s.jpg&quot;</code></pre>
+<p>Here's one of the resized photos:</p>
+<p><img src="images/DSC_0877_s.jpg"
+alt="student wearing chest waders sampling water from a seasonal wetland pond" /></p>
 </div>
 
 <!DOCTYPE html>
