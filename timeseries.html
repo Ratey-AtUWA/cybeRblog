@@ -15,15 +15,21 @@
 
 <script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<link href="site_libs/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet" />
-<script src="site_libs/bootstrap-5.1.3/bootstrap.bundle.min.js"></script>
-<script src="site_libs/bs3compat-0.4.0/transition.js"></script>
-<script src="site_libs/bs3compat-0.4.0/tabs.js"></script>
-<script src="site_libs/bs3compat-0.4.0/bs3compat.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -36,18 +42,113 @@
   ul.task-list{list-style: none;}
     </style>
 
-<style type="text/css">code{white-space: pre;}</style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
   }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #ffffff;
+    color: #a0a0a0;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+div.sourceCode
+  { color: #1f1c1b; background-color: #ffffff; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #1f1c1b; } /* Normal */
+code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+code span.an { color: #ca60ca; } /* Annotation */
+code span.at { color: #0057ae; } /* Attribute */
+code span.bn { color: #b08000; } /* BaseN */
+code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #924c9d; } /* Char */
+code span.cn { color: #aa5500; } /* Constant */
+code span.co { color: #898887; } /* Comment */
+code span.cv { color: #0095ff; } /* CommentVar */
+code span.do { color: #607880; } /* Documentation */
+code span.dt { color: #0057ae; } /* DataType */
+code span.dv { color: #b08000; } /* DecVal */
+code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code span.fl { color: #b08000; } /* Float */
+code span.fu { color: #644a9b; } /* Function */
+code span.im { color: #ff5500; } /* Import */
+code span.in { color: #b08000; } /* Information */
+code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code span.op { color: #1f1c1b; } /* Operator */
+code span.ot { color: #006e28; } /* Other */
+code span.pp { color: #006e28; } /* Preprocessor */
+code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #ff5500; } /* SpecialString */
+code span.st { color: #bf0303; } /* String */
+code span.va { color: #0057ae; } /* Variable */
+code span.vs { color: #bf0303; } /* VerbatimString */
+code span.wa { color: #bf0303; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
 </script>
-
-
 
 
 
@@ -480,21 +581,21 @@ class="section level1">
 <h1>Set up the R environment for time series analysis</h1>
 <p>We will need the additional functions in several <strong>R</strong>
 packages for specialized time series and other functions in R...</p>
-<pre class="r"><code># Load the packages we need 
-library(zoo)      # for basic irregular time series functions
-library(xts)      # we need the xts &quot;eXtended Time Series&quot; format for some functions
-library(Kendall)  # for trend analysis with Mann-Kendall test
-library(trend)    # for trend analysis using the Sen slope
-library(forecast) # for time series forecasting with ARIMA and exponential smoothing 
-library(tseries)  # for assessing stationarity using Augmented Dickey-Fuller test
-library(lmtest)   # for Breusch-Pagan heteroscedasticity test etc.
-library(car)      # for various commonly-used functions
-library(ggplot2)  # alternative to base R plots
-
-# (optional) make a better colour palette than the R default!
-palette(c(&quot;black&quot;,&quot;red3&quot;,&quot;purple&quot;,&quot;blue2&quot;,
-          &quot;darkcyan&quot;,&quot;green3&quot;,&quot;sienna&quot;,&quot;gray50&quot;))
-par(mfrow = c(3,1), mar = c(4,4,1,1), mgp = c(1.7,0.3,0), tcl = 0.3, font.lab=2)</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># Load the packages we need </span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(zoo)      <span class="co"># for basic irregular time series functions</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(xts)      <span class="co"># we need the xts &quot;eXtended Time Series&quot; format for some functions</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(Kendall)  <span class="co"># for trend analysis with Mann-Kendall test</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(trend)    <span class="co"># for trend analysis using the Sen slope</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">library</span>(forecast) <span class="co"># for time series forecasting with ARIMA and exponential smoothing </span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="fu">library</span>(tseries)  <span class="co"># for assessing stationarity using Augmented Dickey-Fuller test</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="fu">library</span>(lmtest)   <span class="co"># for Breusch-Pagan heteroscedasticity test etc.</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="fu">library</span>(car)      <span class="co"># for various commonly-used functions</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="fu">library</span>(ggplot2)  <span class="co"># alternative to base R plots</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="co"># (optional) make a better colour palette than the R default!</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="fu">palette</span>(<span class="fu">c</span>(<span class="st">&quot;black&quot;</span>,<span class="st">&quot;red3&quot;</span>,<span class="st">&quot;purple&quot;</span>,<span class="st">&quot;blue2&quot;</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>          <span class="st">&quot;darkcyan&quot;</span>,<span class="st">&quot;green3&quot;</span>,<span class="st">&quot;sienna&quot;</span>,<span class="st">&quot;gray50&quot;</span>))</span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">mgp =</span> <span class="fu">c</span>(<span class="fl">1.7</span>,<span class="fl">0.3</span>,<span class="dv">0</span>), <span class="at">tcl =</span> <span class="fl">0.3</span>, <span class="at">font.lab=</span><span class="dv">2</span>)</span></code></pre></div>
 </div>
 <div id="data-input" class="section level1">
 <h1>Data input</h1>
@@ -502,12 +603,12 @@ par(mfrow = c(3,1), mar = c(4,4,1,1), mgp = c(1.7,0.3,0), tcl = 0.3, font.lab=2)
 it's not the format we need but we'll use it for comparison.</p>
 <div id="non-time-series-object-for-comparison" class="section level2">
 <h2>Non-time series object for comparison</h2>
-<pre class="r"><code>soiltemp &lt;- read.csv(&quot;soiltemp2.csv&quot;)
-colnames(soiltemp) &lt;- c(&quot;Date&quot;,&quot;temp&quot;)</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>soiltemp <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;soiltemp2.csv&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">colnames</span>(soiltemp) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Date&quot;</span>,<span class="st">&quot;temp&quot;</span>)</span></code></pre></div>
 </div>
 <div id="do-some-checks-of-the-data" class="section level2">
 <h2>Do some checks of the data</h2>
-<pre class="r"><code>summary(soiltemp) # simple summary of each column</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">summary</span>(soiltemp) <span class="co"># simple summary of each column</span></span></code></pre></div>
 <pre><code>##      Date                temp      
 ##  Length:1464        Min.   :10.40  
 ##  Class :character   1st Qu.:12.45  
@@ -515,13 +616,13 @@ colnames(soiltemp) &lt;- c(&quot;Date&quot;,&quot;temp&quot;)</code></pre>
 ##                     Mean   :14.86  
 ##                     3rd Qu.:17.41  
 ##                     Max.   :21.70</code></pre>
-<pre class="r"><code>str(soiltemp) # more detailed information about the R object (&#39;str&#39;=structure)</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">str</span>(soiltemp) <span class="co"># more detailed information about the R object (&#39;str&#39;=structure)</span></span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    1464 obs. of  2 variables:
 ##  $ Date: chr  &quot;2014-04-01 00:00:00&quot; &quot;2014-04-01 01:00:00&quot; &quot;2014-04-01 02:00:00&quot; &quot;2014-04-01 03:00:00&quot; ...
 ##  $ temp: num  20.1 19.8 19.6 19.2 19 ...</code></pre>
 <div id="check-with-a-plot" class="section level3">
 <h3>Check with a plot</h3>
-<pre class="r"><code>plot(soiltemp$temp, type = &quot;l&quot;, col = 4)</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">plot</span>(soiltemp<span class="sc">$</span>temp, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="dv">4</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="timeseries_files/figure-html/plot-df-1.png" alt="Figure 1: Plot of soil temperature time series data which is not (yet) formatted as a time series." width="50%" />
 <p class="caption">
@@ -538,13 +639,13 @@ of R object! We use the <code>read.csv.zoo()</code> function in the
 <code>zoo</code> package to read the data in as a time series. This
 gives a data object of class 'zoo' which is much more flexible than the
 default time series object in R.</p>
-<pre class="r"><code>soiltemp_T15_zoo &lt;- read.csv.zoo(&quot;soiltemp2.csv&quot;,
-                               format = &quot;%Y-%m-%d %H:%M:%S&quot;, 
-                               tz = &quot;Australia/Perth&quot;, 
-                               index.column=1,
-                               header = TRUE)
-# do some quick checks of the new R object:
-summary(soiltemp_T15_zoo) </code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>soiltemp_T15_zoo <span class="ot">&lt;-</span> <span class="fu">read.csv.zoo</span>(<span class="st">&quot;soiltemp2.csv&quot;</span>,</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>                               <span class="at">format =</span> <span class="st">&quot;%Y-%m-%d %H:%M:%S&quot;</span>, </span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>                               <span class="at">tz =</span> <span class="st">&quot;Australia/Perth&quot;</span>, </span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>                               <span class="at">index.column=</span><span class="dv">1</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>                               <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co"># do some quick checks of the new R object:</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="fu">summary</span>(soiltemp_T15_zoo) </span></code></pre></div>
 <pre><code>##      Index                     soiltemp_T15_zoo
 ##  Min.   :2014-04-01 00:00:00   Min.   :10.40   
 ##  1st Qu.:2014-04-16 05:45:00   1st Qu.:12.45   
@@ -552,12 +653,12 @@ summary(soiltemp_T15_zoo) </code></pre>
 ##  Mean   :2014-05-01 11:30:00   Mean   :14.86   
 ##  3rd Qu.:2014-05-16 17:15:00   3rd Qu.:17.41   
 ##  Max.   :2014-05-31 23:00:00   Max.   :21.70</code></pre>
-<pre class="r"><code>str(soiltemp_T15_zoo) # POSIXct in the output is a date-time format</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">str</span>(soiltemp_T15_zoo) <span class="co"># POSIXct in the output is a date-time format</span></span></code></pre></div>
 <pre><code>## &#39;zoo&#39; series from 2014-04-01 to 2014-05-31 23:00:00
 ##   Data: num [1:1464] 20.1 19.8 19.6 19.2 19 ...
 ##   Index:  POSIXct[1:1464], format: &quot;2014-04-01 00:00:00&quot; &quot;2014-04-01 01:00:00&quot; &quot;2014-04-01 02:00:00&quot; &quot;2014-04-01 03:00:00&quot; ...</code></pre>
 <p>It's usually useful to check our data with a plot (Figure 2)</p>
-<pre class="r"><code>plot(soiltemp_T15_zoo, col = 2) </code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">plot</span>(soiltemp_T15_zoo, <span class="at">col =</span> <span class="dv">2</span>) </span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="timeseries_files/figure-html/plot-zoo-1.png" alt="Figure 2: Plot of soil temperature time series data which is formatted as a zoo time series object." width="50%" />
 <p class="caption">
@@ -574,8 +675,8 @@ allows us to use more functions...</p>
 </div>
 <div id="make-an-xts-object-from-our-zoo-object" class="section level3">
 <h3>Make an xts object from our zoo object</h3>
-<pre class="r"><code>soiltemp_T15_xts &lt;- as.xts(soiltemp_T15_zoo)
-str(soiltemp_T15_xts) # just to check</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>soiltemp_T15_xts <span class="ot">&lt;-</span> <span class="fu">as.xts</span>(soiltemp_T15_zoo)</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="fu">str</span>(soiltemp_T15_xts) <span class="co"># just to check</span></span></code></pre></div>
 <pre><code>## An &#39;xts&#39; object on 2014-04-01/2014-05-31 23:00:00 containing:
 ##   Data: num [1:1464, 1] 20.1 19.8 19.6 19.2 19 ...
 ##   Indexed by objects of class: [POSIXct,POSIXt] TZ: Australia/Perth
@@ -592,7 +693,7 @@ class="section level1">
 <h1>Exploratory data analysis of time series</h1>
 <p>We first examine a plot of the data in our time series object (the
 plot for the <code>xts</code> time series object is in Figure 3).</p>
-<pre class="r"><code>plot(soiltemp_T15_xts, col = 3, ylab = &quot;Soil temperature (\u00B0C)&quot;) # just to check</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">plot</span>(soiltemp_T15_xts, <span class="at">col =</span> <span class="dv">3</span>, <span class="at">ylab =</span> <span class="st">&quot;Soil temperature (\u00B0C)&quot;</span>) <span class="co"># just to check</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="timeseries_files/figure-html/plot-xts-1.png" alt="Figure 3: Plot of soil temperature time series data which is formatted as an xts time series object." width="60%" />
 <p class="caption">
@@ -616,30 +717,30 @@ transformations (Figure 4). We compare with transformed time series data
 <p>First we change the default plotting parameters using
 <code>par(...)</code>, then plot the object and some transformed
 versions (with custom axis labels).</p>
-<pre class="r"><code>par(mfrow = c(3,1), mar = c(4,4,1,1), mgp = c(1.7,0.3,0), tcl = 0.3, font.lab=2)
-
-plot(soiltemp_T15_zoo, ylab = &quot;Temperature (\u00B0C)&quot;,
-     xlab = &quot;Date&quot;, col = 7, lwd = 2, cex.lab = 1.4)
-
-plot(log10(soiltemp_T15_zoo), 
-     ylab = expression(bold(paste(log[10],&quot;(Temperature, \u00B0C)&quot;))),
-     xlab = &quot;Date&quot;, col = 3, lwd = 2, cex.lab = 1.4)
-
-pt0 &lt;- powerTransform(coredata(soiltemp_T15_zoo))
-if(pt0$lambda&lt;0) {
-  plot(
-    -1 * (soiltemp_T15_zoo ^ pt0$lambda),
-    ylab = &quot;power-transf. (Temp., \u00B0C)&quot;,
-    xlab = &quot;Date&quot;,
-    col = 4, lwd = 2, cex.lab = 1.4
-  )
-} else {
-  plot((soiltemp_T15_zoo ^ pt0$lambda),
-       ylab = &quot;power-transf. (Temp., \u00B0C)&quot;,
-       xlab = &quot;Date&quot;,
-       col = 4, lwd = 2, cex.lab = 1.4
-  )
-}</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">mgp =</span> <span class="fu">c</span>(<span class="fl">1.7</span>,<span class="fl">0.3</span>,<span class="dv">0</span>), <span class="at">tcl =</span> <span class="fl">0.3</span>, <span class="at">font.lab=</span><span class="dv">2</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="fu">plot</span>(soiltemp_T15_zoo, <span class="at">ylab =</span> <span class="st">&quot;Temperature (\u00B0C)&quot;</span>,</span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Date&quot;</span>, <span class="at">col =</span> <span class="dv">7</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">cex.lab =</span> <span class="fl">1.4</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log10</span>(soiltemp_T15_zoo), </span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="fu">bold</span>(<span class="fu">paste</span>(log[<span class="dv">10</span>],<span class="st">&quot;(Temperature, \u00B0C)&quot;</span>))),</span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Date&quot;</span>, <span class="at">col =</span> <span class="dv">3</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">cex.lab =</span> <span class="fl">1.4</span>)</span>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a>pt0 <span class="ot">&lt;-</span> <span class="fu">powerTransform</span>(<span class="fu">coredata</span>(soiltemp_T15_zoo))</span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a><span class="cf">if</span>(pt0<span class="sc">$</span>lambda<span class="sc">&lt;</span><span class="dv">0</span>) {</span>
+<span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a>  <span class="fu">plot</span>(</span>
+<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a>    <span class="sc">-</span><span class="dv">1</span> <span class="sc">*</span> (soiltemp_T15_zoo <span class="sc">^</span> pt0<span class="sc">$</span>lambda),</span>
+<span id="cb16-14"><a href="#cb16-14" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">&quot;power-transf. (Temp., \u00B0C)&quot;</span>,</span>
+<span id="cb16-15"><a href="#cb16-15" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">&quot;Date&quot;</span>,</span>
+<span id="cb16-16"><a href="#cb16-16" tabindex="-1"></a>    <span class="at">col =</span> <span class="dv">4</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">cex.lab =</span> <span class="fl">1.4</span></span>
+<span id="cb16-17"><a href="#cb16-17" tabindex="-1"></a>  )</span>
+<span id="cb16-18"><a href="#cb16-18" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb16-19"><a href="#cb16-19" tabindex="-1"></a>  <span class="fu">plot</span>((soiltemp_T15_zoo <span class="sc">^</span> pt0<span class="sc">$</span>lambda),</span>
+<span id="cb16-20"><a href="#cb16-20" tabindex="-1"></a>       <span class="at">ylab =</span> <span class="st">&quot;power-transf. (Temp., \u00B0C)&quot;</span>,</span>
+<span id="cb16-21"><a href="#cb16-21" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="st">&quot;Date&quot;</span>,</span>
+<span id="cb16-22"><a href="#cb16-22" tabindex="-1"></a>       <span class="at">col =</span> <span class="dv">4</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">cex.lab =</span> <span class="fl">1.4</span></span>
+<span id="cb16-23"><a href="#cb16-23" tabindex="-1"></a>  )</span>
+<span id="cb16-24"><a href="#cb16-24" tabindex="-1"></a>}</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="timeseries_files/figure-html/plot-transf-1.png" alt="Figure 4: Plots of soil temperature time series data as untransformed, log10-transformed, and power transformed values." width="65%" />
 <p class="caption">
@@ -662,9 +763,9 @@ values are easier to interpret.</p>
 code below (which does a square root transformation, <em>i.e</em>.
 variable<sup>0.5</sup>). This is just an example -- we may, for example,
 decide that the log<sub>10</sub>-transformation is more suitable.</p>
-<pre class="r"><code>soiltemp_T15_zoo &lt;- soiltemp_T15_zoo^0.5 ####  don&#39;t run this chunk of code...
-# don&#39;t forget the xts version either!
-soiltemp_T15_xts &lt;- as.xts(soiltemp_T15_zoo) # ...it&#39;s just an example 😊</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>soiltemp_T15_zoo <span class="ot">&lt;-</span> soiltemp_T15_zoo<span class="sc">^</span><span class="fl">0.5</span> <span class="do">####  don&#39;t run this chunk of code...</span></span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="co"># don&#39;t forget the xts version either!</span></span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>soiltemp_T15_xts <span class="ot">&lt;-</span> <span class="fu">as.xts</span>(soiltemp_T15_zoo) <span class="co"># ...it&#39;s just an example 😊</span></span></code></pre></div>
 <div id="assessing-if-a-time-series-variable-is-stationary"
 class="section level2">
 <h2>Assessing if a time series variable is stationary</h2>
@@ -680,15 +781,15 @@ made stationary with transformations or differencing.</p>
 </div>
 <div id="testing-for-stationarity" class="section level2">
 <h2>Testing for stationarity</h2>
-<pre class="r"><code># we need the package &#39;tseries&#39; for the Augmented Dickey–Fuller (adf) Test
-d0 &lt;- adf.test(soiltemp_T15_zoo); print(d0)</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="co"># we need the package &#39;tseries&#39; for the Augmented Dickey–Fuller (adf) Test</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>d0 <span class="ot">&lt;-</span> <span class="fu">adf.test</span>(soiltemp_T15_zoo); <span class="fu">print</span>(d0)</span></code></pre></div>
 <pre><code>## 
 ##  Augmented Dickey-Fuller Test
 ## 
 ## data:  soiltemp_T15_zoo
 ## Dickey-Fuller = -3.9515, Lag order = 11, p-value = 0.01141
 ## alternative hypothesis: stationary</code></pre>
-<pre class="r"><code>d1 &lt;- adf.test(diff(soiltemp_T15_zoo,1)); print(d1)</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>d1 <span class="ot">&lt;-</span> <span class="fu">adf.test</span>(<span class="fu">diff</span>(soiltemp_T15_zoo,<span class="dv">1</span>)); <span class="fu">print</span>(d1)</span></code></pre></div>
 <pre><code>## Warning in adf.test(diff(soiltemp_T15_zoo, 1)): p-value smaller than printed p-value</code></pre>
 <pre><code>## 
 ##  Augmented Dickey-Fuller Test
@@ -696,7 +797,7 @@ d0 &lt;- adf.test(soiltemp_T15_zoo); print(d0)</code></pre>
 ## data:  diff(soiltemp_T15_zoo, 1)
 ## Dickey-Fuller = -16.143, Lag order = 11, p-value = 0.01
 ## alternative hypothesis: stationary</code></pre>
-<pre class="r"><code>d2 &lt;- adf.test(diff(diff(soiltemp_T15_zoo,1),1)); print(d2)</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>d2 <span class="ot">&lt;-</span> <span class="fu">adf.test</span>(<span class="fu">diff</span>(<span class="fu">diff</span>(soiltemp_T15_zoo,<span class="dv">1</span>),<span class="dv">1</span>)); <span class="fu">print</span>(d2)</span></code></pre></div>
 <pre><code>## Warning in adf.test(diff(diff(soiltemp_T15_zoo, 1), 1)): p-value smaller than printed p-value</code></pre>
 <pre><code>## 
 ##  Augmented Dickey-Fuller Test
@@ -712,39 +813,39 @@ d0 &lt;- adf.test(soiltemp_T15_zoo); print(d0)</code></pre>
 step. The <code>adf.test</code> p-value suggests that the
 non-differenced series is already stationary, but the first sub-plot in
 Figure 5 does not support this.</p>
-<pre class="r"><code>par(mfrow = c(3,1), mar = c(0,4,0,1), oma = c(4,0,1,0), cex.lab = 1.4,
-    mgp = c(2.5,0.7,0), font.lab = 2)
-plot(soiltemp_T15_zoo, ylab = &quot;Raw data, no differencing&quot;,
-     xlab=&quot;&quot;, xaxt=&quot;n&quot;, col = 8)
-lines(loess.smooth(index(soiltemp_T15_zoo),coredata(soiltemp_T15_zoo)), 
-      col = 4, lwd = 2)
-abline(lm(coredata(soiltemp_T15_zoo) ~ index(soiltemp_T15_zoo)), col = 2)
-legend(&quot;topright&quot;, legend = c(&quot;soiltemp_T15_Data&quot;, &quot;Loess smoothing&quot;,&quot;Linear model&quot;),
-       cex = 1.8, col = c(1,4,2), lwd = c(1,2,1), bty = &quot;n&quot;)
-mtext(paste(&quot;adf.test p value =&quot;,signif(d0$p.value,3)), 
-      side = 1, line = -1.2, adj = 0.05)
-plot(diff(soiltemp_T15_zoo,1),
-     ylab = &quot;First differencing&quot;,
-     xlab=&quot;&quot;, xaxt=&quot;n&quot;, col = 8)
-abline(h = 0, col = &quot;grey&quot;, lty = 2)
-lines(loess.smooth(index(diff(soiltemp_T15_zoo,1)),coredata(diff(soiltemp_T15_zoo,1))), 
-      col = 4, lwd = 2)
-abline(lm(coredata(diff(soiltemp_T15_zoo,1)) ~
-            index(diff(soiltemp_T15_zoo,1))), col = 2)
-mtext(paste(&quot;adf.test p value =&quot;,signif(d1$p.value,3)), 
-      side = 1, line = -1.2, adj = 0.05)
-plot(diff(diff(soiltemp_T15_zoo,1),1),
-     ylab = &quot;Second differencing&quot;,
-     xlab=&quot;Date&quot;, col = 8)
-mtext(&quot;Date&quot;,side = 1, line = 2.2, font = 2)
-abline(h = 0, col = &quot;grey&quot;, lty = 2)
-lines(loess.smooth(index(diff(diff(soiltemp_T15_zoo,1),1)),
-                   coredata(diff(diff(soiltemp_T15_zoo,1),1))), 
-      col = 4, lwd = 2)
-abline(lm(coredata(diff(diff(soiltemp_T15_zoo,1))) ~ 
-            index(diff(diff(soiltemp_T15_zoo,1)))), col = 2)
-mtext(paste(&quot;adf.test p value =&quot;,signif(d2$p.value,3)), 
-      side = 1, line = -1.2, adj = 0.05)</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">4</span>,<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">oma =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>), <span class="at">cex.lab =</span> <span class="fl">1.4</span>,</span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>    <span class="at">mgp =</span> <span class="fu">c</span>(<span class="fl">2.5</span>,<span class="fl">0.7</span>,<span class="dv">0</span>), <span class="at">font.lab =</span> <span class="dv">2</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a><span class="fu">plot</span>(soiltemp_T15_zoo, <span class="at">ylab =</span> <span class="st">&quot;Raw data, no differencing&quot;</span>,</span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;&quot;</span>, <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">col =</span> <span class="dv">8</span>)</span>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">loess.smooth</span>(<span class="fu">index</span>(soiltemp_T15_zoo),<span class="fu">coredata</span>(soiltemp_T15_zoo)), </span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a>      <span class="at">col =</span> <span class="dv">4</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(<span class="fu">coredata</span>(soiltemp_T15_zoo) <span class="sc">~</span> <span class="fu">index</span>(soiltemp_T15_zoo)), <span class="at">col =</span> <span class="dv">2</span>)</span>
+<span id="cb26-8"><a href="#cb26-8" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;soiltemp_T15_Data&quot;</span>, <span class="st">&quot;Loess smoothing&quot;</span>,<span class="st">&quot;Linear model&quot;</span>),</span>
+<span id="cb26-9"><a href="#cb26-9" tabindex="-1"></a>       <span class="at">cex =</span> <span class="fl">1.8</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">2</span>), <span class="at">lwd =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">1</span>), <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>)</span>
+<span id="cb26-10"><a href="#cb26-10" tabindex="-1"></a><span class="fu">mtext</span>(<span class="fu">paste</span>(<span class="st">&quot;adf.test p value =&quot;</span>,<span class="fu">signif</span>(d0<span class="sc">$</span>p.value,<span class="dv">3</span>)), </span>
+<span id="cb26-11"><a href="#cb26-11" tabindex="-1"></a>      <span class="at">side =</span> <span class="dv">1</span>, <span class="at">line =</span> <span class="sc">-</span><span class="fl">1.2</span>, <span class="at">adj =</span> <span class="fl">0.05</span>)</span>
+<span id="cb26-12"><a href="#cb26-12" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">diff</span>(soiltemp_T15_zoo,<span class="dv">1</span>),</span>
+<span id="cb26-13"><a href="#cb26-13" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;First differencing&quot;</span>,</span>
+<span id="cb26-14"><a href="#cb26-14" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;&quot;</span>, <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">col =</span> <span class="dv">8</span>)</span>
+<span id="cb26-15"><a href="#cb26-15" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb26-16"><a href="#cb26-16" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">loess.smooth</span>(<span class="fu">index</span>(<span class="fu">diff</span>(soiltemp_T15_zoo,<span class="dv">1</span>)),<span class="fu">coredata</span>(<span class="fu">diff</span>(soiltemp_T15_zoo,<span class="dv">1</span>))), </span>
+<span id="cb26-17"><a href="#cb26-17" tabindex="-1"></a>      <span class="at">col =</span> <span class="dv">4</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb26-18"><a href="#cb26-18" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(<span class="fu">coredata</span>(<span class="fu">diff</span>(soiltemp_T15_zoo,<span class="dv">1</span>)) <span class="sc">~</span></span>
+<span id="cb26-19"><a href="#cb26-19" tabindex="-1"></a>            <span class="fu">index</span>(<span class="fu">diff</span>(soiltemp_T15_zoo,<span class="dv">1</span>))), <span class="at">col =</span> <span class="dv">2</span>)</span>
+<span id="cb26-20"><a href="#cb26-20" tabindex="-1"></a><span class="fu">mtext</span>(<span class="fu">paste</span>(<span class="st">&quot;adf.test p value =&quot;</span>,<span class="fu">signif</span>(d1<span class="sc">$</span>p.value,<span class="dv">3</span>)), </span>
+<span id="cb26-21"><a href="#cb26-21" tabindex="-1"></a>      <span class="at">side =</span> <span class="dv">1</span>, <span class="at">line =</span> <span class="sc">-</span><span class="fl">1.2</span>, <span class="at">adj =</span> <span class="fl">0.05</span>)</span>
+<span id="cb26-22"><a href="#cb26-22" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">diff</span>(<span class="fu">diff</span>(soiltemp_T15_zoo,<span class="dv">1</span>),<span class="dv">1</span>),</span>
+<span id="cb26-23"><a href="#cb26-23" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Second differencing&quot;</span>,</span>
+<span id="cb26-24"><a href="#cb26-24" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Date&quot;</span>, <span class="at">col =</span> <span class="dv">8</span>)</span>
+<span id="cb26-25"><a href="#cb26-25" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;Date&quot;</span>,<span class="at">side =</span> <span class="dv">1</span>, <span class="at">line =</span> <span class="fl">2.2</span>, <span class="at">font =</span> <span class="dv">2</span>)</span>
+<span id="cb26-26"><a href="#cb26-26" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb26-27"><a href="#cb26-27" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">loess.smooth</span>(<span class="fu">index</span>(<span class="fu">diff</span>(<span class="fu">diff</span>(soiltemp_T15_zoo,<span class="dv">1</span>),<span class="dv">1</span>)),</span>
+<span id="cb26-28"><a href="#cb26-28" tabindex="-1"></a>                   <span class="fu">coredata</span>(<span class="fu">diff</span>(<span class="fu">diff</span>(soiltemp_T15_zoo,<span class="dv">1</span>),<span class="dv">1</span>))), </span>
+<span id="cb26-29"><a href="#cb26-29" tabindex="-1"></a>      <span class="at">col =</span> <span class="dv">4</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb26-30"><a href="#cb26-30" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(<span class="fu">coredata</span>(<span class="fu">diff</span>(<span class="fu">diff</span>(soiltemp_T15_zoo,<span class="dv">1</span>))) <span class="sc">~</span> </span>
+<span id="cb26-31"><a href="#cb26-31" tabindex="-1"></a>            <span class="fu">index</span>(<span class="fu">diff</span>(<span class="fu">diff</span>(soiltemp_T15_zoo,<span class="dv">1</span>)))), <span class="at">col =</span> <span class="dv">2</span>)</span>
+<span id="cb26-32"><a href="#cb26-32" tabindex="-1"></a><span class="fu">mtext</span>(<span class="fu">paste</span>(<span class="st">&quot;adf.test p value =&quot;</span>,<span class="fu">signif</span>(d2<span class="sc">$</span>p.value,<span class="dv">3</span>)), </span>
+<span id="cb26-33"><a href="#cb26-33" tabindex="-1"></a>      <span class="at">side =</span> <span class="dv">1</span>, <span class="at">line =</span> <span class="sc">-</span><span class="fl">1.2</span>, <span class="at">adj =</span> <span class="fl">0.05</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="timeseries_files/figure-html/plot-diff-1.png" alt="Figure 5: Plots of soil temperature time series data and its first and second differences, with each sub-plot showing the smoothed (Loess) and linear trends." width="65%" />
 <p class="caption">
@@ -779,7 +880,7 @@ Water 2015).</span>
 <div id="a.-apply-the-mann-kendall-test-from-the-trend-package"
 class="section level4">
 <h4>1a. Apply the Mann-Kendall test from the 'trend' package</h4>
-<pre class="r"><code>mk.test(coredata(soiltemp_T15_zoo))</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">mk.test</span>(<span class="fu">coredata</span>(soiltemp_T15_zoo))</span></code></pre></div>
 <pre><code>## 
 ##  Mann-Kendall trend test
 ## 
@@ -789,8 +890,8 @@ class="section level4">
 ## sample estimates:
 ##             S          varS           tau 
 ## -6.797270e+05  3.489630e+08 -6.371125e-01</code></pre>
-<pre class="r"><code>#    or
-# SeasonalMannKendall(soiltemp_T15_zoo) # needs base R regular time series object</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="co">#    or</span></span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="co"># SeasonalMannKendall(soiltemp_T15_zoo) # needs base R regular time series object</span></span></code></pre></div>
 <p>The output from <code>mk.test()</code> shows a negative slope
 (<em>i.e</em>. the value of <code>S</code>), with the
 <code>p-value</code> definitely &lt; 0.05, so we can reject the null
@@ -798,7 +899,7 @@ hypothesis of zero slope.</p>
 </div>
 <div id="b.-estimate-the-sens-slope" class="section level4">
 <h4>1b. Estimate the Sen's slope</h4>
-<pre class="r"><code>sens.slope(coredata(soiltemp_T15_zoo))</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="fu">sens.slope</span>(<span class="fu">coredata</span>(soiltemp_T15_zoo))</span></code></pre></div>
 <pre><code>## 
 ##  Sen&#39;s slope
 ## 
@@ -846,14 +947,14 @@ time series data (see below).
 <p>
  
 </p>
-<pre class="r"><code>ff &lt;- findfrequency(soiltemp_T15_xts) # often an approximation!! check the data!
-cat(&quot;Estimated frequency is&quot;,ff,&quot;\n&quot;)</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a>ff <span class="ot">&lt;-</span> <span class="fu">findfrequency</span>(soiltemp_T15_xts) <span class="co"># often an approximation!! check the data!</span></span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Estimated frequency is&quot;</span>,ff,<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## Estimated frequency is 24</code></pre>
-<pre class="r"><code>soiltemp_T15_movAv &lt;- rollmean(soiltemp_T15_zoo, 24)
-plot(soiltemp_T15_zoo, col=8, type=&quot;l&quot;) # original data
-# add the moving average
-lines(soiltemp_T15_movAv, lwd = 2)
-legend(&quot;topright&quot;, legend = c(&quot;Data&quot;,&quot;Moving average&quot;), col = c(8,1), lwd = c(1,2))</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a>soiltemp_T15_movAv <span class="ot">&lt;-</span> <span class="fu">rollmean</span>(soiltemp_T15_zoo, <span class="dv">24</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a><span class="fu">plot</span>(soiltemp_T15_zoo, <span class="at">col=</span><span class="dv">8</span>, <span class="at">type=</span><span class="st">&quot;l&quot;</span>) <span class="co"># original data</span></span>
+<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a><span class="co"># add the moving average</span></span>
+<span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a><span class="fu">lines</span>(soiltemp_T15_movAv, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb34-5"><a href="#cb34-5" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Data&quot;</span>,<span class="st">&quot;Moving average&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">1</span>), <span class="at">lwd =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="timeseries_files/figure-html/plot-movAv-1.png" alt="Figure 6: Plots of soil temperature time series data and the 24-hour moving average." width="55%" />
 <p class="caption">
@@ -872,8 +973,8 @@ class="section level3">
 find if a trend exists, we use the Mann-Kendall test or Sen's Slope test
 as descrobed above.</p>
 <p>First we create a linear model of the time series...</p>
-<pre class="r"><code>lm0 &lt;- lm(coredata(soiltemp_T15_zoo) ~ index(soiltemp_T15_zoo))
-summary(lm0)</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a>lm0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">coredata</span>(soiltemp_T15_zoo) <span class="sc">~</span> <span class="fu">index</span>(soiltemp_T15_zoo))</span>
+<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a><span class="fu">summary</span>(lm0)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = coredata(soiltemp_T15_zoo) ~ index(soiltemp_T15_zoo))
@@ -893,10 +994,10 @@ summary(lm0)</code></pre>
 ## Multiple R-squared:  0.7442, Adjusted R-squared:  0.744 
 ## F-statistic:  4253 on 1 and 1462 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>...then use a plot (Figure 7) to look at the linear relationship.</p>
-<pre class="r"><code>soiltemp_T15_lmfit &lt;- zoo(lm0$fitted.values, index(soiltemp_T15_zoo))
-plot(soiltemp_T15_zoo, col = 8, type = &quot;l&quot;)
-lines(soiltemp_T15_lmfit, col = 2, lty = 2)
-legend(&quot;topright&quot;, legend = c(&quot;Data&quot;,&quot;Linear trend&quot;), col = c(8,2), lty = c(1,2))</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a>soiltemp_T15_lmfit <span class="ot">&lt;-</span> <span class="fu">zoo</span>(lm0<span class="sc">$</span>fitted.values, <span class="fu">index</span>(soiltemp_T15_zoo))</span>
+<span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a><span class="fu">plot</span>(soiltemp_T15_zoo, <span class="at">col =</span> <span class="dv">8</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span>
+<span id="cb37-3"><a href="#cb37-3" tabindex="-1"></a><span class="fu">lines</span>(soiltemp_T15_lmfit, <span class="at">col =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb37-4"><a href="#cb37-4" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Data&quot;</span>,<span class="st">&quot;Linear trend&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">2</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="timeseries_files/figure-html/linear-trend-1.png" alt="Figure 7: Plots of soil temperature time series data and the overall trend shown by a linear model." width="55%" />
 <p class="caption">
@@ -923,16 +1024,16 @@ Figure 8.</p>
 <p><strong>NOTE</strong>: loess smoothing does not have the relationship
 to ARIMA that moving averaging does, but does allow us to separate
 periodicity from random error in time series decomposition.</p>
-<pre class="r"><code>y_trend &lt;- loess.smooth(index(soiltemp_T15_zoo), 
-                           coredata(soiltemp_T15_zoo), 
-                           span = 0.15, evaluation = length(soiltemp_T15_zoo))
-plot(soiltemp_T15_zoo, col = 8, type = &quot;l&quot;)
-soiltemp_T15_trend &lt;- zoo(y_trend$y, index(soiltemp_T15_zoo))
-lines(soiltemp_T15_lmfit, col = 2, lty = 2)
-lines(soiltemp_T15_trend, col = &quot;skyblue&quot;, lwd = 3)
-legend(&quot;topright&quot;, bty = &quot;n&quot;, inset = 0.02, cex = 1.25, 
-       legend = c(&quot;actual data&quot;,&quot;linear model&quot;,&quot;loess smoothed&quot;), 
-       col = c(8,2,&quot;skyblue&quot;), lty=c(1,2,1), lwd = c(1,1,3))</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a>y_trend <span class="ot">&lt;-</span> <span class="fu">loess.smooth</span>(<span class="fu">index</span>(soiltemp_T15_zoo), </span>
+<span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a>                           <span class="fu">coredata</span>(soiltemp_T15_zoo), </span>
+<span id="cb38-3"><a href="#cb38-3" tabindex="-1"></a>                           <span class="at">span =</span> <span class="fl">0.15</span>, <span class="at">evaluation =</span> <span class="fu">length</span>(soiltemp_T15_zoo))</span>
+<span id="cb38-4"><a href="#cb38-4" tabindex="-1"></a><span class="fu">plot</span>(soiltemp_T15_zoo, <span class="at">col =</span> <span class="dv">8</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span>
+<span id="cb38-5"><a href="#cb38-5" tabindex="-1"></a>soiltemp_T15_trend <span class="ot">&lt;-</span> <span class="fu">zoo</span>(y_trend<span class="sc">$</span>y, <span class="fu">index</span>(soiltemp_T15_zoo))</span>
+<span id="cb38-6"><a href="#cb38-6" tabindex="-1"></a><span class="fu">lines</span>(soiltemp_T15_lmfit, <span class="at">col =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb38-7"><a href="#cb38-7" tabindex="-1"></a><span class="fu">lines</span>(soiltemp_T15_trend, <span class="at">col =</span> <span class="st">&quot;skyblue&quot;</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span>
+<span id="cb38-8"><a href="#cb38-8" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>, <span class="at">inset =</span> <span class="fl">0.02</span>, <span class="at">cex =</span> <span class="fl">1.25</span>, </span>
+<span id="cb38-9"><a href="#cb38-9" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;actual data&quot;</span>,<span class="st">&quot;linear model&quot;</span>,<span class="st">&quot;loess smoothed&quot;</span>), </span>
+<span id="cb38-10"><a href="#cb38-10" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">2</span>,<span class="st">&quot;skyblue&quot;</span>), <span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">1</span>), <span class="at">lwd =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">3</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="timeseries_files/figure-html/loess-trend-1.png" alt="Figure 8: Plots of soil temperature time series data and the overall trend shown by a loess smoothing model." width="55%" />
 <p class="caption">
@@ -953,7 +1054,7 @@ SERIES DON'T ALWAYS HAVE PERIODICITY !</strong></span></p>
 structure of the time series. We can do this graphically, first by
 plotting the autocorrelation function <code>acf()</code> which outputs a
 plot by default:</p>
-<pre class="r"><code>acf(soiltemp_T15_xts, main = &quot;&quot;)</code></pre>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a><span class="fu">acf</span>(soiltemp_T15_xts, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="timeseries_files/figure-html/acf-plot-1.png" alt="Figure 9: The autocorrelation function plot for soil temperature time series data (the horizontal axis is in units of seconds)." width="65%" />
 <p class="caption">
@@ -970,7 +1071,7 @@ series?</p>
 </blockquote>
 <p>Then plot the partial autocorrelation function
 (<code>pacf()</code>)</p>
-<pre class="r"><code>pacf(soiltemp_T15_xts, main = &quot;&quot;)</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a><span class="fu">pacf</span>(soiltemp_T15_xts, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="timeseries_files/figure-html/pacf-plot-1.png" alt="Figure 10: The partial autocorrelation function plot for soil temperature time series data (horizontal axis units are seconds)." width="65%" />
 <p class="caption">
@@ -992,19 +1093,19 @@ class="section level3">
 <p>The null hypothesis H<sub>0</sub> is that no autocorrelation exists
 at any lag distance (so p <span class="math inline">\(\le\)</span> 0.05
 'rejects' H<sub>0</sub>):</p>
-<pre class="r"><code>Box.test(soiltemp_T15_xts)</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a><span class="fu">Box.test</span>(soiltemp_T15_xts)</span></code></pre></div>
 <pre><code>## 
 ##  Box-Pierce test
 ## 
 ## data:  soiltemp_T15_xts
 ## X-squared = 1436.3, df = 1, p-value &lt; 2.2e-16</code></pre>
-<pre class="r"><code>Box.test(diff(soiltemp_T15_xts,1)) # 1 difference</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a><span class="fu">Box.test</span>(<span class="fu">diff</span>(soiltemp_T15_xts,<span class="dv">1</span>)) <span class="co"># 1 difference</span></span></code></pre></div>
 <pre><code>## 
 ##  Box-Pierce test
 ## 
 ## data:  diff(soiltemp_T15_xts, 1)
 ## X-squared = 15.658, df = 1, p-value = 7.589e-05</code></pre>
-<pre class="r"><code>Box.test(diff(diff(soiltemp_T15_xts,1),1)) # 2 differences</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" tabindex="-1"></a><span class="fu">Box.test</span>(<span class="fu">diff</span>(<span class="fu">diff</span>(soiltemp_T15_xts,<span class="dv">1</span>),<span class="dv">1</span>)) <span class="co"># 2 differences</span></span></code></pre></div>
 <pre><code>## 
 ##  Box-Pierce test
 ## 
@@ -1017,11 +1118,11 @@ class="section level3">
 <p>Remember that we made a loess model of the time series ... the
 residuals (Figure 11) can give us the combination of periodicity
 component plus any random variation.</p>
-<pre class="r"><code>soiltemp_T15_periodic &lt;- soiltemp_T15_zoo - soiltemp_T15_trend
-plot(soiltemp_T15_trend, ylim = c(-2,20), lty = 3)
-lines(soiltemp_T15_periodic, col = &quot;coral&quot;, lwd = 2) # just to check
-legend(&quot;topright&quot;, legend = c(&quot;LOESS trend&quot;, &quot;Periodicity plus noise&quot;), 
-       col = c(1,&quot;coral&quot;), lwd = c(1,2), lty = c(3,1))</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" tabindex="-1"></a>soiltemp_T15_periodic <span class="ot">&lt;-</span> soiltemp_T15_zoo <span class="sc">-</span> soiltemp_T15_trend</span>
+<span id="cb47-2"><a href="#cb47-2" tabindex="-1"></a><span class="fu">plot</span>(soiltemp_T15_trend, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="dv">20</span>), <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb47-3"><a href="#cb47-3" tabindex="-1"></a><span class="fu">lines</span>(soiltemp_T15_periodic, <span class="at">col =</span> <span class="st">&quot;coral&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>) <span class="co"># just to check</span></span>
+<span id="cb47-4"><a href="#cb47-4" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;LOESS trend&quot;</span>, <span class="st">&quot;Periodicity plus noise&quot;</span>), </span>
+<span id="cb47-5"><a href="#cb47-5" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="st">&quot;coral&quot;</span>), <span class="at">lwd =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="timeseries_files/figure-html/loess-resids-1.png" alt="Figure 11: An incomplete decomposition of the soil temperature time series into smoothed trend and periodicity plus error (noise) components." width="55%" />
 <p class="caption">
@@ -1041,31 +1142,31 @@ data and the less-smoothed loess should be just 'noise' or
 '<strong>error</strong>'.</p>
 <p>We first generate a loess model which is stored in the object
 <code>temp_LOESS2</code>:</p>
-<pre class="r"><code>temp_LOESS2 &lt;- loess.smooth(index(soiltemp_T15_zoo), 
-                           coredata(soiltemp_T15_zoo), 
-                           span = 0.012, evaluation = length(soiltemp_T15_zoo))</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a>temp_LOESS2 <span class="ot">&lt;-</span> <span class="fu">loess.smooth</span>(<span class="fu">index</span>(soiltemp_T15_zoo), </span>
+<span id="cb48-2"><a href="#cb48-2" tabindex="-1"></a>                           <span class="fu">coredata</span>(soiltemp_T15_zoo), </span>
+<span id="cb48-3"><a href="#cb48-3" tabindex="-1"></a>                           <span class="at">span =</span> <span class="fl">0.012</span>, <span class="at">evaluation =</span> <span class="fu">length</span>(soiltemp_T15_zoo))</span></code></pre></div>
 <p>We then use the new loess model to make a time series which contains
 both periodic and trend information:</p>
-<pre class="r"><code>soiltemp_T15_LOESS2 &lt;- zoo(temp_LOESS2$y, index(soiltemp_T15_zoo))</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" tabindex="-1"></a>soiltemp_T15_LOESS2 <span class="ot">&lt;-</span> <span class="fu">zoo</span>(temp_LOESS2<span class="sc">$</span>y, <span class="fu">index</span>(soiltemp_T15_zoo))</span></code></pre></div>
 <p>The difference between the data and the less-smoothed loess should be
 just 'noise' or 'error', so we make a new time series based on this
 difference:</p>
-<pre class="r"><code>soiltemp_T15_err &lt;- soiltemp_T15_zoo - soiltemp_T15_LOESS2</code></pre>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" tabindex="-1"></a>soiltemp_T15_err <span class="ot">&lt;-</span> soiltemp_T15_zoo <span class="sc">-</span> soiltemp_T15_LOESS2</span></code></pre></div>
 <p><br />
 </p>
 <div id="plot-setting-y-axis-limits-to-similar-scale-to-original-data"
 class="section level4">
 <h4>Plot, setting y axis limits to similar scale to original data:</h4>
-<pre class="r"><code>par(mar = c(4,4,1,1), mgp = c(1.7,0.3,0), tcl = 0.3, font.lab = 2)
-plot(soiltemp_T15_trend, ylim = c(-2,20), lty = 2, lwd = 2, # from above
-     xlab = &quot;2014 Date&quot;, ylab = &quot;Soil temperature (\u00B0C)&quot;)
-lines(soiltemp_T15_LOESS2, col = 3, lwd = 2)
-lines(soiltemp_T15_err, col = 2) # from a couple of lines above
-legend(&quot;left&quot;, 
-       legend = c(&quot;Trend (coarse LOESS)&quot;, 
-                  &quot;Periodicity + trend (fine LOESS)&quot;,
-                  &quot;Unexplained variation&quot;), 
-       col = c(1,3,2), lwd = c(2,2,1), lty = c(2,1,1), bty=&quot;n&quot;)</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">mgp =</span> <span class="fu">c</span>(<span class="fl">1.7</span>,<span class="fl">0.3</span>,<span class="dv">0</span>), <span class="at">tcl =</span> <span class="fl">0.3</span>, <span class="at">font.lab =</span> <span class="dv">2</span>)</span>
+<span id="cb51-2"><a href="#cb51-2" tabindex="-1"></a><span class="fu">plot</span>(soiltemp_T15_trend, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="dv">20</span>), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="co"># from above</span></span>
+<span id="cb51-3"><a href="#cb51-3" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;2014 Date&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Soil temperature (\u00B0C)&quot;</span>)</span>
+<span id="cb51-4"><a href="#cb51-4" tabindex="-1"></a><span class="fu">lines</span>(soiltemp_T15_LOESS2, <span class="at">col =</span> <span class="dv">3</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb51-5"><a href="#cb51-5" tabindex="-1"></a><span class="fu">lines</span>(soiltemp_T15_err, <span class="at">col =</span> <span class="dv">2</span>) <span class="co"># from a couple of lines above</span></span>
+<span id="cb51-6"><a href="#cb51-6" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;left&quot;</span>, </span>
+<span id="cb51-7"><a href="#cb51-7" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Trend (coarse LOESS)&quot;</span>, </span>
+<span id="cb51-8"><a href="#cb51-8" tabindex="-1"></a>                  <span class="st">&quot;Periodicity + trend (fine LOESS)&quot;</span>,</span>
+<span id="cb51-9"><a href="#cb51-9" tabindex="-1"></a>                  <span class="st">&quot;Unexplained variation&quot;</span>), </span>
+<span id="cb51-10"><a href="#cb51-10" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>), <span class="at">lwd =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">bty=</span><span class="st">&quot;n&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="timeseries_files/figure-html/loess-periodic-1.png" alt="Figure 12: Incomplete decomposition of soil temperature time series data showing the smoothed *trend*, combined *trend + periodicity*, and *error* components." width="55%" />
 <p class="caption">
@@ -1082,7 +1183,7 @@ between the very smoothed (trend) and less smoothed (trend +
 periodicity) loess, as suggested by the two loess curves in Figure 12.
 We now make yet another time series object to hold this isolated
 periodicity:</p>
-<pre class="r"><code>soiltemp_T15_periodic2 &lt;- soiltemp_T15_LOESS2 - soiltemp_T15_trend</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" tabindex="-1"></a>soiltemp_T15_periodic2 <span class="ot">&lt;-</span> soiltemp_T15_LOESS2 <span class="sc">-</span> soiltemp_T15_trend</span></code></pre></div>
 </div>
 </div>
 <div
@@ -1090,15 +1191,15 @@ id="plot-everything-to-show-the-components-of-time-series-decomposition"
 class="section level3">
 <h3>Plot everything to show the components of time series
 decomposition</h3>
-<pre class="r"><code>plot(cbind(soiltemp_T15_zoo,soiltemp_T15_periodic2,
-     soiltemp_T15_trend, soiltemp_T15_err), main = &quot;&quot;, xlab = &quot;Date in 2014&quot;, 
-     cex.main = 1.5, yax.flip = TRUE, col = c(8,3,4,2), 
-     ylim = c(floor(min(soiltemp_T15_periodic2)), ceiling(max(soiltemp_T15_zoo))))
-x1 &lt;- (0.5*(par(&quot;usr&quot;)[2]-par(&quot;usr&quot;)[1]))+par(&quot;usr&quot;)[1]
-y &lt;- (c(0.15, 0.3, 0.6, 0.82)*(par(&quot;usr&quot;)[4]-par(&quot;usr&quot;)[3]))+par(&quot;usr&quot;)[3]
-text(rep(x1,4), y, 
-     labels = c(&quot;Unaccounted variation&quot;,&quot;Trend&quot;,&quot;Apparent periodicity&quot;,&quot;Data&quot;), 
-     col = c(2,4,3,8))</code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">cbind</span>(soiltemp_T15_zoo,soiltemp_T15_periodic2,</span>
+<span id="cb53-2"><a href="#cb53-2" tabindex="-1"></a>     soiltemp_T15_trend, soiltemp_T15_err), <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Date in 2014&quot;</span>, </span>
+<span id="cb53-3"><a href="#cb53-3" tabindex="-1"></a>     <span class="at">cex.main =</span> <span class="fl">1.5</span>, <span class="at">yax.flip =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">2</span>), </span>
+<span id="cb53-4"><a href="#cb53-4" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fu">floor</span>(<span class="fu">min</span>(soiltemp_T15_periodic2)), <span class="fu">ceiling</span>(<span class="fu">max</span>(soiltemp_T15_zoo))))</span>
+<span id="cb53-5"><a href="#cb53-5" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> (<span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">par</span>(<span class="st">&quot;usr&quot;</span>)[<span class="dv">2</span>]<span class="sc">-</span><span class="fu">par</span>(<span class="st">&quot;usr&quot;</span>)[<span class="dv">1</span>]))<span class="sc">+</span><span class="fu">par</span>(<span class="st">&quot;usr&quot;</span>)[<span class="dv">1</span>]</span>
+<span id="cb53-6"><a href="#cb53-6" tabindex="-1"></a>y <span class="ot">&lt;-</span> (<span class="fu">c</span>(<span class="fl">0.15</span>, <span class="fl">0.3</span>, <span class="fl">0.6</span>, <span class="fl">0.82</span>)<span class="sc">*</span>(<span class="fu">par</span>(<span class="st">&quot;usr&quot;</span>)[<span class="dv">4</span>]<span class="sc">-</span><span class="fu">par</span>(<span class="st">&quot;usr&quot;</span>)[<span class="dv">3</span>]))<span class="sc">+</span><span class="fu">par</span>(<span class="st">&quot;usr&quot;</span>)[<span class="dv">3</span>]</span>
+<span id="cb53-7"><a href="#cb53-7" tabindex="-1"></a><span class="fu">text</span>(<span class="fu">rep</span>(x1,<span class="dv">4</span>), y, </span>
+<span id="cb53-8"><a href="#cb53-8" tabindex="-1"></a>     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Unaccounted variation&quot;</span>,<span class="st">&quot;Trend&quot;</span>,<span class="st">&quot;Apparent periodicity&quot;</span>,<span class="st">&quot;Data&quot;</span>), </span>
+<span id="cb53-9"><a href="#cb53-9" tabindex="-1"></a>     <span class="at">col =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">8</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="timeseries_files/figure-html/decomp-plots-1.png" alt="Figure 13: Time series decomposition into the three main components (periodicity, trend, and error; the raw data are at the top) for soil temperature (°C) at 15 cm depth." width="768" />
 <p class="caption">
@@ -1149,8 +1250,8 @@ forecasting</strong>.</span></p>
 <div id="use-the-forecast-r-package-to-run-an-arima-model"
 class="section level2">
 <h2>Use the <code>forecast</code> R package to run an ARIMA model</h2>
-<pre class="r"><code>auto.arima(soiltemp_T15_xts, max.p = 3, max.q = 3, max.d = 0, 
-           seasonal = TRUE)</code></pre>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" tabindex="-1"></a><span class="fu">auto.arima</span>(soiltemp_T15_xts, <span class="at">max.p =</span> <span class="dv">3</span>, <span class="at">max.q =</span> <span class="dv">3</span>, <span class="at">max.d =</span> <span class="dv">0</span>, </span>
+<span id="cb54-2"><a href="#cb54-2" tabindex="-1"></a>           <span class="at">seasonal =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## Series: soiltemp_T15_xts 
 ## ARIMA(1,0,3) with non-zero mean 
 ## 
@@ -1233,9 +1334,9 @@ differencing, <code>Q</code> the seasonal moving averages, and
 <code>n</code> is the number of time steps per period/season.</p>
 <div id="with-no-seasonality" class="section level3">
 <h3>1. With no seasonality</h3>
-<pre class="r"><code>am0 &lt;- arima(x = soiltemp_T15_xts, order = c(1,0,3))
-summary(am0)
-confint(am0)</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" tabindex="-1"></a>am0 <span class="ot">&lt;-</span> <span class="fu">arima</span>(<span class="at">x =</span> soiltemp_T15_xts, <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">3</span>))</span>
+<span id="cb56-2"><a href="#cb56-2" tabindex="-1"></a><span class="fu">summary</span>(am0)</span>
+<span id="cb56-3"><a href="#cb56-3" tabindex="-1"></a><span class="fu">confint</span>(am0)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## arima(x = soiltemp_T15_xts, order = c(1, 0, 3))
@@ -1269,12 +1370,12 @@ parameter is useful or not).</p>
 </div>
 <div id="with-seasonality" class="section level3">
 <h3>2. With seasonality</h3>
-<pre class="r"><code>ff &lt;- findfrequency(soiltemp_T15_xts)
-cat(&quot;Estimated time series frequency is&quot;,ff,&quot;\n&quot;)
-am1 &lt;- arima(x = soiltemp_T15_xts, order = c(1,0,2),
-             seasonal = list(order = c(1, 0, 1), period = ff))
-summary(am1)
-confint(am1)</code></pre>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" tabindex="-1"></a>ff <span class="ot">&lt;-</span> <span class="fu">findfrequency</span>(soiltemp_T15_xts)</span>
+<span id="cb58-2"><a href="#cb58-2" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Estimated time series frequency is&quot;</span>,ff,<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb58-3"><a href="#cb58-3" tabindex="-1"></a>am1 <span class="ot">&lt;-</span> <span class="fu">arima</span>(<span class="at">x =</span> soiltemp_T15_xts, <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">2</span>),</span>
+<span id="cb58-4"><a href="#cb58-4" tabindex="-1"></a>             <span class="at">seasonal =</span> <span class="fu">list</span>(<span class="at">order =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">period =</span> ff))</span>
+<span id="cb58-5"><a href="#cb58-5" tabindex="-1"></a><span class="fu">summary</span>(am1)</span>
+<span id="cb58-6"><a href="#cb58-6" tabindex="-1"></a><span class="fu">confint</span>(am1)</span></code></pre></div>
 <pre><code>## Estimated time series frequency is 24 
 ## 
 ## Call:
@@ -1313,7 +1414,7 @@ the residual plot (top) should look like white noise - the residuals
 should not be autocorrelated (bottom left plot) - the p-value from the
 Ljung-Box test should be &gt; 0.05 (text output) - the residuals should
 be normally distributed (bottom right plot)</p>
-<pre class="r"><code>checkresiduals(am0)</code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" tabindex="-1"></a><span class="fu">checkresiduals</span>(am0)</span></code></pre></div>
 <div class="figure">
 <img src="timeseries_files/figure-html/diagnostic-arima-1.png" alt="Figure 14: Residual diagnostic plots for a non-seasonal ARIMA model of the  soil temperature time series." width="70%" />
 <p class="caption">
@@ -1328,7 +1429,7 @@ the soil temperature time series.
 ## Q* = 35.092, df = 6, p-value = 4.136e-06
 ## 
 ## Model df: 4.   Total lags used: 10</code></pre>
-<pre class="r"><code>checkresiduals(am1)</code></pre>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" tabindex="-1"></a><span class="fu">checkresiduals</span>(am1)</span></code></pre></div>
 <div class="figure">
 <img src="timeseries_files/figure-html/diagnostic-sarima-1.png" alt="Figure 15: Residual diagnostic plots for a seasonal ARIMA (SARIMA) model of the  soil temperature time series." width="70%" />
 <p class="caption">
@@ -1382,27 +1483,27 @@ methods. We won't be covering these methods here.
 <p>
  
 </p>
-<pre class="r"><code>fc0 &lt;- forecast(am0, h = 168)
-fc1 &lt;- forecast(am1, h = 168)</code></pre>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" tabindex="-1"></a>fc0 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(am0, <span class="at">h =</span> <span class="dv">168</span>)</span>
+<span id="cb64-2"><a href="#cb64-2" tabindex="-1"></a>fc1 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(am1, <span class="at">h =</span> <span class="dv">168</span>)</span></code></pre></div>
 <div id="then-look-at-forecasts-with-plots" class="section level3">
 <h3>Then, look at forecasts with plots</h3>
-<pre class="r"><code>par(mfrow = c(2, 1), cex.main = 0.9, mar = c(0,3,0,1), oma = c(3,0,1,0),
-    mgp=c(1.6,0.3,0), tcl=0.2, font.lab=2)
-plot(fc0,ylab = &quot;Temperature (\u00B0C)&quot;,
-     fcol = 4, xlab=&quot;&quot;, main = &quot;&quot;, xaxt=&quot;n&quot;)
-lines(soiltemp_T15_zoo, col = &quot;grey70&quot;)
-mtext(&quot;ARIMA with no seasonality&quot;, 1, -2.2, adj = 0.1, font = 2)
-mtext(am0$call, 1, -1, adj = 0.1, col = 4, cex = 0.9, 
-      family=&quot;mono&quot;, font = 2)
-mtext(&quot;(a)&quot;, 3, -1.2, cex = 1.2, font = 2, adj = 0.95)
-
-plot(fc1,ylab = &quot;Temperature (\u00B0C)&quot;, main = &quot;&quot;, fcol = 3)
-lines(soiltemp$conc, col = &quot;grey70&quot;)
-mtext(&quot;Time since start (seconds)&quot;, 1, 1.7, cex = 1.2, font = 2)
-mtext(paste(&quot;ARIMA with&quot;,am1$arma[5],&quot;h periodicity&quot;),
-      side = 1, line = -2.2, adj = 0.1, font = 2)
-mtext(am1$call, 1, -1, adj = 0.1, col = 3, cex = 0.9, family=&quot;mono&quot;)
-mtext(&quot;(b)&quot;, 3, -1.2, cex = 1.2, font = 2, adj = 0.95)</code></pre>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>), <span class="at">cex.main =</span> <span class="fl">0.9</span>, <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">oma =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>),</span>
+<span id="cb65-2"><a href="#cb65-2" tabindex="-1"></a>    <span class="at">mgp=</span><span class="fu">c</span>(<span class="fl">1.6</span>,<span class="fl">0.3</span>,<span class="dv">0</span>), <span class="at">tcl=</span><span class="fl">0.2</span>, <span class="at">font.lab=</span><span class="dv">2</span>)</span>
+<span id="cb65-3"><a href="#cb65-3" tabindex="-1"></a><span class="fu">plot</span>(fc0,<span class="at">ylab =</span> <span class="st">&quot;Temperature (\u00B0C)&quot;</span>,</span>
+<span id="cb65-4"><a href="#cb65-4" tabindex="-1"></a>     <span class="at">fcol =</span> <span class="dv">4</span>, <span class="at">xlab=</span><span class="st">&quot;&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>)</span>
+<span id="cb65-5"><a href="#cb65-5" tabindex="-1"></a><span class="fu">lines</span>(soiltemp_T15_zoo, <span class="at">col =</span> <span class="st">&quot;grey70&quot;</span>)</span>
+<span id="cb65-6"><a href="#cb65-6" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;ARIMA with no seasonality&quot;</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="fl">2.2</span>, <span class="at">adj =</span> <span class="fl">0.1</span>, <span class="at">font =</span> <span class="dv">2</span>)</span>
+<span id="cb65-7"><a href="#cb65-7" tabindex="-1"></a><span class="fu">mtext</span>(am0<span class="sc">$</span>call, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="at">adj =</span> <span class="fl">0.1</span>, <span class="at">col =</span> <span class="dv">4</span>, <span class="at">cex =</span> <span class="fl">0.9</span>, </span>
+<span id="cb65-8"><a href="#cb65-8" tabindex="-1"></a>      <span class="at">family=</span><span class="st">&quot;mono&quot;</span>, <span class="at">font =</span> <span class="dv">2</span>)</span>
+<span id="cb65-9"><a href="#cb65-9" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;(a)&quot;</span>, <span class="dv">3</span>, <span class="sc">-</span><span class="fl">1.2</span>, <span class="at">cex =</span> <span class="fl">1.2</span>, <span class="at">font =</span> <span class="dv">2</span>, <span class="at">adj =</span> <span class="fl">0.95</span>)</span>
+<span id="cb65-10"><a href="#cb65-10" tabindex="-1"></a></span>
+<span id="cb65-11"><a href="#cb65-11" tabindex="-1"></a><span class="fu">plot</span>(fc1,<span class="at">ylab =</span> <span class="st">&quot;Temperature (\u00B0C)&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">fcol =</span> <span class="dv">3</span>)</span>
+<span id="cb65-12"><a href="#cb65-12" tabindex="-1"></a><span class="fu">lines</span>(soiltemp<span class="sc">$</span>conc, <span class="at">col =</span> <span class="st">&quot;grey70&quot;</span>)</span>
+<span id="cb65-13"><a href="#cb65-13" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;Time since start (seconds)&quot;</span>, <span class="dv">1</span>, <span class="fl">1.7</span>, <span class="at">cex =</span> <span class="fl">1.2</span>, <span class="at">font =</span> <span class="dv">2</span>)</span>
+<span id="cb65-14"><a href="#cb65-14" tabindex="-1"></a><span class="fu">mtext</span>(<span class="fu">paste</span>(<span class="st">&quot;ARIMA with&quot;</span>,am1<span class="sc">$</span>arma[<span class="dv">5</span>],<span class="st">&quot;h periodicity&quot;</span>),</span>
+<span id="cb65-15"><a href="#cb65-15" tabindex="-1"></a>      <span class="at">side =</span> <span class="dv">1</span>, <span class="at">line =</span> <span class="sc">-</span><span class="fl">2.2</span>, <span class="at">adj =</span> <span class="fl">0.1</span>, <span class="at">font =</span> <span class="dv">2</span>)</span>
+<span id="cb65-16"><a href="#cb65-16" tabindex="-1"></a><span class="fu">mtext</span>(am1<span class="sc">$</span>call, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="at">adj =</span> <span class="fl">0.1</span>, <span class="at">col =</span> <span class="dv">3</span>, <span class="at">cex =</span> <span class="fl">0.9</span>, <span class="at">family=</span><span class="st">&quot;mono&quot;</span>)</span>
+<span id="cb65-17"><a href="#cb65-17" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;(b)&quot;</span>, <span class="dv">3</span>, <span class="sc">-</span><span class="fl">1.2</span>, <span class="at">cex =</span> <span class="fl">1.2</span>, <span class="at">font =</span> <span class="dv">2</span>, <span class="at">adj =</span> <span class="fl">0.95</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="timeseries_files/figure-html/forecast-plots-1.png" alt="Figure 16: Time series forecasts for soil temperature, based on (a) a non-seasonal ARIMA model and (b) a seasonal ARIMA model." width="70%" />
 <p class="caption">
@@ -1422,12 +1523,12 @@ seasonal ARIMA model (Figure 16(b)).</p>
 <p>We can also make a slightly 'prettier' time series forecast plot
 using the <code>autoplot()</code> function from the <code>ggplot2</code>
 package (Figure 17):</p>
-<pre class="r"><code>require(ggplot2) # gives best results using autoplot(...)
-autoplot(fc1)+
-  ylab(&quot;Temperature (\u00B0C)&quot;) +
-  xlab(paste(&quot;Time since&quot;,index(soiltemp_T15_zoo)[1],&quot;(s)&quot;)) +
-  ggtitle(&quot;&quot;) +
-  theme_bw()</code></pre>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" tabindex="-1"></a><span class="fu">require</span>(ggplot2) <span class="co"># gives best results using autoplot(...)</span></span>
+<span id="cb66-2"><a href="#cb66-2" tabindex="-1"></a><span class="fu">autoplot</span>(fc1)<span class="sc">+</span></span>
+<span id="cb66-3"><a href="#cb66-3" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Temperature (\u00B0C)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb66-4"><a href="#cb66-4" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="fu">paste</span>(<span class="st">&quot;Time since&quot;</span>,<span class="fu">index</span>(soiltemp_T15_zoo)[<span class="dv">1</span>],<span class="st">&quot;(s)&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb66-5"><a href="#cb66-5" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
+<span id="cb66-6"><a href="#cb66-6" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="timeseries_files/figure-html/forecast-ggplot-1.png" alt="Figure 17: Time series forecast for soil temperature, based on  a seasonal ARIMA model, plotted using the ggplot2 `autoplot()` function." width="70%" />
 <p class="caption">
@@ -1457,8 +1558,8 @@ type using the <code>model =</code> option!</p>
 <p>The easiest option (and the one used here) is to specify
 <code>model = "ZZZ"</code>, which chooses the type of model
 automatically.</p>
-<pre class="r"><code>soiltemp_T15_ets &lt;- ets(soiltemp_T15_xts, model = &quot;ZZZ&quot;)
-summary(soiltemp_T15_ets)</code></pre>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" tabindex="-1"></a>soiltemp_T15_ets <span class="ot">&lt;-</span> <span class="fu">ets</span>(soiltemp_T15_xts, <span class="at">model =</span> <span class="st">&quot;ZZZ&quot;</span>)</span>
+<span id="cb67-2"><a href="#cb67-2" tabindex="-1"></a><span class="fu">summary</span>(soiltemp_T15_ets)</span></code></pre></div>
 <pre><code>## ETS(A,Ad,N) 
 ## 
 ## Call:
@@ -1487,10 +1588,10 @@ errors, but no seasonality. We don't do it here, but we could manually
 select a model with seasonality included.</p>
 <p>The default plot function in R can plot forecasts from exponential
 smoothing models too (Figure 18).</p>
-<pre class="r"><code>plot(forecast(soiltemp_T15_ets, h=168), col=3, 
-     xlab = &quot;Time since start (s)&quot;, ylab = &quot;Temperature (\u00B0C)&quot;, main=&quot;&quot;)
-mtext(names(soiltemp_T15_ets$par),3,seq(-1,-5,-1), adj = 0.7, col = 4, font = 3)
-mtext(signif(soiltemp_T15_ets$par,3),3,seq(-1,-5,-1), adj = 0.8, col = 4, font = 3)</code></pre>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">forecast</span>(soiltemp_T15_ets, <span class="at">h=</span><span class="dv">168</span>), <span class="at">col=</span><span class="dv">3</span>, </span>
+<span id="cb69-2"><a href="#cb69-2" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Time since start (s)&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Temperature (\u00B0C)&quot;</span>, <span class="at">main=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb69-3"><a href="#cb69-3" tabindex="-1"></a><span class="fu">mtext</span>(<span class="fu">names</span>(soiltemp_T15_ets<span class="sc">$</span>par),<span class="dv">3</span>,<span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">5</span>,<span class="sc">-</span><span class="dv">1</span>), <span class="at">adj =</span> <span class="fl">0.7</span>, <span class="at">col =</span> <span class="dv">4</span>, <span class="at">font =</span> <span class="dv">3</span>)</span>
+<span id="cb69-4"><a href="#cb69-4" tabindex="-1"></a><span class="fu">mtext</span>(<span class="fu">signif</span>(soiltemp_T15_ets<span class="sc">$</span>par,<span class="dv">3</span>),<span class="dv">3</span>,<span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">5</span>,<span class="sc">-</span><span class="dv">1</span>), <span class="at">adj =</span> <span class="fl">0.8</span>, <span class="at">col =</span> <span class="dv">4</span>, <span class="at">font =</span> <span class="dv">3</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="timeseries_files/figure-html/ets-forecast-1.png" alt="Figure 18: Forecast of soil temperature based on an automatically selected exponential smoothing model without a seasonal component." width="70%" />
 <p class="caption">
@@ -1504,7 +1605,7 @@ selected exponential smoothing model without a seasonal component.
 <p>Exponential smoothing also <u>decomposes</u> time series in a
 different way, into <em>level</em> and <em>slope</em> components (Figure
 19).</p>
-<pre class="r"><code>plot(soiltemp_T15_ets, col = 4, xlab = &quot;Time since start (s)&quot;) # ETS decomposition plots</code></pre>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" tabindex="-1"></a><span class="fu">plot</span>(soiltemp_T15_ets, <span class="at">col =</span> <span class="dv">4</span>, <span class="at">xlab =</span> <span class="st">&quot;Time since start (s)&quot;</span>) <span class="co"># ETS decomposition plots</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="timeseries_files/figure-html/ets-decomposition-1.png" alt="Figure 19: Exponential smoothing time series decomposition plots for soil temperature data." width="75%" />
 <p class="caption">
@@ -1789,7 +1890,7 @@ $(document).ready(function () {
 
 <hr />
 <p><a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank"><strong>CC-BY-SA</strong></a> • All content by <a href="https://github.com/Ratey-AtUWA" target="_blank">Ratey-AtUWA</a>. My <a href="https://www.uwa.edu.au/schools/agriculture-and-environment" target="_blank">employer</a> does not necessarily know about or endorse the content of this website.<br>
-<span style="font-size:9pt">Created with <span style="font-family: monospace; background-color: #e8e8e8;">rmarkdown</span> in <a href="https://www.rstudio.com/" target="_blank"><span class="fa fa-registered"></span> RStudio</a> using the <span style="font-family: monospace; background-color: #e8e8e8;">cyborg</span> theme from <a href="https://bootswatch.com/" target="_blank"><span class="fa fa-swatchbook"></span> Bootswatch</a> via the <span style="font-family: monospace; background-color: #e8e8e8;">bslib</span> package, and <a href="https://fontawesome.com/v5/search?o=r&m=free" target="_blank"><span class="fa fa-font-awesome"></span> fontawesome v5 icons</a>.</span></p>
+<span style="font-size:9pt">Created with <span style="font-family: monospace;">rmarkdown</span> in <a href="https://www.rstudio.com/" target="_blank"><span class="fa fa-registered"></span> RStudio</a> using the <span style="font-family: monospace;">cyborg</span> theme from <a href="https://bootswatch.com/" target="_blank"><span class="fa fa-swatchbook"></span> Bootswatch</a> via the <span style="font-family: monospace;">bslib</span> package, and <a href="https://fontawesome.com/v5/search?o=r&m=free" target="_blank"><span class="fa fa-font-awesome"></span> fontawesome v5 icons</a>.</span></p>
 
 </div>
 
