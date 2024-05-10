@@ -97,7 +97,8 @@ navbar:
       href: work.html
 output:
   html_document:
-    theme: spacelab
+    theme:
+      bootswatch: cyborg
     highlight: kate
     md_extensions: -smart
     self_contained: no
