@@ -38,6 +38,8 @@ rmarkdown::render_site("relationR.Rmd")
 rmarkdown::render_site("geostats.Rmd")
 rmarkdown::render_site("timeseries.Rmd")
 
+# ebook chapters?
+rmarkdown::render_site("summtables.Rmd")
 rmarkdown::render_site("mapscode.rmd")
 rmarkdown::render_site("EDAcode.rmd")
 rmarkdown::render_site("CoDAcode.Rmd")
