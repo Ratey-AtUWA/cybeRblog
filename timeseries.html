@@ -10,25 +10,18 @@
 
 
 
+<meta name="date" content="2024-07-12" />
 
 <title>Time series in R</title>
 
 <script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
-<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<style>h1 {font-size: 34px;}
-       h1.title {font-size: 38px;}
-       h2 {font-size: 30px;}
-       h3 {font-size: 24px;}
-       h4 {font-size: 18px;}
-       h5 {font-size: 16px;}
-       h6 {font-size: 12px;}
-       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
-       pre:not([class]) { background-color: white }</style>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<link href="site_libs/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-5.1.3/bootstrap.bundle.min.js"></script>
+<script src="site_libs/bs3compat-0.4.0/transition.js"></script>
+<script src="site_libs/bs3compat-0.4.0/tabs.js"></script>
+<script src="site_libs/bs3compat-0.4.0/bs3compat.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
@@ -571,6 +564,7 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Time series in R</h1>
+<h4 class="date">2024-07-12</h4>
 
 </div>
 
@@ -630,9 +624,7 @@ Figure 1: Plot of soil temperature time series data which is not (yet)
 formatted as a time series.
 </p>
 </div>
-<p>
- 
-</p>
+<p> </p>
 <p>The horizontal axis in Figure 1 is just the row number of the data
 frame, not a date or time. We really want the data in a different type
 of R object! We use the <code>read.csv.zoo()</code> function in the
@@ -656,7 +648,7 @@ default time series object in R.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">str</span>(soiltemp_T15_zoo) <span class="co"># POSIXct in the output is a date-time format</span></span></code></pre></div>
 <pre><code>## &#39;zoo&#39; series from 2014-04-01 to 2014-05-31 23:00:00
 ##   Data: num [1:1464] 20.1 19.8 19.6 19.2 19 ...
-##   Index:  POSIXct[1:1464], format: &quot;2014-04-01 00:00:00&quot; &quot;2014-04-01 01:00:00&quot; &quot;2014-04-01 02:00:00&quot; &quot;2014-04-01 03:00:00&quot; ...</code></pre>
+##   Index:  POSIXct[1:1464], format: &quot;2014-04-01 00:00:00&quot; &quot;2014-04-01 01:00:00&quot; &quot;2014-04-01 02:00:00&quot; &quot;2014-04-01 03:00:00&quot; &quot;2014-04-01 04:00:00&quot; ...</code></pre>
 <p>It's usually useful to check our data with a plot (Figure 2)</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">plot</span>(soiltemp_T15_zoo, <span class="at">col =</span> <span class="dv">2</span>) </span></code></pre></div>
 <div class="figure" style="text-align: center">
@@ -666,9 +658,7 @@ Figure 2: Plot of soil temperature time series data which is formatted
 as a zoo time series object.
 </p>
 </div>
-<p>
- 
-</p>
+<p> </p>
 <p>Sometimes we need to use another time series data format,
 <code>xts</code> (e<u>X</u>tended <u>T</u>ime <u>S</u>eries), which
 allows us to use more functions...</p>
@@ -682,9 +672,7 @@ allows us to use more functions...</p>
 ##   Indexed by objects of class: [POSIXct,POSIXt] TZ: Australia/Perth
 ##   xts Attributes:  
 ##  NULL</code></pre>
-<p>
- 
-</p>
+<p> </p>
 </div>
 </div>
 </div>
@@ -701,9 +689,7 @@ Figure 3: Plot of soil temperature time series data which is formatted
 as an xts time series object.
 </p>
 </div>
-<p>
- 
-</p>
+<p> </p>
 <p>Plotting the time series variable (with time as the independent
 variable!) can give us some initial clues about the overall trend in the
 data (in Figure 3, a negative overall slope) and if there is any
@@ -748,9 +734,7 @@ Figure 4: Plots of soil temperature time series data as untransformed,
 log10-transformed, and power transformed values.
 </p>
 </div>
-<p>
- 
-</p>
+<p> </p>
 <blockquote>
 <p>Which of these plots looks like it might be homoscedastic,
 <em>i.e</em>., have constant variance regardless of time?</p>
@@ -854,29 +838,25 @@ second differences, with each sub-plot showing the smoothed (Loess) and
 linear trends.
 </p>
 </div>
-<p>
- 
-</p>
+<p> </p>
 </div>
 <div id="finding-the-trend" class="section level2">
 <h2>Finding the trend</h2>
 <div id="determine-if-there-is-actually-any-trend"
 class="section level3">
 <h3>1. Determine if there is actually any trend</h3>
-<table border="1">
-<tr>
-<td style="background-color:#ffffe0; padding:8px;">
+<div
+style="border: 1px solid #039; background-color:#ffffe0; padding: 8px;">
 <span style="font-size:13pt;">Simply <strong>finding whether there is a
 significant trend, and the direction of that trend</strong>
 (<em>i.e</em>. negative = decreasing or positive = increasing) may be
-sufficient from a regulatory perspective.</span> For example when
+sufficient from a regulatory perspective.</span> For example, when
 monitoring the attenuation of pollution or checking the effectiveness of
 remediation, showing that the contaminant concentrations are decreasing
 is important information! (see Australian Government 2023; Department of
 Water 2015).</span>
-</td>
-</tr>
-</table>
+</div>
+<p> </p>
 <div id="a.-apply-the-mann-kendall-test-from-the-trend-package"
 class="section level4">
 <h4>1a. Apply the Mann-Kendall test from the 'trend' package</h4>
@@ -918,6 +898,7 @@ reject the null hypothesis of zero slope. The
 <code>95 percent confidence interval</code> does not include zero, also
 showing that the Sen's slope is significantly negative in this
 example.</p>
+<p> </p>
 </div>
 </div>
 <div id="visualising-a-trend-using-a-moving-average"
@@ -932,21 +913,16 @@ this seems to be true based on Figure 6. In some cases the
 can detect the periodic frequency for us. A moving average will always
 smooth our data, so a smooth curve doesn't necessarily mean that we have
 periodicity (seasonality).</p>
-<table border="1">
-<tr>
-<td style="background-color: #ffffe0; padding:8px;">
+<div
+style="border: 1px solid #039; background-color:#ffffe0; padding: 8px;">
 <p><span style="font-size:12pt;"><strong>Moving averages</strong> are
 important parts of the <strong>ARIMA</strong> family of predictive
 models for time series, and that's why we show them here
 first.</span></p>
-There are probably better ways of drawing smooth curves to represent our
-time series data (see below).
-</td>
-</tr>
-</table>
-<p>
- 
-</p>
+<p>There are probably better ways of drawing smooth curves to represent
+our time series data (see below).</p>
+</div>
+<p> </p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a>ff <span class="ot">&lt;-</span> <span class="fu">findfrequency</span>(soiltemp_T15_xts) <span class="co"># often an approximation!! check the data!</span></span>
 <span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Estimated frequency is&quot;</span>,ff,<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## Estimated frequency is 24</code></pre>
@@ -962,16 +938,14 @@ Figure 6: Plots of soil temperature time series data and the 24-hour
 moving average.
 </p>
 </div>
-<p>
- 
-</p>
+<p> </p>
 </div>
 <div id="showing-a-trend-using-a-linear-regression-model"
 class="section level3">
 <h3>3. Showing a trend using a linear (regression) model</h3>
 <p>This is just to <strong>visualize</strong> the trend – remember, to
 find if a trend exists, we use the Mann-Kendall test or Sen's Slope test
-as descrobed above.</p>
+as described above.</p>
 <p>First we create a linear model of the time series...</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a>lm0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">coredata</span>(soiltemp_T15_zoo) <span class="sc">~</span> <span class="fu">index</span>(soiltemp_T15_zoo))</span>
 <span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a><span class="fu">summary</span>(lm0)</span></code></pre></div>
@@ -1005,9 +979,7 @@ Figure 7: Plots of soil temperature time series data and the overall
 trend shown by a linear model.
 </p>
 </div>
-<p>
- 
-</p>
+<p> </p>
 <p>Figure 7 shows that a linear model does not really capture the trend
 (ignoring the periodicity) very convincingly. The next option 'loess'
 smoothing option below tries to present the trend more accurately.</p>
@@ -1041,9 +1013,7 @@ Figure 8: Plots of soil temperature time series data and the overall
 trend shown by a loess smoothing model.
 </p>
 </div>
-<p>
- 
-</p>
+<p> </p>
 </div>
 </div>
 <div id="isolating-the-time-series-periodicity" class="section level2">
@@ -1062,9 +1032,7 @@ Figure 9: The autocorrelation function plot for soil temperature time
 series data (the horizontal axis is in units of seconds).
 </p>
 </div>
-<p>
- 
-</p>
+<p> </p>
 <blockquote>
 <p>What does Figure 9 tell you about autocorrelation in this time
 series?</p>
@@ -1079,14 +1047,13 @@ Figure 10: The partial autocorrelation function plot for soil
 temperature time series data (horizontal axis units are seconds).
 </p>
 </div>
-<p>
- 
-</p>
+<p> </p>
 <p>Interpreting partial autocorrelations (Figure 10) is more complicated
 - refer to Long &amp; Teetor (2019, <em>Section 14.15</em>).
 Simplistically, partial autocorrelation allows us to identify which and
 how many autocorrelations will be needed to model the time series
 data.</p>
+<p> </p>
 <div id="we-use-the-box-pierce-test-for-autocorrelation"
 class="section level3">
 <h3>We use the 'Box-Pierce test' for autocorrelation</h3>
@@ -1111,6 +1078,7 @@ at any lag distance (so p <span class="math inline">\(\le\)</span> 0.05
 ## 
 ## data:  diff(diff(soiltemp_T15_xts, 1), 1)
 ## X-squared = 357.45, df = 1, p-value &lt; 2.2e-16</code></pre>
+<p> </p>
 </div>
 <div id="make-a-time-series-of-the-loess-residuals"
 class="section level3">
@@ -1131,14 +1099,12 @@ series into smoothed trend and periodicity plus error (noise)
 components.
 </p>
 </div>
-<p>
- 
-</p>
+<p> </p>
 <p>We can also use <em>less smoothing</em> in the loess function to
-<em>retain</em> periodicity; we adjust the <code>span&amp;nbsp;=</code>
-option (lower values of <code>span</code> give less smoothing; we just
-need to experiment with different values). The difference between the
-data and the less-smoothed loess should be just 'noise' or
+<em>retain</em> periodicity; we adjust the <code>span =</code> option
+(lower values of <code>span</code> give less smoothing; we just need to
+experiment with different values). The difference between the data and
+the less-smoothed loess should be just 'noise' or
 '<strong>error</strong>'.</p>
 <p>We first generate a loess model which is stored in the object
 <code>temp_LOESS2</code>:</p>
@@ -1152,8 +1118,7 @@ both periodic and trend information:</p>
 just 'noise' or 'error', so we make a new time series based on this
 difference:</p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" tabindex="-1"></a>soiltemp_T15_err <span class="ot">&lt;-</span> soiltemp_T15_zoo <span class="sc">-</span> soiltemp_T15_LOESS2</span></code></pre></div>
-<p><br />
-</p>
+<p> </p>
 <div id="plot-setting-y-axis-limits-to-similar-scale-to-original-data"
 class="section level4">
 <h4>Plot, setting y axis limits to similar scale to original data:</h4>
@@ -1175,9 +1140,7 @@ showing the smoothed <em>trend</em>, combined <em>trend +
 periodicity</em>, and <em>error</em> components.
 </p>
 </div>
-<p>
- 
-</p>
+<p> </p>
 <p>The periodicity by itself should be represented by the difference
 between the very smoothed (trend) and less smoothed (trend +
 periodicity) loess, as suggested by the two loess curves in Figure 12.
@@ -1208,9 +1171,7 @@ Figure 13: Time series decomposition into the three main components
 temperature (°C) at 15 cm depth.
 </p>
 </div>
-<p>
- 
-</p>
+<p> </p>
 <p>Figure 13 shows the original time series data, and the three
 important components of the decomposed time series: the
 <em>periodicity</em>, the <em>trend</em>, and the <em>error</em> or
@@ -1228,7 +1189,9 @@ style="font-family: serif; font-size:12pt; background-color: #ffff00;">This
 ends our exploratory data analysis of time series, which leads us into
 ARIMA forecast modelling.</span>
 </p>
+<p> </p>
 <hr style="height:2px; background-color:#003087;">
+<p> </p>
 </div>
 </div>
 </div>
@@ -1279,7 +1242,7 @@ provide a starting point for examining ARIMA models.</p>
 <p>The output of the <code>auto-arima()</code> function includes a
 description of the best model the algorithm found, shown as
 <code>ARIMA(p,d,q)</code>. The p,d,q refer to</p>
-<table border="0" cellpadding="2" cellspacing="2" style="width: 85%;">
+<table border="0" cellpadding="2" cellspacing="2" style="width: 80%;">
 <tr style="background-color: #e0e0e0;">
 <td>
 <strong>Parameter</strong>
@@ -1429,6 +1392,7 @@ the soil temperature time series.
 ## Q* = 35.092, df = 6, p-value = 4.136e-06
 ## 
 ## Model df: 4.   Total lags used: 10</code></pre>
+<p> </p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" tabindex="-1"></a><span class="fu">checkresiduals</span>(am1)</span></code></pre></div>
 <div class="figure">
 <img src="timeseries_files/figure-html/diagnostic-sarima-1.png" alt="Figure 15: Residual diagnostic plots for a seasonal ARIMA (SARIMA) model of the  soil temperature time series." width="70%" />
@@ -1444,14 +1408,13 @@ of the soil temperature time series.
 ## Q* = 20.04, df = 5, p-value = 0.001228
 ## 
 ## Model df: 5.   Total lags used: 10</code></pre>
-<p>
- 
-</p>
+<p> </p>
 <p>In both the diagnostic plots (Figure 14 and Figure 15) the residuals
 appear to be random and normally distributed. There seems to be a more
 obvious autocorrelation of residuals for the non-seasonal model,
 reinforcing the conclusion from the AIC value that the
 <strong>seasonal</strong> ARIMA model is the most appropriate.</p>
+<p> </p>
 </div>
 </div>
 <div id="use-the-arima-model-to-produce-a-forecast-using-both-models"
@@ -1465,26 +1428,22 @@ function from the <code>forecast</code> package. The option
 <code>h =</code> is to specify how long we want to forecast for after
 the end of our data – in this case 168 hours (same units as the
 periodicity from <code>findfrequency()</code>), that is, one week.</p>
-<table border="1">
-<tr>
-<td style="background-color:#ffffe0; padding:8px;">
+<div
+style="border: 1px solid #039; background-color:#ffffe0; padding: 8px;">
 <p><span style="font-size:12pt;"><strong>One of the problems</strong> we
 often run into is the issue of <strong>irregular time series</strong>,
 where the observations are not taken at regularly-spaced time intervals.
 Features of time series, such as periodicity and the length of time we
 want to forecast for, may be incorrect if our time series is
 irregular.</span></p>
-It is possible to "fill in" a time series so we have observations
+<p>It is possible to "fill in" a time series so we have observations
 regularly spaced in time, using interpolation or numerical filtering
-methods. We won't be covering these methods here.
-</td>
-</tr>
-</table>
-<p>
- 
-</p>
+methods. We won't be covering these methods here, though.</p>
+</div>
+<p> </p>
 <div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" tabindex="-1"></a>fc0 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(am0, <span class="at">h =</span> <span class="dv">168</span>)</span>
 <span id="cb64-2"><a href="#cb64-2" tabindex="-1"></a>fc1 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(am1, <span class="at">h =</span> <span class="dv">168</span>)</span></code></pre></div>
+<p> </p>
 <div id="then-look-at-forecasts-with-plots" class="section level3">
 <h3>Then, look at forecasts with plots</h3>
 <div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>), <span class="at">cex.main =</span> <span class="fl">0.9</span>, <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">oma =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>),</span>
@@ -1511,9 +1470,7 @@ Figure 16: Time series forecasts for soil temperature, based on (a) a
 non-seasonal ARIMA model and (b) a seasonal ARIMA model.
 </p>
 </div>
-<p>
- 
-</p>
+<p> </p>
 <p>From the two plots in Figure 16, we observe that the seasonal ARIMA
 model seems to reflect the form of the original data much better, by
 simulating the diurnal fluctuations in soil temperature. Although the
@@ -1537,13 +1494,12 @@ seasonal ARIMA model, plotted using the ggplot2 <code>autoplot()</code>
 function.
 </p>
 </div>
-<p>
- 
-</p>
+<p> </p>
 <p><span
 style="font-family: serif; font-size: 14pt; background-color: #ffff00;">ARIMA
 models are not the end of the time series modelling and forecasting
 story!</span></p>
+<p> </p>
 </div>
 </div>
 </div>
@@ -1599,9 +1555,7 @@ Figure 18: Forecast of soil temperature based on an automatically
 selected exponential smoothing model without a seasonal component.
 </p>
 </div>
-<p>
- 
-</p>
+<p> </p>
 <p>Exponential smoothing also <u>decomposes</u> time series in a
 different way, into <em>level</em> and <em>slope</em> components (Figure
 19).</p>
@@ -1613,14 +1567,13 @@ Figure 19: Exponential smoothing time series decomposition plots for
 soil temperature data.
 </p>
 </div>
-<p>
- 
-</p>
+<p> </p>
 <p style="text-align: center;">
 <span style="font-family: serif; font-size: 13pt">(<em>Exponential
 smoothing is maybe not so good for the soil temperature
 data!</em>)</span>
 </p>
+<p> </p>
 </div>
 </div>
 <div id="references" class="section level1">
@@ -1636,8 +1589,8 @@ href="https://www.waterquality.gov.au/anz-guidelines/monitoring/data-analysis/da
 target="_blank">www.waterquality.gov.au/anz-guidelines/monitoring/data-analysis/data-assess-change</a>.</p>
 <p>Department of Water (2015). <em>Calculating trends in nutrient
 data</em>, Government of Western Australia, Perth. <a
-href="https://water.wa.gov.au/__data/assets/pdf_file/0014/6800/Calculating-trends-in-nutrient-data-10-3-15.pdf"
-target="_blank">water.wa.gov.au/.../Calculating-trends-in-nutrient-data-10-3-15.pdf</a>.</p>
+href="https://www.wa.gov.au/government/publications/calculating-trends-nutrient-data"
+target="_blank">www.wa.gov.au/.../calculating-trends-nutrient-data</a>.</p>
 <p>Hyndman R, Athanasopoulos G, Bergmeir C, Caceres G, Chhay L,
 O'Hara-Wild M, Petropoulos F, Razbash S, Wang E, Yasmeen F (2022).
 <em>forecast: Forecasting</em> <em>functions for time series and linear
