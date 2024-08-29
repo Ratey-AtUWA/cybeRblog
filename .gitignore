@@ -13,6 +13,7 @@ old.gitignore.txt
 *.css
 footer.html
 footer2.html
+search-replace-gsub-multi-files.R
 
 /rosm.cache/*
 /images/gif-png*
