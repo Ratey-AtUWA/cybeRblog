@@ -239,65 +239,65 @@ $(document).ready(function () {
         <li>
   <a href="index.html">
     <span class="fa fa-home"></span>
-     
+
     Home
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-project-diagram"></span>
-     
+
     Code
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="code.html">
         <span class="fa fa-arrow-circle-right"></span>
-         
+
         All the code in one place
       </a>
     </li>
     <li>
       <a href="mapscode.html">
         <span class="fa fa-arrow-circle-right"></span>
-         
+
         Maps and geostatistics
       </a>
     </li>
     <li>
       <a href="EDAcode.html">
         <span class="fa fa-arrow-circle-right"></span>
-         
+
         Exploratory Data Analysis
       </a>
     </li>
     <li>
       <a href="CoDAcode.html">
         <span class="fa fa-arrow-circle-right"></span>
-         
+
         Compositional Data Analysis
       </a>
     </li>
     <li>
       <a href="soilcode.html">
         <span class="fa fa-arrow-circle-right"></span>
-         
+
         Soil science
       </a>
     </li>
     <li>
       <a href="filecode.html">
         <span class="fa fa-arrow-circle-right"></span>
-         
+
         File conversions
       </a>
     </li>
     <li>
       <a href="biolcode.html">
         <span class="fa fa-arrow-circle-right"></span>
-         
+
         Environmental Biology
       </a>
     </li>
@@ -306,93 +306,93 @@ $(document).ready(function () {
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-chalkboard-teacher"></span>
-     
+
     Teaching
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="teaching.html">
         <span class="fa fa-arrow-circle-right"></span>
-         
+
         All in one place
       </a>
     </li>
     <li>
       <a href="WhatsR.html">
         <span class="fa fa-arrow-circle-right"></span>
-         
+
         Very basic R
       </a>
     </li>
     <li>
       <a href="Rbasics.html">
         <span class="fa fa-arrow-circle-right"></span>
-         
+
         Intro to R
       </a>
     </li>
     <li>
       <a href="Rgraphs.html">
         <span class="fa fa-arrow-circle-right"></span>
-         
+
         Intro to R graphics
       </a>
     </li>
     <li>
       <a href="transformR.html">
         <span class="fa fa-arrow-circle-right"></span>
-         
+
         Variable distributions
       </a>
     </li>
     <li>
       <a href="meansR.html">
         <span class="fa fa-arrow-circle-right"></span>
-         
+
         Comparing means
       </a>
     </li>
     <li>
       <a href="relationR.html">
         <span class="fa fa-arrow-circle-right"></span>
-         
+
         Relationships
       </a>
     </li>
     <li>
       <a href="Rmaps.html">
         <span class="fa fa-arrow-circle-right"></span>
-         
+
         Basic maps in R
       </a>
     </li>
     <li>
       <a href="geostats.html">
         <span class="fa fa-arrow-circle-right"></span>
-         
+
         Geostatistics
       </a>
     </li>
     <li>
       <a href="vegan.html">
         <span class="fa fa-arrow-circle-right"></span>
-         
+
         Multivariate eDNA
       </a>
     </li>
     <li>
       <a href="compositional_Pt0-Intro.html">
         <span class="fa fa-arrow-circle-right"></span>
-         
+
         Compositional data analysis Intro
       </a>
     </li>
     <li>
       <a href="compositional_Pt1-PCA.html">
         <span class="fa fa-arrow-circle-right"></span>
-         
+
         PCA for compositional data analysis
       </a>
     </li>
@@ -401,21 +401,21 @@ $(document).ready(function () {
 <li>
   <a href="rants.html">
     <span class="fa fa-bell"></span>
-     
+
     Rants
   </a>
 </li>
 <li>
   <a href="images.html">
     <span class="fa fa-images"></span>
-     
+
     Images
   </a>
 </li>
 <li>
   <a href="about.html">
     <span class="fa fa-address-card"></span>
-     
+
     About
   </a>
 </li>
@@ -424,14 +424,14 @@ $(document).ready(function () {
         <li>
   <a href="social.html">
     <span class="fa fa-twitter"></span>
-     
+
     Social
   </a>
 </li>
 <li>
   <a href="work.html">
     <span class="fa fa-user-graduate"></span>
-     
+
     UWA
   </a>
 </li>
@@ -455,6 +455,13 @@ $(document).ready(function () {
 }
 </style>
 <p><img src="meansR_files/figure-html/banner%20hide%20code-1.png" width="100%" style="display: block; margin: auto 0 auto auto;" /></p>
+<div style="border: 2px solid #039; background-color:#fff0e8; padding: 8px;">
+<a href="https://ratey-atuwa.github.io/Learn-R-web/index.html"
+target="_blank"><img src="images/infoicon.png" align="left"
+alt="information symbol icon" width="24" height="24" /></a>&nbsp;See also my other <em>GitHub Pages</em> website dedicated to teaching: <a
+href="https://ratey-atuwa.github.io/Learn-R-web/index.html"
+target="_blank">“R for Environmental Science”</a>.</div>
+<p>&nbsp;</p>
 <div id="intro-comparisons-of-means-between-groups"
 class="section level2">
 <h2>Intro: Comparisons of means between groups</h2>
@@ -514,7 +521,7 @@ sv2017$Reserve &lt;- cut(sv2017$Northing,
 sv17_soil &lt;- subset(sv2017, subset=sv2017$Type==&quot;Soil&quot;)
 cat(&quot;Number of soil samples in each reserve\n&quot;); summary(sv17_soil$Reserve)</code></pre>
 <pre><code>## Number of soil samples in each reserve</code></pre>
-<pre><code>##  Smiths Veryard 
+<pre><code>##  Smiths Veryard
 ##      21      52</code></pre>
 </div>
 <div id="check-the-newly-created-factor-with-a-plot"
@@ -565,21 +572,21 @@ we still need to use <strong>appropriately transformed
 variables</strong>!</p>
 <pre class="r"><code>require(car)
 powerTransform(sv17_soil$Na)</code></pre>
-<pre><code>## Estimated transformation parameter 
-## sv17_soil$Na 
+<pre><code>## Estimated transformation parameter
+## sv17_soil$Na
 ##    0.1266407</code></pre>
 <pre class="r"><code>sv17_soil$Na.pow &lt;- (sv17_soil$Na)^0.127
 t.test(sv17_soil$Na.pow ~ sv17_soil$Reserve)</code></pre>
-<pre><code>## 
+<pre><code>##
 ##  Welch Two Sample t-test
-## 
+##
 ## data:  sv17_soil$Na.pow by sv17_soil$Reserve
 ## t = -2.2869, df = 20.851, p-value = 0.03277
 ## alternative hypothesis: true difference in means between group Smiths and group Veryard is not equal to 0
 ## 95 percent confidence interval:
 ##  -0.166413933 -0.007862766
 ## sample estimates:
-##  mean in group Smiths mean in group Veryard 
+##  mean in group Smiths mean in group Veryard
 ##              1.762519              1.849657</code></pre>
 <p>We can visualize means comparisons in a few different ways – see
 Figure 3. My favourite is the boxplot with means included as extra
@@ -592,7 +599,7 @@ class="section level3">
 <pre class="r"><code>par(mfrow=c(1,3), mar=c(3.5,3.5,1.5,1.5), mgp=c(1.7,0.3,0),
     font.lab=2, font.main=3, cex.main=1, tcl=0.3,
     cex.lab = 1.4, cex.axis = 1.4)
-boxplot(sv17_soil$Na.pow ~ sv17_soil$Reserve, 
+boxplot(sv17_soil$Na.pow ~ sv17_soil$Reserve,
         notch=F, col=&quot;grey92&quot;,
         xlab=&quot;Reserve&quot;, ylab=&quot;Na (power-transformed)&quot;)
 mtext(&quot;(a)&quot;, 3, -1.5, adj=0.03, font=2)
@@ -603,15 +610,15 @@ plotMeans(sv17_soil$Na.pow, sv17_soil$Reserve, error.bars=&quot;conf.int&quot;,
 mtext(&quot;(b)&quot;, 3, -1.5, adj=0.03, font=2)
 #
 # the third plot is a box plot with the means overplotted
-boxplot(sv17_soil$Na.pow ~ sv17_soil$Reserve, 
+boxplot(sv17_soil$Na.pow ~ sv17_soil$Reserve,
         notch=F, col=&quot;thistle&quot;,
         xlab=&quot;Reserve&quot;, ylab=&quot;Na (power-transformed)&quot;)
 # make a temporary object &#39;meanz&#39; containing the means
 meanz &lt;- tapply(sv17_soil$Na.pow, sv17_soil$Reserve, mean, na.rm=T)
 # plot means as points (boxplot boxes are centered on whole numbers)
-points(seq(1, nlevels(sv17_soil$Reserve)), meanz, 
+points(seq(1, nlevels(sv17_soil$Reserve)), meanz,
        col = 6, pch = 3, lwd = 2)
-legend(&quot;bottomright&quot;, &quot;Mean values&quot;, 
+legend(&quot;bottomright&quot;, &quot;Mean values&quot;,
        pch = 3, pt.lwd = 2, col = 6,
        bty = &quot;n&quot;, inset = 0.03)
 mtext(&quot;(c)&quot;, 3, -1.5, adj=0.03, font=2)</code></pre>
@@ -637,22 +644,22 @@ Bartlett's Test (<code>bartlett.test()</code>), or for this example with
 function (do they both give the same conclusion?):</p>
 <pre class="r"><code>with(sv17_soil, bartlett.test(Na.pow ~ Reserve))
 with(sv17_soil, var.test(Na.pow ~ Reserve))</code></pre>
-<pre><code>## 
+<pre><code>##
 ##  Bartlett test of homogeneity of variances
-## 
+##
 ## data:  Na.pow by Reserve
 ## Bartlett&#39;s K-squared = 1.6001, df = 1, p-value = 0.2059
-## 
-## 
+##
+##
 ##  F test to compare two variances
-## 
+##
 ## data:  Na.pow by Reserve
 ## F = 1.664, num df = 15, denom df = 51, p-value = 0.1789
 ## alternative hypothesis: true ratio of variances is not equal to 1
 ## 95 percent confidence interval:
 ##  0.7911095 4.2363994
 ## sample estimates:
-## ratio of variances 
+## ratio of variances
 ##           1.663991</code></pre>
 <p>Both the variance-ratio and Bartlett tests show that H<sub>0</sub>
 (that variances are equal) can <strong>not</strong> be rejected. We can
@@ -662,10 +669,10 @@ visualise this with (for instance) a boxplot or density plot (Figure
 par(mfrow=c(1,2), mar=c(3.5,3.5,1.5,1.5), mgp=c(1.6,0.5,0),
     font.lab=2, font.main=3, cex.main=0.8, tcl=-0.2,
     cex.lab = 1, cex.axis = 1)
-boxplot(sv17_soil$Na.pow ~ sv17_soil$Reserve, 
+boxplot(sv17_soil$Na.pow ~ sv17_soil$Reserve,
         notch=FALSE, col=&quot;grey92&quot;,
         xlab=&quot;Reserve&quot;, ylab=&quot;Na (power-transformed)&quot;)
-densityPlot(sv17_soil$Na.pow ~ sv17_soil$Reserve, 
+densityPlot(sv17_soil$Na.pow ~ sv17_soil$Reserve,
             xlab=&quot;Na (power transformed)&quot;, adjust=1.5, ylim=c(0,5))</code></pre>
 <div class="figure">
 <img src="meansR_files/figure-html/vis-variance-2group-1.png" alt="Figure 4: Graphical visulaization of variance (the 'spread' of the distribution) in each group using (left) a box plot and (right) a density plot." width="768" />
@@ -691,12 +698,12 @@ statistic is a standardised measure of effect size available in the
 <code>effsize</code>h R package.</p>
 <pre class="r"><code>require(effsize)
 cohen.d(sv17_soil$Na.pow ~ sv17_soil$Reserve)</code></pre>
-<pre><code>## 
+<pre><code>##
 ## Cohen&#39;s d
-## 
+##
 ## d estimate: -0.7483083 (medium)
 ## 95 percent confidence interval:
-##      lower      upper 
+##      lower      upper
 ## -1.3332988 -0.1633178</code></pre>
 <p>The calculated value of Cohen's <em>d</em> is 0.5 ≤ <em>d</em> &lt;
 0.8, which is medium. The 95% CI for the estimate of Cohen's <em>d</em>
@@ -807,23 +814,23 @@ cat(&quot;\nMeans for original (untransformed) variable\n&quot;);
 meansAl &lt;- tapply(sv2017$Al, sv2017$Type, mean, na.rm=TRUE);
 print(signif(meansAl,4)) # output means with appropriate significant digits
 rm(list=c(&quot;anova_Al&quot;,&quot;meansAl&quot;)) # tidy up</code></pre>
-<pre><code>## Estimated transformation parameter 
-## sv2017$Al 
-## 0.4552982 
+<pre><code>## Estimated transformation parameter
+## sv2017$Al
+## 0.4552982
 ## aov(formula = sv2017$Al.pow ~ sv2017$Type)
-##             Df Sum Sq Mean Sq F value Pr(&gt;F)  
+##             Df Sum Sq Mean Sq F value Pr(&gt;F)
 ## sv2017$Type  2  299.3  149.63   4.163 0.0189 *
-## Residuals   85 3055.5   35.95                 
+## Residuals   85 3055.5   35.95
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 7 observations deleted due to missingness
-## 
+##
 ## Means for transformed variable
-##    Sediment        Soil Street dust 
-##        30.6        35.8        34.2 
-## 
+##    Sediment        Soil Street dust
+##        30.6        35.8        34.2
+##
 ## Means for original (untransformed) variable
-##    Sediment        Soil Street dust 
+##    Sediment        Soil Street dust
 ##        2083        2667        2380</code></pre>
 <p>In the output above, the p-value in the ANOVA table
 <code>Pr(&gt;F)</code> is less than 0.05 allowing us to reject the null
@@ -835,7 +842,7 @@ class="section level3">
 <pre class="r"><code>par(mfrow=c(1,3), mar=c(3.5,3.5,1.5,1.5), mgp=c(1.7,0.3,0),
     font.lab=2, font.main=3, cex.main=1, tcl=0.3,
     cex.lab = 1.4, cex.axis = 1.4, lend = &quot;square&quot;, ljoin = &quot;mitre&quot;)
-boxplot(sv2017$Al.pow ~ sv2017$Type, notch=T, 
+boxplot(sv2017$Al.pow ~ sv2017$Type, notch=T,
         cex = 1.2, col=&quot;grey92&quot;, ylim = c(15,61),
         xlab=&quot;Sample type&quot;, ylab=&quot;Al (power-transformed)&quot;)
 mtext(&quot;(a)&quot;, 3, -1.5, adj=0.97, font=2) # label each sub-plot
@@ -845,17 +852,17 @@ plotMeans(sv2017$Al.pow, sv2017$Type, error.bars=&quot;conf.int&quot;,
         main = &quot;Don&#39;t include plot titles in reports!&quot;,
         ylim = c(15,61))
 mtext(&quot;(b)&quot;, 3, -1.5, adj=0.97, font=2) # label each sub-plot
-boxplot(sv2017$Al.pow ~ sv2017$Type, notch=F, 
-        col=c(&quot;cadetblue&quot;,&quot;moccasin&quot;,&quot;thistle&quot;), 
+boxplot(sv2017$Al.pow ~ sv2017$Type, notch=F,
+        col=c(&quot;cadetblue&quot;,&quot;moccasin&quot;,&quot;thistle&quot;),
         cex = 1.2, ylim = c(15,61),
         xlab=&quot;Reserve&quot;, ylab=&quot;Al (power-transformed)&quot;)
 mtext(&quot;(c)&quot;, 3, -1.5, adj=0.97, font=2) # label each sub-plot
 meanz &lt;- tapply(sv2017$Al.pow, sv2017$Type, mean, na.rm=T)
-points(seq(1, nlevels(sv2017$Type)), meanz, 
+points(seq(1, nlevels(sv2017$Type)), meanz,
        col = &quot;white&quot;, pch = 3, lwd = 4, cex = 1.3)
-points(seq(1, nlevels(sv2017$Type)), meanz, 
+points(seq(1, nlevels(sv2017$Type)), meanz,
        col = &quot;red3&quot;, pch = 3, lwd = 2, cex = 1.2)
-legend(&quot;bottomright&quot;, &quot;Mean values&quot;, 
+legend(&quot;bottomright&quot;, &quot;Mean values&quot;,
        pch = 3, pt.lwd = 2, col = &quot;red3&quot;, pt.cex = 1.2,
        bty = &quot;n&quot;, inset = 0.03)</code></pre>
 <div class="figure">
@@ -876,19 +883,19 @@ class="section level3">
 equal. Since there are more than 2 groups, we need to use the Bartlett
 test.</p>
 <pre class="r"><code>bartlett.test(sv2017$Al.pow~sv2017$Type)</code></pre>
-<pre><code>## 
+<pre><code>##
 ##  Bartlett test of homogeneity of variances
-## 
+##
 ## data:  sv2017$Al.pow by sv2017$Type
 ## Bartlett&#39;s K-squared = 12.85, df = 2, p-value = 0.001621</code></pre>
 <pre class="r"><code>require(car)
 par(mfrow=c(1,2), mar=c(3.5,3.5,1.5,1.5), mgp=c(1.6,0.5,0),
     font.lab=2, font.main=3, cex.main=0.8, tcl=-0.2,
     cex.lab = 1, cex.axis = 1)
-boxplot(sv2017$Al.pow ~ sv2017$Type, 
+boxplot(sv2017$Al.pow ~ sv2017$Type,
         notch=FALSE, col=&quot;grey92&quot;,
         xlab=&quot;Reserve&quot;, ylab=&quot;Al (power-transformed&quot;)
-densityPlot(sv2017$Al.pow ~ sv2017$Type, adjust=2, 
+densityPlot(sv2017$Al.pow ~ sv2017$Type, adjust=2,
             xlab=&quot;Al (power transformed)&quot;)</code></pre>
 <div class="figure">
 <img src="meansR_files/figure-html/vis-var-3groups-1.png" alt="Figure 6: Graphical visualization of variance (the 'spread' of the distribution) in 3 groups using (left) a box plot and (right) a density plot." width="768" />
@@ -905,7 +912,7 @@ values using <code>tapply()</code>:</p>
 <pre class="r"><code>cat(&quot;--- Variances for each factor level ---\n&quot;)
 with(sv2017, tapply(Al.pow, Type, var, na.rm=TRUE))</code></pre>
 <pre><code>## --- Variances for each factor level ---
-##    Sediment        Soil Street dust 
+##    Sediment        Soil Street dust
 ##    98.10216    26.80443    13.72370</code></pre>
 <hr style="height: 2px; background-color: #008060   ;" />
 <blockquote>
@@ -925,9 +932,9 @@ variable)</h3>
 (<code>oneway.test()</code>) if our variable has different variance for
 different factor levels.</p>
 <pre class="r"><code>with(sv2017, oneway.test(Al.pow ~ Type))</code></pre>
-<pre><code>## 
+<pre><code>##
 ##  One-way analysis of means (not assuming equal variances)
-## 
+##
 ## data:  Al.pow and Type
 ## F = 1.9945, num df = 2.000, denom df = 13.702, p-value = 0.1737</code></pre>
 <p>The Welch correction for unequal variances means the p-value is now
@@ -971,22 +978,22 @@ significant (p ≈ 0.002):</p>
 with(sv2017, bartlett.test(Ba.log ~ Type))
 anovaBa &lt;- with(sv2017, aov(Ba.log ~ Type))
 cat(&quot;==== Analysis of Variance ====\n&quot;);summary(anovaBa)</code></pre>
-<pre><code>## 
+<pre><code>##
 ##  Shapiro-Wilk normality test
-## 
+##
 ## data:  Ba.log
 ## W = 0.9885, p-value = 0.6358
-## 
-## 
+##
+##
 ##  Bartlett test of homogeneity of variances
-## 
+##
 ## data:  Ba.log by Type
 ## Bartlett&#39;s K-squared = 3.4694, df = 2, p-value = 0.1765
-## 
+##
 ## ==== Analysis of Variance ====
-##             Df Sum Sq Mean Sq F value  Pr(&gt;F)   
+##             Df Sum Sq Mean Sq F value  Pr(&gt;F)
 ## Type         2  0.538 0.26919    6.66 0.00206 **
-## Residuals   85  3.436 0.04042                   
+## Residuals   85  3.436 0.04042
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 7 observations deleted due to missingness</code></pre>
@@ -1001,22 +1008,22 @@ package and <code>multcompLetters()</code> from the
 <pre class="r"><code>library(rcompanion)
 library(multcompView)
 (pwBa &lt;- with(sv2017, pairwise.t.test(Ba.log, Type)))
-cat(&quot;\n==== Compact letters ====\n&quot;) 
+cat(&quot;\n==== Compact letters ====\n&quot;)
 pwBa_pv &lt;- fullPTable(pwBa$p.value)                 # from rcompanion
 multcompLetters(pwBa_pv)                            # from multcompView</code></pre>
-<pre><code>## 
-##  Pairwise comparisons using t tests with pooled SD 
-## 
-## data:  Ba.log and Type 
-## 
-##             Sediment Soil  
-## Soil        0.0031   -     
+<pre><code>##
+##  Pairwise comparisons using t tests with pooled SD
+##
+## data:  Ba.log and Type
+##
+##             Sediment Soil
+## Soil        0.0031   -
 ## Street dust 0.0078   0.3634
-## 
-## P value adjustment method: holm 
-## 
+##
+## P value adjustment method: holm
+##
 ## ==== Compact letters ====
-##    Sediment        Soil Street dust 
+##    Sediment        Soil Street dust
 ##         &quot;a&quot;         &quot;b&quot;         &quot;b&quot;</code></pre>
 <p>In the output above, the table of p-values show a significant
 difference (p &lt; 0.05) between Sediment and Soil, and Sediment and
@@ -1035,7 +1042,7 @@ conclusion. We need to load the <code>multcomp</code> package.</p>
 <pre class="r"><code>require(multcomp)
 pwise0 &lt;- glht(anovaBa, linfct = mcp(Type=&quot;Tukey&quot;)) # anovaBa from above
 cld(pwise0)</code></pre>
-<pre><code>##    Sediment        Soil Street dust 
+<pre><code>##    Sediment        Soil Street dust
 ##         &quot;a&quot;         &quot;b&quot;         &quot;b&quot;</code></pre>
 <p>Groups assigned a different letter are significantly different at the
 specified probability level (p ≤ 0.05 by default). In this example, Ba
@@ -1057,9 +1064,9 @@ don't.</p>
 rm(list=c(&quot;anovaBa&quot;,&quot;pwise0&quot;))    # tidy up</code></pre>
 <pre><code>##   Tukey multiple comparisons of means
 ##     95% family-wise confidence level
-## 
+##
 ## Fit: aov(formula = Ba.log ~ Type)
-## 
+##
 ## $Type
 ##                            diff         lwr       upr     p adj
 ## Soil-Sediment        0.20660696  0.06143156 0.3517824 0.0029746
@@ -1103,38 +1110,38 @@ wilcox.test(sv17_soil$Na.pow ~ sv17_soil$Reserve)
 meansNa &lt;- tapply(sv17_soil$Na.pow, sv17_soil$Reserve, mean, na.rm=TRUE)
 print(signif(meansNa, 3))}
 rm(meansNa) # remove temporary object(s)</code></pre>
-<pre><code>## 
+<pre><code>##
 ##  Wilcoxon rank sum test with continuity correction
-## 
+##
 ## data:  sv17_soil$Na by sv17_soil$Reserve
 ## W = 246, p-value = 0.01426
 ## alternative hypothesis: true location shift is not equal to 0
-## 
+##
 ## Means for original (untransformed) variable
-##  Smiths Veryard 
-##     102     139 
-## 
+##  Smiths Veryard
+##     102     139
+##
 ## --------------------------------------------
-## 
+##
 ##  Wilcoxon rank sum test with continuity correction
-## 
+##
 ## data:  sv17_soil$Na.pow by sv17_soil$Reserve
 ## W = 246, p-value = 0.01426
 ## alternative hypothesis: true location shift is not equal to 0
-## 
+##
 ## Means for transformed variable
-##  Smiths Veryard 
+##  Smiths Veryard
 ##    1.76    1.85</code></pre>
 <div id="effect-size" class="section level4">
 <h4>Effect size</h4>
 <pre class="r"><code>require(effsize)
 cohen.d(sv17_soil$Na.pow ~ sv17_soil$Reserve)</code></pre>
-<pre><code>## 
+<pre><code>##
 ## Cohen&#39;s d
-## 
+##
 ## d estimate: -0.7483083 (medium)
 ## 95 percent confidence interval:
-##      lower      upper 
+##      lower      upper
 ## -1.3332988 -0.1633178</code></pre>
 </div>
 </div>
@@ -1151,14 +1158,14 @@ meansFe &lt;- tapply(sv2017$Fe, sv2017$Type, mean,
                   na.rm=TRUE)
 print(signif(meansFe),4)}
 rm(meansFe)</code></pre>
-<pre><code>## 
+<pre><code>##
 ##  Kruskal-Wallis rank sum test
-## 
+##
 ## data:  sv2017$Fe by sv2017$Type
 ## Kruskal-Wallis chi-squared = 8.222, df = 2, p-value = 0.01639
-## 
+##
 ## Means for original (untransformed) variable
-##    Sediment        Soil Street dust 
+##    Sediment        Soil Street dust
 ##        5111        2695        3694</code></pre>
 <p>With a p-value of ≈ 0.016, H<sub>0</sub> can be rejected. We still
 have the problem of not knowing which means are significantly different
@@ -1173,13 +1180,13 @@ class="section level3">
 <h3>Pairwise comparisons following a Kruskal-Wallis test</h3>
 <pre class="r"><code>require(PMCMRplus)
 kwAllPairsConoverTest(Fe~Type, data=sv2017)</code></pre>
-<pre><code>## 
+<pre><code>##
 ##  Pairwise comparisons using Conover&#39;s all-pairs test</code></pre>
 <pre><code>## data: Fe by Type</code></pre>
-<pre><code>## 
+<pre><code>##
 ## P value adjustment method: single-step</code></pre>
-<pre><code>##             Sediment Soil 
-## Soil        0.927    -    
+<pre><code>##             Sediment Soil
+## Soil        0.927    -
 ## Street dust 0.064    0.010</code></pre>
 <p>The pairwise comparisons show that only Soil and Street dust have
 significantly different Fe concentration. <em>Note</em> the p-value
@@ -1193,7 +1200,7 @@ library(multcompView)
 pwFe_Type &lt;- with(sv2017, kwAllPairsConoverTest(Fe ~ Type)) # from PMCMRplus
 pwFe_Type_pv &lt;- fullPTable(pwFe_Type$p.value)               # from rcompanion
 multcompLetters(pwFe_Type_pv)                               # from multcompView</code></pre>
-<pre><code>##    Sediment        Soil Street dust 
+<pre><code>##    Sediment        Soil Street dust
 ##        &quot;ab&quot;         &quot;a&quot;         &quot;b&quot;</code></pre>
 <p>The output from <code>kwAllPairsConoverTest()</code> shows that p ≤
 0.05 only for the Soil-Street dust comparison (<code>"ab"</code> matches
@@ -1205,23 +1212,23 @@ conclusions are the same for each type of pairwise test, but this isn't
 always the case.]</p>
 <pre class="r"><code>kwAllPairsDunnTest(Fe~Type, data=sv2017)
 kwAllPairsNemenyiTest(Fe~Type, data=sv2017)</code></pre>
-<pre><code>## 
+<pre><code>##
 ##  Pairwise comparisons using Dunn&#39;s all-pairs test</code></pre>
 <pre><code>## data: Fe by Type</code></pre>
-<pre><code>## 
+<pre><code>##
 ## P value adjustment method: holm</code></pre>
 <pre><code>## alternative hypothesis: two.sided</code></pre>
-<pre><code>##             Sediment Soil 
-## Soil        0.721    -    
+<pre><code>##             Sediment Soil
+## Soil        0.721    -
 ## Street dust 0.056    0.012</code></pre>
-<pre><code>## 
+<pre><code>##
 ##  Pairwise comparisons using Tukey-Kramer-Nemenyi all-pairs test with Tukey-Dist approximation</code></pre>
 <pre><code>## data: Fe by Type</code></pre>
-<pre><code>## 
+<pre><code>##
 ## P value adjustment method: single-step</code></pre>
 <pre><code>## alternative hypothesis: two.sided</code></pre>
-<pre><code>##             Sediment Soil 
-## Soil        0.932    -    
+<pre><code>##             Sediment Soil
+## Soil        0.932    -
 ## Street dust 0.072    0.012</code></pre>
 </div>
 </div>
